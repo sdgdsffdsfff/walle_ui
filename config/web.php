@@ -44,6 +44,7 @@ $config = [
             'enableStrictParsing' => true,  //是否开启严格解析
             'showScriptName' => false,  //隐藏url中的入口脚本index.php
             'rules' => [
+                '/' => 'index',  //输入域名默认访问index/index
                 //请求路由地址是http:://hostname/controller/action?param1=value&param2=value
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
