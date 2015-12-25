@@ -39,14 +39,12 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
-        //隐藏url中的index.php
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
-            'showScriptName' => false,
+            'enablePrettyUrl' => true,  //路由的路径化
+            'enableStrictParsing' => true,  //是否开启严格解析
+            'showScriptName' => false,  //隐藏url中的入口脚本index.php
             'rules' => [
-                //['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
-                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+                '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
     ],
