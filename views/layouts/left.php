@@ -1,9 +1,12 @@
- <!-- Navigation -->
+<?php
+use yii\helpers\Html;
+?>
+<!-- Navigation -->
 <aside id="menu">
     <div id="navigation">
         <div class="profile-picture">
             <a href="index.html">
-                <img src="static/images/profile.jpg" class="img-circle m-b" alt="logo">
+                <?= Html::img('@web/static/images/profile.jpg', ['class' => 'img-circle m-b', 'alt' => 'logo']); ?>
             </a>
             <div class="stats-label text-color">
                 <span class="font-extra-bold font-uppercase">Robert Razer</span>

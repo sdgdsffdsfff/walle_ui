@@ -6,6 +6,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'defaultRoute' => 'index', //默认控制器
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
@@ -38,6 +39,16 @@ $config = [
             ],
         ],
         'db' => require(__DIR__ . '/db.php'),
+        //隐藏url中的index.php
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+            'rules' => [
+                //['class' => 'yii\rest\UrlRule', 'controller' => 'user'],
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ],
+        ],
     ],
     'params' => $params,
 ];

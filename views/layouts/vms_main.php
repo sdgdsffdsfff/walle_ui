@@ -66,4 +66,4 @@ PluginsAsset::register($this);
 </html>
 <?php $this->endPage(); ?>
 
-<script src="static/homer.js"></script>
+<?= Html::jsFile('@web/static/homer.js'); ?>
