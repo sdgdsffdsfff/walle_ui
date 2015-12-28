@@ -17,7 +17,7 @@ use yii\helpers\Html;
                 <a href="#"><span class="nav-label">版本列表</span></a>
             </li>
             <li>
-                <a href="#"><span class="nav-label">创建版本</span></a>
+                <a href="/version/add-version"><span class="nav-label">创建版本</span></a>
             </li>
             <li>
                 <a href="#"><span class="nav-label">创建发布任务</span></a>
