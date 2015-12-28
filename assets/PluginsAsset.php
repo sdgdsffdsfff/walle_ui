@@ -5,6 +5,7 @@ namespace app\assets;
  * 资源包--管理视图所用到的css和javascript文件
  * @author zhaolu@playcrab.com
  */
+use yii\web\View;
 use yii\web\AssetBundle;
 
 class PluginsAsset extends AssetBundle
@@ -44,5 +45,13 @@ class PluginsAsset extends AssetBundle
         'static/plugins/iCheck/icheck.min.js',
         'static/plugins/peity/jquery.peity.min.js',
         'static/plugins/sparkline/index.js',
+    ];
+    
+    /**
+     * 将js文件放在head里
+     * @var type 
+     */
+    public $jsOptions = [
+        'position' => View::POS_HEAD,
     ];
 }
