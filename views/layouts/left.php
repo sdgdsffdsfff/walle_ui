@@ -14,30 +14,19 @@ use yii\helpers\Html;
         </div>
         <ul class="nav" id="side-menu">
             <li class="active">
-                <a href="#"> <span class="nav-label">版本管理</span> </a>
+                <a href="#"><span class="nav-label">版本列表</span></a>
             </li>
             <li>
-                <a href="#"> <span class="nav-label">版本发布</span> </a>
+                <a href="#"><span class="nav-label">创建版本</span></a>
             </li>
             <li>
-                <a href="index.html#"><span class="nav-label">Charts</span><span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li><a href="chartjs.html">ChartJs</a></li>
-                    <li><a href="flot.html">Flot charts</a></li>
-                    <li><a href="inline.html">Inline graphs</a></li>
-                    <li><a href="chartist.html">Chartist</a></li>
-                </ul>
+                <a href="#"><span class="nav-label">创建发布任务</span></a>
             </li>
             <li>
-                <a href="index.html#"><span class="nav-label">Box transitions</span><span class="fa arrow"></span> </a>
-                <ul class="nav nav-second-level">
-                    <li><a href="overview.html"><span class="label label-success pull-right">Start</span> Overview </a>  </li>
-                    <li><a href="transition_two.html">Columns from up</a></li>
-                    <li><a href="transition_one.html">Columns custom</a></li>
-                    <li><a href="transition_three.html">Panels zoom</a></li>
-                    <li><a href="transition_four.html">Rows from down</a></li>
-                    <li><a href="transition_five.html">Rows from right</a></li>
-                </ul>
+                <a href="#"><span class="nav-label">发布任务列表</span></a>
+            </li>
+            <li>
+                <a href="#"><span class="nav-label">已发布版本列表</span></a>
             </li>
         </ul>
     </div>
