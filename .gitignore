@@ -1,0 +1,46 @@
+# Ignore the default database.
+#app/config/config.php
+app/config/config.ini
+app/scripts/queue_config.py
+
+# Ignore the default cache.
+app/cache/volt/*.php
+app/cache/*.php
+
+# Ignore all vendor.
+vendor
+
+public/*.log
+tags
+*.swp
+*.log
+
+# Ignore out
+nohup.out
+
+# Ignore pyc
+*.pyc
+
+# Ignore pyc
+*.log
+
+# Ignore *.DS_Store
+*.DS_Store
+
+#Ignore buildpath
+*.buildpath
+
+# Ignore *.project
+*.project
+
+# Ignore *.settings/org.eclipse.php.core.prefs
+.settings/org.eclipse.php.core.prefs
+
+# Ignore *.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.wst.common.project.facet.core.xml
+
+# Ignore *.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.core.resources.prefs
+
+# Ignore ucenter config
+app/librarys/clients/ucenter/config.inc.php
