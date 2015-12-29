@@ -24,6 +24,11 @@ $this->title = 'My Yii Application';
                 选择发布位置和任务目标
             </div>
                 <div class="panel-body">
+                        <div class="form-group"><label class="col-sm-3 control-label">版本号</label>
+                            <div class="col-md-9">
+                                    <input id="version_id" type="text" name="version_id" value="123">
+                            </div>
+                        </div>
                         <div class="form-group"><label class="col-sm-3 control-label">发布位置</label>
                             <div class="col-sm-9">
                                 <select class="js-source-states" name="deployment_id" style="width: 100%">
@@ -94,7 +99,7 @@ $this->title = 'My Yii Application';
                  <div class="row">
 
                     <label class="col-md-3 control-label">选择客户端更新包 </label>
-
+                        <!--  
                      <div class="col-md-4 col-md-offset-2">
 
                     	<div class="checkbox checkbox-primary">
@@ -104,6 +109,7 @@ $this->title = 'My Yii Application';
                        </div>
 
                 	  </div>
+                	  -->
                    </div>  
             </div>
             <div class="panel-body"  style=" height:250px; overflow-y:scroll;overflow-x:hidden;">
@@ -208,7 +214,12 @@ $this->title = 'My Yii Application';
                         <div class="form-group"><label class="col-sm-4 control-label">打包机</label>
         
                             <div class="col-sm-8">
-                                 <input  type="text" name="work_id" value="test1.war.playcrab.com" style="width: 100%" readonly>
+                                  <select class="js-source-states" name="work_id" style="width: 100%">
+                                    <option value="1">test1.war.playcrab.com</option>
+                                    <option value="2">test2.war.playcrab.com</option>
+                                    <option value="3">test3.war.playcrab.com</option>
+                                    <option value="4">test4.war.playcrab.com</option>
+                                  </select>
                             </div>
                         </div>
                         <div class="form-group"><label class="col-sm-4 control-label">日志级别</label>
