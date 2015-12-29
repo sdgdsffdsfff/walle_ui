@@ -249,11 +249,29 @@ use yii\helpers\Html;
                         </div><br/>
                         <div class="form-group">
                             <div class="col-sm-10 text-center">
-                                <button class="btn w-xs btn-success" type="submit">创建版本</button>
+                                <button class="btn w-xs btn-success" data-toggle="modal" data-target="#myModal7" type="button">创建版本</button>
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal弹出层-->
+<div class="modal fade hmodal-success" id="myModal7" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>创建版本成功!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
