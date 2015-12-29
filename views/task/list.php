@@ -23,9 +23,10 @@ $this->title = "";
 </div>
 
 <div class="content animate-panel">
+<!--
 <div class="row">
     <div class="col-lg-12">
-        <div class="hpanel">
+        <div class="hpanel hblue">
             <div class="panel-body">
                 <form method="get" class="form-horizontal">
                     <div class="form-group">
@@ -42,19 +43,24 @@ $this->title = "";
         </div>
     </div>
 </div>
+-->
 <!--list content div-->
 <div class="row">
     <div class="col-lg-12">
-        <div class="hpanel">
-               <!--
+        <div class="hpanel hblue">
             <div class="panel-heading">
-                <div class="panel-tools">
-                    <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                    <a class="closebox"><i class="fa fa-times"></i></a>
-                </div>
-                This is task list 
+                <form method="get" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-lg-1 control-label">版本号:</label>
+                        <div class ="col-lg-2"><input type="text" name="version" class="form-control"></div>
+                        <label class="col-lg-1 control-label">发布机器:</label>
+                        <div class ="col-lg-2"><input type="text" name="woker" class="form-control"></div>
+                        <label class="col-lg-1 control-label">发布人:</label>
+                        <div class ="col-lg-2"><input type="text" name="releaser" class="form-control"></div>
+                        <div class ="col-lg-2 col-lg-offset-1"><button class="btn w-xs btn-info" type="submit">查询</button></div>
+                    </div>
+                </form>
             </div>
-                -->
             <div class="panel-body">
                 <div class="table-responsive">
                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
@@ -73,7 +79,7 @@ $this->title = "";
                     </thead>
                     <tbody>
                     <tr>
-                        <td><a style="text-decoration:underline" href="/task/detail">122</a></td>
+                        <td><a style="text-decoration:underline" href="#">122</a></td>
                         <td>96</td>
                         <td>deploy1.saiya.playcrab-inc.com</td>
                         <td>2015-12-28 22:22:10</td>
@@ -92,7 +98,7 @@ $this->title = "";
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" href="javascript:stoptask();" disabled=true>终止任务</a></td>
+                        <td><a style="text-decoration:underline" href="javascript:stoptask();">终止任务</a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="#">123</a></td>
@@ -103,7 +109,7 @@ $this->title = "";
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" href="javascript:stoptask();" disabled=true>终止任务</a></td>
+                        <td><a style="text-decoration:underline" href="javascript:stoptask();"><code>终止任务</code></a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="#">123</a></td>
