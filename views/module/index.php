@@ -18,7 +18,7 @@ use yii\helpers\Html;
 
                 <div class="panel-body">
                     <form class="form-horizontal">
-                          <table  class="table table-stripped toggle-arrow-tiny" data-page-size="8" data-filter=#filter>
+                          <table  class="table table-bordered table-striped" data-page-size="8" data-filter=#filter>
                         <thead>
                         <tr>
 
