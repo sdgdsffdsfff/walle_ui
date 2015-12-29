@@ -17,7 +17,6 @@ class VersionController extends Controller
     //创建版本
     public function actionAddVersion()
     {
-        
         return $this->render('addversion');
     }
     
