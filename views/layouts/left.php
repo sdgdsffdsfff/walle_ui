@@ -20,10 +20,10 @@ use yii\helpers\Html;
                 <a href="/version/add-version"><span class="nav-label">创建版本</span></a>
             </li>
             <li>
-                <a href="#"><span class="nav-label">创建发布任务</span></a>
+                <a href="/task/publish"><span class="nav-label">创建发布任务</span></a>
             </li>
             <li>
-                <a href="#"><span class="nav-label">发布任务列表</span></a>
+                <a href="/task/list"><span class="nav-label">发布任务列表</span></a>
             </li>
             <li>
                 <a href="#"><span class="nav-label">安装包下载</span></a>

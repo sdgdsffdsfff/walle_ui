@@ -10,8 +10,17 @@
 * 
 */
 ?>
-<div class="content animate-panel">
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                任务详情
+            </h5>
+        </div>
+    </div>
+</div>
 
+<div class="content animate-panel">
 <div class="row">
     <div class="col-lg-12">
         <div class="hpanel">

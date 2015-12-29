@@ -12,6 +12,16 @@
 use yii\helpers\Html;
 $this->title = "";
 ?>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                发布任务列表
+            </h5>
+        </div>
+    </div>
+</div>
+
 <div class="content animate-panel">
 <div class="row">
     <div class="col-lg-12">
