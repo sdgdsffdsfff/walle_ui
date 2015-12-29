@@ -27,4 +27,20 @@ class TaskController extends Controller
         return $this->render('publish');
     }
     
+    /**
+     * 发布任务列表
+     */
+    public function actionList()
+    {
+        return $this->render('list');
+    
+    }
+
+    /**
+     * 任务详情页
+     */
+    public function actionDetail()
+    {
+        return $this->render("detail");
+    }
 }
