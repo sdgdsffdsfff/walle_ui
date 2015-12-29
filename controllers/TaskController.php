@@ -28,6 +28,18 @@ class TaskController extends Controller
     }
     
     /**
+     *  确认发布任务
+     * @return
+     */
+    public function actionRepublish()
+    {
+        //return 'test yii2';
+        $params = yii::$app->getRequest()->post();
+    
+        return $this->render('republish');
+    }
+    
+    /**
      * 发布任务列表
      */
     public function actionList()
@@ -43,4 +55,8 @@ class TaskController extends Controller
     {
         return $this->render("detail");
     }
+    
+   
+
+    
 }
