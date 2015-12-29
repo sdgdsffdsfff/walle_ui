@@ -5,23 +5,21 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote-bs3.css'); ?>
-<div class="content animate-panel">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <h5>创建版本</h5>
-                </div>
-            </div>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                创建版本
+            </h5>
         </div>
     </div>
+</div>
+
+<div class="content animate-panel">
     <div class="row">
         <div class="col-lg-6">
             <div class="hpanel">
                 <div class="panel-heading">
-                    <div class="panel-tools">
-                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                    </div>
                     当前版本
                 </div>
                 <div class="panel-body">
@@ -106,13 +104,10 @@ use yii\helpers\Html;
         <div class="col-lg-6">
             <div class="hpanel">
                 <div class="panel-heading">
-                    <div class="panel-tools">
-                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                    </div>
                     新版本
                 </div>
                 <div class="panel-body">
-                    <form method="get" class="form-horizontal">
+                    <form class="form-horizontal" method="post" action="/version/version-detail">
                         <div class="form-group">
                             <label class="col-sm-3 control-label" style="margin-left: -47px;">新版本参数</label>
                             <div class="col-sm-9 text-left">
@@ -249,7 +244,7 @@ use yii\helpers\Html;
                         </div><br/>
                         <div class="form-group">
                             <div class="col-sm-10 text-center">
-                                <button class="btn w-xs btn-success" type="button">创建版本</button>
+                                <button class="btn w-xs btn-success" type="submit">创建版本</button>
                             </div>
                         </div>
                     </form>

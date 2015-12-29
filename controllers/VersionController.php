@@ -20,7 +20,14 @@ class VersionController extends Controller
         return $this->render('addversion');
     }
     
-    public function actionList(){
+    public function actionList()
+    {
     	return $this->render('list');
+    }
+    
+    //版本详情
+    public function actionVersionDetail()
+    {
+        return $this->render('versiondetail');
     }
 }

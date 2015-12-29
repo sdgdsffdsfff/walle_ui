@@ -11,7 +11,7 @@ $config = [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'playcrab',
-            'enableCsrfValidation' => false,
+            'enableCsrfValidation' => false,  //禁用crsf防范攻击功能
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
