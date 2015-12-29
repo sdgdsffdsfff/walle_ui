@@ -1,21 +1,20 @@
 <?php
 use yii\helpers\Html;
 ?>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                更新模块版本
+            </h5>
+        </div>
+    </div>
+</div>
 
 <div class="content animate-panel">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <h5>更新模块版本</h5>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-lg-6">
             <div class="hpanel">
-
                 <div class="panel-body">
                     <form class="form-horizontal">
                           <table  class="table table-bordered table-striped" data-page-size="8" data-filter=#filter>
@@ -53,7 +52,7 @@ use yii\helpers\Html;
                         </tbody>
                         
                     </table>
-                    <button type="submit" class="btn btn-default">更新模块版本列表</button>
+                    <button type="submit" class="btn w-xs btn-success">更新模块版本列表</button>
                     </form>
                 </div>
             </div>

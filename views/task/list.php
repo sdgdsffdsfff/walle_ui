@@ -73,7 +73,7 @@ $this->title = "";
                     </thead>
                     <tbody>
                     <tr>
-                        <td><a style="text-decoration:underline" href="#">122</a></td>
+                        <td><a style="text-decoration:underline" href="/task/detail">122</a></td>
                         <td>96</td>
                         <td>deploy1.saiya.playcrab-inc.com</td>
                         <td>2015-12-28 22:22:10</td>
@@ -84,7 +84,7 @@ $this->title = "";
                         <td></td>
                     </tr>
                     <tr>
-                        <td><a style="text-decoration:underline" href="#">123</a></td>
+                        <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
                         <td>deploy1.saiya.playcrab-inc.com</td>
                         <td>2015-12-28 22:22:10</td>

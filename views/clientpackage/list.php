@@ -6,24 +6,22 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote-bs3.css'); ?>
-<!-- Main Wrapper -->
-<div class="content animate-panel">
- <div class="row">
-        <div class="col-lg-12">
-            <div class="hpanel">
-                <div class="panel-body">
-                    <h5>安装包下载</h5>
-                </div>
-            </div>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                安装包下载
+            </h5>
         </div>
     </div>
+</div>
+
+<!-- Main Wrapper -->
+<div class="content animate-panel">
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="panel-heading">
-                    <div class="panel-tools">
-                        <a class="showhide"><i class="fa fa-chevron-up"></i></a>
-                    </div>
                     高级筛选
             </div>
     <div class="panel-body">
