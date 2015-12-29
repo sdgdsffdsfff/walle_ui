@@ -29,10 +29,10 @@ use yii\helpers\Html;
                 <a href="/task/list"><span class="nav-label">发布任务列表</span></a>
             </li>
             <li>
-                <a href="#"><span class="nav-label">安装包下载</span></a>
+                <a href="/clientpackage/list"><span class="nav-label">安装包下载</span></a>
             </li>
             <li>
-                <a href="#"><span class="nav-label">更新模块版本列表</span></a>
+                <a href="/module/index"><span class="nav-label">更新模块版本列表</span></a>
             </li>
         </ul>
     </div>
