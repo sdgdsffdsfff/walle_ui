@@ -8,6 +8,15 @@ $this->title = 'My Yii Application';
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+                发布任务确认
+            </h5>
+        </div>
+    </div>
+</div>
 
 <div class="content animate-panel">
   <form method="post" class="form-horizontal" action="/task/republish">
