@@ -27,7 +27,12 @@ use yii\helpers\Html;
                         <div class="form-group">
                             <label class="col-sm-2 control-label">现有版本</label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="现有版本" class="form-control" name="current_version" />
+                                <div class="input-group">
+                                    <input type="text" placeholder="现有版本" class="form-control" name="current_version" />
+                                    <span class="input-group-btn">
+                                        <input type="button" name="search" class="btn btn-warning" value="查询" />
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
