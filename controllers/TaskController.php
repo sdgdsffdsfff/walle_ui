@@ -10,10 +10,13 @@ use yii\web\Controller;
 use app\models\Version;
 use app\models\Platform;
 use app\models\Deployment;
+use app\models\DynamicConfig;
+use app\models\Worker;
 use yii\helpers\ArrayHelper;
 use app\models\Package;
 use yii\db\Connection as Connection;
-class TaskController extends Controller
+use yii\helpers\Url;
+class TaskController extends BaseController
 {
     public function actionIndex()
     {
@@ -29,12 +32,15 @@ class TaskController extends Controller
 //         //获得版本号
 //         $versionId = yii::$app->getRequest()->get("version_id");
 //         $version = Version::findOne($versionId);
+//            $this->error('参数错误', Url::toRoute('index/index'));
         
 //         if(!$version)
 //         {
+           
 //            die("版本id错误！");   
 //         }
 //         $versionData = ArrayHelper::toArray($version);
+//         var_dump($versionData);
 //         $platformId   = $versionData['platform_id'];
 //         $upgradPathId = $versionData['upgrade_path_id'];
         
@@ -52,29 +58,48 @@ class TaskController extends Controller
 //         {
 //             die("平台下无安装包！");
 //         }
-//         $versionList = ArrayHelper::toArray($packageList);
+//         $packageListData = ArrayHelper::toArray($packageList);
 //         var_dump($packageListData);
         
 //         //获得升级序列下的30天发布的已上线版本列表
 //         $startDate = date('Y-m-d 00:00:00' , strtotime('-30 day'));
 //         $endDate = date('Y-m-d H:i:s' , time());
-//         $versionList = Version::find()->where("upgrade_path_id=:upgrade_path_id and released=1",array(":upgrade_path_id"=>$upgradPathId))
+//         $versionUpdateList = Version::find()->where("upgrade_path_id=:upgrade_path_id and released=1",array(":upgrade_path_id"=>$upgradPathId))
 //             ->andWhere(['>','release_time',$startDate])
 //             ->andWhere(['<=','release_time',$endDate])->all();
 //         $versionListData = array();
-//         if($versionList)
+//         if($versionUpdateList)
 //         {
-//             $versionListData= ArrayHelper::toArray($versionList);
+//             $versionUpdateListData= ArrayHelper::toArray($versionUpdateList);
 //         }
 //         var_dump($versionListData);
-        //获得动态参数
-        
-        //获得空闲打包机
-        
-        //随机选择空闲的一台打包机
-        
-        
-        
+//         //获得动态参数
+//         $dynamicConfigList = DynamicConfig::find()->all();
+//         $dynamicConfigListData = array();
+//         if($dynamicConfigList)
+//         {
+//             $dynamicConfigListData= ArrayHelper::toArray($dynamicConfigList);
+//         }
+//         var_dump($dynamicConfigListData);
+//         //获得空闲打包机
+//         $workerList = Worker::find()->where("disable=0")->all();
+//         if(!$workerList)
+//         {
+//             die("平台下无安装包！");
+//         }
+
+//         $workerListData= ArrayHelper::toArray($workerList);
+//         var_dump($workerListData);
+//         //随机选择空闲的一台打包机
+//         $randMax   = count(workerListData);
+//         $randIndex = rand(0,$randMax-1);
+//         $freeWork  = $workerListData[$randIndex];
+
+//         $data['version']        = $versionData;
+//         $data['deploymentList'] = $versionData;
+//         $data['version'] = $versionData;
+//         $data['version'] = $versionData;
+//         $data['version'] = $versionData;
         return $this->render('publish');
     }
     

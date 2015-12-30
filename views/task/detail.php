@@ -134,21 +134,26 @@ use yii\helpers\Html;
                         <div class="hpanel hblue">
                             <div class="panel-heading">
                                 <div class="alert alert-info">
-                                    <div><div class="row">
+                                    <div class="row">
                                          <div class="col-lg-1">当前状态:</div>
-                                         <div class="col-lg-2 full progress-striped active">
-                                             <div style="width:110%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="100" role="progressbar" class="progress-bar progress-bar-success full">
+                                         <div class="col-lg-2">
+                                         <div class="progress full progress-striped active">
+                                             <div style="width:100%" aria-valuemax="50" aria-valuemin="0" aria-valuenow="50" role="progressbar" class="progress-bar progress-bar-success">
                                              running
                                              </div>
                                          </div>
-                                    </div> </div>
+                                         </div>
+                                    </div>
                                 </div>
                                 <div class="alert alert-success">
-                                    <div><div class="row"><div class="col-lg-1">当前状态:</div><div class="col-lg-2">succeed</div></div>
+                                    <div class="row">
+                                        <div class="col-lg-1">当前状态:</div><div class="col-lg-2">succeed</div>
                                     </div>
                                 </div>
                                 <div class="alert alert-danger">
-                                    <div>当前状态: failed</div>
+                                    <div class="row">
+                                        <div class="col-lg-1">当前状态:</div><div class="col-lg-2">failed</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="panel-body">

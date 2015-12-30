@@ -6,8 +6,9 @@ namespace app\controllers;
  * @author zhaolu@playcrab.com
  */
 use yii\web\Controller;
+use admin\controllers\BaseController;
 
-class ClientpackageController extends Controller
+class ClientpackageController extends BaseController
 {
     public function actionIndex()
     {
