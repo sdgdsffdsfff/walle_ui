@@ -9,7 +9,10 @@
 * 2015-12-28 - created
 * 
 */
+use yii\helpers\Html;
 ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -28,10 +31,12 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#tab-1">任务参数</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-2">任务状态</a></li>
-                <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick="stoptask()">终止任务</button>
+                <button class="btn-outline w-xs btn-danger stoptask col-lg-offset-8">终止任务</button>
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
+                    <div class="panel-body">
+                    <div class="hpanel horange">
                     <div class="panel-body">
                         <!-- 任务参数-->
                      <div class="table-responsive">
@@ -120,6 +125,8 @@
                             </table>
                         </div>
                     </div>
+                    </div>
+                    </div>
                 </div>
                 <div id="tab-2" class="tab-pane">
                     <div class="panel-body">
@@ -203,8 +210,29 @@
 
 
 </div>
+
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+
 <script type="text/javascript">
-function stoptask() {
-    alert("test stop task");
-}
+$(function() {
+    $('.stoptask').click(function(){
+        swal({
+                title: "Are you sure?",
+                text: "You will stop this task!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, stop it!"
+            },
+            function(isConfirm){
+                if (isConfirm) {
+                    //调用后台脚本
+                } else {
+                    
+                }
+            
+            });
+    });
+
+});
 </script>
