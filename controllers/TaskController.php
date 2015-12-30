@@ -36,7 +36,6 @@ class TaskController extends BaseController
         
 //         if(!$version)
 //         {
-           
 //            die("版本id错误！");   
 //         }
 //         $versionData = ArrayHelper::toArray($version);
@@ -67,12 +66,12 @@ class TaskController extends BaseController
 //         $versionUpdateList = Version::find()->where("upgrade_path_id=:upgrade_path_id and released=1",array(":upgrade_path_id"=>$upgradPathId))
 //             ->andWhere(['>','release_time',$startDate])
 //             ->andWhere(['<=','release_time',$endDate])->all();
-//         $versionListData = array();
+//         $versionUpdateListData = array();
 //         if($versionUpdateList)
 //         {
 //             $versionUpdateListData= ArrayHelper::toArray($versionUpdateList);
 //         }
-//         var_dump($versionListData);
+//         var_dump($versionUpdateListData);
 //         //获得动态参数
 //         $dynamicConfigList = DynamicConfig::find()->all();
 //         $dynamicConfigListData = array();
@@ -93,14 +92,17 @@ class TaskController extends BaseController
 //         //随机选择空闲的一台打包机
 //         $randMax   = count(workerListData);
 //         $randIndex = rand(0,$randMax-1);
-//         $freeWork  = $workerListData[$randIndex];
+//         $freeWorker  = $workerListData[$randIndex];
 
-//         $data['version']        = $versionData;
-//         $data['deploymentList'] = $versionData;
-//         $data['version'] = $versionData;
-//         $data['version'] = $versionData;
-//         $data['version'] = $versionData;
-//         die();
+//         $data['version']           = $versionData;
+//         $data['deploymentList']    = $deploymentListData;
+//         $data['packageList']       = $packageListData;
+//         $data['versionUpdateList'] = $versionUpdateListData;
+//         $data['dynamicConfigList'] = $dynamicConfigListData;
+//         $data['workerList']        = $workerListData;
+//         $data['freeWorker']        = $freeWorker;
+        
+//         var_dump($data);die;
         return $this->render('publish');
     }
     

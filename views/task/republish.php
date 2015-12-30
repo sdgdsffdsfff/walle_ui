@@ -144,9 +144,14 @@ $this->title = 'My Yii Application';
                 cancelButtonText: "取消",
                 closeOnConfirm: false,
                 closeOnCancel: false },
-            function (isConfirm) {
+                function (isConfirm) {
                 if (isConfirm) {
-                    swal("创建", "发布任务成功", "success");
+                    swal({ title:"创建", text:"发布任务成功", type:"success"},
+                    		 function (isConfirm) {
+                                 window.location.href="/version/list";
+                              }
+                            );
+//                    
                 } else {
                     swal("取消", "取消发布任务", "error");
                 }
