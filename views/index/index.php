@@ -13,8 +13,13 @@ use yii\helpers\Html;
 
 <!-- Main Wrapper -->
 <div class="content animate-panel">
-	<a href="/version/list" class="btn btn-success btn-lg btn-block active" role="button">大掌门</a>
-	<a href="/version/list" class="btn btn-success btn-lg btn-block active" role="button">乱世曲</a>
+    <?php
+        foreach ($gameInfo as $k) {
+          echo '<a href="/index/seldb?id='.$k['id'].'&'.$k['alias'].'" class="btn btn-success btn-lg btn-block active" role="button">'.$k['name'].'</a>';
+        }
+    ?>
+<!-- 	<a href="/index/session" class="btn btn-success btn-lg btn-block active" role="button">大掌门</a>
+	<a href="/index/session" class="btn btn-success btn-lg btn-block active" role="button">乱世曲</a> -->
  <!--   <button type="button" class="btn btn-info btn-lg btn-block">大掌门</button>
 
        <button type="button" class="btn btn-info btn-lg btn-block">乱世曲</button>   -->  

@@ -12,7 +12,7 @@ use yii\helpers\Html;
         <?= $content ?>
         
         <!-- Footer-->
-        <?= $this->render('footer'); ?>
+      
     </div>
     
 <?php $this->endBody(); ?>
