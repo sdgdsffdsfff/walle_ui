@@ -28,7 +28,7 @@ use yii\helpers\Html;
                             <label class="col-sm-2 control-label">现有版本</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input type="text" placeholder="现有版本" class="form-control" name="current_version" />
+                                    <input type="text" placeholder="现有版本" class="form-control" id="current_version" name="current_version" />
                                     <span class="input-group-btn">
                                         <input type="button" name="search" class="btn btn-warning" value="查询" />
                                     </span>
@@ -249,11 +249,29 @@ use yii\helpers\Html;
                         </div><br/>
                         <div class="form-group">
                             <div class="col-sm-10 text-center">
-                                <button class="btn w-xs btn-success" type="submit">创建版本</button>
+                                <button class="btn w-xs btn-success" data-toggle="modal" data-target="#myModal7" type="button">创建版本</button>
                             </div>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal弹出层-->
+<div class="modal fade hmodal-success" id="myModal7" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Success</h4>
+            </div>
+            <div class="modal-body">
+                <p>创建版本成功!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
             </div>
         </div>
     </div>
@@ -268,5 +286,13 @@ use yii\helpers\Html;
     
     $('.summernote2').summernote({
         airMode: true
+    });
+    
+    //敲回车查询
+    $('#current_version').keyup(function(event){
+        if(event.keyCode === 13)
+        {
+            alert('aaaa');
+        }
     });
 </script>

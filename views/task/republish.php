@@ -48,7 +48,7 @@ $this->title = 'My Yii Application';
                                 <td>任务参数</td>
                                 <td>服务器更新包</td>
                                 <td>                                   
-                                     <input id="upload_server_update_package" type="checkbox" name="target_tasks" checked value="upload_server_update_package">
+                                     <input id="upload_server_update_package" type="checkbox" name="target_tasks" checked value="upload_server_update_package" disabled>
                                 </td>
                             </tr>
                             <tr>
