@@ -6,8 +6,7 @@ use yii\helpers\Url;
 
 $this->title = 'My Yii Application';
 ?>
-<?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
-<?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -121,19 +120,38 @@ $this->title = 'My Yii Application';
             </div>
         <div class="row">
         <div style="" class="col-lg-2">
-            <button type="button" class="btn btn-warning btn-block" onlick="" >上一步</button>
+            <button type="button" class="btn btn-warning btn-block" onclick="javascript:pre('<?php echo Url::toRoute(['task/publish','version_id'=>12]);?>')" >上一步</button>
         </div>
         <div style="" class="col-lg-8">
-             <button type="submit" class="btn btn-success btn-block">创建任务</button>
+             <button id="create_job_btn" type="button" class="btn btn-success btn-block">创建任务</button>
         </div>
         </div>
      </div>
   </form>
 </div>
- <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
+ <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+ 
 <script type="text/javascript">
  $(function(){
-	 $(".js-source-states").select2();  
+	 $('#create_job_btn').click(function(){
+		 swal({
+			    title: "发布任务确认",
+			    text: "",
+			    type: "warning",
+			    showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确认",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: false },
+            function (isConfirm) {
+                if (isConfirm) {
+                    swal("创建", "发布任务成功", "success");
+                } else {
+                    swal("取消", "取消发布任务", "error");
+                }
+			});
+     });
  });
  function chkall()
  {
@@ -172,4 +190,9 @@ $this->title = 'My Yii Application';
     	 $("#div4").hide();
      }
  }
+ function pre(url)
+ {
+	 window.location.href=url;
+ }
+
  </script>

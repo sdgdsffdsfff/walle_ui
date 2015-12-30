@@ -15,7 +15,7 @@ $this->title = 'My Yii Application';
 <div class="content">
     <div class="row">
     <div class="col-lg-6">
-         <div class="hpanel">
+         <div class="hpanel hgreen">
             <div class="panel-heading hbuilt">
                 <div class="panel-tools">
 <!--                     <a class="showhide"><i class="fa fa-chevron-up"></i></a> -->
@@ -92,27 +92,13 @@ $this->title = 'My Yii Application';
         </div>
     </div>
     <div class="col-lg-6">
-        <div id="div2" class="hpanel"  >
+        <div id="div2" class="hpanel hgreen"  >
             <div class="panel-heading hbuilt">
                 <div class="panel-tools">
                 </div>
-                 <div class="row">
-
-                    <label class="col-md-3 control-label">选择客户端更新包 </label>
-                        <!--  
-                     <div class="col-md-4 col-md-offset-2">
-
-                    	<div class="checkbox checkbox-primary">
-
-                        	<input id="chk_all" type="checkbox" onclick="javascript:chkall()" checked/><label for="chk_all">选中最近30天版本</label>
-
-                       </div>
-
-                	  </div>
-                	  -->
-                   </div>  
+                   选择客户端更新包 
             </div>
-            <div class="panel-body"  style=" height:250px; overflow-y:scroll;overflow-x:hidden;">
+            <div class="panel-body"  style=" height:333px; overflow-y:scroll;overflow-x:hidden;">
                 <div class="table-responsive" id="version_div" >
                 <table class="table table-condensed table-striped" cellpadding="1" cellspacing="1"  style="table-layout:fixed;" >
                     <thead>
@@ -204,7 +190,7 @@ $this->title = 'My Yii Application';
 </div>
 <div class="row">
     <div class="col-lg-6">
-         <div id="div3" class="hpanel">
+         <div id="div3" class="hpanel hgreen">
             <div class="panel-heading hbuilt">
                 <div class="panel-tools">
                 </div>
@@ -244,7 +230,7 @@ $this->title = 'My Yii Application';
         </div>
     </div>
     <div class="col-lg-6">
-        <div id="div4" class="hpanel"  >
+        <div id="div4" class="hpanel hgreen"  >
             <div class="panel-heading hbuilt">
                 <div class="panel-tools">
                 </div>
