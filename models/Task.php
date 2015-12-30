@@ -15,7 +15,7 @@ use Yii;
  *
  * @property Job $job
  */
-class Task extends \yii\db\ActiveRecord
+class Task extends BaseModel
 {
     /**
      * @inheritdoc

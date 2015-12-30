@@ -13,7 +13,7 @@ use Yii;
  *
  * @property Job[] $jobs
  */
-class Worker extends \yii\db\ActiveRecord
+class Worker extends BaseModel
 {
     /**
      * @inheritdoc

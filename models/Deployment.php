@@ -19,7 +19,7 @@ use Yii;
  * @property Parameter[] $parameters
  * @property Job[] $jobs
  */
-class Deployment extends \yii\db\ActiveRecord
+class Deployment extends BaseModel
 {
     /**
      * @inheritdoc

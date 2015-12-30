@@ -20,7 +20,7 @@ use Yii;
  * @property Parameter[] $parameters
  * @property Version[] $versions
  */
-class Platform extends \yii\db\ActiveRecord
+class Platform extends BaseModel
 {
     /**
      * @inheritdoc

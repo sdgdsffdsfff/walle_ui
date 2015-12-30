@@ -14,7 +14,7 @@ use Yii;
  * @property Parameter $parameter
  * @property Platform $platform
  */
-class PlatformConfig extends \yii\db\ActiveRecord
+class PlatformConfig extends BaseModel
 {
     /**
      * @inheritdoc

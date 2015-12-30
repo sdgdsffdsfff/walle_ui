@@ -12,7 +12,7 @@ use Yii;
  *
  * @property Parameter $parameter
  */
-class DynamicConfig extends \yii\db\ActiveRecord
+class DynamicConfig extends BaseModel
 {
     /**
      * @inheritdoc

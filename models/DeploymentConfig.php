@@ -14,7 +14,7 @@ use Yii;
  * @property Parameter $parameter
  * @property Deployment $deployment
  */
-class DeploymentConfig extends \yii\db\ActiveRecord
+class DeploymentConfig extends BaseModel
 {
     /**
      * @inheritdoc

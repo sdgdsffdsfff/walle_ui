@@ -18,7 +18,7 @@ use Yii;
  * @property Parameter[] $parameters
  * @property Version[] $versions
  */
-class UpgradePath extends \yii\db\ActiveRecord
+class UpgradePath extends BaseModel
 {
     /**
      * @inheritdoc
