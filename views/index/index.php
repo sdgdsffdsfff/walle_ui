@@ -15,7 +15,7 @@ use yii\helpers\Html;
 <div class="content animate-panel">
     <?php
         foreach ($gameInfo as $k) {
-          echo '<a href="/index/seldb?id='.$k['id'].'&'.$k['alias'].'" class="btn btn-success btn-lg btn-block active" role="button">'.$k['name'].'</a>';
+          echo '<a href="/index/seldb?id='.$k['id'].'&alias='.$k['alias'].'" class="btn btn-success btn-lg btn-block active" role="button">'.$k['name'].'</a>';
         }
     ?>
 <!-- 	<a href="/index/session" class="btn btn-success btn-lg btn-block active" role="button">大掌门</a>

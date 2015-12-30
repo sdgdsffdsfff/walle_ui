@@ -24,11 +24,11 @@ class BaseModel extends ActiveRecord
      */
     public static function getDb()
     {
-        $gameAlias = yii::$app->session->get('gameAlias');
-
+        $gameAlias = yii::$app->session->get('game_alias');
+        
 		if(empty($gameAlias))
         {
-			return yii::$app->db; // 使用名为 "db" 的应用组件
+			return yii::$app->db;
 		} 
         else 
         {

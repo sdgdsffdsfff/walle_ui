@@ -13,13 +13,17 @@ class IndexController extends Controller
 {
 	public $layout = "vms_index";
     public function actionIndex()
-    {	$gameInfo = Game::getAll();   
+    {	
+        $gameInfo = Game::getAll();   
         return $this->render('index',['gameInfo'=>$gameInfo]);
     }
 
-    public function actionSeldb(){
-    	$alias=yii::$app->getRequest()->get('alias');
-    	$_SESSION['game_alias']=$alias;
+    public function actionSeldb()
+    {
+    	$alias = yii::$app->getRequest()->get('alias');
+        //默认会开启session
+        yii::$app->session->set('game_alias', $alias);
+
     	header('Location:/version/add-version'); 
     	exit;
     }
