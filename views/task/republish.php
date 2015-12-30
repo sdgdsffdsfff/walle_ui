@@ -11,7 +11,7 @@ $this->title = 'My Yii Application';
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                发布任务确认
+                首页 > 发布任务 > 发布任务确认
             </h5>
         </div>
     </div>
