@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-
 /**
  * This is the model class for table "version".
  *
@@ -25,7 +24,7 @@ use Yii;
  * @property Platform $platform
  * @property UpgradePath $upgradePath
  */
-class Version extends \yii\db\ActiveRecord
+class Version extends BaseModel
 {
     /**
      * @inheritdoc
