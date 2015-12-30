@@ -96,7 +96,7 @@ class UpgradePath extends \yii\db\ActiveRecord
     }
 
     public function getAbleUpgradepath(){
-        $upgradePath=UpgradePath::find()->where(['disable'=>0]);
+        $upgradePath=UpgradePath::find()->where(['disable'=>0])->all();
         return $upgradePath;
     }
 }
