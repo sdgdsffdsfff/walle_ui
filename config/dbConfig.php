@@ -4,16 +4,16 @@ return [
     'dbConfig' => [
         'ares' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=mostsdk',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=test',
             'username' => 'root',
-            'password' => '111111',
+            'password' => '123456',
             'charset' => 'utf8',
         ],
         'crius' => [
             'class' => 'yii\db\Connection',
-            'dsn' => 'mysql:host=127.0.0.1;dbname=walle',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=walleui',
             'username' => 'root',
-            'password' => '111111',
+            'password' => '123456',
             'charset' => 'utf8',
         ],
     ]
