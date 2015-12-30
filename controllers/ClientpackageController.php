@@ -6,7 +6,7 @@ namespace app\controllers;
  * @author zhaolu@playcrab.com
  */
 use yii\web\Controller;
-use admin\controllers\BaseController;
+use app\controllers\BaseController;
 
 class ClientpackageController extends BaseController
 {
