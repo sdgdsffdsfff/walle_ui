@@ -28,7 +28,7 @@ use yii\helpers\Html;
                             <label class="col-sm-2 control-label">现有版本</label>
                             <div class="col-sm-10">
                                 <div class="input-group">
-                                    <input type="text" placeholder="现有版本" class="form-control" name="current_version" />
+                                    <input type="text" placeholder="现有版本" class="form-control" id="current_version" name="current_version" />
                                     <span class="input-group-btn">
                                         <input type="button" name="search" class="btn btn-warning" value="查询" />
                                     </span>
@@ -286,5 +286,13 @@ use yii\helpers\Html;
     
     $('.summernote2').summernote({
         airMode: true
+    });
+    
+    //敲回车查询
+    $('#current_version').keyup(function(event){
+        if(event.keyCode === 13)
+        {
+            alert('aaaa');
+        }
     });
 </script>
