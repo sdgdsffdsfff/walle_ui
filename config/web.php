@@ -1,6 +1,10 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
+$params = array_merge(
+    require(__DIR__ . '/params.php'),
+    //多游戏数据库
+    require(__DIR__ . '/dbConfig.php')
+);
 
 $config = [
     'id' => 'basic',
