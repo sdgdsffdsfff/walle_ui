@@ -105,4 +105,12 @@ class Platform extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Version::className(), ['platform_id' => 'id']);
     }
+    public function getAllPlatform(){
+        $object = Platform::find()->where(['disable'=>0]);
+        $platform = $object->select(['id','name','region_id'])
+        ->with(['region'=>function($object){$object->select('*');}])
+        ->asArray()
+        ->all();
+        return $platform;
+    }
 }
