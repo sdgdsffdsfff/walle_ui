@@ -133,6 +133,7 @@ use yii\helpers\Html;
                         <!-- 任务状态-->
                         <div class="hpanel hblue">
                             <div class="panel-heading">
+<!--
                                 <div class="alert alert-info">
                                     <div class="row">
                                          <div class="col-lg-1">当前状态:</div>
@@ -151,8 +152,10 @@ use yii\helpers\Html;
                                     </div>
                                 </div>
                                 <div class="alert alert-danger">
+-->
+                                <div id="taskstatus" class="alert" style="color:#FFFFFF">
                                     <div class="row">
-                                        <div class="col-lg-1">当前状态:</div><div class="col-lg-2">failed</div>
+                                        <div class="col-lg-1">当前状态:</div><div id="statuscontent" class="col-lg-2">failed</div>
                                     </div>
                                 </div>
                             </div>
@@ -240,4 +243,36 @@ $(function() {
     });
 
 });
+
+var job_status;
+window.onload = function () {
+    //后台查看jobstatus和
+    var st = 1;
+    updateJobStatus(st);
+    //setInterval("updateJobStatus(1)", 3000);
+}
+
+//更改job status 页面显示,status为当前job的状态1，2，3
+function updateJobStatus(status) {
+    switch(status){
+        case 1:
+            //running
+            document.getElementById("taskstatus").style.backgroundColor = "#3498db";
+            document.getElementById("statuscontent").textContent = "运行中。。。";
+            break;
+        case 2:
+            //succeed
+            document.getElementById("taskstatus").style.backgroundColor = "#62cb31";
+            document.getElementById("statuscontent").textContent = "成功";
+            break;
+        case 3:
+            //failed
+            document.getElementById("taskstatus").style.backgroundColor = "#e74c3c";
+            document.getElementById("statuscontent").textContent = "失败";
+            break;
+        default:
+            break;
+    }
+}
+
 </script>
