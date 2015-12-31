@@ -56,4 +56,20 @@ class ModuleAvailableTag extends BaseModel
     {
         return $this->hasOne(Module::className(), ['id' => 'module_id']);
     }
+    
+    /**
+     * 根据moduleId,获取tag信息
+     * @param int $moduleId moduleId
+     * @return array
+     */    
+    public static function getModuleAvailableTagByModuleId($moduleId)
+    {
+        $resource = ModuleAvailableTag::find()
+                    ->where(['module_id' => $moduleId])
+                    ->orderBy(['create_time' => SORT_DESC])
+                    ->asArray()
+                    ->all();
+        
+        return $resource;
+    }
 }

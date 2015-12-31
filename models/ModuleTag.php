@@ -63,4 +63,20 @@ class ModuleTag extends BaseModel
     {
         return $this->hasOne(Module::className(), ['id' => 'module_id']);
     }
+    
+    /**
+     * 根据版本id和模块id,获取模板版本信息
+     * @param int $versionId 版本号
+     * @param int $moduleId 模块id
+     * @return array
+     */
+    public static function getModuleTagByVersionIdAndModuleId($versionId, $moduleId)
+    {
+        $resource = ModuleTag::find()
+                    ->where(['version_id' => $versionId, 'module_id' => $moduleId])
+                    ->asArray()
+                    ->one();
+        
+        return $resource;
+    }
 }

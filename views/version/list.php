@@ -2,7 +2,7 @@
 use yii\helpers\Html;
 use \yii\widgets\LinkPager;
 ?>
-<?= Html::cssFile('@web/static/vendor/fooTable/css/footable.core.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/fooTable/css/footable.core.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>

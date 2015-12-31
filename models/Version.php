@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "version".
  *
@@ -113,6 +114,7 @@ class Version extends BaseModel
     }
 
     /**
+     * 一个版本对应一个平台,二者1对1关系
      * @return \yii\db\ActiveQuery
      */
     public function getPlatform()
@@ -121,10 +123,33 @@ class Version extends BaseModel
     }
 
     /**
+     * 一个版本对应一个升级序列,二者1对1关系
      * @return \yii\db\ActiveQuery
      */
     public function getUpgradePath()
     {
         return $this->hasOne(UpgradePath::className(), ['id' => 'upgrade_path_id']);
+    }
+    
+    /**
+     * 根据版本号获取数据
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getDataById($versionId)
+    {
+        $fields = ['id','platform_id','upgrade_path_id'];
+        $condition = ['id' => $versionId];
+        
+        $resource = Version::find()->where($condition);
+        $result = $resource->select($fields)
+                  ->with([
+                      'upgradePath' => function($resource)
+                      {
+                          $resource->select('*')->where(['disable' => 0]);
+                      }
+                  ])->asArray()->one();
+        
+        return $result;
     }
 }

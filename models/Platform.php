@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-
 /**
  * This is the model class for table "platform".
  *
@@ -75,6 +74,7 @@ class Platform extends BaseModel
     }
 
     /**
+     * 1个平台对应1个区域,是1对1关系
      * @return \yii\db\ActiveQuery
      */
     public function getRegion()
@@ -105,12 +105,44 @@ class Platform extends BaseModel
     {
         return $this->hasMany(Version::className(), ['platform_id' => 'id']);
     }
-    public function getAllPlatform(){
+    
+    /**
+     * 获取非禁用平台信息
+     * @return array
+     */
+    public static function getAllPlatform()
+    {
         $object = Platform::find()->where(['disable'=>0]);
         $platform = $object->select(['id','name','region_id'])
         ->with(['region'=>function($object){$object->select('*');}])
         ->asArray()
         ->all();
+        
         return $platform;
+    }
+    
+    /**
+     * 根据平台id,获取平台和相关联区域信息
+     * @param int $platformId 平台id
+     * @return array
+     */
+    public static function getDataById($platformId)
+    {
+        $fields = ['id','name','region_id'];
+        $condition = [
+            'id' => $platformId,
+            'disable' => 0
+        ];
+
+        $resource = Platform::find()->where($condition);
+        $result = $resource->select($fields)
+                  ->with([
+                      'region' => function($resource)
+                      {
+                          $resource->select('*')->where(['disable' => 0]);
+                      }
+                  ])->asArray()->one();
+        
+        return $result;
     }
 }

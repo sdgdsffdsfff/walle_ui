@@ -96,4 +96,17 @@ class Module extends BaseModel
     {
         return $this->hasMany(Version::className(), ['id' => 'version_id'])->viaTable('module_tag', ['module_id' => 'id']);
     }
+    
+    /**
+     * 获取所有可用模块
+     * @return array
+     */
+    public static function getAllDatas()
+    {
+        $resource = Module::find()->where(['disable' => 0])
+                    ->asArray()
+                    ->all();
+        
+        return $resource;
+    }
 }

@@ -95,8 +95,14 @@ class UpgradePath extends BaseModel
         return $this->hasMany(Version::className(), ['upgrade_path_id' => 'id']);
     }
 
-    public function getAbleUpgradepath(){
-        $upgradePath=UpgradePath::find()->where(['disable'=>0])->all();
+    /**
+     * 获取所有非禁用升级序列
+     * @return object
+     */
+    public static function getAbleUpgradepath()
+    {
+        $upgradePath = UpgradePath::find()->where(['disable' => 0])->all();
+        
         return $upgradePath;
     }
 }

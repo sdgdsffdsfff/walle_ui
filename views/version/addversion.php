@@ -1,4 +1,5 @@
 <?php
+
 use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
@@ -30,7 +31,7 @@ use yii\helpers\Html;
                                 <div class="input-group">
                                     <input type="text" placeholder="现有版本" class="form-control" id="current_version" name="current_version" />
                                     <span class="input-group-btn">
-                                        <input type="button" name="search" class="btn btn-warning" value="查询" />
+                                        <input type="button" id="search_btn" name="search_btn" class="btn btn-warning" value="查询" onclick="javascript:getVersion();" />
                                     </span>
                                 </div>
                             </div>
@@ -38,69 +39,23 @@ use yii\helpers\Html;
                         <div class="form-group">
                             <label class="col-sm-2 control-label">平台</label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="平台" class="form-control" name="platform" disabled="" />
+                                <input type="text" placeholder="平台" class="form-control" id="platform" name="platform" disabled="" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">升级序列</label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="升级序列" class="form-control" name="upgrade_path" disabled="" />
+                                <input type="text" placeholder="升级序列" class="form-control" id="upgrade_path" name="upgrade_path" disabled="" />
                             </div>
                         </div>
+                        <?php foreach($module_list as $module){ ?>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Frontend</label>
+                            <label class="col-sm-2 control-label"><?= ucwords($module['name']); ?></label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="Frontend" class="form-control" name="frontend" disabled="" />
+                                <input type="text" placeholder="<?= ucwords($module['name']); ?>" class="form-control" id="<?= $module['name']; ?>" name="<?= $module['name']; ?>" disabled="" />
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Backend</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Backend" class="form-control" name="backend" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Script</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Script" class="form-control" name="script" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Asset</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Asset" class="form-control" name="asset" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Config</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Config" class="form-control" name="config" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kakura Node</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Kakura Node" class="form-control" name="kakura_node" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kakura Chat</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Kakura Chat" class="form-control" name="kakura_chat" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Battle</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Battle" class="form-control" name="battle" disabled="" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Global</label>
-                            <div class="col-lg-10">
-                                <input type="text" placeholder="Global" class="form-control" name="global" disabled="" />
-                            </div>
-                        </div>
+                        <?php } ?>
                     </form>
                 </div>
             </div>
@@ -124,8 +79,9 @@ use yii\helpers\Html;
                             <div class="col-sm-10">
                                 <select class="js-source-states" name="platform" style="width: 100%">
                                     <optgroup label="请选择发行区域-平台">
-                                        <option value="AK">大陆发行-appstore</option>
-                                        <option value="HI">海外发行-appstore</option>
+                                        <?php foreach($platform_list as $platform){ ?>
+                                        <option value="<?= $platform['region']['id'] .'-'. $platform['id']; ?>"><?= $platform['region']['name']; ?> - <?= $platform['name']; ?></option>
+                                        <?php } ?>
                                     </optgroup>
                                 </select>
                             </div>
@@ -135,113 +91,27 @@ use yii\helpers\Html;
                             <div class="col-sm-10">
                                 <select class="js-source-states" name="upgrade_path" style="width: 100%">
                                     <optgroup label="请选择升级序列">
-                                        <option value="AK">1111</option>
-                                        <option value="HI">2222</option>
+                                        <?php foreach($upgradePath_list as $upgradePath){ ?>
+                                        <option value="<?= $upgradePath['id']; ?>"><?= $upgradePath['name']; ?></option>
+                                        <?php } ?>
                                     </optgroup>
                                 </select>
                             </div>
                         </div>
+                        <?php foreach($module_list as $module){ ?>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Frontend</label>
+                            <label class="col-sm-2 control-label"><?= ucwords($module['name']); ?></label>
                             <div class="col-sm-10">
-                                <select class="js-source-states" name="frontend" style="width: 100%">
-                                    <optgroup label="请选择frontend">
+                                <select class="js-source-states" name="<?= $module['name']; ?>" style="width: 100%">
+                                    <optgroup label="请选择<?= ucwords($module['name']); ?>">
                                         <option value="AK">master-1111</option>
                                         <option value="HI">master-2222</option>
                                     </optgroup>
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Backend</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="backend" style="width: 100%">
-                                    <optgroup label="请选择backend">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Script</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="script" style="width: 100%">
-                                    <optgroup label="请选择script">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Asset</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="asset" style="width: 100%">
-                                    <optgroup label="请选择asset">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                                <!--<input type="text" placeholder="Asset" class="form-control" name="asset" disabled="" />-->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Config</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="config" style="width: 100%">
-                                    <optgroup label="请选择config">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                                <!--<input type="text" placeholder="Config" class="form-control" name="config" disabled="" />-->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kakura Node</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="kakura_node" style="width: 100%">
-                                    <optgroup label="请选择kakura_node">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Kakura Chat</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="kakura_chat" style="width: 100%">
-                                    <optgroup label="请选择kakura_chat">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Battle</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="battle" style="width: 100%">
-                                    <optgroup label="请选择battle">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-lg-2 control-label">Global</label>
-                            <div class="col-lg-10">
-                                <select class="js-source-states" name="global" style="width: 100%">
-                                    <optgroup label="请选择global">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
-                                </select>
-                            </div>
-                        </div>
+                        <?php } ?>
+                        <!--<input type="text" placeholder="Config" class="form-control" name="config" disabled="" />-->
                         <div class="panel-body">
                             <div class="summernote2">
                                 <p>change log...</p>
@@ -280,19 +150,42 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $(".js-source-states").select2();
     });
-    
+
     $('.summernote2').summernote({
         airMode: true
     });
-    
+
     //敲回车查询
-    $('#current_version').keyup(function(event){
-        if(event.keyCode === 13)
+    $('#current_version').keyup(function (event) {
+        if (event.keyCode === 13)
         {
-            alert('aaaa');
+            getVersion();
         }
     });
+
+    function getVersion()
+    {alert('aa');
+//        $versionId = $('#current_version').val();
+//        if(!$versionId)
+//        {
+//            return false;
+//        }
+//        $.ajax({
+//            url: '/version/add-version',
+//            type: 'post',
+//            data: 'version_id='+$versionId,
+//            dataType: 'json',
+//            success: function(response){
+//                $('#platform').val(response.data.region_name + ' - ' + response.data.platform_name);
+//                $('#upgrade_path').val(response.data.upgrade_name);
+//                for(var i = 0; i < response.data.module_tags.length; i++)
+//                {
+//                    $('#' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
+//                }
+//            }
+//        });
+    }
 </script>
