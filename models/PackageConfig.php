@@ -14,7 +14,7 @@ use Yii;
  * @property Package $package
  * @property Parameter $parameter
  */
-class PackageConfig extends \yii\db\ActiveRecord
+class PackageConfig extends BaseModel
 {
     /**
      * @inheritdoc

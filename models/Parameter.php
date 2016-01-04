@@ -26,7 +26,7 @@ use Yii;
  * @property UpgradePathConfig[] $upgradePathConfigs
  * @property UpgradePath[] $upgradePaths
  */
-class Parameter extends \yii\db\ActiveRecord
+class Parameter extends BaseModel
 {
     /**
      * @inheritdoc

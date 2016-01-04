@@ -25,7 +25,7 @@ use Yii;
  * @property Worker $worker
  * @property Task[] $tasks
  */
-class Job extends \yii\db\ActiveRecord
+class Job extends BaseModel
 {
     /**
      * @inheritdoc

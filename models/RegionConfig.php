@@ -14,7 +14,7 @@ use Yii;
  * @property Region $region
  * @property Parameter $parameter
  */
-class RegionConfig extends \yii\db\ActiveRecord
+class RegionConfig extends BaseModel
 {
     /**
      * @inheritdoc

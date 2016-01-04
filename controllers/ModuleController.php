@@ -7,7 +7,7 @@ namespace app\controllers;
  */
 use yii\web\Controller;
 
-class ModuleController extends Controller
+class ModuleController extends BaseController
 {
     public function actionIndex()
     {

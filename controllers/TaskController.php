@@ -142,6 +142,53 @@ class TaskController extends BaseController
     {
         //获得版本号
         $version_id = yii::$app->getRequest()->get("version_id");
+        $data['versionUpdateContent'] = "<table id=\"version_update_table\" class=\"table table-condensed table-striped\" cellpadding=\"1\" cellspacing=\"1\"  style=\"table-layout:fixed;\" >".
+                                              "<thead>".
+                                                "<tr>".
+                                                    "<th>版本号</th>".
+                                                    "<th>发布时间</th>".
+                                                    "<th>是否选择</th>".
+                                                "</tr>".
+                                                "</thead>".
+                                                "<tbody>".
+                                                "<tr>".
+                                                    "<td>112</td>".
+                                                    "<td>2015-12-28 16:09:22</td>".
+                                                    "<td><input id=\"chk_all_1\" type=\"checkbox\" name=\"package_update_config\" value=\"1\" checked></td>".
+                                                "</tr>".
+                                                "<tr>".
+                                                    "<td>112</td>".
+                                                    "<td>2015-12-28 16:09:22</td>".
+                                                    "<td><input id=\"chk_all_1\" type=\"checkbox\" name=\"package_update_config\" value=\"2\" checked></td>".
+                                                "</tr>".         
+                            		           "</tbody>".
+                                        "</table>";
+        
+        $data['packageContent']= "<table id=\"package_table\" class=\"table table-condensed table-striped\" cellpadding=\"1\" cellspacing=\"1\"  style=\"table-layout:fixed;\" >".
+                                    "<thead>".
+                                    "<tr>".
+                                        "<th>版本号</th>".
+                                        "<th>是否选择</th>".
+                                    "</tr>".
+                                    "</thead>".
+                                    "<tbody>".
+                                    "<tr>".
+                                        "<td>appstore_debug</td>".
+                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"3\" checked></td>".
+                                    "</tr>".
+                                    "<tr>".
+                                        "<td>appstore_release</td>".
+                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"4\" checked></td>".
+                                    "</tr>".
+                                    "</tbody>".
+                                "</table>";
+        
+        $data['deploymentContent']="<select id=\"deployment_select\" class=\"js-source-states\" name=\"deployment_id\" style=\"width: 100%\">".
+                                        "<option value=\"1\">deploy2.walle.playcrab-inc.com</option>".
+                                        "<option value=\"2\">deploy2.walle.playcrab-inc.com</option>".
+                                    "</select>";
+          echo json_encode($data);
+          die();
     }
     
 }
