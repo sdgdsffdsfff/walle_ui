@@ -22,6 +22,34 @@ class TaskController extends BaseController
     {
         return $this->render('index');
     }
+    public function actionJobstatus()
+    {
+    
+        $params = yii::$app->getRequest()->post();
+        $data = array("status" => 2);
+        $result = array(
+            "result" => "success",
+            "data" => $data,
+        );
+        echo json_encode($result);
+    }
+
+    public function actionTasksinfo()
+    {
+        $params = yii::$app->getRequest()->post();
+        $tasks = array(
+            array("name" => "task1", "status" => "finished", "bt" => "123142134", "et" => "32141243214"),
+            array("name" => "task2", "status" => "running", "bt" => "123142134", "et" => ""),
+            array("name" => "task3", "status" => "running", "bt" => "123142134", "et" => ""),
+            array("name" => "task4", "status" => "running", "bt" => "123142134", "et" => ""),
+            array("name" => "task5", "status" => "running", "bt" => "123142134", "et" => ""),
+        );
+        $result = array(
+            "status" => "success",
+            "data" => $tasks,
+        );
+        echo json_encode($result);
+    }
     
     /**
      * 发布任务
@@ -123,7 +151,21 @@ class TaskController extends BaseController
      */
     public function actionList()
     {
-        return $this->render('list');
+        //查询数据库返回指定行job数据
+        $job_list = array(
+            array(
+                "id" => 222,
+                "version_id" => "22",
+                "worker" => "test.test.com",
+                "create_time" => "2015-12-27 12:23:22",
+                "finish_time" => "2015-12-27 12:23:22",
+                "status" => 1,
+                "create_user" => "liuhaiyang",
+                "target_tasks" => "create_server_package",
+            ),
+            array(),
+        );
+        return $this->render('list', array('job_list' => $job_list));
     }
 
     /**
@@ -131,7 +173,7 @@ class TaskController extends BaseController
      */
     public function actionDetail()
     {
-        return $this->render("detail");
+        return $this->render("detail", array("job_id" => 100));
     }
     
     /**

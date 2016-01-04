@@ -11,6 +11,8 @@
 */
 use yii\helpers\Html;
 ?>
+<?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
+<?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 
 <div class="normalheader transition small-header">
@@ -24,43 +26,35 @@ use yii\helpers\Html;
 </div>
 
 <div class="content animate-panel">
-<!--
-<div class="row">
-    <div class="col-lg-12">
-        <div class="hpanel hblue">
-            <div class="panel-body">
-                <form method="get" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-lg-1 control-label">版本号:</label>
-                        <div class ="col-lg-2"><input type="text" name="version" class="form-control"></div>
-                        <label class="col-lg-1 control-label">发布机器:</label>
-                        <div class ="col-lg-2"><input type="text" name="woker" class="form-control"></div>
-                        <label class="col-lg-1 control-label">发布人:</label>
-                        <div class ="col-lg-2"><input type="text" name="releaser" class="form-control"></div>
-                        <div class ="col-lg-2 col-lg-offset-1"><button class="btn btn-primary" type="submit">查询</button></div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
--->
-<!--list content div-->
 <div class="row">
     <div class="col-lg-12">
         <div class="hpanel hblue">
             <div class="panel-heading">
-                <form method="get" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-lg-1 control-label">版本号:</label>
-                        <div class ="col-lg-2"><input type="text" name="version" class="form-control"></div>
-                        <label class="col-lg-1 control-label">发布机器:</label>
-                        <div class ="col-lg-2"><input type="text" name="woker" class="form-control"></div>
-                        <label class="col-lg-1 control-label">发布人:</label>
-                        <div class ="col-lg-2"><input type="text" name="releaser" class="form-control"></div>
-                        <div class ="col-lg-2 col-lg-offset-1"><button class="btn w-xs btn-info" type="submit">查询</button></div>
+<div class="row">
+                <form method="get" class="form-inline">
+                    <div class="form-group col-md-3">
+                        <label class="control-label">版本号：</label>
+                        <input type="text" name="version" class="form-control" placeholder="版本号">
                     </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label">发布人：</label>
+                        <input type="text" name="release_user" class="form-control" placeholder="发布人">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label class="control-label">发布机器：</label>
+                        <select class="js-source-states" name="worker_id" style="width:200px">
+                            <optgroup label="请选择发布机器">
+                                <option value="1">deploy1.saiya.com</option>
+                                <option value="2">deploy1.ares.com</option>
+                                <option value="3">deploy1.hebe.com</option>
+                                <option value="4">deploy1.kof.com</option>
+                                <!---  php foreach work table-->
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-3"><button class="btn w-xs btn-info" type="submit">查询</button></div>
                 </form>
+</div>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -99,7 +93,7 @@ use yii\helpers\Html;
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" class="stoptask"><code>终止任务</code></a></td>
+                        <td><a href='javascript:stop_task("123");'><button class="btn-outline btn-sm btn-danger stoptask">终止任务</button></a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
@@ -110,7 +104,7 @@ use yii\helpers\Html;
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" class="stoptask"><code>终止任务</code></a></td>
+                        <td><a href='javascript:stop_task("123");'><button class="btn-outline btn-sm btn-danger stoptask">终止任务</button></a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
@@ -121,7 +115,7 @@ use yii\helpers\Html;
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" class="stoptask"><code>终止任务</code></a></td>
+                        <td><a href='javascript:stop_task("123");'><button class="btn-outline btn-sm btn-danger stoptask">终止任务</button></a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
@@ -132,7 +126,7 @@ use yii\helpers\Html;
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" class="stoptask"><code>终止任务</code></a></td>
+                        <td><a href='javascript:stop_task("123");'><button class="btn-outline btn-sm btn-danger stoptask">终止任务</button></a></td>
                     </tr>
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
@@ -143,10 +137,10 @@ use yii\helpers\Html;
                         <td>运行中</td>
                         <td>liuhaiyang</td>
                         <td>生成安装包</td>
-                        <td><a style="text-decoration:underline" class="stoptask"><code>终止任务</code></a></td>
+                        <td><a href='javascript:stop_task("123");'><button class="btn-outline btn-sm btn-danger stoptask">终止任务</button></a></td>
                     </tr>
                     <tr>
-                        <td><a style="text-decoration:underline" href="#">122</a></td>
+                        <td><a style="text-decoration:underline" href="/task/detail?job_id=122">122</a></td>
                         <td>96</td>
                         <td>deploy1.saiya.playcrab-inc.com</td>
                         <td>2015-12-28 22:22:10</td>
@@ -180,28 +174,31 @@ use yii\helpers\Html;
 
 </div>
 
+<?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 
 <script type="text/javascript">
 $(function() {
-    $('.stoptask').click(function(){
-        swal({
-                title: "Are you sure?",
-                text: "You will stop this task!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, stop it!"
-            },
-            function(isConfirm){
-                if (isConfirm) {
-                    //调用后台脚本
-                } else {
-
-                }
-
-            });
-    });
-
+    $(".js-source-states").select2();
 });
+//终止任务
+function stop_task(id) {
+    swal({
+            title: "终止任务确认",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                //调用后台脚本
+                alert("终止任务："+id);
+            } else {
+
+            }
+
+        });
+}
 </script>

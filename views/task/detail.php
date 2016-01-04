@@ -31,7 +31,9 @@ use yii\helpers\Html;
             <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#tab-1">任务参数</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-2">任务状态</a></li>
-                <button class="btn-outline w-xs btn-danger stoptask col-lg-offset-8">终止任务</button>
+                <!--<a class="col-lg-offset-8" href='javascript:stop_task("123");'><button class="btn-outline w-xs btn-danger">终止任务</button></a>-->
+                <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("123");'>终止任务</a></button>
+
             </ul>
             <div class="tab-content">
                 <div id="tab-1" class="tab-pane active">
@@ -170,7 +172,7 @@ use yii\helpers\Html;
                                             <th>结束时间</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="task_body">
                                         <tr>
                                             <th>create_walle_task</th>
                                             <th>succeed</th>
@@ -222,34 +224,57 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 
 <script type="text/javascript">
-$(function() {
-    $('.stoptask').click(function(){
-        swal({
-                title: "Are you sure?",
-                text: "You will stop this task!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, stop it!"
-            },
-            function(isConfirm){
-                if (isConfirm) {
-                    //调用后台脚本
-                } else {
-                    
-                }
-            
-            });
-    });
 
-});
+//终止任务
+function stop_task(id) {
+    swal({
+            title: "终止任务确认",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+        },
+        function(isConfirm){
+            if (isConfirm) {
+                //调用后台脚本
+                alert("终止任务："+id);
+            } else {
 
-var job_status;
+            }
+
+        });
+}
+
+
+var job_id = 122;//var job_id = <?php echo $job_id;?>;
+var setIntervalFun = null;
 window.onload = function () {
-    //后台查看jobstatus和
-    var st = 1;
-    updateJobStatus(st);
-    //setInterval("updateJobStatus(1)", 3000);
+    checkJobStatus(job_id);
+}
+setIntervalFun = setInterval("checkJobStatus(job_id)", 1000*7);
+//根据job_id查询当前job的状态,并根据job_status 判断是否需要轮询
+function checkJobStatus(id) {
+    $.post(
+        "/task/jobstatus",
+        {job_id:id},
+        function(json) {
+            if (json.result = "success") {
+                var job_info = eval(json.data);
+                updatePage(job_info.status);
+                if(job_info.status != 1) {
+                    clearInterval(setIntervalFun);
+                }                
+            } else {
+                alert("error");
+            }
+        },"json"
+    );
+}
+//动态更新页面显示信息
+function updatePage(job_status) {
+    updateJobStatus(job_status);
+    updateTasks(job_id);
 }
 
 //更改job status 页面显示,status为当前job的状态1，2，3
@@ -273,6 +298,36 @@ function updateJobStatus(status) {
         default:
             break;
     }
+}
+
+//显示job 对应的所有task 的状态table,json job对应的task名称，状态，开始时间，结束时间
+//{status:"success",data:[{"name":"task1","status":"running","bt":"123142134","et":""},....]}
+function showTable(json) {
+    if (json.status == "success") {
+        var tbody = document.getElementById("task_body");
+        var tasks = eval(json.data);
+        for(var i=0; i<tasks.length; i++) { 
+            var row = document.createElement('tr');
+            //var row = document.createElement_x('tr');
+            for(var key in tasks[i]) {
+                var c = document.createElement('th');
+                var m = document.createTextNode(tasks[i][key]);
+                c.appendChild(m);
+                row.appendChild(c);
+            }
+            tbody.appendChild(row);
+        }
+    }
+}
+
+function updateTasks(id) {
+    $.post(
+        "/task/tasksinfo",
+        {job_id:id},
+        function(json) {
+            showTable(json)
+        },"json"
+    );
 }
 
 </script>
