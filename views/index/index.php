@@ -24,13 +24,13 @@ use yii\helpers\Html;
 
        <button type="button" class="btn btn-info btn-lg btn-block">乱世曲</button>   -->  
 
-            </div>
+</div>
 
 
 
 
-    <!-- Footer-->
-
+<!-- Footer-->
+<?= $this->render('/layouts/footer'); ?>
 <!-- Vendor scripts -->
 
 
