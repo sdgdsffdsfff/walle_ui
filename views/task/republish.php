@@ -11,7 +11,7 @@ $this->title = 'My Yii Application';
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                首页 > 发布任务 > 发布任务确认
+                 发布任务确认
             </h5>
         </div>
     </div>
@@ -148,7 +148,7 @@ $this->title = 'My Yii Application';
                 if (isConfirm) {
                     swal({ title:"创建", text:"发布任务成功", type:"success"},
                     		 function (isConfirm) {
-                                 window.location.href="/version/list";
+                                 window.location.href="/task/detail?job_id=2";
                               }
                             );
 //                    
