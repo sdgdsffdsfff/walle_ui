@@ -116,7 +116,7 @@ use \yii\widgets\LinkPager;
                             foreach ($models as $k) {
 
                                 echo "<tr>";
-                                echo '<td><a style="text-decoration:underline" href="/version/add-version?id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
                                 echo "<td>".$k['upgrade_name']."</td>";
                                 echo "<td>".$k['deployment_name']."</td>";
                                 echo "<td>".$k['url']."</td>";

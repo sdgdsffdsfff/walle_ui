@@ -127,7 +127,7 @@ use \yii\widgets\LinkPager;
                            <?php 
                             foreach ($models as $k) {
                                 echo "<tr>";
-                                echo '<td><a style="text-decoration:underline" href="/version/add-version?id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
                                 echo "<td>".$k['create_time']."</td>";
                                 echo "<td>".$k['platform']['description']."</td>";
                                 echo "<td>".$k['upgradePath']['name']."</td>";
@@ -141,8 +141,8 @@ use \yii\widgets\LinkPager;
                                 </button></td>';
                                 }
                                 
-                                echo '<td><a href="/task/publish?id='.$k['id'].'" class="btn btn-info btn-sm active" >发布版本</a>
-<a href="/task/list" class="btn btn-success btn-sm active" >查看相关任务</a></td>';
+                                echo '<td><a href="/task/publish?version_id='.$k['id'].'" class="btn btn-info btn-sm active" >发布版本</a>
+<a href="/task/list?version_id='.$k['id'].'" class="btn btn-success btn-sm active" >查看相关任务</a></td>';
                                 echo "</tr>";
                             }
                             ?> 
