@@ -65,65 +65,81 @@ class VersionController extends BaseController
         ]);
     }
     
+    /**
+     * 版本列表
+     * @return type
+     */    
+    public function actionList()
+    {
+        $platform = Platform::getAllPlatform();
+        $upgradePath = UpgradePath::getAbleUpgradepath();
         
-    public function actionList(){
-        $platform=Platform::getAllPlatform();
-        $upgradePath=UpgradePath::getAbleUpgradepath();
-        $vid=$platform_id=$upgrade_path_id=$create_user=$release='';
+        $vid = $platform_id = $upgrade_path_id = $create_user = $release = '';
         $params = yii::$app->getRequest()->get();
-        $sql='1=1';
-        if(isset($params['vid'])&&!empty($params['vid'])){
-          $sql.=' and id='.$params['vid'];
-          $vid=$params['vid'];
+        $sql = '1=1';
+        if(isset($params['vid']) && !empty($params['vid']))
+        {
+          $sql .= ' and id='.$params['vid'];
+          $vid = $params['vid'];
         }
 
-        if(isset($params['release'])&&!empty($params['release'])){
-          if($params['release']==2){$sql.=' and released=0';}else{
-             $sql.=' and released='.$params['release'];
-          }
+        if(isset($params['release']) && !empty($params['release']))
+        {
+            if($params['release'] == 2)
+            {
+                $sql .= ' and released=0';
+                
+            }
+            else
+            {
+                $sql .= ' and released='.$params['release'];
+            }
          
-          $release=$params['release'];
+            $release = $params['release'];
         }
-         if(isset($params['platform_id'])&&!empty($params['platform_id'])){
-          $sql.=' and platform_id='.$params['platform_id'];
-          $platform_id=$params['platform_id'];
+        if(isset($params['platform_id']) && !empty($params['platform_id']))
+        {
+            $sql .= ' and platform_id='.$params['platform_id'];
+            $platform_id = $params['platform_id'];
         }
-         if(isset($params['upgrade_path_id'])&&!empty($params['upgrade_path_id'])){
-          $sql.=' and upgrade_path_id='.$params['upgrade_path_id'];
-          $upgrade_path_id=$params['upgrade_path_id'];
+        if(isset($params['upgrade_path_id']) && !empty($params['upgrade_path_id']))
+        {
+            $sql .= ' and upgrade_path_id='.$params['upgrade_path_id'];
+            $upgrade_path_id = $params['upgrade_path_id'];
         }
-         if(isset($params['create_user'])&&!empty($params['create_user'])){
-          $sql.=" and create_user='".$params['create_user']."'";
-          $create_user=$params['create_user'];
+        if(isset($params['create_user']) && !empty($params['create_user']))
+        {
+            $sql .= " and create_user='".$params['create_user']."'";
+            $create_user = $params['create_user'];
         }
         $object = Version::find()->where($sql)->orderBy('id DESC');
         $countQuery = clone $object;
-        $totalCount=$countQuery->count();
+        $totalCount = $countQuery->count();
         $pages = new Pagination(['totalCount' =>$totalCount,'pageSize'=>10]);
  
         $models = $object->select(['id','platform_id','upgrade_path_id','create_time', 'create_user', 'change_log','released','release_time'])
-        ->offset($pages->offset)
-        ->limit($pages->limit)
-        ->with('upgradePath')
-        ->with('platform')
-        ->asArray()
-        ->all();
+                        ->offset($pages->offset)
+                        ->limit($pages->limit)
+                        ->with('upgradePath')
+                        ->with('platform')
+                        ->asArray()
+                        ->all();
    
-      $pageCount=$pages->pageCount;
+        $pageCount = $pages->pageCount;
         
-         return $this->render('list',[
-         'models' => $models,
-         'pages' => $pages,
-         'platform' => $platform,
-         'upgradePath' => $upgradePath,
-         'vid'=>$vid,
-         'platform_id'=>$platform_id,
-         'upgrade_path_id'=>$upgrade_path_id,
-         'create_user'=>$create_user,
-         'pageCount'=>$pageCount,
-         'totalCount'=>$totalCount,
-         'release'=>$release
-         ]);
+        return $this->render('list',[
+            'models' => $models,
+            'pages' => $pages,
+            'platform' => $platform,
+            'upgradePath' => $upgradePath,
+            'vid' => $vid,
+            'platform_id' => $platform_id,
+            'upgrade_path_id' => $upgrade_path_id,
+            'create_user' => $create_user,
+            'pageCount' => $pageCount,
+            'totalCount' => $totalCount,
+            'release' => $release
+        ]);
     }
     
     /**
@@ -380,17 +396,22 @@ EOT;
             'changes' => $changes
         );
     }
-        public function actionReleased(){
-      $id= yii::$app->getRequest()->post('id');
-      $release_time=yii::$app->getRequest()->post('release_time');
-      if($id&&$release_time){
-        $info = Version::findOne($id);
-        $info->released = 1;
-        $info->release_time = $release_time;
-        $info->update();
-        echo $this->ajaxReturn(1,'设置成功');
-      }else{
-         echo $this->ajaxReturn(0,'参数不全');
-      }
+    
+    public function actionReleased()
+    {
+        $id = yii::$app->getRequest()->post('id');
+        $release_time = yii::$app->getRequest()->post('release_time');
+        if($id && $release_time)
+        {
+            $info = Version::findOne($id);
+            $info->released = 1;
+            $info->release_time = $release_time;
+            $info->update();
+            echo $this->ajaxReturn(1,'设置成功');
+        }
+        else
+        {
+             echo $this->ajaxReturn(0,'参数不全');
+        }
     }
 }
