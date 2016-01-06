@@ -8,6 +8,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\helpers\Url;
+use models\User;
+use clients\ucenter\services\Common;
 
 class SiteController extends BaseController
 {
@@ -28,7 +31,7 @@ class SiteController extends BaseController
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'logout' => ['post','get'],
                 ],
             ],
         ];
@@ -52,43 +55,61 @@ class SiteController extends BaseController
         return $this->render('index');
     }
 
+    /**
+     * 登陆
+     *
+     * @return string|\yii\web\Response
+     */
     public function actionLogin()
     {
-        if (!\Yii::$app->user->isGuest) {
+        if (!Yii::$app->getUser()->getIsGuest()) {
             return $this->goHome();
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        //callback
+        $callback = Url::toRoute('site/callback', true);
+        $loginUrl = Common::loginUrl($callback);
+        return $this->redirect($loginUrl);
     }
 
-    public function actionLogout()
+    /**
+     * SSO登录回跳
+     *
+     * @return \yii\web\Response
+     */
+    public function actionCallback()
     {
-        Yii::$app->user->logout();
+        $token = Yii::$app->getRequest()->get('token');
 
+        if (null === $token) {
+            //TODO 跳转不合理
+            $this->error403();
+        }
+
+        // 验证token
+        $uid = Common::checkToken($token);
+
+        if (!$uid) {
+            $this->error403();
+        }
+        $uid = (int)$uid;
+        $user = User::findIdentity($uid);
+
+        Yii::$app->getUser()->login($user);
         return $this->goHome();
     }
 
-    public function actionContact()
+    /**
+     * 登出
+     *
+     * @return \yii\web\Response
+     */
+    public function actionLogout()
     {
-        $model = new ContactForm();
-        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-            Yii::$app->session->setFlash('contactFormSubmitted');
-
-            return $this->refresh();
-        }
-        return $this->render('contact', [
-            'model' => $model,
-        ]);
-    }
-
-    public function actionAbout()
-    {
-        return $this->render('about');
+        Yii::$app->getUser()->logout();
+        $callback = Url::toRoute('site/callback', true);
+        $loginUrl = Common::loginUrl($callback);
+        $logoutUrl = Common::logoutUrl($loginUrl);
+        return $this->redirect($logoutUrl);
     }
 }

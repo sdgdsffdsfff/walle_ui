@@ -37,7 +37,7 @@ PluginsAsset::register($this);
                         <span class="text-center font-bold"><h5>欢迎来到WALLEUI系统, 当前游戏: 大掌门</h5></span>
                     </li>
                     <li class="dropdown">
-                        <a href="#">
+                        <a href="/site/logout">
                             <i class="pe-7s-upload pe-rotate-90"></i>
                         </a>
                     </li>

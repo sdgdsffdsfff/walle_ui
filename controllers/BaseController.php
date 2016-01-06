@@ -8,7 +8,7 @@ use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\base\Application;
 use yii\helpers\Json;
-// use common\filters\PermissionFilter;
+use filters\PermissionFilter;
 // use common\filters;
 
 
@@ -31,45 +31,49 @@ class BaseController extends Controller
     public $dataForFunc = [];
 
 
-
-//     /**
-//      * @inheritdoc
-//      */
-//     public function behaviors()
-//     {
-
-//         return [
-//             'access' => [
-//                 'class' => AccessControl::className(),
-//                 'rules' => [
-//                     [
-//                         'controllers' => ['site'],
-//                         'actions' => ['login', 'callback', 'error'],
-//                         'allow' => true,
-//                     ],
-//                     [
-//                         'allow' => true,
-//                         'roles' => ['@']
-//                     ]
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+    
+        return [
+                'access' => [
+                        'class' => AccessControl::className(),
+                        'rules' => [
+                                [
+                                        'controllers' => ['site'],
+                                        'actions' => ['login', 'callback', 'error'],
+                                        'allow' => true,
+                                ],
+                                [
+                                        'allow' => true,
+                                        'roles' => ['@']
+                                ]
+                        ]
+                ],
+//                 'permission' => [
+//                         'class' => PermissionFilter::className()
 //                 ]
-//             ],
-// //             'permission' => [
-// //                 'class' => PermissionFilter::className()
-// //              ]
-//         ];
-//     }
+        ];
+    }
 
     /**
      * 公共初始化函数
      */
     public function init()
     {
-//         if (Yii::$app->getUser()->getIdentity()) {
-//             // 根据当前用户权限，初始化菜单列表
-//             $userFunctions = Yii::$app->getUser()->getIdentity()->getUserFunctions();
-//             $this->getView()->params['userFunctions'] = $userFunctions;
-//             $this->getView()->params['menuData'] = yii::$app->params['menuData'];
-//         }
+//         var_dump(Yii::$app->getUser()->getIdentity());die;
+        if (Yii::$app->getUser()->getIdentity()) {
+            // 根据当前用户权限，初始化菜单列表
+            $userFunctions = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+//             var_dump($userFunctions);die;
+            $this->getView()->params['userFunctions'] = $userFunctions;
+            $this->getView()->params['menuData'] = yii::$app->params['menuData'];
+            
+            $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
+//             var_dump($uerRoles);die;
+        }
     }
 
 
