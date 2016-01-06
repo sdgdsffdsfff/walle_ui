@@ -28,27 +28,16 @@ use yii\helpers\Html;
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>frontend</td>
-                            <td><input type="checkbox"> </td>
-                           
-                        </tr>
-                       <tr>
-                            <td>backend</td>
-                            <td><input type="checkbox"> </td>
-                           
-                        </tr>
-                        <tr>
-                            <td>script</td>
-                            <td><input type="checkbox"> </td>
-                           
-                        </tr>
-                        <tr>
-                            <td>global</td>
-                            <td><input type="checkbox"> </td>
-                           
-                        </tr>
+                            <?php 
 
+                           foreach ($models as $k) {
+                              echo "<tr>";
+                              echo "<td>".$k['name']."</td>";
+                              echo '<td><input type="checkbox" name="module" value="'.$k['id'].'"> </td>';
+                              echo "</tr>";
+                           }
+                            ?>
+                       
                         </tbody>
                         
                     </table>

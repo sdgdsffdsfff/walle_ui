@@ -6,12 +6,15 @@ namespace app\controllers;
  * @author zhaolu@playcrab.com
  */
 use yii\web\Controller;
+use app\models\Module;
 
 class ModuleController extends BaseController
 {
     public function actionIndex()
     {
-        return $this->render('index');
+    	$models=Module::find()->all();
+
+        return $this->render('index',['models'=>$models]);
     }
 
   

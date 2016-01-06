@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use \yii\widgets\LinkPager;
 ?>
 <?= Html::cssFile('@web/static/vendor/fooTable/css/footable.core.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
@@ -28,36 +29,75 @@ use yii\helpers\Html;
         <form class="form-inline">
   <div class="form-group">
     <label for="exampleInputName2">版本号</label>
-    <input type="text" class="form-control" id="version_id" placeholder="版本号">
+    <input type="text" class="form-control" name="vid" value="<?php echo $vid; ?>" placeholder="版本号">
   </div>
   <div class="form-group">
     <label for="exampleInputEmail2">升级序列</label>
-    <input type="email" class="form-control" id="upgrade_path" placeholder="升级序列">
+     <select class="js-source-states" name="upgrade_path_id" style="width:200px">
+                                    <optgroup label="请选择升级序列">
+                                         <option value="">请选择升级序列</option>
+                                        <?php 
+
+                                        foreach ($upgradePath as $v) {
+                                            if(isset($upgrade_path_id)&&!empty($upgrade_path_id)&&$upgrade_path_id==$v['id']){
+                                                echo " <option value='".$v['id']."' selected>".$v['name']."</option>";
+                                            }else{
+                                             echo " <option value='".$v['id']."'>".$v['name']."</option>";
+                                            }
+                                            
+                                        }
+                                        ?>
+                                    </optgroup>
+                                </select>
   </div>
      <div class="form-group">
     <label for="exampleInputEmail2">平台</label>
     <select class="js-source-states" name="platform_id" >
                                     <optgroup label="请选择发行区域-平台">
-                                        <option value="AK">大陆发行-appstore</option>
-                                        <option value="HI">海外发行-appstore</option>
+                                        <option value="">请选择发行区域-平台</option>
+                                         <?php 
+                                        foreach ($platform as $v) {
+                                             if(isset($platform_id)&&!empty($platform_id)&&$platform_id==$v['id']){
+                                                 echo " <option value='".$v['id']."' selected>".$v['region']['description']."-".$v['name']."</option>";
+                                            }else{
+                                                echo " <option value='".$v['id']."'>".$v['region']['description']."-".$v['name']."</option>";
+                                            }
+                                           
+                                        }
+                                        ?>
                                     </optgroup>
                                 </select>
   </div>
      <div class="form-group">
     <label for="exampleInputEmail2">部署位置</label>
-    <select class="js-source-states" name="platform" >
-                                    <optgroup label="请选择发行区域-平台">
-                                        <option value="AK">大陆发行-appstore</option>
-                                        <option value="HI">海外发行-appstore</option>
+    <select class="js-source-states" name="deployment_id" >
+                                    <optgroup label="请选择发布位置">
+                                        <option value="">请选择发布位置</option>
+                                         <?php 
+                                        foreach ($deployment as $v) {
+                                             if(isset($deployment_id)&&!empty($deployment_id)&&$deployment_id==$v['id']){
+                                                 echo " <option value='".$v['id']."' selected>".$v['name']."</option>";
+                                            }else{
+                                                echo " <option value='".$v['id']."'>".$v['name']."</option>";
+                                            }
+                                           
+                                        }
+                                        ?>
                                     </optgroup>
                                 </select>
   </div>
-   <button type="submit" class="btn btn-primary" >搜索</button>
+   <button type="submit" class="btn btn-warning" >查询</button>
 </form>
 
     </div>
     
                <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
+                 <div style="float:right">
+                    <?php echo LinkPager::widget([
+    'pagination' => $pages
+]); ?>
+              </div> 
+              <div style="float:left;display: inline-block;padding-left: 0;margin: 20px 0;border-radius: 4px;" >总页数：<?php echo $pageCount;?> /总记录数：<?php echo $totalCount;?></div>
                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
@@ -71,32 +111,30 @@ use yii\helpers\Html;
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Alpha project</td>
-                            <td>Alice Jackson</td>
-                            <td>0500 780909</td>
-                            <td>Nec Euismod In Company</td>
-                         
-                        </tr>
-                       
+                                     <?php 
+                              
+                            foreach ($models as $k) {
+
+                                echo "<tr>";
+                                echo '<td><a style="text-decoration:underline" href="/version/add-version?id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                echo "<td>".$k['upgrade_name']."</td>";
+                                echo "<td>".$k['deployment_name']."</td>";
+                                echo "<td>".$k['url']."</td>";
+                                echo "</tr>";
+        
+                            }
+                            ?> 
                         </tbody>
                        
                     </table>
+ <div style="float:right">
+                    <?php echo LinkPager::widget([
+    'pagination' => $pages
+]); ?>
+              </div> 
+              <div style="float:left;display: inline-block;padding-left: 0;margin: 20px 0;border-radius: 4px;" >总页数：<?php echo $pageCount;?> /总记录数：<?php echo $totalCount;?></div>
+                </div>
 
-                </div>
-                      <div class="panel-footer">
-            <!-- 需要使用风格一致的分页-->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default"><i class="fa fa-chevron-left"></i></button>
-                    <button class="btn btn-default active">1</button>
-                    <button class="btn btn-default">2</button>
-                    <button class="btn btn-default">3</button>
-                    <button class="btn btn-default">4</button>
-                    <button class="btn btn-default">5</button>
-                    <button class="btn btn-default">6</button>
-                    <button type="button" class="btn btn-default"><i class="fa fa-chevron-right"></i></button>
-                </div>
-            </div>
             </div>
 
         </div>
