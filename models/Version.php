@@ -138,7 +138,7 @@ class Version extends BaseModel
      */
     public static function getDataById($versionId)
     {
-        $fields = ['id','platform_id','upgrade_path_id'];
+        $fields = ['id','platform_id','upgrade_path_id','create_time','create_user','change_log'];
         $condition = ['id' => $versionId];
         
         $resource = Version::find()->where($condition);
@@ -151,5 +151,45 @@ class Version extends BaseModel
                   ])->asArray()->one();
         
         return $result;
+    }
+    
+    /**
+     * 添加新数据
+     * @param array $datas 新增的版本数据
+     * @return bool
+     */
+    public static function createVersion($datas)
+    {
+        $version = new Version();
+        $version->platform_id = $datas['platform_id'];
+        $version->upgrade_path_id = $datas['upgrade_path_id'];
+        $version->create_time = date('Y-m-d H:i:s');
+        $version->create_user = $datas['create_user'];
+        $version->change_log = $datas['change_log'];
+        
+        $bool = $version->insert();
+        if($bool)
+        {
+            return $version->getOldAttribute('id');
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 根据版本id,更新change_log
+     * @param int $versionId 版本id
+     * @param string $changeLog 更新日志
+     * @return boolean
+     */
+    public static function modifyChangeLog($versionId, $changeLog)
+    {
+        $version = Version::findOne($versionId);
+        $version->change_log = $changeLog;
+        $bool = $version->save();
+        
+        return $bool;
     }
 }

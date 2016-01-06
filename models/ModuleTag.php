@@ -79,4 +79,21 @@ class ModuleTag extends BaseModel
         
         return $resource;
     }
+    
+    /**
+     * 添加新的子模块tag数据
+     * @param array $datas 新数据
+     * @return bool
+     */
+    public static function CreateModuleTag($datas)
+    {
+        $moduleTag = new ModuleTag();
+        $moduleTag->version_id = $datas['version_id'];
+        $moduleTag->module_id = $datas['module_id'];
+        $moduleTag->tag = $datas['tag'];
+        
+        $bool = $moduleTag->insert();
+        
+        return $bool;
+    }
 }
