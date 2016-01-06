@@ -28,11 +28,11 @@ use yii\widgets\LinkPager;
                 <div class="panel-body">
                     <form class="form-inline">
                         <div class="form-group">
-                            <label for="exampleInputName2">版本号</label>
+                            <label for="exampleInputName2">版本号：</label>
                             <input type="text" class="form-control" name="vid" value="<?php echo $vid; ?>" placeholder="版本号" style="margin-right: 20px;" />
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">升级序列</label>
+                            <label for="exampleInputEmail2">升级序列：</label>
                             <select class="js-source-states" name="upgrade_path_id" style="width:200px; margin-right: 20px;">
                                 <optgroup label="请选择升级序列">
                                     <option value="">请选择升级序列</option>
@@ -50,7 +50,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">平台</label>
+                            <label for="exampleInputEmail2">平台：</label>
                             <select class="js-source-states" name="platform_id" style="margin-right: 20px;">
                                 <optgroup label="请选择发行区域-平台">
                                     <option value="">请选择发行区域-平台</option>
@@ -68,7 +68,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">部署位置</label>
+                            <label for="exampleInputEmail2">部署位置：</label>
                             <select class="js-source-states" name="deployment_id" style="margin-right: 20px;">
                                 <optgroup label="请选择发布位置">
                                     <option value="">请选择发布位置</option>
@@ -84,7 +84,7 @@ use yii\widgets\LinkPager;
                                 </optgroup>
                             </select>
                         </div>
-                        <button type="submit" class="btn btn-warning" style="margin-left: 30px;">查询</button>
+                        <button type="submit" class="btn btn-warning" style="margin-left: 20px;">查询</button>
                     </form>
                 </div>
                 
