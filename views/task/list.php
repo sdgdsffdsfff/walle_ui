@@ -10,6 +10,7 @@
 * 
 */
 use yii\helpers\Html;
+use \yii\widgets\LinkPager;
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
@@ -25,12 +26,12 @@ use yii\helpers\Html;
     </div>
 </div>
 
+
 <div class="content animate-panel">
 <div class="row">
-    <div class="col-lg-12">
-        <div class="hpanel hblue">
-            <div class="panel-heading">
-<div class="row">
+     <div class="col-lg-12">
+         <div class="hpanel">
+            <div class="panel-body">
                 <form method="get" class="form-inline">
                     <div class="form-group col-md-3">
                         <label class="control-label">版本号：</label>
@@ -40,30 +41,39 @@ use yii\helpers\Html;
                         <label class="control-label">发布人：</label>
                         <input type="text" name="release_user" class="form-control" placeholder="发布人">
                     </div>
-                    <div class="form-group col-md-3">
-                        <label class="control-label">发布机器：</label>
-                        <select class="js-source-states" name="worker_id" style="width:200px">
-                            <optgroup label="请选择发布机器">
-                                <option value="1">deploy1.saiya.com</option>
-                                <option value="2">deploy1.ares.com</option>
-                                <option value="3">deploy1.hebe.com</option>
-                                <option value="4">deploy1.kof.com</option>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">发布位置：</label>
+                        <select class="js-source-states" name="deployment_id" style="width:200px">
+                            <optgroup label="请选择发布位置">
+                                <option value="1">appstoreonline</option>
+                                <option value="2">appstoretest</option>
+                                <option value="3">mixonline</option>
+                                <option value="4">mixtest</option>
                                 <!---  php foreach work table-->
                             </optgroup>
                         </select>
                     </div>
-                    <div class="col-md-3"><button class="btn w-xs btn-info" type="submit">查询</button></div>
+                    <div class="col-md-2"><button class="btn w-xs btn-info" type="submit">查询</button></div>
                 </form>
-</div>
             </div>
+         </div>
+     </div>
+    <div class="col-lg-12">
+        <div class="hpanel">
             <div class="panel-body">
                 <div class="table-responsive">
+                  <div style="float:right">
+                    <?php echo LinkPager::widget([
+    'pagination' => $pages
+]); ?>
+              </div>
+              <div style="float:left;display: inline-block;padding-left: 0;margin: 20px 0;border-radius: 4px;" >总页数：<?php echo $pageCount;?> /总记录数：<?php echo $totalCount;?></div>
                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>任务号</th>
                         <th>版本号</th>
-                        <th>发布机器</th>
+                        <th>发布位置</th>
                         <th>开始时间</th>
                         <th>结束时间</th>
                         <th>状态</th>
@@ -76,7 +86,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">122</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>appstoreonline</td>
                         <td>2015-12-28 22:22:10</td>
                         <td>2015-12-28 22:42:10</td>
                         <td>成功</td>
@@ -87,7 +97,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>appstoretest</td>
                         <td>2015-12-28 22:22:10</td>
                         <td></td>
                         <td>运行中</td>
@@ -98,7 +108,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>mixonline</td>
                         <td>2015-12-28 22:22:10</td>
                         <td></td>
                         <td>运行中</td>
@@ -109,7 +119,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>mixtest</td>
                         <td>2015-12-28 22:22:10</td>
                         <td></td>
                         <td>运行中</td>
@@ -120,7 +130,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>mixonline</td>
                         <td>2015-12-28 22:22:10</td>
                         <td></td>
                         <td>运行中</td>
@@ -131,7 +141,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail">123</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>mixtest</td>
                         <td>2015-12-28 22:22:10</td>
                         <td></td>
                         <td>运行中</td>
@@ -142,7 +152,7 @@ use yii\helpers\Html;
                     <tr>
                         <td><a style="text-decoration:underline" href="/task/detail?job_id=122">122</a></td>
                         <td>96</td>
-                        <td>deploy1.saiya.playcrab-inc.com</td>
+                        <td>mixonline</td>
                         <td>2015-12-28 22:22:10</td>
                         <td>2015-12-28 22:42:10</td>
                         <td>成功</td>
@@ -152,23 +162,17 @@ use yii\helpers\Html;
                     </tr>
                     </tbody>
                 </table>
+  <div style="float:right">
+                    <?php echo LinkPager::widget([
+    'pagination' => $pages
+]); ?>
+              </div>
+              <div style="float:left;display: inline-block;padding-left: 0;margin: 20px 0;border-radius: 4px;" >总页数：<?php echo $pageCount;?> /总记录数：<?php echo $totalCount;?></div>
                 </div>
 
             </div>
-            <div class="panel-footer">
-            <!-- 需要使用风格一致的分页-->
-                <div class="btn-group">
-                    <button type="button" class="btn btn-default"><i class="fa fa-chevron-left"></i></button>
-                    <button class="btn btn-default active">1</button>
-                    <button class="btn btn-default">2</button>
-                    <button class="btn btn-default">3</button>
-                    <button class="btn btn-default">4</button>
-                    <button class="btn btn-default">5</button>
-                    <button class="btn btn-default">6</button>
-                    <button type="button" class="btn btn-default"><i class="fa fa-chevron-right"></i></button>
-                </div>
-            </div>
         </div>
+
     </div>
 </div> <!--list content div-->
 

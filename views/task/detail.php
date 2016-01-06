@@ -132,34 +132,19 @@ use yii\helpers\Html;
                 </div>
                 <div id="tab-2" class="tab-pane active">
                     <div class="panel-body">
-                        <!-- 任务状态-->
-                        <div class="hpanel hblue">
+                        <div class="hpanel">
                             <div class="panel-heading">
-<!--
-                                <div class="alert alert-info">
-                                    <div class="row">
-                                         <div class="col-lg-1">当前状态:</div>
-                                         <div class="col-lg-2">
-                                         <div class="progress full progress-striped active">
-                                             <div style="width:100%" aria-valuemax="50" aria-valuemin="0" aria-valuenow="50" role="progressbar" class="progress-bar progress-bar-success">
-                                             running
-                                             </div>
-                                         </div>
-                                         </div>
-                                    </div>
-                                </div>
-                                <div class="alert alert-success">
-                                    <div class="row">
-                                        <div class="col-lg-1">当前状态:</div><div class="col-lg-2">succeed</div>
-                                    </div>
-                                </div>
-                                <div class="alert alert-danger">
--->
                                 <div id="taskstatus" class="alert" style="color:#FFFFFF">
                                     <div class="row">
                                         <div class="col-lg-1">当前状态:</div><div id="statuscontent" class="col-lg-2">failed</div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <!-- 任务状态-->
+                        <div class="hpanel hblue">
+                            <div class="panel-heading">
+                                <h5>任务日志下载链接：<a style="text-decoration:underline" href="#">http://walle.playcrab-inc.com/vms/index.php</a></h5>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -173,42 +158,9 @@ use yii\helpers\Html;
                                         </tr>
                                     </thead>
                                     <tbody id="task_body">
-                                        <tr>
-                                            <th>create_walle_task</th>
-                                            <th>succeed</th>
-                                            <th>2015-12-29 11:21:20</th>
-                                            <th>2015-12-29 11:21:27</th>
-                                        </tr>
-                                        <tr>
-                                            <th>convert_module_asset</th>
-                                            <th>skipped</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
-                                        <tr>
-                                            <th>convert_module_script</th>
-                                            <th>failed</th>
-                                            <th>2015-12-29 11:21:20</th>
-                                            <th>2015-12-29 11:21:27</th>
-                                        </tr>
-                                        <tr>
-                                            <th>convert_module_config</th>
-                                            <th>running</th>
-                                            <th>2015-12-29 11:21:20</th>
-                                            <th><i class="fa fa-spinner"></i></th>
-                                        </tr>
-                                        <tr>
-                                            <th>create_package</th>
-                                            <th>waiting</th>
-                                            <th></th>
-                                            <th></th>
-                                        </tr>
                                     </tbody>
                                 </table>
                                 </div>
-                            </div>
-                            <div class="panel-footer">
-                                <h5>任务日志下载链接：<a style="text-decoration:underline" href="#">http://walle.playcrab-inc.com/vms/index.php</a></h5>
                             </div>
                         </div>
                     </div>
@@ -259,22 +211,22 @@ function checkJobStatus(id) {
         "/task/jobstatus",
         {job_id:id},
         function(json) {
-            if (json.result = "success") {
+            if (json.result = 10000) {
                 var job_info = eval(json.data);
-                updatePage(job_info.status);
+                //清空table内容
+                $("#task_body").html("");
+                //更新job 状态
+                updateJobStatus(job_info.status);
+                //更新table 中task 的信息
+                showTasksTable(job_info.tasks);
                 if(job_info.status != 1) {
                     clearInterval(setIntervalFun);
                 }                
             } else {
-                alert("error");
+                alert("后台通信异常，请联系管理员!");
             }
         },"json"
     );
-}
-//动态更新页面显示信息
-function updatePage(job_status) {
-    updateJobStatus(job_status);
-    updateTasks(job_id);
 }
 
 //更改job status 页面显示,status为当前job的状态1，2，3
@@ -300,34 +252,61 @@ function updateJobStatus(status) {
     }
 }
 
-//显示job 对应的所有task 的状态table,json job对应的task名称，状态，开始时间，结束时间
-//{status:"success",data:[{"name":"task1","status":"running","bt":"123142134","et":""},....]}
-function showTable(json) {
-    if (json.status == "success") {
-        var tbody = document.getElementById("task_body");
-        var tasks = eval(json.data);
-        for(var i=0; i<tasks.length; i++) { 
-            var row = document.createElement('tr');
-            //var row = document.createElement_x('tr');
-            for(var key in tasks[i]) {
-                var c = document.createElement('th');
-                var m = document.createTextNode(tasks[i][key]);
-                c.appendChild(m);
-                row.appendChild(c);
-            }
-            tbody.appendChild(row);
+//显示job下的所有task状态，动态绘制table
+function showTasksTable(arr) {
+    var tbody = document.getElementById("task_body");
+    for (var i=0; i<arr.length; i++) {
+        var row = document.createElement('tr');
+        //防止后台返回的数据顺序和table不一致，不用for
+        var name_c = document.createElement('td');
+        var name = document.createTextNode(arr[i]["name"]);
+        name_c.appendChild(name);
+        row.appendChild(name_c);
+        var status_c = document.createElement('td');
+        switch(arr[i]["status"]){
+            case 0:
+                var m = document.createTextNode("waiting");
+                break;
+            case 1:
+                var m = document.createTextNode("running");
+                status_c.style.color = "#3498db";
+                break;
+            case 2:
+                var m = document.createTextNode("succeed");
+                status_c.style.color = "#62cb31";
+                break;
+            case 3:
+                var m = document.createTextNode("failed");
+                status_c.style.color = "#e74c3c";
+                break;
+            case 4:
+                var m = document.createTextNode("skipped");
+                status_c.style.color = "#ffb606";
+                break;
+            default:
+                break;
         }
-    }
-}
+        status_c.appendChild(m);
+        row.appendChild(status_c);
 
-function updateTasks(id) {
-    $.post(
-        "/task/tasksinfo",
-        {job_id:id},
-        function(json) {
-            showTable(json)
-        },"json"
-    );
+        var st_c = document.createElement('td');
+        var start_time = document.createTextNode(arr[i]["start_time"]);
+        st_c.appendChild(start_time);
+        row.appendChild(st_c);
+
+        var fn_c = document.createElement('td');
+        if (arr[i]['status'] == 1) {
+            var finish_time = document.createElement('img');
+            finish_time.setAttribute("src", "/static/images/loading1.gif");
+        } else {
+            var finish_time = document.createTextNode(arr[i]["finish_time"]);
+        }
+
+        fn_c.appendChild(finish_time);
+        row.appendChild(fn_c);
+
+        tbody.appendChild(row);
+    }
 }
 
 </script>
