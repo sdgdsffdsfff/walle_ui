@@ -53,7 +53,7 @@ use \yii\widgets\LinkPager;
                             </optgroup>
                         </select>
                     </div>
-                    <div class="col-md-2"><button class="btn w-xs btn-info" type="submit">查询</button></div>
+                    <div class="col-md-2"><button class="btn w-xs btn-warning" type="submit">查询</button></div>
                 </form>
             </div>
          </div>
