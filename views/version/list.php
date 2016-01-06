@@ -8,6 +8,7 @@ use \yii\widgets\LinkPager;
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote-bs3.css'); ?>
 <?= Html::cssFile('@web/static/plugins/bootstrap-datepicker-master/dist/css/bootstrap-datetimepicker.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <style>.pagination {
     display: inline-block;
     padding-left: 0;
@@ -176,7 +177,7 @@ use \yii\widgets\LinkPager;
                                 <div class="modal-body">
                                     
                             <div class="input-group date">
-                            <input type="text" class="form-control" size="20" value="2016-01-1 21:05:00" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
+                            <input type="text" class="form-control" size="20" value="<?php echo date('Y-m-d H:i');?>" id="datetimepicker" data-date-format="yyyy-mm-dd hh:ii:ss">
                            
                         </div>
                   
@@ -197,7 +198,7 @@ use \yii\widgets\LinkPager;
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/bootstrap-datepicker-master/dist/js/bootstrap-datetimepicker.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/bootstrap-datepicker-master/dist/js/bootstrap-datetimepicker.zh-CN.js'); ?>
-
+ <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 
 <script>
 
@@ -224,11 +225,15 @@ use \yii\widgets\LinkPager;
                       data:post,
                       dataType:'json',
                     }).done(function(data){
-                      if (data.info == '1') {
-                            alert( JSON.stringify(data.msg)); 
+                        console.log(data);
+                      if (data.status == '1') {
+                          swal({ title:"设置上线时间", text:data.data, type:"success",timer: 5000,
+                        showConfirmButton: false}
+                            );
                             location.reload();
                         }else{
-                            alert(JSON.stringify(data.msg));
+                              swal({ title:"设置上线时间", text:data.data, type:"error"}
+                            );
                         }
                     });
 

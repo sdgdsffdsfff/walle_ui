@@ -19,7 +19,7 @@ use Yii;
  * @property Deployment $deployment
  * @property Package $package
  */
-class ClientPackage extends \yii\db\ActiveRecord
+class ClientPackage extends BaseModel
 {
     /**
      * @inheritdoc

@@ -155,4 +155,17 @@ class VersionController extends BaseController
         
         echo $this->ajaxReturn(self::STATUS, $return);
     }
+        public function actionReleased(){
+      $id= yii::$app->getRequest()->post('id');
+      $release_time=yii::$app->getRequest()->post('release_time');
+      if($id&&$release_time){
+        $info = Version::findOne($id);
+        $info->released = 1;
+        $info->release_time = $release_time;
+        $info->update();
+        echo $this->ajaxReturn(1,'设置成功');
+      }else{
+         echo $this->ajaxReturn(0,'参数不全');
+      }
+    }
 }
