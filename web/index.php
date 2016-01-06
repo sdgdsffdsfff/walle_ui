@@ -7,6 +7,8 @@ defined('YII_ENV') or define('YII_ENV', 'dev');
 //加入第三方类库
 require(__DIR__ . '/../librarys/clients/basedata/autoload.php');
 require(__DIR__ . '/../librarys/clients/ucenter/autoload.php');
+require(__DIR__ . '/../librarys/models/autoload.php');
+require(__DIR__ . '/../librarys/filters/autoload.php');
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../vendor/yiisoft/yii2/Yii.php');
 

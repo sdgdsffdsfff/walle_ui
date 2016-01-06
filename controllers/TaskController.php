@@ -216,11 +216,11 @@ class TaskController extends BaseController
                                     "<tbody>".
                                     "<tr>".
                                         "<td>appstore_debug</td>".
-                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"3\" checked></td>".
+                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"3\" ></td>".
                                     "</tr>".
                                     "<tr>".
                                         "<td>appstore_release</td>".
-                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"4\" checked></td>".
+                                        "<td><input id=\"package_1\" type=\"checkbox\" name=\"package_config\" value=\"4\" ></td>".
                                     "</tr>".
                                     "</tbody>".
                                 "</table>";
