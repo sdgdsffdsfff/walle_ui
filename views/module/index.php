@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
+<?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -22,7 +23,9 @@ use yii\helpers\Html;
                         <tr>
 
                             <th data-toggle="true">模块名称</th>
-                            <th>是否更新</th>
+                            <th> <div class="checkbox checkbox-success">
+                                        <input  type="checkbox" id="checkAll" checked> <label >是否更新 </label>
+                                    </div></th>
                            
                             
                         </tr>
@@ -33,7 +36,7 @@ use yii\helpers\Html;
                            foreach ($models as $k) {
                               echo "<tr>";
                               echo "<td>".$k['name']."</td>";
-                              echo '<td><input type="checkbox" name="module" value="'.$k['id'].'"> </td>';
+                              echo '<td><div class="checkbox checkbox-success"> <input  type="checkbox" name="subBox" checked value="'.$k['id'].'"><label></label></div> </td>';
                               echo "</tr>";
                            }
                             ?>
@@ -60,6 +63,14 @@ use yii\helpers\Html;
 <script type="text/javascript">
     $(function(){
         $(".js-source-states").select2();
+
+         $("#checkAll").click(function() {
+                 $('input[name="subBox"]').prop("checked",this.checked);  
+            });
+            var $subBox = $("input[name='subBox']");
+            $subBox.click(function(){
+                $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
+            });
     });
     
     $('.summernote2').summernote({
