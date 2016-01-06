@@ -30,7 +30,7 @@ use yii\helpers\Html;
 
 
 <!-- Footer-->
-<?= $this->render('/layouts/footer'); ?>
+
 <!-- Vendor scripts -->
 
 
