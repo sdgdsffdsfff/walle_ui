@@ -165,7 +165,7 @@ use yii\widgets\LinkPager;
 
     </div>
     </div>
-    <input type="hide" name="set_id" id="set_id" value=""> 
+    <input type="hidden" name="set_id" id="set_id" value="" /> 
           <div class="modal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
                         <div class="modal-dialog modal-sm">
                             <div class="modal-content">
