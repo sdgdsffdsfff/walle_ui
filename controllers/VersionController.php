@@ -73,7 +73,7 @@ class VersionController extends BaseController
         $params = yii::$app->getRequest()->get();
         $sql='1=1';
         if(isset($params['vid'])&&!empty($params['vid'])){
-          $sql.=' and id='.$params['vid'];
+          $sql.=' and id='.(int)$params['vid'];
           $vid=$params['vid'];
         }
 

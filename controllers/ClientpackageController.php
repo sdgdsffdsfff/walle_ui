@@ -31,8 +31,8 @@ class ClientpackageController extends BaseController
         $sql='select a.url,a.deployment_id,b.* from client_package as a inner JOIN version as b on a.version_id=b.id ';
         $countSql='select count(a.id) from client_package as a inner JOIN version as b on a.version_id=b.id ';
         if(isset($params['vid'])&&!empty($params['vid'])){
-          $sql.=' and a.version_id='.$params['vid'];
-          $countSql.=' and a.version_id='.$params['vid'];
+          $sql.=' and a.version_id='.(int)$params['vid'];
+          $countSql.=' and a.version_id='.(int)$params['vid'];
           $vid=$params['vid'];
         }
      
