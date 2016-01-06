@@ -6,6 +6,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>
 <?= Html::cssFile('@web/static/plugins/summernote/dist/summernote-bs3.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -67,34 +68,32 @@ use yii\helpers\Html;
                     新版本
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/version/version-detail">
+                    <form id="create_version_form" role="create_version_form" class="form-horizontal">
                         <div class="form-group">
                             <label class="col-sm-3 control-label" style="margin-left: -47px;">新版本参数</label>
                             <div class="col-sm-9 text-left">
-                                <button class="btn w-xs btn-info" type="button">导入版本信息</button>
+                                <button class="btn w-xs btn-info" id="import_btn" type="button">导入版本信息</button>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">平台</label>
                             <div class="col-sm-10">
-                                <select class="js-source-states" name="platform" style="width: 100%">
-                                    <optgroup label="请选择发行区域-平台">
-                                        <?php foreach($platform_list as $platform){ ?>
-                                        <option value="<?= $platform['region']['id'] .'-'. $platform['id']; ?>"><?= $platform['region']['name']; ?> - <?= $platform['name']; ?></option>
-                                        <?php } ?>
-                                    </optgroup>
+                                <select class="js-source-states" id="new_platform" name="new_platform" style="width: 100%">
+                                    <option value="">请选择发行区域-平台</option>
+                                    <?php foreach($platform_list as $platform){ ?>
+                                    <option value="<?= $platform['id']; ?>"><?= $platform['region']['name']; ?> - <?= $platform['name']; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">升级序列</label>
                             <div class="col-sm-10">
-                                <select class="js-source-states" name="upgrade_path" style="width: 100%">
-                                    <optgroup label="请选择升级序列">
-                                        <?php foreach($upgradePath_list as $upgradePath){ ?>
-                                        <option value="<?= $upgradePath['id']; ?>"><?= $upgradePath['name']; ?></option>
-                                        <?php } ?>
-                                    </optgroup>
+                                <select class="js-source-states" id="new_upgrade_path" name="new_upgrade_path" style="width: 100%">
+                                    <option value="">请选择升级序列</option>
+                                    <?php foreach($upgradePath_list as $upgradePath){ ?>
+                                    <option value="<?= $upgradePath['id']; ?>"><?= $upgradePath['name']; ?></option>
+                                    <?php } ?>
                                 </select>
                             </div>
                         </div>
@@ -102,24 +101,31 @@ use yii\helpers\Html;
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><?= ucwords($module['name']); ?></label>
                             <div class="col-sm-10">
-                                <select class="js-source-states" name="<?= $module['name']; ?>" style="width: 100%">
-                                    <optgroup label="请选择<?= ucwords($module['name']); ?>">
-                                        <option value="AK">master-1111</option>
-                                        <option value="HI">master-2222</option>
-                                    </optgroup>
+                                <?php if(((strtolower($module['name']) == 'asset') || (strtolower($module['name']) == 'config')) && ($module['repo_type'] == 'SVN')){ ?>
+                                <input type="text" placeholder="<?= ucwords($module['name']); ?>" class="form-control" id="new_<?= $module['name']; ?>" name="new_<?= $module['name']; ?>" />
+                                <?php }else{ ?>
+                                <select class="js-source-states" id="new_<?= $module['name']; ?>" name="new_<?= $module['name']; ?>" style="width: 100%">
+                                    <option value="">请选择<?= ucwords($module['name']); ?></option>
+                                    <?php foreach($moduleAvailableTag_list as $module_id => $tags){ ?>
+                                        <?php if($module_id == $module['id']){ ?>
+                                            <?php foreach($tags as $val){ ?>
+                                            <option value="<?= $val; ?>"><?= $val; ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    <?php } ?>
                                 </select>
+                                <?php } ?>
                             </div>
                         </div>
                         <?php } ?>
-                        <!--<input type="text" placeholder="Config" class="form-control" name="config" disabled="" />-->
                         <div class="panel-body">
-                            <div class="summernote2">
-                                <p>change log...</p>
+                            <div class="col-sm-13">
+                                <textarea name="changelog" placeholder="change log..." style="border-bottom: 0px solid; border-left: 0px solid; border-right: 0px solid; border-top: 0px solid; resize: none;" class="form-control" cols="100" rows="3"></textarea>
                             </div>
                         </div><br/>
                         <div class="form-group">
                             <div class="col-sm-10 text-center">
-                                <button class="btn w-xs btn-success" data-toggle="modal" data-target="#myModal7" type="button">创建版本</button>
+                                <button id="create_version_btn" class="btn w-xs btn-success" type="submit">创建版本</button>
                             </div>
                         </div>
                     </form>
@@ -129,33 +135,47 @@ use yii\helpers\Html;
     </div>
 </div>
 
-<!--Modal弹出层-->
-<div class="modal fade hmodal-success" id="myModal7" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="color-line"></div>
-            <div class="modal-header">
-                <h4 class="modal-title">Success</h4>
-            </div>
-            <div class="modal-body">
-                <p>创建版本成功!</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
+
 <script type="text/javascript">
     $(function () {
         $(".js-source-states").select2();
-    });
-
-    $('.summernote2').summernote({
-        airMode: true
+        
+        /*表单验证*/
+        $('#create_version_form').validate({
+            ignore: '.ignore',
+            rules: {
+                new_platform: {
+                    required: true
+                },
+                new_upgrade_path: {
+                    required: true
+                },
+                <?= $rules; ?>
+            },
+            messages: {
+                new_platform: {
+                    required: '请选择区域 - 平台'
+                },
+                new_upgrade_path: {
+                    required: '请选择升级序列'
+                },
+                <?= $messages; ?>
+            },
+            submitHandler: function(form){
+                //form.submit();
+                popConfirm();
+            }
+        });
+        $("#new_platform").change(function(){
+            $(this).valid();  
+        });
+        $("#new_upgrade_path").change(function(){
+            $(this).valid();  
+        });
+        <?= $changes; ?>     
     });
 
     //敲回车查询
@@ -167,25 +187,110 @@ use yii\helpers\Html;
     });
 
     function getVersion()
-    {alert('aa');
+    {//alert('aa');
+        $versionId = $('#current_version').val();
+        if(!$versionId)
+        {
+            return false;
+        }
+        $.ajax({
+            url: '/version/add-version',
+            type: 'post',
+            data: 'version_id='+$versionId,
+            dataType: 'json',
+            success: function(response){
+                $('#platform').val(response.data.region_name + ' - ' + response.data.platform_name);
+                $('#upgrade_path').val(response.data.upgrade_name);
+                for(var i = 0; i < response.data.module_tags.length; i++)
+                {
+                    $('#' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
+                }
+            }
+        });
+    }
+    
+    //导入版本信息
+    $('#import_btn').bind('click', function(){alert('ww');
 //        $versionId = $('#current_version').val();
 //        if(!$versionId)
 //        {
 //            return false;
 //        }
 //        $.ajax({
-//            url: '/version/add-version',
+//            url: '/version/import-version',
 //            type: 'post',
 //            data: 'version_id='+$versionId,
 //            dataType: 'json',
 //            success: function(response){
-//                $('#platform').val(response.data.region_name + ' - ' + response.data.platform_name);
-//                $('#upgrade_path').val(response.data.upgrade_name);
+//                $('#new_platform').select2('val', response.data.platform_id);
+//                $('#new_upgrade_path').select2('val', response.data.upgrade_id);
 //                for(var i = 0; i < response.data.module_tags.length; i++)
 //                {
-//                    $('#' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
+//                    if(response.data.module_tags[i].module_type === 'SVN')
+//                    {
+//                        $('#new_' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
+//                    }
+//                    else
+//                    {
+//                        $('#new_' + response.data.module_tags[i].name).select2('val', response.data.module_tags[i].tag);
+//                    }
 //                }
 //            }
 //        });
+    });
+    
+    //弹出提交表单确认框
+    function popConfirm()
+    {//alert('rrr');
+        swal({
+            title: "创建版本确认",
+            text: "确定要创建新版本吗?",
+            type: "warning",
+            showCancelButton: true, //是否显示'取消'按钮
+            confirmButtonColor: "#e74c3c",
+            confirmButtonText: "确认",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+            closeOnCancel: true
+        },
+        function(isConfirm){
+            if(isConfirm) 
+            {
+                submitForm();
+            } 
+            else 
+            {
+                //swal("取消", "取消发布任务", "error");
+            }
+        });
+    }
+    
+    //提交表单
+    function submitForm()
+    {
+        $.ajax({
+            url: '/version/create-version',
+            type: 'post',
+            data: $('#create_version_form').serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.data.msg == 'success')
+                {
+                    window.location.href="/version/version-detail?version_id="+response.data.version_id;
+                }
+                else
+                {
+                    swal({
+                        title: "创建版本结果",
+                        text: "创建版本失败!",
+                        type: "error",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false,
+                    });
+                }
+            }
+        });
     }
 </script>
