@@ -14,7 +14,8 @@ use yii\helpers\Html;
         </div>
         <ul class="nav" id="side-menu">
             <li class="active">
-                <a href="/"><span class="nav-label">首页</span></a>
+                <a href="/index/index"><span class="nav-label">首页</span></a>
+
             </li>
             <li>
                 <a href="/version/list"><span class="nav-label">版本列表</span></a>

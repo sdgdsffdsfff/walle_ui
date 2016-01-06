@@ -29,14 +29,14 @@ use yii\helpers\Html;
     <div class="col-lg-12">
         <div class="hpanel">
             <ul class="nav nav-tabs">
-                <li class="active"><a data-toggle="tab" href="#tab-1">任务参数</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-2">任务状态</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-1">任务参数</a></li>
+                <li class="active"><a data-toggle="tab" href="#tab-2">任务状态</a></li>
                 <!--<a class="col-lg-offset-8" href='javascript:stop_task("123");'><button class="btn-outline w-xs btn-danger">终止任务</button></a>-->
                 <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("123");'>终止任务</a></button>
 
             </ul>
             <div class="tab-content">
-                <div id="tab-1" class="tab-pane active">
+                <div id="tab-1" class="tab-pane">
                     <div class="panel-body">
                     <div class="hpanel horange">
                     <div class="panel-body">
@@ -130,7 +130,7 @@ use yii\helpers\Html;
                     </div>
                     </div>
                 </div>
-                <div id="tab-2" class="tab-pane">
+                <div id="tab-2" class="tab-pane active">
                     <div class="panel-body">
                         <!-- 任务状态-->
                         <div class="hpanel hblue">

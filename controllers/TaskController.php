@@ -209,7 +209,7 @@ class TaskController extends BaseController
         $data['packageContent']= "<table id=\"package_table\" class=\"table table-condensed table-striped\" cellpadding=\"1\" cellspacing=\"1\"  style=\"table-layout:fixed;\" >".
                                     "<thead>".
                                     "<tr>".
-                                        "<th>版本号</th>".
+                                        "<th>安装包</th>".
                                         "<th>是否选择</th>".
                                     "</tr>".
                                     "</thead>".
