@@ -34,7 +34,7 @@ PluginsAsset::register($this);
             <div class="navbar-right">
                 <ul class="nav navbar-nav no-borders">
                     <li class="dropdown" style="margin-top: 14px; margin-right: 10px;">
-                        <span class="text-center font-bold"><h5>欢迎来到WALLEUI系统, 当前游戏: 大掌门</h5></span>
+                        <span class="text-center font-bold"><h5>当前游戏: 大掌门</h5></span>
                     </li>
                     <li class="dropdown">
                         <a href="/site/logout">
