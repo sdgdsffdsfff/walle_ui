@@ -406,6 +406,9 @@ EOT;
         );
     }
     
+    /**
+     * 设置上线时间
+     */
     public function actionReleased()
     {
         $id = yii::$app->getRequest()->post('id');
