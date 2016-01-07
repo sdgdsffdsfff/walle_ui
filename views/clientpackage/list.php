@@ -68,7 +68,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">部署位置：</label>
+                            <label for="exampleInputEmail2">发布位置：</label>
                             <select class="js-source-states" name="deployment_id" style="margin-right: 20px;">
                                 <optgroup label="请选择发布位置">
                                     <option value="">请选择发布位置</option>
