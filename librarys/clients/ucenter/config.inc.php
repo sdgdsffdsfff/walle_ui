@@ -18,8 +18,8 @@
 $config = array(
     'api_url' => 'http://119.254.111.26:8086/',
     //'api_url' => 'http://api.ucenter.playcrab.com/',  //线上地址
-    'api_key' => '1547219295',
+    'api_key' => '3462071649',
     //'api_secret_key' => '6deb3c19f94363b11915421b68c8c8a0',  //线上key
-    'api_secret_key' => '1f0f18acaea63dd35e015ece5fc1f62c',
+    'api_secret_key' => '21ae25708f1d5e6d5d4d97d33c478a1d',
     'log_path' => dirname(__FILE__).'/logs'
 );
