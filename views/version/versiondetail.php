@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -20,7 +21,7 @@ use yii\helpers\Html;
             <div class="hpanel">
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <form id="version_detail_form" method="post" action="/version/modify">
+                        <form id="version_detail_form">
                             <input type="hidden" name="version_id" value="<?= $versionId; ?>" />
                             <table class="table table-hover table-bordered table-striped">
                                 <tbody>
@@ -98,6 +99,9 @@ use yii\helpers\Html;
                                     </tr>
                                 </tbody>
                             </table>
+                            <div class="input-group col-sm-12">
+                                <button type="button" id="save_btn" name="save_btn" class="btn w-xs btn-success" onclick="javascript:changeLog();" style="position: relative; left: 40%;">保存</button>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -137,9 +141,48 @@ use yii\helpers\Html;
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="col-md-3 col-md-offset-3">
-                    <button class="btn w-xs btn-success" type="button" style="margin-left: 160px;" onclick="javascript: $('#version_detail_form').submit();">发布版本</button>
+                    <a href="/task/publish?version_id=<?= $versionId; ?>" class="btn w-xs btn-success" style="margin-left: 170px; margin-top: -10px;">发布版本</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<script type="text/javascript">
+    function changeLog()
+    {
+        $.ajax({
+            url: '/version/modify',
+            type: 'post',
+            data: $('#version_detail_form').serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.data.result === 'success')
+                {
+                    swal({
+                        title: response.data.msg,
+                        text: "",
+                        type: "success",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: response.data.msg,
+                        text: "",
+                        type: "error",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
+                }
+            }
+        });
+    }
+</script>

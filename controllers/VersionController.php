@@ -284,17 +284,17 @@ class VersionController extends BaseController
         
         if(empty($versionId))
         {
-            $this->error('参数错误!', '/version/add-version');
+            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '参数错误!'));
         }
         
         $bool = Version::modifyChangeLog($versionId, $changeLog);
         if($bool)
         {
-            return $this->redirect('/task/publish?version_id='.$versionId);
+            $this->ajaxReturn(self::STATUS_SUCCESS, array('result' => 'success', 'msg' => '更新changLog成功!'));
         }
         else
         {
-            $this->error500();
+            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '更新changLog失败!'));
         }
     }
     
