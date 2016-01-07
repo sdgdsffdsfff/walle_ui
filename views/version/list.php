@@ -73,9 +73,9 @@ use yii\widgets\LinkPager;
                                     <?php 
                                         foreach ($platform as $v) {
                                              if(isset($platform_id)&&!empty($platform_id)&&$platform_id==$v['id']){
-                                                 echo " <option value='".$v['id']."' selected>".$v['region']['description']."-".$v['name']."</option>";
+                                                 echo " <option value='".$v['id']."' selected>".$v['region']['name']."-".$v['name']."</option>";
                                             }else{
-                                                echo " <option value='".$v['id']."'>".$v['region']['description']."-".$v['name']."</option>";
+                                                echo " <option value='".$v['id']."'>".$v['region']['name']."-".$v['name']."</option>";
                                             }
 
                                         }
