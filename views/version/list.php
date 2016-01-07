@@ -46,6 +46,7 @@ use yii\widgets\LinkPager;
                             <label for="exampleInputEmail2">创建人：</label>
                             <input type="text" class="form-control" name="create_user" placeholder="创建人" value="<?php echo $create_user;?>" size="10" style="margin-right: 12px;" /> 
                         </div>
+
                         <div class="form-group">
                             <label for="exampleInputEmail2">升级序列：</label>
                             <select class="js-source-states" name="upgrade_path_id" style="width:180px; margin-right: 12px;">
@@ -82,7 +83,7 @@ use yii\widgets\LinkPager;
                                 </optgroup>
                             </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" >
                             <label for="exampleInputEmail2">上线状态：</label>
                             <select class="js-source-states" name="release" style="margin-right: 12px;">
                                 <optgroup label="请选择">
@@ -125,7 +126,12 @@ use yii\widgets\LinkPager;
                                     echo "<td>".$k['upgradePath']['name']."</td>";
                                     echo "<td>".$k['create_user']."</td>";
                                     echo "<td>".$k['change_log']."</td>";
-                                    echo "<td>".$k['change_log']."</td>";
+                                    echo "<td>";
+                                    foreach ($k['modules'] as $v) {
+                                      
+                                       echo $v['module']['name'].':'.$v['tag'].'</br>';
+                                    }
+                                    echo "</td>";
                                     if($k['released']==1){
                                         echo "<td>".$k['release_time']."</td>";
                                     }else{
