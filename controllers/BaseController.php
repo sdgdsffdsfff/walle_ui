@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use Yii;
@@ -9,8 +8,6 @@ use yii\web\Controller;
 use yii\base\Application;
 use yii\helpers\Json;
 use filters\PermissionFilter;
-// use common\filters;
-
 
 /**
  * Class BaseController
@@ -30,31 +27,29 @@ class BaseController extends Controller
     public $dataForMenu = [];
     public $dataForFunc = [];
 
-
     /**
      * @inheritdoc
      */
     public function behaviors()
     {
-    
         return [
-                'access' => [
-                        'class' => AccessControl::className(),
-                        'rules' => [
-                                [
-                                        'controllers' => ['site'],
-                                        'actions' => ['login', 'callback', 'error'],
-                                        'allow' => true,
-                                ],
-                                [
-                                        'allow' => true,
-                                        'roles' => ['@']
-                                ]
-                        ]
-                ],
-//                 'permission' => [
-//                         'class' => PermissionFilter::className()
-//                 ]
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'controllers' => ['site'],
+                        'actions' => ['login', 'callback', 'error'],
+                        'allow' => true,
+                    ],
+                    [
+                        'allow' => true,
+                        'roles' => ['@']
+                    ]
+                ]
+            ],
+//            'permission' => [
+//                'class' => PermissionFilter::className()
+//            ]
         ];
     }
 
@@ -63,21 +58,39 @@ class BaseController extends Controller
      */
     public function init()
     {
-//         var_dump(Yii::$app->getUser()->getIdentity());die;
-        if (Yii::$app->getUser()->getIdentity()) {
-            // 根据当前用户权限，初始化菜单列表
-            $userFunctions = Yii::$app->getUser()->getIdentity()->getUserFunctions();
-//             var_dump($userFunctions);die;
-            $this->getView()->params['userFunctions'] = $userFunctions;
-            $this->getView()->params['menuData'] = yii::$app->params['menuData'];
-            
+        if (Yii::$app->getUser()->getIdentity()) 
+        {
+            //根据当前用户权限，初始化菜单列表
+            $this->menuManager();
+            //获取当前用户所有角色
             $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
-//             var_dump($uerRoles);die;
+            
+            $this->getView()->params['requestUrl'] = $this->dataForMenu;
+            $this->getView()->params['menuData'] = yii::$app->params['menuData'];
         }
     }
 
-
-
+    /**
+     * 用户有权限访问的请求路径
+     */
+    protected function menuManager()
+    {
+        //根据当前用户权限
+        $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+        
+        //通用权限
+        $common_sec = ['index/index'];
+        if(!empty($permission) && is_array($permission))
+        {
+			//将通用权限加到数组中
+			$this->dataForMenu = array_merge($common_sec, $permission);
+		}
+        else
+        {
+			$this->dataForMenu = $common_sec;
+		}
+    }
+    
     /**
      * 跳转页
      *
@@ -172,7 +185,6 @@ class BaseController extends Controller
         }
     }
 
-
     /**
      * error 500
      *
@@ -191,7 +203,6 @@ class BaseController extends Controller
             \yii::$app->end();
         }
     }
-
 
     /**
      * 统一ajax输出
