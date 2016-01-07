@@ -68,7 +68,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">部署位置：</label>
+                            <label for="exampleInputEmail2">发布位置：</label>
                             <select class="js-source-states" name="deployment_id" style="margin-right: 20px;">
                                 <optgroup label="请选择发布位置">
                                     <option value="">请选择发布位置</option>
@@ -98,7 +98,7 @@ use yii\widgets\LinkPager;
                             <tr>
                                 <th data-toggle="true">版本号</th>
                                 <th>升级序列</th>
-                                <th>部署位置</th>
+                                <th>发布位置</th>
                                 <th>安装包下载地址</th>
                             </tr>
                         </thead>
