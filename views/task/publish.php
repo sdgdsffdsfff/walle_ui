@@ -24,7 +24,7 @@ $this->title = 'My Yii Application';
 		<div class="content">
 			<div class="row">
 				<div class="col-lg-6">
-					<div class="hpanel hgreen">
+					<div class="hpanel">
 						<div class="panel-heading hbuilt">
 							<div class="panel-tools">
 								<!--                     <a class="showhide"><i class="fa fa-chevron-up"></i></a> -->
@@ -111,7 +111,7 @@ $this->title = 'My Yii Application';
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<div id="div2" class="hpanel hgreen">
+					<div id="div2" class="hpanel ">
 						<div class="panel-heading hbuilt">
 							<div class="panel-tools"></div>
 							<div class="row">
@@ -231,7 +231,7 @@ $this->title = 'My Yii Application';
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
-					<div id="div3" class="hpanel hgreen">
+					<div id="div3" class="hpanel">
 						<div class="panel-heading hbuilt">
 							<div class="panel-tools"></div>
 							发布相关的动态可调整参数
@@ -276,7 +276,7 @@ $this->title = 'My Yii Application';
 					</div>
 				</div>
 				<div class="col-lg-6">
-					<div id="div4" class="hpanel hgreen">
+					<div id="div4" class="hpanel">
 						<div class="panel-heading hbuilt">
 							<div class="panel-tools"></div>
 							<div class="row">
