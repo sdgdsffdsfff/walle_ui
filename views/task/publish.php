@@ -37,7 +37,7 @@ $this->title = 'My Yii Application';
 							<div class="form-group">
 								<label class="col-sm-3 control-label">版本号</label>
 								<div class="col-md-9">
-									<input id="version_id" type="text" name="version_id"
+									<input id="version_id" class="form-control" placeholder="请输入版本号" type="text" name="version_id"
 										value="123" onblur="updateVersion(this)">
 								</div>
 							</div>
@@ -266,7 +266,7 @@ $this->title = 'My Yii Application';
 							<div class="form-group">
 								<label class="col-sm-4 control-label">并发执行的task数量</label>
 								<div class="col-md-8">
-									<input id="concurrent_task_count" type="text"
+									<input id="concurrent_task_count" class="form-control"  type="text"
 										name="concurrent_task_count" value="1">
 								</div>
 							</div>
