@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
@@ -187,7 +186,7 @@ use yii\helpers\Html;
     });
 
     function getVersion()
-    {//alert('aa');
+    {
         $versionId = $('#current_version').val();
         if(!$versionId)
         {
@@ -210,38 +209,38 @@ use yii\helpers\Html;
     }
     
     //导入版本信息
-    $('#import_btn').bind('click', function(){alert('ww');
-//        $versionId = $('#current_version').val();
-//        if(!$versionId)
-//        {
-//            return false;
-//        }
-//        $.ajax({
-//            url: '/version/import-version',
-//            type: 'post',
-//            data: 'version_id='+$versionId,
-//            dataType: 'json',
-//            success: function(response){
-//                $('#new_platform').select2('val', response.data.platform_id);
-//                $('#new_upgrade_path').select2('val', response.data.upgrade_id);
-//                for(var i = 0; i < response.data.module_tags.length; i++)
-//                {
-//                    if(response.data.module_tags[i].module_type === 'SVN')
-//                    {
-//                        $('#new_' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
-//                    }
-//                    else
-//                    {
-//                        $('#new_' + response.data.module_tags[i].name).select2('val', response.data.module_tags[i].tag);
-//                    }
-//                }
-//            }
-//        });
+    $('#import_btn').bind('click', function(){
+        $versionId = $('#current_version').val();
+        if(!$versionId)
+        {
+            return false;
+        }
+        $.ajax({
+            url: '/version/import-version',
+            type: 'post',
+            data: 'version_id='+$versionId,
+            dataType: 'json',
+            success: function(response){
+                $('#new_platform').select2('val', response.data.platform_id);
+                $('#new_upgrade_path').select2('val', response.data.upgrade_id);
+                for(var i = 0; i < response.data.module_tags.length; i++)
+                {
+                    if(response.data.module_tags[i].module_type === 'SVN')
+                    {
+                        $('#new_' + response.data.module_tags[i].name).val(response.data.module_tags[i].tag);
+                    }
+                    else
+                    {
+                        $('#new_' + response.data.module_tags[i].name).select2('val', response.data.module_tags[i].tag);
+                    }
+                }
+            }
+        });
     });
     
     //弹出提交表单确认框
     function popConfirm()
-    {//alert('rrr');
+    {
         swal({
             title: "创建版本确认",
             text: "确定要创建新版本吗?",
