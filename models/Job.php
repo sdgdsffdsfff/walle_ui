@@ -71,6 +71,20 @@ class Job extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function extraFields()
+    {
+        return array(
+            'deployment_name' => function() {
+                if (isset($this->deployment)) {
+                    return $this->deployment->name;
+                }
+            }
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getClientUpdatePackages()

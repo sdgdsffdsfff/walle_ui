@@ -14,6 +14,7 @@ use app\models\DynamicConfig;
 use app\models\Worker;
 use yii\helpers\ArrayHelper;
 use app\models\Package;
+use app\models\Job;
 use yii\db\Connection as Connection;
 use yii\helpers\Url;
 use yii\data\Pagination;
@@ -200,26 +201,60 @@ class TaskController extends BaseController
     
     /**
      * 发布任务列表
+     * 返回指定的job信息，查询条件：version_id, create_user,deployment_id
      */
     public function actionList()
     {
-        //查询数据库返回指定行job数据
-        $job_list = array(
-            array(
-                "id" => 222,
-                "version_id" => "22",
-                "worker" => "test.test.com",
-                "create_time" => "2015-12-27 12:23:22",
-                "finish_time" => "2015-12-27 12:23:22",
-                "status" => 1,
-                "create_user" => "liuhaiyang",
-                "target_tasks" => "create_server_package",
-            ),
-            array(),
-        );
-        $totalCount = 100;
-        $pages = new Pagination(['totalCount' =>$totalCount,'pageSize'=>20]);
-        return $this->render('list', array('job_list' => $job_list, 'pages' => $pages, 'pageCount' => 21, 'totalCount' => 210,));
+        $rend_data = array();//渲染view数据
+        $version_id = yii::$app->getRequest()->get('version_id');
+        $create_user = yii::$app->getRequest()->get('create_user');
+        $deployment_id = yii::$app->getRequest()->get('deployment_id');
+
+        $rend_data['version_id'] = $version_id;
+        $rend_data['create_user'] = $create_user;
+        $rend_data['deployment_id'] = $deployment_id;
+
+        $condition = array();//where 条件
+        if (!empty($version_id))
+        {
+            $condition['version_id'] = $version_id;
+        }
+        if (!empty($create_user))
+        {
+            $condition['create_user'] = $create_user;
+        }
+        if (!empty($deployment_id))
+        {
+            $condition['deployment_id'] = $deployment_id;
+        }
+
+        if (empty($condition))
+        {
+            $job_aq_obj = Job::find()->orderBy('id DESC');
+        }
+        else
+        {
+            $job_aq_obj = Job::find()->where($condition)->orderBy('id DESC');
+        }
+        //分页
+        $total_count = $job_aq_obj->count();
+        $pages = new Pagination(['totalCount' =>$total_count,'pageSize'=>10]);
+        $page_count = $pages->pageCount;
+        $jobs = $job_aq_obj->offset($pages->offset)->limit($pages->limit)->all();
+        $job_list = array();
+        if (!empty($jobs))
+        {
+            foreach ($jobs as $job) {
+                $job_list[] = $job->toArray(['id', 'version_id', 'create_time', 'create_user', 'finish_time', 'status', 'target_tasks'],['deployment_name']);
+            }
+        }
+
+        $rend_data['pages'] = $pages;
+        $rend_data['total_count'] = $total_count;
+        $rend_data['page_count'] = $page_count;
+        $rend_data['job_list'] = $job_list;
+
+        return $this->render('list', $rend_data);
     }
 
     /**
