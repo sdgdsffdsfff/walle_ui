@@ -21,7 +21,7 @@ class BaseController extends Controller
     const TPL_JUMP_ERROR = '../partial/error';
     const TPL_JUMP_ERROR_404 = '../partial/404';
     const TPL_JUMP_ERROR_500 = '../partial/500';
-    const TPL_JUMP_ERROR_403 = '../partial/403';
+    const TPL_JUMP_ERROR_403 = '@app/views/partial/403';
 
     public $roleOfUser = [];
     public $dataForMenu = [];
@@ -47,9 +47,9 @@ class BaseController extends Controller
                     ]
                 ]
             ],
-//            'permission' => [
-//                'class' => PermissionFilter::className()
-//            ]
+            'permission' => [
+                'class' => PermissionFilter::className()
+            ]
         ];
     }
 
@@ -60,35 +60,11 @@ class BaseController extends Controller
     {
         if (Yii::$app->getUser()->getIdentity()) 
         {
-            //根据当前用户权限，初始化菜单列表
-            $this->menuManager();
             //获取当前用户所有角色
             $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
             
-            $this->getView()->params['requestUrl'] = $this->dataForMenu;
             $this->getView()->params['menuData'] = yii::$app->params['menuData'];
         }
-    }
-
-    /**
-     * 用户有权限访问的请求路径
-     */
-    protected function menuManager()
-    {
-        //根据当前用户权限
-        $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
-        
-        //通用权限
-        $common_sec = ['index/index'];
-        if(!empty($permission) && is_array($permission))
-        {
-			//将通用权限加到数组中
-			$this->dataForMenu = array_merge($common_sec, $permission);
-		}
-        else
-        {
-			$this->dataForMenu = $common_sec;
-		}
     }
     
     /**
@@ -171,7 +147,7 @@ class BaseController extends Controller
      *
      * @return void
      */
-    protected function error403()
+    public function actionError403()
     {
         $response = Yii::$app->getResponse();
         $response->setStatusCode(403);

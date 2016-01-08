@@ -12,6 +12,7 @@ use yii\base\ActionEvent;
 use yii\base\Behavior;
 use yii\web\Controller;
 use yii\web\MethodNotAllowedHttpException;
+use yii\web\ForbiddenHttpException;
 
 /**
  * VerbFilter Class
@@ -38,18 +39,35 @@ class PermissionFilter extends Behavior
      */
     public function beforeAction($event)
     {
-        if (Yii::$app->getUser()->getIdentity()) {
+        if (Yii::$app->getUser()->getIdentity()) 
+        {
             $controller = Yii::$app->controller->id;
             $action = $event->action->id;
 
-            $userFunctions = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+            $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+            
+            //通用权限
+            $common_sec = ['index/index', 'index/seldb'];
+            if(!empty($permission) && is_array($permission))
+            {
+                //将通用权限加到数组中
+                $userFunctions = array_merge($common_sec, $permission);
+            }
+            else
+            {
+                $userFunctions = $common_sec;
+            }
 
+            yii::$app->getView()->params['requestUrl'] = $userFunctions;
+            
             $cAction = ($controller . '/' . $action);
             $errorAction = yii::$app->getErrorHandler()->errorAction;
-
-            if ($cAction !== $errorAction) {
-                if (!in_array($cAction, $userFunctions)) {
-                    throw new MethodNotAllowedHttpException('Method Not Allowed. ');
+            if ($cAction !== $errorAction) 
+            {
+                if (!in_array($cAction, $userFunctions)) 
+                {
+                    //throw new MethodNotAllowedHttpException('Method Not Allowed. ');
+                    throw new ForbiddenHttpException('你没有权限访问,请联系管理员!');
                 }
             }
         }
