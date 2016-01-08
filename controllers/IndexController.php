@@ -9,8 +9,12 @@ use yii;
 use yii\web\Controller;
 use clients\ucenter\services\Game as Game;
 use clients\ucenter\services\MainCategory as MainCategory;
+<<<<<<< HEAD
 
 class IndexController extends Controller
+=======
+class IndexController extends BaseController
+>>>>>>> 8fc90b2413718974724721d9fd284d7c2b13807c
 {
 	public $layout = "vms_index";
     
