@@ -96,4 +96,19 @@ class Deployment extends BaseModel
     {
         return $this->hasMany(Job::className(), ['deployment_id' => 'id']);
     }
+
+    /**
+     * 获取未禁用的发布位置
+     * @return array
+     */
+    public static function getAllDeployment()
+    {
+        $deployments = Deployment::find()->where(['disable' => 0])
+            ->select(['id', 'platform_id', 'name'])
+            ->asArray()
+            ->all();
+
+        return $deployments;
+    }
+
 }

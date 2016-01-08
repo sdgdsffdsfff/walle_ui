@@ -199,7 +199,8 @@ function stop_task(id) {
 }
 
 
-var job_id = 122;//var job_id = <?php echo $job_id;?>;
+//var job_id = 122;
+var job_id = <?php echo $job_id;?>;
 var setIntervalFun = null;
 window.onload = function () {
     checkJobStatus(job_id);

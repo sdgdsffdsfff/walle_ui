@@ -44,11 +44,17 @@ use yii\widgets\LinkPager;
                             <label class="control-label">发布位置：</label>
                             <select class="js-source-states" name="deployment_id" style="width:200px; margin-right: 40px;">
                                 <optgroup label="请选择发布位置">
-                                    <option value="1">appstoreonline</option>
-                                    <option value="2">appstoretest</option>
-                                    <option value="3">mixonline</option>
-                                    <option value="4">mixtest</option>
+                                    <option value="">请选择发布位置</option>
                                     <!---  php foreach work table-->
+<?php
+foreach ($deployments as $deployment) {
+    if ($deployment_id == $deployment['id']) {
+        echo "<option value='" . $deployment['id'] . "' selected>" . $deployment['name'] . "</option>";
+    } else {
+        echo "<option value='" . $deployment['id'] . "'>" . $deployment['name'] . "</option>";
+    }
+}
+?>
                                 </optgroup>
                             </select>
                         </div>
@@ -81,7 +87,7 @@ use yii\widgets\LinkPager;
 foreach ($job_list as $job) {
     $targets = explode(',', $job['target_tasks']);
     foreach ($targets as $v) {
-        $target .= "<br>". $v."</br>";
+        $target .= $v."</br>";
     }
     switch($job['status']){
     case 0:

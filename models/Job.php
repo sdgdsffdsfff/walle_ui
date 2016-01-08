@@ -123,4 +123,5 @@ class Job extends BaseModel
     {
         return $this->hasMany(Task::className(), ['job_id' => 'id']);
     }
+
 }
