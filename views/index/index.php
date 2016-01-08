@@ -26,4 +26,3 @@ use yii\helpers\Html;
 </div>
 
 <!-- Footer-->
-<?= $this->render('/layouts/footer'); ?>
