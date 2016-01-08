@@ -33,9 +33,11 @@ PluginsAsset::register($this);
             </div>
             <div class="navbar-right">
                 <ul class="nav navbar-nav no-borders">
+                    <?php if(yii::$app->session->get('game_name')){ ?>
                     <li class="dropdown" style="margin-top: 14px; margin-right: 10px;">
-                        <span class="text-center font-bold"><h5>当前游戏: 大掌门</h5></span>
+                        <span class="text-center font-bold"><h5>当前游戏: <?= yii::$app->session->get('game_name'); ?></h5></span>
                     </li>
+                    <?php } ?>
                     <li class="dropdown">
                         <a href="/site/logout">
                             <i class="pe-7s-upload pe-rotate-90"></i>

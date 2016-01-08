@@ -9,15 +9,22 @@ use yii;
 use yii\web\Controller;
 use clients\ucenter\services\Game as Game;
 use clients\ucenter\services\MainCategory as MainCategory;
+
 class IndexController extends Controller
 {
 	public $layout = "vms_index";
+    
+    /**
+     * 游戏选择首页
+     * @return type
+     */
     public function actionIndex()
     {	
+        yii::$app->session->remove('game_name');
         
-         $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
+        $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
             // var_dump($userRoles);die; 
-            foreach ($userRoles as $key => $role)
+        foreach ($userRoles as $key => $role)
         {
             if($role['game_id'] == 0)
             {
@@ -26,7 +33,7 @@ class IndexController extends Controller
             }
             else
             {
-                $info=Game::getGameById($role['game_id']);
+                $info = Game::getGameById($role['game_id']);
                 $gameInfo[$key] = array(
                     'id' => $role['game_id'],
                     'name' => $info['name'],  //获取游戏名称
@@ -38,16 +45,21 @@ class IndexController extends Controller
         return $this->render('index',['gameInfo'=>$gameInfo]);
     }
 
+    /**
+     * 数据库切换
+     */
     public function actionSeldb()
     {
- 
     	$alias = yii::$app->getRequest()->get('alias');
         $id = yii::$app->getRequest()->get('id');
         $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
         foreach ($userRoles as $key => $role)
         {
-            if($role['game_id'] == 0||$role['game_id']==$id)
+            if($role['game_id'] == 0||$role['game_id'] == $id)
             {
+                $info = Game::getGameById((int)$id);
+                yii::$app->session->set('game_name', $info['name']);
+                
                 //默认会开启session
                 yii::$app->session->set('game_alias', $alias);
                 header('Location:/version/add-version'); 
