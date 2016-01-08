@@ -3,9 +3,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
-use yii\base\Application;
 use yii\helpers\Json;
 use filters\PermissionFilter;
 
@@ -21,7 +19,7 @@ class BaseController extends Controller
     const TPL_JUMP_ERROR = '../partial/error';
     const TPL_JUMP_ERROR_404 = '../partial/404';
     const TPL_JUMP_ERROR_500 = '../partial/500';
-    const TPL_JUMP_ERROR_403 = '@app/views/partial/403';
+    const TPL_JUMP_ERROR_403 = '../partial/403';
 
     public $roleOfUser = [];
     public $dataForMenu = [];
@@ -147,7 +145,7 @@ class BaseController extends Controller
      *
      * @return void
      */
-    public function actionError403()
+    protected function error403()
     {
         $response = Yii::$app->getResponse();
         $response->setStatusCode(403);
