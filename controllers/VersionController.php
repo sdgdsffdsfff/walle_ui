@@ -333,7 +333,7 @@ class VersionController extends BaseController
             'module_tags' => $moduleTag_array,
         );
         
-        echo $this->ajaxReturn(self::STATUS_SUCCESS, $return);
+        $this->ajaxReturn(self::STATUS_SUCCESS, $return);
     }
     
     /**
@@ -419,11 +419,12 @@ EOT;
             $info->released = 1;
             $info->release_time = $release_time;
             $info->update();
-            echo $this->ajaxReturn(1,'设置成功');
+            
+            $this->ajaxReturn(1,'设置成功');
         }
         else
         {
-             echo $this->ajaxReturn(0,'参数不全');
+             $this->ajaxReturn(0,'参数不全');
         }
     }
 }
