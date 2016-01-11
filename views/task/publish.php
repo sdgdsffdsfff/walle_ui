@@ -224,11 +224,9 @@ $this->title = 'My Yii Application';
 <script type="text/javascript">
  $(function(){
 	 $("#deployment_select").change(function(){ 
-		 alert("come"); 
 		    $(this).valid();  
 		});  
 	 $("#deployment_select").blur(function(){
-		 alert("dd");
 		    $(this).valid();  
 	 		});
 	 toastr.options = {
