@@ -63,4 +63,25 @@ class PlatformConfig extends BaseModel
     {
         return $this->hasOne(Platform::className(), ['id' => 'platform_id']);
     }
+    
+    /**
+     * 根据平台id获取平台配置
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getPlatformConfigById($platformId)
+    {
+        $condition = ['platform_id' => $platformId];
+    
+        $resource = PlatformConfig::find()->where($condition);
+        $result = $resource->select('*')
+        ->with([
+                'parameter' => function($resource)
+                {
+                    $resource->select('*');
+                }
+        ])->asArray()->all();
+    
+        return $result;
+    }
 }

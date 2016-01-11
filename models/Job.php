@@ -123,5 +123,46 @@ class Job extends BaseModel
     {
         return $this->hasMany(Task::className(), ['job_id' => 'id']);
     }
-
+    /**
+     * 添加新数据
+     * @param array $datas 新增的版本数据
+     * @return bool
+     */
+    public static function createJob($datas)
+    {
+        $job = new Job();
+        $job->version_id     = $datas['version_id'];
+        $job->deployment_id  = $datas['deployment_id'];
+        $job->worker_id      = $datas['worker_id'];
+        $job->target_tasks   = $datas['target_tasks'];
+        $job->create_time    = $datas['create_time'];
+        $job->create_user    = $datas['create_user'];
+        $job->status         = $datas['status'];
+        $job->log_url        = $datas['log_url'];
+    
+        $bool = $job->insert();
+        if($bool)
+        {
+            return $job->getOldAttribute('id');
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 更新job_config
+     * @param int $jobId job id
+     * @param string $jobConfig 
+     * @return boolean
+     */
+    public static function modifyJobConfig($jobId, $jobConfig)
+    {
+        $job = Job::findOne($jobId);
+        $job->job_config = $jobConfig;
+        $bool = $job->save();
+    
+        return $bool;
+    }
 }

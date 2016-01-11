@@ -63,4 +63,25 @@ class RegionConfig extends BaseModel
     {
         return $this->hasOne(Parameter::className(), ['id' => 'parameter_id']);
     }
+    
+    /**
+     * 根据地区id获取发行地区配置
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getRegionConfigById($regionId)
+    {
+        $condition = ['region_id' => $regionId];
+    
+        $resource = RegionConfig::find()->where($condition);
+        $result = $resource->select('*')
+        ->with([
+                'parameter' => function($resource)
+                {
+                    $resource->select('*');
+                }
+        ])->asArray()->all();
+    
+        return $result;
+    }
 }

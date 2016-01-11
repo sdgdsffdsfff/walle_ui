@@ -105,4 +105,20 @@ class UpgradePath extends BaseModel
         
         return $upgradePath;
     }
+    /**
+     *  根据升级序列id获取数据
+     * @param int id 平台id
+     * @return array
+     */
+    public static function getById($id)
+    {
+        $fields = ['id','name','disable'];
+    
+        $condition = ['id' => $id];
+        $result = UpgradePath::find()->select($fields)
+        ->where($condition)
+        ->asArray()
+        ->one();
+        return $result;
+    }
 }

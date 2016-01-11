@@ -63,4 +63,24 @@ class DeploymentConfig extends BaseModel
     {
         return $this->hasOne(Deployment::className(), ['id' => 'deployment_id']);
     }
+    /**
+     * 根据发布位置id获取发布位置配置
+     * @param int deployment_id 发布位置
+     * @return array
+     */
+    public static function getPlatformConfigById($deploymentId)
+    {
+        $condition = ['deployment_id' => $deploymentId];
+    
+        $resource = DeploymentConfig::find()->where($condition);
+        $result = $resource->select('*')
+        ->with([
+                'parameter' => function($resource)
+                {
+                    $resource->select('*');
+                }
+        ])->asArray()->all();
+    
+        return $result;
+    }
 }

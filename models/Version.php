@@ -192,4 +192,39 @@ class Version extends BaseModel
         
         return $bool;
     }
+    /**
+     *  根据版本号获取数据
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getById($versionId)
+    {
+        $fields = ['id','platform_id','upgrade_path_id'];
+        
+        $condition = ['id' => $versionId];
+        $result = Version::find()->select($fields)
+                  ->where($condition)
+                  ->asArray()
+                  ->one();
+        return $result;
+    }
+    
+    /**
+     * 获得三十天内已上线版本
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getUpdateVersion($startDate,$endDate,$upgradPathId)
+    {
+        $condition = ['upgrade_path_id' => $upgradPathId,'released' =>1];
+        $fields = ['id','platform_id','upgrade_path_id'];
+        $versionUpdateList = Version::find()
+                            ->where($condition)
+                            ->andWhere(['>','release_time', $startDate])
+                            ->andWhere(['<=', 'release_time',$endDate])                  
+                            ->asArray()
+                            ->orderBy('id')
+                            ->all();
+        return $versionUpdateList;
+    }
 }

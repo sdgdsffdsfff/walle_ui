@@ -186,21 +186,9 @@ class BaseController extends Controller
      *
      * return void
      */
-    protected function ajaxReturn($status, $data, $type='JSON')
+    protected function ajaxReturn($status, $data, $description='')
     {
-        switch ($type) {
-        case 'JOSN':
-            //返回json数据格式到客户端
-            yii::$app->response->format = Response::FORMAT_JSON;
-            break;
-        case 'XML':
-            yii::$app->response->format = Response::FORMAT_XML;
-            break;
-        case 'HTML':
-            yii::$app->response->format = Response::FORMAT_HTML;
-            break;
-        }
-
-        return ['status' => (int)$status, 'data' => $data];
+        echo Json::encode(['status' => (int)$status,'description'=>$description, 'data' => $data]);
+        die;
     }
 }

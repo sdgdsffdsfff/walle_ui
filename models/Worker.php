@@ -55,4 +55,35 @@ class Worker extends BaseModel
     {
         return $this->hasMany(Job::className(), ['worker_id' => 'id']);
     }
+    
+    /**
+     * 获得空闲打包机
+     * @param int $platformId 平台id
+     * @return array
+     */
+    public static function getFreeData()
+    {
+        $condition = ['disable'=> 0 ];
+        $result = Worker::find()
+        ->where($condition)
+        ->asArray()
+        ->all();
+        return $result;
+    }
+    /**
+     *  根据id获取数据
+     * @param int id 平台id
+     * @return array
+     */
+    public static function getById($id)
+    {
+        $fields = ['id','hostname','disable'];
+    
+        $condition = ['id' => $id];
+        $result = Worker::find()->select($fields)
+        ->where($condition)
+        ->asArray()
+        ->one();
+        return $result;
+    }
 }

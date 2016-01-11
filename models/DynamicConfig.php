@@ -52,4 +52,15 @@ class DynamicConfig extends BaseModel
     {
         return $this->hasOne(Parameter::className(), ['id' => 'parameter_id']);
     }
+    
+    /**
+     * 获得动态参数
+     * @param int $platformId 平台id
+     * @return array
+     */
+    public static function getData()
+    {
+        $result = DynamicConfig::find()->with('parameter')->asArray()->all();
+        return $result;
+    }
 }

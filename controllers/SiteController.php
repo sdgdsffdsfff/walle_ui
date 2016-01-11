@@ -13,29 +13,6 @@ use yii\web\ForbiddenHttpException;
 
 class SiteController extends BaseController
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'only' => ['logout'],
-                'rules' => [
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post','get'],
-                ],
-            ],
-        ];
-    }
-
     public function actions()
     {
         return [

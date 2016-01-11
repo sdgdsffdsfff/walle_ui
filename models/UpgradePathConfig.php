@@ -5,23 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "package_config".
+ * This is the model class for table "upgrade_path_config".
  *
- * @property integer $package_id
+ * @property integer $upgrade_path_id
  * @property integer $parameter_id
  * @property string $value
  *
- * @property Package $package
+ * @property UpgradePath $upgradePath
  * @property Parameter $parameter
  */
-class PackageConfig extends BaseModel
+class UpgradePathConfig extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'package_config';
+        return 'upgrade_path_config';
     }
 
     /**
@@ -30,8 +30,8 @@ class PackageConfig extends BaseModel
     public function rules()
     {
         return [
-            [['package_id', 'parameter_id'], 'required'],
-            [['package_id', 'parameter_id'], 'integer'],
+            [['upgrade_path_id', 'parameter_id'], 'required'],
+            [['upgrade_path_id', 'parameter_id'], 'integer'],
             [['value'], 'string', 'max' => 255]
         ];
     }
@@ -42,7 +42,7 @@ class PackageConfig extends BaseModel
     public function attributeLabels()
     {
         return [
-            'package_id' => 'Package ID',
+            'upgrade_path_id' => 'Upgrade Path ID',
             'parameter_id' => 'Parameter ID',
             'value' => 'Value',
         ];
@@ -51,9 +51,9 @@ class PackageConfig extends BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPackage()
+    public function getUpgradePath()
     {
-        return $this->hasOne(Package::className(), ['id' => 'package_id']);
+        return $this->hasOne(UpgradePath::className(), ['id' => 'upgrade_path_id']);
     }
 
     /**
@@ -63,26 +63,19 @@ class PackageConfig extends BaseModel
     {
         return $this->hasOne(Parameter::className(), ['id' => 'parameter_id']);
     }
-    
     /**
-     * 根据版本号获取数据
-     * @param int $versionId 版本号
+     * 根据升级序列id获得升级序列配置
+     * @param int upgrade_path_id 升级序列id
      * @return array
      */
-    public static function getPackageConfigParams($packageList)
+    public static function getUpgradePathById($upgradePathId)
     {
-        $condition = ['in' , 'package_id', $packageList];
+        $condition = ['upgrade_path_id' => $upgradePathId];
     
-        $resource = PackageConfig::find()->where($condition);
+        $resource = UpgradePathConfig::find()->where($condition);
         $result = $resource->select('*')
         ->with([
                 'parameter' => function($resource)
-                {
-                    $resource->select('*');
-                }
-        ])
-        ->with([
-                'package' => function($resource)
                 {
                     $resource->select('*');
                 }

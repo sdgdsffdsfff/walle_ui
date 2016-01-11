@@ -96,4 +96,26 @@ class ModuleTag extends BaseModel
         
         return $bool;
     }
+    
+    /**
+     * 根据版本号获取数据
+     * @param int $versionId 版本号
+     * @return array
+     */
+    public static function getVersionModuleTag($versionId)
+    {
+        $fields = ['tag','module_id'];
+        $condition = ['version_id' => $versionId];
+    
+        $resource = ModuleTag::find()->where($condition);
+        $result = $resource->select($fields)
+        ->with([
+                'module' => function($resource)
+                {
+                    $resource->select('*')->where(['disable' => 0]);
+                }
+        ])->asArray()->all();
+    
+        return $result;
+    }
 }

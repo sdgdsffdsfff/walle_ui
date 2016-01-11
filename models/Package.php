@@ -85,4 +85,19 @@ class Package extends BaseModel
     {
         return $this->hasMany(Parameter::className(), ['id' => 'parameter_id'])->viaTable('package_config', ['package_id' => 'id']);
     }
+    
+    /**
+     * 根据平台下的安装包
+     * @param int $platformId 平台id
+     * @return array
+     */
+    public static function getDataByPlatformId($platformId)
+    {
+        $condition = ['platform_id' => $platformId,'disable'=> 0 ];
+        $result = Package::find()
+        ->where($condition)
+        ->asArray()
+        ->all();
+        return $result;
+    }
 }

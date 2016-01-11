@@ -9,6 +9,8 @@ $this->title = 'My Yii Application';
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins//toastr/build/toastr.min.css'); ?>
+
 <div class="normalheader transition small-header">
 	<div class="hpanel">
 		<div class="panel-body">
@@ -32,25 +34,18 @@ $this->title = 'My Yii Application';
 							</div>
 							选择发布位置和任务目标
 						</div>
-						<div class="panel-body"
-							style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
+						<div class="panel-body" style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">版本号</label>
 								<div class="col-md-9">
-									<input id="version_id" class="form-control" placeholder="请输入版本号" type="text" name="version_id"
-										value="123" onblur="updateVersion(this)">
+									<input id="version_id" type="text" name="version_id" class="form-control" 
+										value="<?php echo empty($data['version']['id'])? '':$data['version']['id']?>" placeholder="请输入版本号"  onblur="updateVersion(this)">
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">发布位置</label>
 								<div id="deployment_div" class="col-sm-9">
-									<select id="deployment_select" class="js-source-states"
-										name="deployment_id" style="width: 100%">
-										<option value="1">test1.war.playcrab.com</option>
-										<option value="2">test2.war.playcrab.com</option>
-										<option value="3">test3.war.playcrab.com</option>
-										<option value="4">test4.war.playcrab.com</option>
-									</select>
+                                       	<?php echo $data['deploymentListContent']?>
 								</div>
 							</div>
 							<!-- 							<div class="hr-line-dashed"></div> -->
@@ -65,12 +60,13 @@ $this->title = 'My Yii Application';
 							<!--                                     </select> -->
 							<!--                                 </div> -->
 							<!--                             </div> -->
+							
 							<div class="form-group">
 								<label class="col-sm-3 control-label">服务端更新包</label>
 								<div class="col-md-2 col-md-offset-7">
 									<div class="checkbox checkbox-success">
 										<input id="upload_server_update_package" type="checkbox"
-											name="target_tasks" checked
+											name="target_tasks[]" checked
 											value="upload_server_update_package"> <label
 											for="upload_server_update_package"> </label>
 									</div>
@@ -83,7 +79,7 @@ $this->title = 'My Yii Application';
 								<div class="col-md-2 col-md-offset-7">
 									<div class="checkbox checkbox-warning">
 										<input id="create_client_update_package" type="checkbox"
-											name="target_tasks" checked
+											name="target_tasks[]" checked
 											onclick="javascript:checkUpdateClient()"
 											value="create_client_update_package"> <label
 											for="create_client_update_package"> </label>
@@ -97,7 +93,7 @@ $this->title = 'My Yii Application';
 								<div class="col-md-2 col-md-offset-7">
 									<div class="checkbox checkbox-danger">
 										<input id="create_client_package" type="checkbox"
-											name="target_tasks" 
+											name="target_tasks[]" 
 											onclick="javascript:checkClient()"
 											value="create_client_package"> <label
 											for="create_client_package"> </label>
@@ -126,103 +122,25 @@ $this->title = 'My Yii Application';
 						<div class="panel-body"
 							style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
 							<div class="table-responsive" id="version_update_div">
-								<table id="version_update_table"
-									class="table table-condensed table-striped" cellpadding="1"
-									cellspacing="1" style="table-layout: fixed;">
-									<thead>
-										<tr>
-											<th>版本号</th>
-											<th>发布时间</th>
-											<th>是否选择</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="1" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="2" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="3" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="4" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="5" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="6" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="7" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="8" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="9" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="10" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="11" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="12" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="13" checked></td>
-										</tr>
-										<tr>
-											<td>112</td>
-											<td>2015-12-28 16:09:22</td>
-											<td><input id="chk_all_1" type="checkbox"
-												name="package_update_config" value="14" checked></td>
-										</tr>
-									</tbody>
-								</table>
+								<table id="version_update_table" class="table table-condensed table-striped" cellpadding="1" cellspacing="1"  style="table-layout:fixed;" >
+                                    <thead>
+                                    <tr>
+                                    <th>版本号</th>
+                                    <th>发布时间</th>
+                                    <th>是否选择</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                         <?php  foreach ($data['versionUpdateList'] as $key => $value) {?>
+                                             <tr>
+                                                   <td><?php echo $value['id']?></td>
+                                                   <td><?php echo $value['release_time']?></td>
+                                                   <td><input id="chk_all_<?php echo $key?>"  type="checkbox" name="package_update_config[]" value="<?php echo $value['id']?>" checked></td>
+                                           </tr>
+                                       <?php }?>
+                                    </tbody>
+                                 </table>    
+                                    
 							</div>
 						</div>
 						<div class="panel-footer"></div>
@@ -236,41 +154,21 @@ $this->title = 'My Yii Application';
 							<div class="panel-tools"></div>
 							发布相关的动态可调整参数
 						</div>
-						<div class="panel-body"
-							style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
+						<div class="panel-body" style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
 							<div class="form-group">
 								<label class="col-sm-4 control-label">打包机</label>
 
 								<div class="col-sm-8">
-									<select class="js-source-states" name="work_id"
+									<select class="js-source-states" name="worker_id"
 										style="width: 100%">
-										<option value="1">test1.war.playcrab.com</option>
-										<option value="2">test2.war.playcrab.com</option>
-										<option value="3">test3.war.playcrab.com</option>
-										<option value="4">test4.war.playcrab.com</option>
+										<?php foreach ($data['workerList'] as $value) {?>
+                                            <option value="<?php echo $value['id']?>" <?php echo  $data['freeWorker']['id'] == $value['id'] ? ' selected="selected"' : ''?>><?php echo Html::encode($value['hostname']);?></option>
+                                        <?php }?>
 									</select>
 								</div>
 							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">日志级别</label>
-								<div class="col-sm-8">
-									<select class="js-source-states" name="log_level"
-										style="width: 100%">
-										<option value="DEBUG">DEBUG</option>
-										<option value="INFO">INFO</option>
-										<option value="WARNING">WARNING</option>
-										<option value="ERROR">ERROR</option>
-									</select>
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="col-sm-4 control-label">并发执行的task数量</label>
-								<div class="col-md-8">
-									<input id="concurrent_task_count" class="form-control"  type="text"
-										name="concurrent_task_count" value="1">
-								</div>
-							</div>
-
+							<?php echo $data['dynamicConfigContent']?>
+                            
 						</div>
 						<div class="panel-footer"></div>
 					</div>
@@ -288,41 +186,24 @@ $this->title = 'My Yii Application';
 							</div>
 
 						</div>
-						<div class="panel-body"
-							style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
+						<div class="panel-body" style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
 							<div class="table-responsive" id="package_div">
-								<table id="package_table"
-									class="table table-condensed table-striped" cellpadding="1"
-									cellspacing="1" style="table-layout: fixed;">
-									<thead>
-										<tr>
-											<th>安装包</th>
-											<th>是否选择</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>appstore_debug</td>
-											<td><input id="package_1" type="checkbox"
-												name="package_config" value="3"></td>
-										</tr>
-										<tr>
-											<td>appstore_release</td>
-											<td><input id="package_2" type="checkbox"
-												name="package_config" value="1"></td>
-										</tr>
-										<tr>
-											<td>appstore_debug</td>
-											<td><input id="package_3" type="checkbox"
-												name="package_config" value="2"></td>
-										</tr>
-										<tr>
-											<td>appstore_release</td>
-											<td><input id="package_4" type="checkbox"
-												name="package_config" value="4"></td>
-										</tr>
-									</tbody>
-								</table>
+								<table id="package_table" class="table table-condensed table-striped" cellpadding="1" cellspacing="1"  style="table-layout:fixed;" >
+                                    <thead>
+                                    <tr>
+                                    <th>安装包</th>
+                                    <th>是否选择</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                         <?php  foreach ($data['packageList'] as $key => $value) {?>
+                                             <tr>
+                                                   <td><?php echo $value['name']?></td>
+                                                   <td><input id="package_<?php echo $key?>"  type="checkbox" name="package_config" value="<?php echo $value['id']?>"></td>
+                                           </tr>
+                                       <?php }?>
+                                    </tbody>
+                                 </table>   
 							</div>
 						</div>
 						<div class="panel-footer"></div>
@@ -338,9 +219,33 @@ $this->title = 'My Yii Application';
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
+
 <script type="text/javascript">
  $(function(){
-	 $("#div4").hide();
+	 $("#deployment_select").change(function(){ 
+		 alert("come"); 
+		    $(this).valid();  
+		});  
+	 $("#deployment_select").blur(function(){
+		 alert("dd");
+		    $(this).valid();  
+	 		});
+	 toastr.options = {
+	            "debug": false,
+	            "newestOnTop": false,
+	            "positionClass": "toast-top-center",
+	            "closeButton": true,
+	            "debug": false,
+	            "toastClass": "animated fadeInDown",
+	        };
+     
+	 if($('#create_client_package').prop('checked')==false)
+	 {
+		 $("#div4").hide(); 
+     }
+	
+	 $(".js-source-states").select2(); 
 	 $("#publish_form").validate({
          ignore:".ignore",
          rules: {
@@ -354,13 +259,13 @@ $this->title = 'My Yii Application';
              work_id: {
                  required: true,
              },
-             log_level: {
-                 required: true,
-             },
-             concurrent_task_count: {
-                 required: true,
-                 number: true
-             }
+//              log_level: {
+//                  required: true,
+//              },
+//              concurrent_task_count: {
+//                  required: true,
+//                  number: true
+//              }
          },
          messages: {
         	 version_id: {
@@ -372,13 +277,6 @@ $this->title = 'My Yii Application';
              },
              work_id: {
                  required: "无空闲打包机",
-             },
-             log_level: {
-                 required: "无可选日志级别",
-             },
-             concurrent_task_count: {
-                 required: "请输入并发执行的task数量",
-                 number: "请输入正确格式的并发执行的task数量"
              },
          },
 //          submitHandler: function(form) {
@@ -396,24 +294,27 @@ $this->title = 'My Yii Application';
                     confirmButtonText: "确认",
                     cancelButtonText: "取消",
                     closeOnConfirm: false,
-                    closeOnCancel: false },
+//                     closeOnCancel: false 
+                    },
                     function (isConfirm) {
                     if (isConfirm) {
-                    	swal({ title:"创建", text:"发布任务成功", type:"success"},
-                            function (isConfirm) {
-                                         window.location.href="/task/detail?job_id=2";
-                                      }
-                                    );
-                      
+                    	 $.ajax({
+                             type: "POST",
+                             url: '/task/dopublish',
+                             data:$('#publish_form').serialize(),// 要提交的表单 
+                             dataType: "json", 
+                             success: function(json) {
+                            	 toastr.success('发布任务成功');
+                            	 window.location.href="/task/detail?job_id=2";
+                             }
+                        });
                        
-                    } else {
-                        swal("取消", "取消发布任务", "error");
-                    }
+                    } 
 			});
 		  }
      });
-	 $(".js-source-states").select2(); 
 
+	<?php echo $data['rules']?>
  });
  function chkUpdateAll()
  {
@@ -468,6 +369,10 @@ $this->title = 'My Yii Application';
  function updateVersion(version)
  {
 	 var version_value = version.value;
+	 $("#version_update_table").remove();
+	 $("#package_table").remove();
+	 var deployment_select =  $("#deployment_select");
+	 deployment_select.html("").select2();
 	 if(version_value == "")
 	 {
 		 return;
@@ -476,23 +381,27 @@ $this->title = 'My Yii Application';
         "/task/jpublish",
          {version_id:version_value},
          function(json){
-//                  alert(json);
-                 if(json.versionUpdateContent)
-                 {
-                	 $("#version_update_table").remove();
-                	 $("#version_update_div").append(json.versionUpdateContent);
-                 }
-                 if(json.packageContent)
-                 {
-                	 $("#package_table").remove();
-                	 $("#package_div").append(json.packageContent);
-                 }
-                 if(json.deploymentContent)
-                 {
-                	 var deployment_select =  $("#deployment_select");
-                	 deployment_select.find("option").remove();
-                	 deployment_select.html(json.deploymentContent).select2();
-                 }
+        	
+        	     if(json.status){
+        	    	 toastr.success("切换版本数据成功");
+                     if(json.data.versionUpdateContent)
+                     {
+                    	 
+                    	 $("#version_update_div").append(json.data.versionUpdateContent);
+                     }
+                     if(json.data.packageListContent)
+                     {
+                    	
+                    	 $("#package_div").append(json.data.packageListContent);
+                     }
+                     if(json.data.deploymentListContent)
+                     {
+                    	 deployment_select.html(json.data.deploymentListContent).select2();
+                     }
+        	     }else{
+        	    	 toastr.error(json.description);
+        	    	 version.value=""; 
+            	 }
                  
          },"json"
          );

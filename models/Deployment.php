@@ -111,4 +111,34 @@ class Deployment extends BaseModel
         return $deployments;
     }
 
+    /**
+     * 根据平台下的发布位置
+     * @param int $platformId 平台id
+     * @return array
+     */
+    public static function getDataByPlatformId($platformId)
+    {
+        $condition = ['platform_id' => $platformId,'disable'=> 0 ];
+        $result = Deployment::find()
+        ->where($condition)
+        ->asArray()
+        ->all();
+        return $result;
+    }
+    /**
+     *  根据平台id获取数据
+     * @param int id 平台id
+     * @return array
+     */
+    public static function getById($id)
+    {
+        $fields = ['id','platform_id','name','disable'];
+    
+        $condition = ['id' => $id];
+        $result = Deployment::find()->select($fields)
+        ->where($condition)
+        ->asArray()
+        ->one();
+        return $result;
+    }
 }
