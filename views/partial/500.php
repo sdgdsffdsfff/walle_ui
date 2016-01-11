@@ -26,8 +26,8 @@ use yii\helpers\Html;
         </div>
         <div class="error-container">
             <i class="pe-7s-way text-success big-icon"></i>
-            <h1>404</h1>
-            <strong>页面没有找到！</strong>
+            <h1>500</h1>
+            <strong>系统内部错误,请联系系统管理员！</strong>
             <p></p>
             <a href="/" class="btn btn-xs btn-success">返回首页</a>
         </div>

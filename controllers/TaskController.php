@@ -18,8 +18,11 @@ use app\models\Job;
 use yii\db\Connection as Connection;
 use yii\helpers\Url;
 use yii\data\Pagination;
+
 class TaskController extends BaseController
 {
+    const STATUS_SUCCESS = 10000;
+
     public function actionIndex()
     {
         return $this->render('index');
@@ -31,77 +34,27 @@ class TaskController extends BaseController
      */
     public function actionJobstatus()
     {
-    
-        $params = yii::$app->getRequest()->post();
+        $job_id = yii::$app->getRequest()->post('job_id');
+        if (empty($job_id))
+        {
+            //提示错误跳转页面
+        }
+        $job = Job::findOne($job_id);
+        if (empty($job))
+        {
+            //提示错误跳转页面
+        }
+        $job_status = $job->status;
+        $tasks = $job->tasks;
+        foreach ($tasks as $task)
+        {
+            $job_tasks[] = ArrayHelper::toArray($task);
+        }
         $data = array(
-            "status" => 2,
-            "tasks" => array(
-                array(
-                    "name" => "checkout_module_asset",
-                    "status" => 2,
-                    "start_time" => "2015-12-28 19:28:22",
-                    "finish_time" => "2015-12-28 19:28:25",
-                ),
-                array(
-                    "name" => "checkout_module_config",
-                    "status" => 2,
-                    "start_time" => "2015-12-28 19:28:22",
-                    "finish_time" => "2015-12-28 19:28:25",
-                ),
-                array(
-                    "name" => "checkout_module_script",
-                    "status" => 2,
-                    "start_time" => "2015-12-28 19:28:22",
-                    "finish_time" => "2015-12-28 19:28:25",
-                ),
-                array(
-                    "name" => "create_client_package",
-                    "status" => 4,
-                    "start_time" => "",
-                    "finish_time" => "",
-                ),
-                array(
-                    "name" => "create_client_update_package",
-                    "status" => 1,
-                    "start_time" => "2015-12-28 19:28:22",
-                    "finish_time" => "2015-12-28 19:28:25",
-                ),
-                array(
-                    "name" => "create_walle_task",
-                    "status" => 3,
-                    "start_time" => "2015-12-28 19:28:22",
-                    "finish_time" => "2015-12-28 19:28:25",
-                ),
-                array(
-                    "name" => "create_server_update_package",
-                    "status" => 0,
-                    "start_time" => "",
-                    "finish_time" => "",
-                ),
-            ),
+            "status" => $job_status,
+            "tasks" => $job_tasks,
         );
-        $result = array(
-            "result" => 10000,
-            "data" => $data,
-        );
-        echo json_encode($result);
-    }
-
-    public function actionTasksinfo()
-    {
-        $params = yii::$app->getRequest()->post();
-        $tasks = array(
-            array("name" => "task1", "status" => "finished", "bt" => "123142134", "et" => "32141243214"),
-            array("name" => "task2", "status" => "running", "bt" => "123142134", "et" => ""),
-            array("name" => "task3", "status" => "running", "bt" => "123142134", "et" => ""),
-            array("name" => "task4", "status" => "running", "bt" => "123142134", "et" => ""),
-            array("name" => "task5", "status" => "running", "bt" => "123142134", "et" => ""),
-        );
-        $result = array(
-            "status" => "success",
-            "data" => $tasks,
-        );
-        echo json_encode($result);
+        return $this->ajaxReturn(self::STATUS_SUCCESS, $data);
     }
     
     /**
@@ -214,6 +167,10 @@ class TaskController extends BaseController
         $rend_data['create_user'] = $create_user;
         $rend_data['deployment_id'] = $deployment_id;
 
+        //获取所有未禁用的发布位置
+        $deployments = Deployment::getAllDeployment();
+        $rend_data['deployments'] = $deployments;
+
         $condition = array();//where 条件
         if (!empty($version_id))
         {
@@ -262,7 +219,16 @@ class TaskController extends BaseController
      */
     public function actionDetail()
     {
-        return $this->render("detail", array("job_id" => 100));
+        $job_id = yii::$app->getRequest()->get("job_id");
+        //todo job_id 为空的时候怎么处理？
+        $rend_data['job_id'] = $job_id;
+        $rend_data['log_url'] = "http://deploy1.saiya.com";
+        //todo 查找job表、返回job_config log_url job_status(根据status判断是否显示终止任务按钮)
+        
+
+
+
+        return $this->render("detail", $rend_data);
     }
     
     /**

@@ -3,9 +3,7 @@ namespace app\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 use yii\web\Controller;
-use yii\base\Application;
 use yii\helpers\Json;
 use filters\PermissionFilter;
 
@@ -47,9 +45,9 @@ class BaseController extends Controller
                     ]
                 ]
             ],
-//            'permission' => [
-//                'class' => PermissionFilter::className()
-//            ]
+            'permission' => [
+                'class' => PermissionFilter::className()
+            ]
         ];
     }
 
@@ -60,35 +58,11 @@ class BaseController extends Controller
     {
         if (Yii::$app->getUser()->getIdentity()) 
         {
-            //根据当前用户权限，初始化菜单列表
-            $this->menuManager();
             //获取当前用户所有角色
             $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
             
-            $this->getView()->params['requestUrl'] = $this->dataForMenu;
             $this->getView()->params['menuData'] = yii::$app->params['menuData'];
         }
-    }
-
-    /**
-     * 用户有权限访问的请求路径
-     */
-    protected function menuManager()
-    {
-        //根据当前用户权限
-        $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
-        
-        //通用权限
-        $common_sec = ['index/index'];
-        if(!empty($permission) && is_array($permission))
-        {
-			//将通用权限加到数组中
-			$this->dataForMenu = array_merge($common_sec, $permission);
-		}
-        else
-        {
-			$this->dataForMenu = $common_sec;
-		}
     }
     
     /**
@@ -212,9 +186,21 @@ class BaseController extends Controller
      *
      * return void
      */
-    protected function ajaxReturn($status, $data)
+    protected function ajaxReturn($status, $data, $type='JSON')
     {
-        echo Json::encode(['status'=>(int)$status, 'data'=>$data]);
-        die;
+        switch ($type) {
+        case 'JOSN':
+            //返回json数据格式到客户端
+            yii::$app->response->format = Response::FORMAT_JSON;
+            break;
+        case 'XML':
+            yii::$app->response->format = Response::FORMAT_XML;
+            break;
+        case 'HTML':
+            yii::$app->response->format = Response::FORMAT_HTML;
+            break;
+        }
+
+        return ['status' => (int)$status, 'data' => $data];
     }
 }

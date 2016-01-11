@@ -51,8 +51,13 @@ use yii\helpers\Html;
         </div>
 
         <div class="col-lg-6">
-        <div class="hpanel"> <div class="panel-body">
-滚动日志
+        <div class="hpanel"> <div class="panel-body"
+                            >滚动日志
+                            <div style="height: 300px; overflow-y: scroll; overflow-x: hidden;" id="div_logs">
+
+                            </div>
+
+
         </div></div>
         </div>
     </div>
@@ -60,8 +65,10 @@ use yii\helpers\Html;
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
+<?= Html::jsFile('@web/static/FileReaderClient.js'); ?>
 <script type="text/javascript">
     $(function(){
+        cat();
         $(".js-source-states").select2();
 
          $("#checkAll").click(function() {
@@ -76,4 +83,13 @@ use yii\helpers\Html;
     $('.summernote2').summernote({
         airMode: true
     });
+
+    function cat() {
+            var ws_url = 'ws://172.16.30.50:9003';
+            var log_path = '/data/work/log/nginx/access.log';
+            var pid = 0;
+            var div_id = 'div_logs';
+            document.getElementById(div_id).innerHTML = '';
+            FileReaderClient.cat(ws_url, pid, log_path, div_id);
+        }
 </script>
