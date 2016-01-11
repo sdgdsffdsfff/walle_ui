@@ -124,14 +124,13 @@ class VersionController extends BaseController
                         ->with('platform')
                         ->asArray()
                         ->all();
-        foreach ($models as $k => $v) {
-           $res=ModuleTag::find()->where('version_id='.$v['id'])->select(['version_id','module_id','tag'])
+        foreach ($models as $k => $v) 
+        {
+            $res=ModuleTag::find()->where('version_id='.$v['id'])->select(['version_id','module_id','tag'])
                             ->with('module')
                             ->asArray()
                             ->all();
             $models[$k]['modules']=$res;
-            // print_r($res);
-            // exit;
         }
 
         $pageCount = $pages->pageCount;
