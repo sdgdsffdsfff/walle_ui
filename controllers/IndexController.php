@@ -8,7 +8,7 @@ namespace app\controllers;
 use yii;
 use yii\web\Controller;
 use clients\ucenter\services\Game as Game;
-use clients\ucenter\services\MainCategory as MainCategory;
+
 class IndexController extends BaseController
 {
 	public $layout = "vms_index";
