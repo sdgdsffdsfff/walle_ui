@@ -31,8 +31,15 @@ use yii\helpers\Html;
             <ul class="nav nav-tabs">
                 <li class=""><a data-toggle="tab" href="#tab-1">任务参数</a></li>
                 <li class="active"><a data-toggle="tab" href="#tab-2">任务状态</a></li>
-                <!--<a class="col-lg-offset-8" href='javascript:stop_task("123");'><button class="btn-outline w-xs btn-danger">终止任务</button></a>-->
-                <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("123");'>终止任务</a></button>
+                <!--根据job_status判断是否显示终止任务按钮-->
+<!--
+                <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("");'>终止任务</a></button>
+-->
+<?php
+if ($job_status == 1) {
+    echo '<button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick=\'javascript:stop_task("'.$job_id.'");\'>终止任务</a></button>';
+}
+?>
 
             </ul>
             <div class="tab-content">
@@ -203,9 +210,9 @@ function stop_task(id) {
 var job_id = <?php echo $job_id;?>;
 var setIntervalFun = null;
 window.onload = function () {
+    setIntervalFun = setInterval("checkJobStatus(job_id)", 1000*7);
     checkJobStatus(job_id);
 }
-setIntervalFun = setInterval("checkJobStatus(job_id)", 1000*7);
 //根据job_id查询当前job的状态,并根据job_status 判断是否需要轮询
 function checkJobStatus(id) {
     $.post(
@@ -218,11 +225,11 @@ function checkJobStatus(id) {
                 $("#task_body").html("");
                 //更新job 状态
                 updateJobStatus(job_info.status);
-                //更新table 中task 的信息
-                showTasksTable(job_info.tasks);
                 if(job_info.status != 1) {
                     clearInterval(setIntervalFun);
                 }                
+                //更新table 中task 的信息
+                showTasksTable(job_info.tasks);
             } else {
                 alert("后台通信异常，请联系管理员!");
             }
@@ -249,6 +256,8 @@ function updateJobStatus(status) {
             document.getElementById("statuscontent").textContent = "失败";
             break;
         default:
+            document.getElementById("taskstatus").style.backgroundColor = "#e74c3c";
+            document.getElementById("statuscontent").textContent = "执行终止";
             break;
     }
 }
@@ -256,6 +265,9 @@ function updateJobStatus(status) {
 //显示job下的所有task状态，动态绘制table
 function showTasksTable(arr) {
     var tbody = document.getElementById("task_body");
+    if (!(arr instanceof Array)) {
+        return ;
+    }
     for (var i=0; i<arr.length; i++) {
         var row = document.createElement('tr');
         //防止后台返回的数据顺序和table不一致，不用for
@@ -291,7 +303,11 @@ function showTasksTable(arr) {
         row.appendChild(status_c);
 
         var st_c = document.createElement('td');
-        var start_time = document.createTextNode(arr[i]["start_time"]);
+        if (arr[i]["start_time"] == null) {
+            var start_time = document.createTextNode("");
+        } else {
+            var start_time = document.createTextNode(arr[i]["start_time"]);
+        }
         st_c.appendChild(start_time);
         row.appendChild(st_c);
 
@@ -300,7 +316,11 @@ function showTasksTable(arr) {
             var finish_time = document.createElement('img');
             finish_time.setAttribute("src", "/static/images/loading1.gif");
         } else {
-            var finish_time = document.createTextNode(arr[i]["finish_time"]);
+            if (arr[i]["finish_time"] == null) {
+                var finish_time = document.createTextNode("");
+            } else {
+                var finish_time = document.createTextNode(arr[i]["finish_time"]);
+            }
         }
 
         fn_c.appendChild(finish_time);

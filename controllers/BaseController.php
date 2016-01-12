@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\helpers\Json;
 use filters\PermissionFilter;
+use yii\web\Response as Response;
 
 /**
  * Class BaseController
@@ -190,5 +191,13 @@ class BaseController extends Controller
     {
         echo Json::encode(['status' => (int)$status,'description'=>$description, 'data' => $data]);
         die;
+    }
+
+    protected function newajaxReturn($status, $data, $type='JSON')
+    {
+        $response = Yii::$app->getResponse();
+        $response->format = Response::FORMAT_JSON;
+        $response->data = array("status"=>$status, "data" => $data);
+        Yii::$app->end();
     }
 }

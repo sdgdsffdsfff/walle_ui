@@ -86,6 +86,7 @@ foreach ($deployments as $deployment) {
 <?php
 foreach ($job_list as $job) {
     $targets = explode(',', $job['target_tasks']);
+    $target = "";
     foreach ($targets as $v) {
         $target .= $v."</br>";
     }
