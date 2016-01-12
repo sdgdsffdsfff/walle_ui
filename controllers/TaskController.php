@@ -303,8 +303,8 @@ class TaskController extends BaseController
         
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
-        $versionsUpdatePackageStr = !empty($versionsUpdatePackage)? implode(",", $versionsUpdatePackage) :"";
-        $packageConfigStr = !empty($packageConfig)? implode(",", $packageConfig) : "";
+        $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('create_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
+        $packageConfigStr = !empty($packageConfig) &&  in_array('create_client_package', $targetTasks)? implode(",", $packageConfig) : "";
         
         
         //模板参数
