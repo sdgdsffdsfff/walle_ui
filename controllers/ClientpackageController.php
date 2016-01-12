@@ -29,7 +29,7 @@ class ClientpackageController extends BaseController
         $vid=$platform_id=$upgrade_path_id=$create_user=$deployment_id='';
         $params = yii::$app->getRequest()->get();
         $sql='select a.url,a.deployment_id,b.* from client_package as a inner JOIN version as b on a.version_id=b.id ';
-        $countSql='select count(a.id) from client_package as a inner JOIN version as b on a.version_id=b.id ';
+        $countSql='select count(a.id) as count from client_package as a inner JOIN version as b on a.version_id=b.id ';
         if(isset($params['vid'])&&!empty($params['vid'])){
           $sql.=' and a.version_id='.(int)$params['vid'];
           $countSql.=' and a.version_id='.(int)$params['vid'];
@@ -52,13 +52,16 @@ class ClientpackageController extends BaseController
            $countSql.=' and a.deployment_id='.$params['deployment_id'];
           $deployment_id=$params['deployment_id'];
         }
-		
-        $totalCount = Yii::$app->db->createCommand($countSql)->queryScalar(); 
- 
+
+        
+       
+        $res=Clientpackage::findBySql($countSql)->asArray()->all();
+        $totalCount = $res[0]['count']; 
+
         $pages = new Pagination(['totalCount' =>$totalCount,'pageSize'=>10]);
         $sql.=" limit ".$pages->offset.",".$pages->limit;
  
-     	$models=Yii::$app->db->createCommand($sql)->queryAll(); 
+     	$models=Clientpackage::findBySql($sql)->asArray()->all();
  		foreach ($models as $k=>$v) {
 
  			$up=UpgradePath::find()->where('id='.$v['upgrade_path_id'])->one();
