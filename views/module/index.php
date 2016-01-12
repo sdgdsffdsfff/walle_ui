@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -66,6 +67,7 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
 <?= Html::jsFile('@web/static/FileReaderClient.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <script type="text/javascript">
     $(function(){
 
@@ -97,11 +99,12 @@ use yii\helpers\Html;
             }).done(function(data){
                 console.log(data);
                 if (data.status == '1') {
-                    swal({ title:"设置上线时间", text:data.data, type:"success",timer: 5000,
+                    swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
                     location.reload();
                 }else{
-                    swal({ title:"设置上线时间", text:data.data, type:"error"});
+                    swal({ title:"模块更新", text:data.data, type:"error"});
+                    $(this).removeAttr("disabled");
                 }
             });
 

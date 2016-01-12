@@ -21,9 +21,16 @@ class ModuleController extends BaseController
     {
     	$chk_value = yii::$app->getRequest()->post('chk_value');
     	if(count($chk_value)){
-    		//system("dir",$out); 
+    		$params=' --log-level DEBUG';
+    		$params.=' --game icx';
+    		foreach ($chk_value as $key => $value) {
+    			$params.=' --module '.$value;
+    		}
+    		
+    		system("/data/work/walle/walle3/env/bin/walle updatetaglist".$params,$out); 
+    		$this->ajaxReturn(1,$out);
     	}else{
-    		 $this->ajaxReturn(1,'设置成功');
+    		 $this->ajaxReturn(0,'没有选择更新内容');
     	}
 
     }
