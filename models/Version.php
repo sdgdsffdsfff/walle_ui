@@ -214,14 +214,15 @@ class Version extends BaseModel
      * @param int $versionId 版本号
      * @return array
      */
-    public static function getUpdateVersion($startDate,$endDate,$upgradPathId)
+    public static function getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId)
     {
         $condition = ['upgrade_path_id' => $upgradPathId,'released' =>1];
         $fields = ['id','platform_id','upgrade_path_id'];
         $versionUpdateList = Version::find()
                             ->where($condition)
                             ->andWhere(['>','release_time', $startDate])
-                            ->andWhere(['<=', 'release_time',$endDate])                  
+                            ->andWhere(['<=', 'release_time',$endDate])
+                            ->andWhere(['<', 'id',$versionId])
                             ->asArray()
                             ->orderBy('id')
                             ->all();

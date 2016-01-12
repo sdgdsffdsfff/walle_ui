@@ -263,25 +263,24 @@ class TaskController extends BaseController
         
         //获得平台下的发布位置
         $deploymentListData =Deployment::getDataByPlatformId($platformId);
-        if(!$deploymentListData)
-        {
+//         if(!$deploymentListData)
+//         {
 //             $this->ajaxReturn(false, array(), "该版本无发布位置,请配置相关发布位置！");
-        }
+//         }
 //                 var_dump($deploymentListData);
         
         //获得平台下安装包
         $packageListData = Package::getDataByPlatformId($platformId);
-        if(!$packageListData)
-        {
-//             $this->ajaxReturn(false,array(), "该版本无安装包,请配置相关安装包！");
-        }
+//         if(!$packageListData)
+//         {
+//              $this->ajaxReturn(false,array(), "该版本无安装包,请配置相关安装包！");
+//         }
         //         var_dump($packageListData);
         
         // 获得升级序列下的30天发布的已上线版本列表
         $startDate = date('Y-m-d 00:00:00', strtotime('-30 day'));
         $endDate = date('Y-m-d H:i:s', time());
-        $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId);
-        //         var_dump($versionUpdateListData);
+        $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId);
         $data['version']                = $versionData;
 //         $data['deploymentList']         = $deploymentListData;
 //         $data['packageList']            = $packageListData;
