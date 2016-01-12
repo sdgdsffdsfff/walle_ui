@@ -110,7 +110,7 @@ class TaskController extends BaseController
             // 获得升级序列下的30天发布的已上线版本列表
             $startDate = date('Y-m-d 00:00:00', strtotime('-30 day'));
             $endDate = date('Y-m-d H:i:s', time());
-            $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId);
+             $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId);
             //         var_dump($versionUpdateListData);
         }
         
