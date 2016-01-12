@@ -27,7 +27,10 @@ class ModuleController extends BaseController
     			$params.=' --module '.$value;
     		}
     		
-    		system("/data/work/walle/walle3/env/bin/walle updatetaglist".$params,$out); 
+    		$a=exec("/data/work/walle/walle3/env/bin/walle updatetaglist".$params,$b); 
+    		var_dump($a);
+    		var_dump($b);
+    		exit;
     		$this->ajaxReturn(1,$out);
     	}else{
     		 $this->ajaxReturn(0,'没有选择更新内容');
