@@ -67,8 +67,8 @@ $this->title = 'My Yii Application';
 									<div class="checkbox checkbox-success">
 										<input id="upload_server_update_package" type="checkbox"
 											name="target_tasks[]" checked
-											value="upload_server_update_package"> <label
-											for="upload_server_update_package"> </label>
+											value="create_server_update_package"> <label
+											for="create_server_update_package"> </label>
 									</div>
 								</div>
 							</div>
