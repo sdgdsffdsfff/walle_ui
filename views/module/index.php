@@ -68,7 +68,7 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/FileReaderClient.js'); ?>
 <script type="text/javascript">
     $(function(){
-        cat();
+
         $(".js-source-states").select2();
 
          $("#checkAll").click(function() {
@@ -82,7 +82,7 @@ use yii\helpers\Html;
 
         $(".btn-primary").click(function() {
           $(this).attr("disabled","disabled");
-         
+         cat();
           var chk_value =[]; 
         $("input[name='subBox']:checked").each(function(){ 
         chk_value.push($(this).val()); 
