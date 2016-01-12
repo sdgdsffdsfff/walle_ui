@@ -36,7 +36,7 @@ use yii\helpers\Html;
                            foreach ($models as $k) {
                               echo "<tr>";
                               echo "<td>".$k['name']."</td>";
-                              echo '<td><div class="checkbox checkbox-success"> <input  type="checkbox" name="subBox" checked value="'.$k['id'].'"><label></label></div> </td>';
+                              echo '<td><div class="checkbox checkbox-success"> <input  type="checkbox" name="subBox" checked value="'.$k['name'].'"><label></label></div> </td>';
                               echo "</tr>";
                            }
                             ?>
@@ -44,7 +44,7 @@ use yii\helpers\Html;
                         </tbody>
                         
                     </table>
-                    <button type="submit" class="btn w-xs btn-success">更新模块版本列表</button>
+                    <button type="button" class="btn w-xs btn-primary" >更新模块版本列表</button>
                     </form>
                 </div>
             </div>
@@ -68,7 +68,7 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/FileReaderClient.js'); ?>
 <script type="text/javascript">
     $(function(){
-        cat();
+
         $(".js-source-states").select2();
 
          $("#checkAll").click(function() {
@@ -78,6 +78,34 @@ use yii\helpers\Html;
             $subBox.click(function(){
                 $("#checkAll").attr("checked",$subBox.length == $("input[name='subBox']:checked").length ? true : false);
             });
+
+
+        $(".btn-primary").click(function() {
+          $(this).attr("disabled","disabled");
+         cat();
+          var chk_value =[]; 
+        $("input[name='subBox']:checked").each(function(){ 
+        chk_value.push($(this).val()); 
+        }); 
+
+            var post = {chk_value : chk_value};
+            $.ajax({
+                type:'post',
+                url:'/module/update',
+                data:post,
+                dataType:'json',
+            }).done(function(data){
+                console.log(data);
+                if (data.status == '1') {
+                    swal({ title:"设置上线时间", text:data.data, type:"success",timer: 5000,
+                        showConfirmButton: false});
+                    location.reload();
+                }else{
+                    swal({ title:"设置上线时间", text:data.data, type:"error"});
+                }
+            });
+
+        });
     });
     
     $('.summernote2').summernote({

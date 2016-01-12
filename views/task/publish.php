@@ -229,6 +229,9 @@ $this->title = 'My Yii Application';
 	 $("#deployment_select").blur(function(){
 		    $(this).valid();  
 	 		});
+     $('#version_id').change(function(){
+         $('#deployment_select').valid();
+     });
 	 toastr.options = {
 	            "debug": false,
 	            "newestOnTop": false,
@@ -396,6 +399,7 @@ $this->title = 'My Yii Application';
                      {
                     	 deployment_select.html(json.data.deploymentListContent).select2();
                      }
+                     deployment_select.valid();
         	     }else{
         	    	 toastr.error(json.description);
         	    	 version.value=""; 
