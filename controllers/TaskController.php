@@ -64,7 +64,7 @@ class TaskController extends BaseController
             "status" => $job_status,
             "tasks" => $job_tasks,
         );
-        return $this->ajaxReturn(self::STATUS_SUCCESS, $data);
+        $this->newajaxReturn(self::STATUS_SUCCESS, $data);
     }
     
     /**
@@ -232,13 +232,25 @@ class TaskController extends BaseController
     public function actionDetail()
     {
         $job_id = yii::$app->getRequest()->get("job_id");
-        //todo job_id 为空的时候怎么处理？
-        $rend_data['job_id'] = $job_id;
-        $rend_data['log_url'] = "http://deploy1.saiya.com";
-        //todo 查找job表、返回job_config log_url job_status(根据status判断是否显示终止任务按钮)
+        //todo job_id 为空的时候提示错误跳转list 页面
+        if (empty($job_id))
+        {
         
+        }
 
-
+        $rend_data['job_id'] = $job_id;
+        //todo 查找job表、返回job_config log_url job_status(根据status判断是否显示终止任务按钮)
+        $job = Job::findOne($job_id);
+        if (empty($job)) {
+        
+        }
+        $job_status = $job->status;
+        $log_url = $job->log_url;
+        $job_config = $job->job_config;
+        //job_config 需要解析json，查找对应key 在parameter表中对应的description值,拼成数组传递到view层
+        
+        $rend_data['job_status'] = $job_status;
+        $rend_data['log_url'] = $log_url;
 
         return $this->render("detail", $rend_data);
     }
@@ -303,8 +315,8 @@ class TaskController extends BaseController
         
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
-        $versionsUpdatePackageStr = !empty($versionsUpdatePackage)? implode(",", $versionsUpdatePackage) :"";
-        $packageConfigStr = !empty($packageConfig)? implode(",", $packageConfig) : "";
+        $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('create_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
+        $packageConfigStr = !empty($packageConfig) &&  in_array('create_client_package', $targetTasks)? implode(",", $packageConfig) : "";
         
         
         //模板参数
