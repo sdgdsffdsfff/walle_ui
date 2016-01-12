@@ -248,9 +248,11 @@ class TaskController extends BaseController
         $log_url = $job->log_url;
         $job_config = $job->job_config;
         //job_config 需要解析json，查找对应key 在parameter表中对应的description值,拼成数组传递到view层
+        $job_config_arr = $this->replaceJobConfigDescription($job_config);
         
         $rend_data['job_status'] = $job_status;
         $rend_data['log_url'] = $log_url;
+        $rend_data['job_config'] = $job_config_arr;
 
         return $this->render("detail", $rend_data);
     }
@@ -715,4 +717,42 @@ class TaskController extends BaseController
         $jobConfig['dynamic_config'] = $dynamicConfig;
         return $jobConfig;
     }
+
+
+    //解析job_config,替换key为对应的description中文描述 
+    private function replaceJobConfigDescription($job_config) 
+    {
+        $task_param_arr = array(
+            "module_tag",
+            "target_tasks",
+            "versions_need_client_update_package",
+            "package_config",
+        );
+        $job_config = json_decode($job_config, true);
+        $job_config_cn = array();
+        foreach ($job_config as $key => $value)
+        {
+            if (!is_array($value) || in_array($key, $task_param_arr))
+            {
+                $tmp['type'] = "任务参数";
+                $tmp['name'] = $key;
+                $tmp['value'] = $value;
+                $job_config_cn[] = $tmp;
+            }
+            else
+            {
+                foreach ($value as $param => $v)
+                {
+                    $tmp['type'] = $key;
+                    //查parameter表
+                    $description = Parameter::getDesByName($param);
+                    $tmp['name'] = $description;
+                    $tmp['value'] = $v;
+                    $job_config_cn[] = $tmp;
+                }
+            }
+        }
+
+        return $job_config_cn;
+    } 
 }

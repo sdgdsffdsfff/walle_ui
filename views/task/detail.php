@@ -151,7 +151,7 @@ if ($job_status == 1) {
                         <!-- 任务状态-->
                         <div class="hpanel hblue">
                             <div class="panel-heading">
-                                <h5>任务日志下载链接：<a style="text-decoration:underline" href="#">http://walle.playcrab-inc.com/vms/index.php</a></h5>
+                            <h5>任务日志下载链接：<a style="text-decoration:underline" href="#"><?php echo $log_url;?></a></h5>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -240,6 +240,11 @@ function checkJobStatus(id) {
 //更改job status 页面显示,status为当前job的状态1，2，3
 function updateJobStatus(status) {
     switch(status){
+        case 0:
+            //create
+            document.getElementById("taskstatus").style.backgroundColor = "#9b59b6";
+            document.getElementById("statuscontent").textContent = "创建";
+            break;
         case 1:
             //running
             document.getElementById("taskstatus").style.backgroundColor = "#3498db";
@@ -255,7 +260,7 @@ function updateJobStatus(status) {
             document.getElementById("taskstatus").style.backgroundColor = "#e74c3c";
             document.getElementById("statuscontent").textContent = "失败";
             break;
-        default:
+        case 4:
             document.getElementById("taskstatus").style.backgroundColor = "#e74c3c";
             document.getElementById("statuscontent").textContent = "执行终止";
             break;

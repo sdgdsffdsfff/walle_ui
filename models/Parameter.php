@@ -152,4 +152,19 @@ class Parameter extends BaseModel
     {
         return $this->hasMany(UpgradePath::className(), ['id' => 'upgrade_path_id'])->viaTable('upgrade_path_config', ['parameter_id' => 'id']);
     }
+
+    /**
+     * 通过name查找对应的description
+     * @param string $name
+     * @return string $description | false
+     */
+    public static function getDesByName($name)
+    {
+        $parameter = Parameter::findOne(['name' => $name]);
+        if ($parameter)
+        {
+            return $parameter->description;
+        }
+        return false;
+    }
 }

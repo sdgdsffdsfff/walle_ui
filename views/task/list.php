@@ -88,6 +88,19 @@ foreach ($job_list as $job) {
     $targets = explode(',', $job['target_tasks']);
     $target = "";
     foreach ($targets as $v) {
+        switch($v){
+            case "create_server_update_package":
+                $v = "服务端更新包";
+                break;
+            case "create_client_update_package":
+                $v = "客户端更新包";
+                break;
+            case "create_client_package":
+                $v = "客户端安装包";
+                break;
+            default:
+                break;
+        }
         $target .= $v."</br>";
     }
     switch($job['status']){
