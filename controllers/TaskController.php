@@ -267,7 +267,7 @@ class TaskController extends BaseController
         //          var_dump($versionData);
         if(!$versionData)
         {
-            $this->ajaxReturn(false, "版本参数错误,请输入正确的版本号！");
+            $this->ajaxReturn(false, array(), "版本参数错误,请输入正确的版本号!");
         }
         
         $platformId   = $versionData['platform_id'];
@@ -313,6 +313,10 @@ class TaskController extends BaseController
         $versionsUpdatePackage= $params['package_update_config'];
         $packageConfig= $params['package_config'];
         
+        if(empty($targetTasks))
+        {
+            $this->ajaxReturn(false, array(),"请选择发布任务！");
+        }
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
         $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('create_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
@@ -331,7 +335,6 @@ class TaskController extends BaseController
                 }
             }
         }
-        //调用脚本执行job TODO
         
         //入库
         $job['version_id'] = intval($versionId);
@@ -352,7 +355,23 @@ class TaskController extends BaseController
         {
             $job['id'] = $resJob;
             $jobConfig = $this->setJobConfig($job, $gameAlias, $versionsUpdatePackageStr, $packageConfigStr, $dynamicConfig);
-            $resUpdate = Job::modifyJobConfig($resJob, $jobConfig);
+            $resUpdate = Job::modifyJobConfig($resJob, json_encode($jobConfig));
+            
+            $logLevel = isset($jobConfig['dynamic_config']['log_level']) ?  $jobConfig['dynamic_config']['log_level'] : 'DEBUG';
+            
+            $targetTask = explode(',', $targetTasksStr);
+            foreach ($targetTask as $value) {
+                $targetTaskContent .= " --target-task {$value} ";
+            }
+           
+            
+            //调用脚本执行job TODO
+            $command = "walle  job run \
+                            --log-level {$logLevel} \
+                            --game {$gameAlias} \
+                            --job-id {$resJob}";
+            $command .= $targetTaskContent;
+//             exec($command, $output, $returnVar);
             $this->ajaxReturn(true, array(),"发布任务成功！");
         }
         else
@@ -694,6 +713,6 @@ class TaskController extends BaseController
             }
         }
         $jobConfig['dynamic_config'] = $dynamicConfig;
-        return json_encode($jobConfig);
+        return $jobConfig;
     }
 }
