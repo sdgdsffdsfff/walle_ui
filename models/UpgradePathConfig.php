@@ -71,16 +71,16 @@ class UpgradePathConfig extends \yii\db\ActiveRecord
     public static function getUpgradePathById($upgradePathId)
     {
         $condition = ['upgrade_path_id' => $upgradePathId];
-    
-        $resource = UpgradePathConfig::find()->where($condition);
-        $result = $resource->select('*')
-        ->with([
-                'parameter' => function($resource)
-                {
-                    $resource->select('*');
-                }
-        ])->asArray()->all();
-    
+        $result = UpgradePathConfig::find()->where($condition)->with('parameter')->asArray()->all();
+        
+//         $resource = UpgradePathConfig::find()->where($condition);
+//         $result = $resource->select('*')
+//         ->with([
+//                 'parameter' => function($resource)
+//                 {
+//                     $resource->select('*');
+//                 }
+//         ])->asArray()->all();
         return $result;
     }
 }
