@@ -199,7 +199,7 @@ $this->title = 'My Yii Application';
                                          <?php  foreach ($data['packageList'] as $key => $value) {?>
                                              <tr>
                                                    <td><?php echo $value['name']?></td>
-                                                   <td><input id="package_<?php echo $key?>"  type="checkbox" name="package_config" value="<?php echo $value['id']?>"></td>
+                                                   <td><input id="package_<?php echo $key?>"  type="checkbox" name="package_config[]" value="<?php echo $value['id']?>"></td>
                                            </tr>
                                        <?php }?>
                                     </tbody>
