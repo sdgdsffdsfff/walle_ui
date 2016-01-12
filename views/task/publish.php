@@ -305,8 +305,17 @@ $this->title = 'My Yii Application';
                              data:$('#publish_form').serialize(),// 要提交的表单 
                              dataType: "json", 
                              success: function(json) {
-                            	 toastr.success('发布任务成功');
-                            	 window.location.href="/task/detail?job_id=2";
+                                 if(json.status)
+                                 {
+                                	 toastr.success('发布任务成功');
+                                	 window.location.href="/task/detail?job_id=2";
+                                 }
+                                 else
+                                 {
+//                                 	 toastr.error(json.description);
+                                	  swal("提示", json.description, "error"); 
+                                 }
+                            
                              }
                         });
                        
