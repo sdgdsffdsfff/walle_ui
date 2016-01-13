@@ -273,11 +273,23 @@ use yii\helpers\Html;
             data: $('#create_version_form').serialize(),
             dataType: 'json',
             success: function(response){
+                if(response.data.msg == 'unpermit')
+                {
+                    swal({
+                        title: "权限提示",
+                        text: "无权限访问,请联系管理员!",
+                        type: "warning",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false,
+                    });
+                }
                 if(response.data.msg == 'success')
                 {
                     window.location.href="/version/version-detail?version_id="+response.data.version_id;
                 }
-                else
+                if(response.data.msg == 'fails')
                 {
                     swal({
                         title: "创建版本结果",

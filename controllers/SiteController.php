@@ -97,11 +97,26 @@ class SiteController extends BaseController
         } 
         else if(yii::$app->getErrorHandler()->exception instanceof ForbiddenHttpException) 
         {
+            $this->ajaxError();
             $this->error403();
         } 
         else 
         {
             $this->error500();
         }
+    }
+    
+    /**
+     * ajax提示无权限
+     * @return boolean
+     */
+    private function ajaxError()
+    {
+        if(!yii::$app->getRequest()->isAjax)
+        {
+            return false;
+        }
+
+        $this->newajaxReturn(403, array('msg' => 'unpermit'));
     }
 }
