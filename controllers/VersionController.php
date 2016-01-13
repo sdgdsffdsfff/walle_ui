@@ -327,7 +327,7 @@ class VersionController extends BaseController
             'region_id' => $platformInfo['region']['id'],
             'platform_name' => $platformInfo['name'],
             'platform_id' => $platformInfo['id'],
-            'upgrade_name' => $versionInfo['upgradePath']['name'],
+            'upgrade_name' => empty($versionInfo['upgradePath']['name']) ? 'null' : $versionInfo['upgradePath']['name'],
             'upgrade_id' => $versionInfo['upgrade_path_id'],
             'module_tags' => $moduleTag_array,
         );
