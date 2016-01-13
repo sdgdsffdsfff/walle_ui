@@ -732,7 +732,7 @@ class TaskController extends BaseController
         $job_config_cn = array();
         foreach ($job_config as $key => $value)
         {
-            if (!is_array($value) || in_array($key, $task_param_arr))
+            if (!is_array($value))
             {
                 $tmp['type'] = "任务参数";
                 $tmp['name'] = $key;
@@ -741,14 +741,68 @@ class TaskController extends BaseController
             }
             else
             {
-                foreach ($value as $param => $v)
+                if (in_array($key, $task_param_arr))
                 {
-                    $tmp['type'] = $key;
-                    //查parameter表
-                    $description = Parameter::getDesByName($param);
-                    $tmp['name'] = $description;
-                    $tmp['value'] = $v;
+                    $tmp['type'] = "任务参数";
+                    $tmp['name'] = $key;
+                    $tmp_v = "";
+                    switch ($key)
+                    {
+                        case "module_tag":
+                            foreach ($value as $v)
+                            {
+                                $tmp_v .= $v['name']."：".$v['tag']."</br>";
+                            }
+                            break;
+                        case "package_config":
+                            foreach ($value as $v)
+                            {
+                                $tmp_v .= $v['package_name']."</br>";
+                            }
+                            break;
+                        case "target_tasks":
+                            foreach ($value as $v)
+                            {
+                                if ($v == "create_server_update_package")
+                                {
+                                    $v="服务端更新包";
+                                }
+                                else if ($v == "create_client_package")
+                                {
+                                    $v="客户端安装包";
+                                } else if ($v == "create_client_update_package")
+                                {
+                                    $v="客户端更新包";
+                                }
+                                $tmp_v .= $v."</br>";
+                            }
+                            break;
+                        case "versions_need_client_update_package":
+                            $tmp['type'] = "任务参数";
+                            $tmp['name'] = $key;
+                            $tmp_v = "";
+                            foreach ($value as $v)
+                            {
+                                $tmp_v .= $v.";";
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    $tmp['value'] = $tmp_v;
                     $job_config_cn[] = $tmp;
+                }
+                else
+                {
+                    foreach ($value as $param => $v)
+                    {
+                        $tmp['type'] = $key;
+                        //查parameter表
+                        $description = Parameter::getDesByName($param);
+                        $tmp['name'] = $description;
+                        $tmp['value'] = $v;
+                        $job_config_cn[] = $tmp;
+                    }
                 }
             }
         }
