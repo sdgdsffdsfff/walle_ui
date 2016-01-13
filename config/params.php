@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'scriptPath' => '/data/work/walle/walle3/env/bin/',
     'adminEmail' => 'admin@example.com',
     //左侧菜单
     'menuData' => [

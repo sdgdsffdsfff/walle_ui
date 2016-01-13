@@ -269,7 +269,7 @@ class TaskController extends BaseController
         //          var_dump($versionData);
         if(!$versionData)
         {
-            $this->ajaxReturn(false, array(), "版本参数错误,请输入正确的版本号!");
+            $this->ajaxReturn(self::STATUS_FAILS, array(), "版本参数错误,请输入正确的版本号!");
         }
         
         $platformId   = $versionData['platform_id'];
@@ -302,7 +302,7 @@ class TaskController extends BaseController
         $data['deploymentListContent']  = $this->getDeploymentList($deploymentListData);
         $data['packageListContent']     = $this->getPackagelist($packageListData);
         $data['versionUpdateContent']   = $this->getVersionupdatelist($versionUpdateListData);
-        $this->ajaxReturn(true, $data, "成功");
+        $this->ajaxReturn(self::STATUS_SUCCESS, $data, "切换版本数据成功");
     }
     public function actionDopublish()
     {
@@ -317,7 +317,7 @@ class TaskController extends BaseController
         
         if(empty($targetTasks))
         {
-            $this->ajaxReturn(false, array(),"请选择发布任务！");
+            $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择发布任务！");
         }
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
@@ -368,19 +368,29 @@ class TaskController extends BaseController
            
             
             //调用脚本执行job TODO
-            $command = "walle  job run \
+            $scriptPath = Yii::$app->params['scriptPath'];
+            $command = "{$scriptPath}walle job run \
                             --log-level {$logLevel} \
                             --game {$gameAlias} \
                             --job-id {$resJob}";
             $command .= $targetTaskContent;
-//             exec($command, $output, $returnVar);
-            $this->ajaxReturn(true, array(),"发布任务成功！");
+            exec($command, $output, $returnVar);
+//             if($returnVar == 0)
+//             {
+//                 $this->ajaxReturn(true, array(),"发布任务成功！");
+//             }
+//             else
+//             {
+//                 $this->ajaxReturn(self::STATUS_FAILS, array(),"执行发布任务脚本错误，请重新发布！");
+//             }
+            
+            $this->ajaxReturn(self::STATUS_SUCCESS, array(),"发布任务成功！");
         }
         else
         {
-            $this->ajaxReturn(false, array(), "发布任务失败！");
+            $this->ajaxReturn(self::STATUS_FAILS, array(), "发布任务失败！");
         }
-        $this->ajaxReturn(true,  $params, "成功");
+        $this->ajaxReturn(self::STATUS_SUCCESS,  $params, "成功");
     }
     
     /**

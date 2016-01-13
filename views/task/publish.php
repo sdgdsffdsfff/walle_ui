@@ -305,16 +305,31 @@ $this->title = 'My Yii Application';
                              data:$('#publish_form').serialize(),// 要提交的表单 
                              dataType: "json", 
                              success: function(json) {
-                                 if(json.status)
+                            	 if(json.status == '40003')
                                  {
-                                	 toastr.success('发布任务成功');
-                                	 window.location.href="/task/detail?job_id=2";
+                                     swal({
+                                         title: "权限提示",
+                                         text: json.description,
+                                         type: "warning",
+                                         showCancelButton: false, //是否显示'取消'按钮
+                                         confirmButtonColor: "#e74c3c",
+                                         confirmButtonText: "确认",
+                                         closeOnConfirm: false,
+                                     });
                                  }
-                                 else
-                                 {
-//                                 	 toastr.error(json.description);
-                                	  swal("提示", json.description, "error"); 
-                                 }
+                                 else{
+                                    	 if(json.status == 10000)
+                                         {
+                                        	 toastr.success('发布任务成功');
+                                        	 window.location.href="/task/detail?job_id=2";
+                                         }
+                                         else
+                                         {
+    //                                     	 toastr.error(json.description);
+                                        	  swal("提示", json.description, "error"); 
+                                         }
+                                     }
+                            	
                             
                              }
                         });
@@ -391,8 +406,20 @@ $this->title = 'My Yii Application';
         "/task/jpublish",
          {version_id:version_value},
          function(json){
-        	
-        	     if(json.status){
+        	 if(json.status == '40003')
+             {
+                 swal({
+                     title: "权限提示",
+                     text: json.description,
+                     type: "warning",
+                     showCancelButton: false, //是否显示'取消'按钮
+                     confirmButtonColor: "#e74c3c",
+                     confirmButtonText: "确认",
+                     closeOnConfirm: false,
+                 });
+             }
+             else{
+        	     if(json.status == 10000){
         	    	 toastr.success("切换版本数据成功");
                      if(json.data.versionUpdateContent)
                      {
@@ -413,6 +440,7 @@ $this->title = 'My Yii Application';
         	    	 toastr.error(json.description);
         	    	 version.value=""; 
             	 }
+             }
                  
          },"json"
          );
