@@ -16,10 +16,7 @@ use app\models\UpgradePath;
 use app\models\ModuleAvailableTag;
 
 class VersionController extends BaseController
-{
-    const STATUS_SUCCESS = 10000;
-    const STATUS_FAILS = 40004;
-    
+{   
     public function actionIndex()
     {
         return $this->render('index');

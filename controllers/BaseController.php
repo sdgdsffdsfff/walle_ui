@@ -22,6 +22,13 @@ class BaseController extends Controller
     const TPL_JUMP_ERROR_500 = '../partial/500';
     const TPL_JUMP_ERROR_403 = '../partial/403';
 
+    /**
+     * 状态码
+     */
+    const STATUS_SUCCESS = 10000;  //成功
+    const STATUS_FAILS = 99999;  //失败
+    const STATUS_PERMIT = 40003;  //无权限
+    
     public $roleOfUser = [];
     public $dataForMenu = [];
     public $dataForFunc = [];
@@ -193,11 +200,18 @@ class BaseController extends Controller
         die;
     }
 
-    protected function newajaxReturn($status, $data, $type='JSON')
+    /**
+     * 新ajax输出(无权限提示,需此方法)
+     * @param type $status
+     * @param type $data
+     * @param type $description
+     * @param type $type
+     */
+    protected function newajaxReturn($status, $data, $description='', $type='JSON')
     {
         $response = Yii::$app->getResponse();
         $response->format = Response::FORMAT_JSON;
-        $response->data = array("status"=>$status, "data" => $data);
+        $response->data = array("status" => $status, "data" => $data, 'description' => $description);
         Yii::$app->end();
     }
 }

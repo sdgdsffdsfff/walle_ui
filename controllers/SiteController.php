@@ -117,6 +117,6 @@ class SiteController extends BaseController
             return false;
         }
 
-        $this->newajaxReturn(403, array('msg' => 'unpermit'));
+        $this->newajaxReturn(self::STATUS_PERMIT, '无权限访问,请联系管理员!', '无权限访问,请联系管理员!');
     }
 }

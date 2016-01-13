@@ -273,11 +273,11 @@ use yii\helpers\Html;
             data: $('#create_version_form').serialize(),
             dataType: 'json',
             success: function(response){
-                if(response.data.msg == 'unpermit')
+                if(response.status == '40003')
                 {
                     swal({
                         title: "权限提示",
-                        text: "无权限访问,请联系管理员!",
+                        text: response.description,
                         type: "warning",
                         showCancelButton: false, //是否显示'取消'按钮
                         confirmButtonColor: "#e74c3c",
