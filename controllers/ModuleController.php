@@ -13,21 +13,22 @@ class ModuleController extends BaseController
 {
     public function actionIndex()
     {
-    	$models=Module::find()->all();
+    	$models = Module::find()->all();
 
         return $this->render('index',['models'=>$models]);
     }
+    
     public function actionUpdate()
     {
     	$chk_value = yii::$app->getRequest()->post('chk_value');
     	if(count($chk_value)){
-    		$params=' --log-level DEBUG';
-    		$params.=' --game icx';
+    		$params = ' --log-level DEBUG';
+    		$params .= ' --game icx';  //这个地方要根据选择的游戏不同,进行切换
     		foreach ($chk_value as $key => $value) {
-    			$params.=' --module '.$value;
+    			$params .= ' --module '.$value;
     		}
     		
-    		$a=exec("/data/work/walle/walle3/env/bin/walle updatetaglist".$params,$b); 
+    		$a = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params, $b); 
     		var_dump($a);
     		var_dump($b);
     		exit;
