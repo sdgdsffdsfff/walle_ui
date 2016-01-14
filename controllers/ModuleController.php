@@ -11,6 +11,10 @@ use app\models\Module;
 
 class ModuleController extends BaseController
 {
+    /**
+     * 模块更新版本列表
+     * @return type
+     */
     public function actionIndex()
     {
     	$models = Module::find()->all();
@@ -18,6 +22,9 @@ class ModuleController extends BaseController
         return $this->render('index',['models'=>$models]);
     }
     
+    /**
+     * 模块更新操作
+     */
     public function actionUpdate()
     {
     	$chk_value = yii::$app->getRequest()->post('chk_value');
