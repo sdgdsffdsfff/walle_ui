@@ -384,7 +384,7 @@ class TaskController extends BaseController
 //                 $this->ajaxReturn(self::STATUS_FAILS, array(),"执行发布任务脚本错误，请重新发布！");
 //             }
             
-            $this->ajaxReturn(self::STATUS_SUCCESS, array(),"发布任务成功！");
+            $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
         }
         else
         {

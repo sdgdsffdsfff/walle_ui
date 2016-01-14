@@ -321,7 +321,8 @@ $this->title = 'My Yii Application';
                                     	 if(json.status == 10000)
                                          {
                                         	 toastr.success('发布任务成功');
-                                        	 window.location.href="/task/detail?job_id=2";
+                                        	 var jobId = json.data;
+                                        	 window.location.href="/task/detail?job_id="+jobId;
                                          }
                                          else
                                          {
