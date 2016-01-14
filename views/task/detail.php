@@ -253,7 +253,7 @@ function showTasksTable(arr) {
         var status_c = document.createElement('td');
         switch(arr[i]["status"]){
             case 0:
-                var m = document.createTextNode("waiting");
+                var m = document.createTextNode("creating");
                 break;
             case 1:
                 var m = document.createTextNode("running");
@@ -271,7 +271,11 @@ function showTasksTable(arr) {
                 var m = document.createTextNode("skipped");
                 status_c.style.color = "#ffb606";
                 break;
+            case 5:
+                var m = document.createTextNode("waiting");
+                break;
             default:
+                var m = document.createTextNode("");
                 break;
         }
         status_c.appendChild(m);
