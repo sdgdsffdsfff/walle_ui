@@ -284,8 +284,10 @@ $this->title = 'My Yii Application';
 //              form.submit();
 //          },
      }); 
+	 var submiting = 0;
 	 $('#create_job_button').click(function(){
 		 if($("#publish_form").valid()){
+			
     		 swal({
     			    title: "发布任务确认",
     			    text: "",
@@ -299,6 +301,14 @@ $this->title = 'My Yii Application';
                     },
                     function (isConfirm) {
                     if (isConfirm) {
+                    	 
+                    	 if(submiting == 0)
+                 		 {
+                 			submiting = 1;
+                 		 }else
+                 		 {
+                     		 return;
+                     	 }
                     	 $.ajax({
                              type: "POST",
                              url: '/task/dopublish',
@@ -330,7 +340,7 @@ $this->title = 'My Yii Application';
                                         	  swal("提示", json.description, "error"); 
                                          }
                                      }
-                            	
+                            	 submiting = 0;
                             
                              }
                         });
