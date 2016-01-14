@@ -416,11 +416,11 @@ EOT;
             $info->release_time = $release_time;
             $info->update();
             
-            $this->ajaxReturn(1,'设置成功');
+            $this->ajaxReturn(self::STATUS_SUCCESS,'设置成功');
         }
         else
         {
-             $this->ajaxReturn(0,'参数不全');
+             $this->ajaxReturn(self::STATUS_FAILS,'参数不全');
         }
     }
 }
