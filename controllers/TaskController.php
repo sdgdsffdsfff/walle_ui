@@ -66,7 +66,39 @@ class TaskController extends BaseController
         );
         $this->newajaxReturn(self::STATUS_SUCCESS, $data);
     }
-    
+
+    /**
+     * kill job ajax 终止任务
+     * @param job_id int
+     * @return json
+     */
+    public function actionKilljob()
+    {
+        $job_id = yii::$app->getRequest()->post('job_id');
+        if (empty($job_id))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "参数错误，执行失败！");
+        }
+        $job = Job::findOne($job_id);
+        if (empty($job) || $job->status != 1)
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "当前任务信息或状态不合法！");
+        }
+        $gameAlias = yii::$app->session->get('game_alias');
+        //调用脚本执行kill job 
+        $scriptPath = Yii::$app->params['scriptPath'];
+        //log-level 是使用job_config中的log_level 还是固定DEBUG
+        $command = "{$scriptPath}walle job kill \
+                        --log-level DEBUG \
+                        --game {$gameAlias} \
+                        --job-id {$job_id}";
+        exec($command, $output, $returnVar);
+        //todo 根据脚本执行结果返回前端页面
+        //
+        $this->newajaxReturn(self::STATUS_SUCCESS, array(),"发布任务成功！");
+        
+    }
+
     /**
      * 发布任务
      * @return 

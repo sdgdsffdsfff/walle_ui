@@ -15,6 +15,7 @@ use yii\widgets\LinkPager;
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins//toastr/build/toastr.min.css'); ?>
 
 <div class="normalheader transition small-header">
     <div class="hpanel">
@@ -162,9 +163,18 @@ foreach ($job_list as $job) {
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
+     toastr.options = {
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-top-center",
+                "closeButton": true,
+                "debug": false,
+                "toastClass": "animated fadeInDown",
+            };
 });
 //终止任务
 function stop_task(id) 
@@ -181,7 +191,30 @@ function stop_task(id)
         if (isConfirm) 
         {
             //调用后台脚本
-            alert("终止任务："+id);
+            $.ajax({
+                type: 'POST',
+                url: '/task/killjob',
+                dataType: 'json',
+                data: {'job_id': id},
+                success: function(json) {
+                    if (json.status == 10000) {
+                        toastr.success("终止任务成功！");
+                        window.location.href="/task/list";
+                    } else {
+                        swal({
+                            title: "操作失败",
+                            text: json.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false,
+                        });
+                    }
+                }
+
+
+            });
         } 
         else 
         {

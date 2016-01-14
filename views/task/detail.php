@@ -12,6 +12,7 @@
 use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins//toastr/build/toastr.min.css'); ?>
 
 <div class="normalheader transition small-header">
     <div class="hpanel">
@@ -118,28 +119,60 @@ foreach ($job_config as $v) {
 </div>
 
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 
 <script type="text/javascript">
+$(function() {
+     toastr.options = {
+                "debug": false,
+                "newestOnTop": false,
+                "positionClass": "toast-top-center",
+                "closeButton": true,
+                "debug": false,
+                "toastClass": "animated fadeInDown",
+            };
+});
 
 //终止任务
 function stop_task(id) {
     swal({
-            title: "终止任务确认",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "确认",
-            cancelButtonText: "取消",
-        },
-        function(isConfirm){
-            if (isConfirm) {
-                //调用后台脚本
-                alert("终止任务："+id);
-            } else {
+        title: "终止任务确认",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#DD6B55",
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+    },
+    function(isConfirm){
+        if (isConfirm) {
+            //调用后台脚本
+            $.ajax({
+                type: 'POST',
+                url: '/task/killjob',
+                dataType: 'json',
+                data: {'job_id': id},
+                success: function(json) {
+                    if (json.status == 10000) {
+                        toastr.success("终止任务成功！");
+                        window.location.href="/task/detail?job_id="+id;
+                    } else {
+                        swal({
+                            title: "操作失败",
+                            text: json.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false,
+                        });
+                    }
+                }
+            });
+        } else {
 
-            }
+        }
 
-        });
+    });
 }
 
 
