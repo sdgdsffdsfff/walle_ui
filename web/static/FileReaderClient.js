@@ -95,12 +95,12 @@ FileReaderClient.run = function (socket_url, pid, filename, div_id, tail_line_co
             frc2.on('message', function (evt) {
                 console.log(evt);
                 var d = document.getElementById(div_id);
-                d.innerText = d.innerText + evt.data;
+                d.textContent = d.textContent + evt.data;
             });
             frc2.on('close', function (evt) {
                 console.log(evt);
                 var d = document.getElementById(div_id);
-                d.innerText = d.innerText + "\nwebsocket closed";
+                d.textContent = d.textContent + "\nwebsocket closed";
             });
             frc2.start();
             FileReaderClient._clients[div_id] = frc2;
