@@ -346,7 +346,7 @@ class TaskController extends BaseController
         $job['create_user'] = Yii::$app->getUser()->getIdentity()->name;
         $job['create_time'] = date('Y-m-d H:i:s');
         $job['status'] = 0;
-        $job['log_url'] = "http://logpath.com";
+//         $job['log_url'] = "http://logpath.com";
         
         $gameAlias = yii::$app->session->get('game_alias');
         
