@@ -213,7 +213,7 @@ use yii\widgets\LinkPager;
                 dataType:'json',
             }).done(function(data){
                 console.log(data);
-                if (data.status == '1') {
+                if (data.status == '10000') {
                     swal({ title:"设置上线时间", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
                     location.reload();
