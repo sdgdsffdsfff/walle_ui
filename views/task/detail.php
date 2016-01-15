@@ -89,7 +89,7 @@ foreach ($job_config as $v) {
                         <!-- 任务状态-->
                         <div class="hpanel hblue">
                             <div class="panel-heading">
-                            <h5>任务日志下载链接：<a style="text-decoration:underline" href="#"><?php echo $log_url;?></a></h5>
+                            <h5>任务日志下载链接：<a style="text-decoration:underline" href="<?php echo $log_url;?>"><?php echo $log_url;?></a></h5>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -189,7 +189,7 @@ function checkJobStatus(id) {
         "/task/jobstatus",
         {job_id:id},
         function(json) {
-            if (json.result = 10000) {
+            if (json.status == 10000) {
                 var job_info = eval(json.data);
                 //清空table内容
                 $("#task_body").html("");
@@ -201,7 +201,16 @@ function checkJobStatus(id) {
                 //更新table 中task 的信息
                 showTasksTable(job_info.tasks);
             } else {
-                alert("后台通信异常，请联系管理员!");
+                clearInterval(setIntervalFun);
+                swal({
+                    title: "操作失败",
+                    text: json.description,
+                    type: "warning",
+                    showCancelButton: false,
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtionText: "确认",
+                    closeOnConfirm: false,
+                });
             }
         },"json"
     );

@@ -47,12 +47,12 @@ class TaskController extends BaseController
         $job_id = yii::$app->getRequest()->post('job_id');
         if (empty($job_id))
         {
-            //提示错误跳转页面
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "job_id不能为空！");
         }
         $job = Job::findOne($job_id);
         if (empty($job))
         {
-            //提示错误跳转页面
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "参数错误,此Job不存在！");
         }
         $job_status = $job->status;
         $tasks = $job->tasks;
@@ -87,16 +87,19 @@ class TaskController extends BaseController
         $gameAlias = yii::$app->session->get('game_alias');
         //调用脚本执行kill job 
         $scriptPath = Yii::$app->params['scriptPath'];
-        //log-level 是使用job_config中的log_level 还是固定DEBUG
+        //log-level 固定DEBUG
         $command = "{$scriptPath}walle job kill \
                         --log-level DEBUG \
                         --game {$gameAlias} \
                         --job-id {$job_id}";
         exec($command, $output, $returnVar);
-        //todo 根据脚本执行结果返回前端页面
-        //
-        $this->newajaxReturn(self::STATUS_SUCCESS, array(),"发布任务成功！");
+        //根据脚本执行结果返回前端页面
+        if ($returnVar != 0)
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "后台命令，执行失败！");
+        }
         
+        $this->newajaxReturn(self::STATUS_SUCCESS, array(),"终止任务成功！");
     }
 
     /**
@@ -264,17 +267,15 @@ class TaskController extends BaseController
     public function actionDetail()
     {
         $job_id = yii::$app->getRequest()->get("job_id");
-        //todo job_id 为空的时候提示错误跳转list 页面
         if (empty($job_id))
         {
-        
+            $this->error("参数错误！", "/task/list");
         }
 
         $rend_data['job_id'] = $job_id;
-        //todo 查找job表、返回job_config log_url job_status(根据status判断是否显示终止任务按钮)
         $job = Job::findOne($job_id);
         if (empty($job)) {
-        
+            $this->error("参数错误！", "/task/list");
         }
         $job_status = $job->status;
         $log_url = $job->log_url;
