@@ -34,12 +34,9 @@ class ModuleController extends BaseController
     		foreach ($chk_value as $key => $value) {
     			$params .= ' --module '.$value;
     		}
-    		
-    		$a = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params, $b); 
-    		var_dump($a);
-    		var_dump($b);
-    		exit;
-    		$this->ajaxReturn(1,$out);
+            $logPath='/data/work/walle/log/updatetaglist_'.time().'.log';
+    		$pid = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params.' >$logPath 2>&1 & echo &!', $b); 
+    		$this->ajaxReturn(1,array('pid'=>$pid,'log_path'=>$logPath));
     	}else{
     		 $this->ajaxReturn(0,'没有选择更新内容');
     	}
