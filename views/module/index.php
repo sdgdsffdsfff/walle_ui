@@ -84,7 +84,7 @@ use yii\helpers\Html;
 
         $(".btn-primary").click(function() {
           $(this).attr("disabled","disabled");
-         cat();
+       
           var chk_value =[]; 
         $("input[name='subBox']:checked").each(function(){ 
         chk_value.push($(this).val()); 
@@ -99,9 +99,10 @@ use yii\helpers\Html;
             }).done(function(data){
                 console.log(data);
                 if (data.status == '1') {
+                      cat(data.data.pid,data.data.log_path);
                     swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
-                    location.reload();
+                    $(this).removeAttr("disabled");
                 }else{
                     swal({ title:"模块更新", text:data.data, type:"error"});
                     $(this).removeAttr("disabled");
@@ -115,10 +116,10 @@ use yii\helpers\Html;
         airMode: true
     });
 
-    function cat() {
+    function cat(pid,log_path) {
             var ws_url = 'ws://172.16.30.50:9003';
-            var log_path = '/data/work/log/nginx/access.log';
-            var pid = 0;
+            var log_path = log_path;
+            var pid = pid;
             var div_id = 'div_logs';
             document.getElementById(div_id).innerHTML = '';
             FileReaderClient.cat(ws_url, pid, log_path, div_id);
