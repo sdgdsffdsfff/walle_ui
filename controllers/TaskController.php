@@ -409,7 +409,7 @@ class TaskController extends BaseController
             exec($command, $output, $returnVar);
             if($returnVar == 0)
             {
-                $this->ajaxReturn(self::STATUS_SUCCESS, array(),"发布任务成功！");
+                $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
             }
             else
             {
