@@ -402,10 +402,10 @@ class TaskController extends BaseController
             //调用脚本执行job TODO
             $scriptPath = Yii::$app->params['scriptPath'];
             $command = "{$scriptPath}walle job run \
-                            --log-level {$logLevel} \
+                            --log-level DEBUG\
                             --game {$gameAlias} \
                             --job-id {$resJob}";
-            $command .= $targetTaskContent;
+            $command .= $targetTaskContent ." &";
             exec($command, $output, $returnVar);
 //             if($returnVar == 0)
 //             {
