@@ -99,8 +99,8 @@ use yii\helpers\Html;
             }).done(function(data){
                 console.log(data);
                 if (data.status == '1') {
-                      cat(data.data.pid,data.data.log_path);
-                    swal({ title:"模块更新", text:data.description, type:"success",timer: 5000,
+                      cat(data.description.pid,data.description.log_path);
+                    swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
                     $(this).removeAttr("disabled");
                 }else{
