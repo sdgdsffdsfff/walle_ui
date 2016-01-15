@@ -407,16 +407,14 @@ class TaskController extends BaseController
                             --job-id {$resJob}";
             $command .= $targetTaskContent ." &";
             exec($command, $output, $returnVar);
-//             if($returnVar == 0)
-//             {
-//                 $this->ajaxReturn(true, array(),"发布任务成功！");
-//             }
-//             else
-//             {
-//                 $this->ajaxReturn(self::STATUS_FAILS, array(),"执行发布任务脚本错误，请重新发布！");
-//             }
-            
-            $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
+            if($returnVar == 0)
+            {
+                $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
+            }
+            else
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(),"执行发布任务脚本错误，请重新发布！");
+            }
         }
         else
         {
