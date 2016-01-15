@@ -30,13 +30,13 @@ class ModuleController extends BaseController
     	$chk_value = yii::$app->getRequest()->post('chk_value');
     	if(count($chk_value)){
     		$params = ' --log-level DEBUG';
-    		$params .= ' --game icx';  //这个地方要根据选择的游戏不同,进行切换
+    		$params .= ' --game '.yii::$app->session->get('game_alias');;  //这个地方要根据选择的游戏不同,进行切换
     		foreach ($chk_value as $key => $value) {
     			$params .= ' --module '.$value;
     		}
             $logPath='/data/work/walle/log/updatetaglist_'.time().'.log';
             touch($logPath);
-    		$pid = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params.' >'.$logPath.' 2>&1 & echo $!', $b); 
+    		$pid = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params.' >'.$logPath.' 2>&1 & echo $!'); 
             if($pid){
                 $this->ajaxReturn(self::STATUS_SUCCESS,'模块更新成功',array('pid'=>$pid,'log_path'=>$logPath));
             }else{
