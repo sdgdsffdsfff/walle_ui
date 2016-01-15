@@ -37,7 +37,7 @@ class ModuleController extends BaseController
             $logPath='/data/work/walle/log/updatetaglist_'.time().'.log';
             touch($logPath);
     		$pid = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params.' >'.$logPath.' 2>&1 & echo $!', $b); 
-    		$this->ajaxReturn(1,array('pid'=>$pid,'log_path'=>$logPath));
+    		$this->ajaxReturn(1,'模块更新成功',array('pid'=>$pid,'log_path'=>$logPath));
     	}else{
     		 $this->ajaxReturn(0,'没有选择更新内容');
     	}
