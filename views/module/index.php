@@ -98,7 +98,7 @@ use yii\helpers\Html;
                 dataType:'json',
             }).done(function(data){
                 console.log(data);
-                if (data.status == '1') {
+                if (data.status == '10000') {
                       cat(data.description.pid,data.description.log_path);
                     swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
