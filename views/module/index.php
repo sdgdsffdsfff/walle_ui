@@ -100,13 +100,13 @@ use yii\helpers\Html;
                 console.log(data);
                 if (data.status == '10000') {
                       cat(data.description.pid,data.description.log_path);
-                      $(this).removeClass("disabled");
+                      $("#uptag").removeClass("disabled");
                     swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
                     
                 }else{
                     swal({ title:"模块更新", text:data.data, type:"error"});
-                    $(this).removeClass("disabled");
+                    $("#uptag").removeClass("disabled");
                 }
             });
 
