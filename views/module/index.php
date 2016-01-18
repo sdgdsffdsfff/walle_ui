@@ -45,7 +45,7 @@ use yii\helpers\Html;
                         </tbody>
                         
                     </table>
-                    <button type="button" class="btn w-xs btn-primary" >更新模块版本列表</button>
+                    <button type="button" class="btn w-xs btn-primary" id="uptag">更新模块版本列表</button>
                     </form>
                 </div>
             </div>
@@ -82,7 +82,7 @@ use yii\helpers\Html;
             });
 
 
-        $(".btn-primary").click(function() {
+        $("#uptag").click(function() {
           $(this).addClass("disabled");
           var chk_value =[]; 
         $("input[name='subBox']:checked").each(function(){ 
@@ -96,12 +96,14 @@ use yii\helpers\Html;
                 data:post,
                 dataType:'json',
             }).done(function(data){
+
                 console.log(data);
                 if (data.status == '10000') {
                       cat(data.description.pid,data.description.log_path);
+                      $(this).removeClass("disabled");
                     swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
-                    $(this).removeClass("disabled");
+                    
                 }else{
                     swal({ title:"模块更新", text:data.data, type:"error"});
                     $(this).removeClass("disabled");
