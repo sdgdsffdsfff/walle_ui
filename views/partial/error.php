@@ -28,7 +28,7 @@ use yii\helpers\Html;
         <div class="error-container">
             <i class="pe-7s-way text-success big-icon"></i>
             <h1>ERROR</h1>
-            <strong><?php echo Html::encode($message);?></strong>
+            <h4><?php echo Html::encode($message);?></h4>
             <p>
                 <?php echo $waitSecond ?></span>秒后自动跳转，如果不想等待，<a href="<?php echo $jumpUrl; ?>">直接点击这里</a>
             </p>
