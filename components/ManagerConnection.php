@@ -5,7 +5,9 @@ namespace app\components;
  * 建立新的数据库连接
  * @author zhaolu@playcrab.com
  */
+use yii;
 use yii\db\Connection;
+use yii\db\Exception;
 
 class ManagerConnection
 {
@@ -19,7 +21,9 @@ class ManagerConnection
     {
         if(empty($config) || !is_array($config))
         {
-            throw new Exception('数据库配信息错误!');
+            header('Location:/error/config-error');
+            exit;
+            //throw new Exception('数据库配信息错误!');
         }
         
         try
@@ -35,7 +39,9 @@ class ManagerConnection
         } 
         catch (Exception $e)
         {
-            throw new Exception('数据库连接失败!');
+            header('Location:/error/connection-error');
+            exit;
+            //throw new Exception('数据库连接失败!');
         }
         
         return $connection;
