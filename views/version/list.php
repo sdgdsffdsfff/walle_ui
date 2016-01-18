@@ -162,7 +162,7 @@ use yii\widgets\LinkPager;
         <div class="modal-content">
             <div class="color-line"></div>
             <div class="modal-header">
-                <h4 class="modal-title">Modal title</h4>
+                <h4 class="modal-title">设置时间</h4>
                 <small class="font-bold">设置时间</small>
             </div>
             <div class="modal-body">
