@@ -180,7 +180,7 @@ function stop_task(id) {
 var job_id = <?php echo $job_id;?>;
 var setIntervalFun = null;
 window.onload = function () {
-    setIntervalFun = setInterval("checkJobStatus(job_id)", 1000*7);
+    setIntervalFun = setInterval("checkJobStatus(job_id)", 1000*5);
     checkJobStatus(job_id);
 }
 //根据job_id查询当前job的状态,并根据job_status 判断是否需要轮询
