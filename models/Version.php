@@ -224,7 +224,7 @@ class Version extends BaseModel
                             ->andWhere(['<=', 'release_time',$endDate])
                             ->andWhere(['<', 'id',$versionId])
                             ->asArray()
-                            ->orderBy('id')
+                            ->orderBy('id desc')
                             ->all();
         return $versionUpdateList;
     }

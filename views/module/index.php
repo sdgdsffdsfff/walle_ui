@@ -83,8 +83,7 @@ use yii\helpers\Html;
 
 
         $(".btn-primary").click(function() {
-          $(this).attr("disabled","disabled");
-       
+          $(this).addClass("disabled");
           var chk_value =[]; 
         $("input[name='subBox']:checked").each(function(){ 
         chk_value.push($(this).val()); 
@@ -102,10 +101,10 @@ use yii\helpers\Html;
                       cat(data.description.pid,data.description.log_path);
                     swal({ title:"模块更新", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
-                    $(this).removeAttr("disabled");
+                    $(this).removeClass("disabled");
                 }else{
                     swal({ title:"模块更新", text:data.data, type:"error"});
-                    $(this).removeAttr("disabled");
+                    $(this).removeClass("disabled");
                 }
             });
 
