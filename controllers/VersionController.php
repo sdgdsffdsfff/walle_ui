@@ -76,8 +76,8 @@ class VersionController extends BaseController
         $sql = '1=1';
         if(isset($params['vid']) && !empty($params['vid']))
         {
-          $sql .= ' and id='.(int)$params['vid'];
-          $vid = $params['vid'];
+            $sql .= ' and id='.(int)$params['vid'];
+            $vid = $params['vid'];
         }
 
         if(isset($params['release']) && !empty($params['release']))
