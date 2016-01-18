@@ -555,8 +555,8 @@ class TaskController extends BaseController
                     {
                         $content.= "<div class=\"form-group\">\n".
                                     "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>\n".
-                                    "<div class=\"col-sm-8\">\n"
-                                            ."<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$value['value']}\" checked>\n".
+                                    "<div class=\"col-sm-8\">\n".
+                                            "<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"true\" checked>\n".
                                     "</div>\n".
          						"</div>\n" ;
                     }
@@ -564,7 +564,7 @@ class TaskController extends BaseController
                     {
                        $content.="<div class=\"form-group\">\n".
                                     "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>\n".
-                                    "<div class=\"col-sm-8\">". "<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$value['value']}\">".
+                                    "<div class=\"col-sm-8\">". "<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"true\">".
                                     "</div> ".
          						"</div>" ;
                     }
@@ -748,14 +748,22 @@ class TaskController extends BaseController
         
         //动态参数
         $dynamicConfigList = DynamicConfig::getData();
-        $dynamicConfig = array();
+        $dynamicConfigNew = array();
+       
         if(!empty($dynamicConfigList))
         {
             foreach ($dynamicConfigList as $value) {
-                $dynamicConfig[$value['parameter']['name']] = $value['value'];
+                if($value['parameter']['value_type'] == 'bool' && $dynamicConfig[$value['parameter']['name']] == "")
+                {
+                    $dynamicConfigNew[$value['parameter']['name']] = 'false';
+                }
+                else
+                {
+                $dynamicConfigNew[$value['parameter']['name']] = $dynamicConfig[$value['parameter']['name']];
+                }
             }
         }
-        $jobConfig['dynamic_config'] = $dynamicConfig;
+        $jobConfig['dynamic_config'] = $dynamicConfigNew;
         return $jobConfig;
     }
 
