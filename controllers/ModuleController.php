@@ -17,7 +17,7 @@ class ModuleController extends BaseController
      */
     public function actionIndex()
     {
-    	$models = Module::find()->all();
+    	$models = Module::findBySql('select * from module where repo_type!="svn"')->asArray()->all();
 
         return $this->render('index',['models'=>$models]);
     }
@@ -36,7 +36,7 @@ class ModuleController extends BaseController
     		}
             $logPath='/data/work/walle/log/updatetaglist_'.time().'.log';
             touch($logPath);
-    		$pid = exec(yii::$app->params['scriptPath']."walle updatetaglist".$params.' >'.$logPath.' 2>&1 & echo $!'); 
+    		$pid = exec("LANG=en_US.UTF-8 ".yii::$app->params['scriptPath']."walle updatetaglist".$params.' >'.$logPath.' 2>&1 & echo $!'); 
             if($pid){
                 $this->ajaxReturn(self::STATUS_SUCCESS,'模块更新成功',array('pid'=>$pid,'log_path'=>$logPath));
             }else{
