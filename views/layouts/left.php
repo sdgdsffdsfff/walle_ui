@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <aside id="menu">
     <div id="navigation">
         <div class="profile-picture">
-            <a href="index.html">
+            <a href="javascript:void(0);">
                 <?= Html::img('@web/static/images/av3.png', ['class' => 'img-circle m-b', 'alt' => 'logo','style' => 'width:60px;height:60px;']); ?>
             </a>
             <div class="stats-label text-color">
