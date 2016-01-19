@@ -379,7 +379,7 @@ class TaskController extends BaseController
         $job['deployment_id'] = $deploymentId;
         $job['worker_id'] = $workerId;
         $job['target_tasks'] = $targetTasksStr;
-        $job['create_user'] = Yii::$app->getUser()->getIdentity()->name;
+        $job['create_user'] = yii::$app->getUser()->getIdentity()->account;
         $job['create_time'] = date('Y-m-d H:i:s');
         $job['status'] = 0;
 //         $job['log_url'] = "http://logpath.com";

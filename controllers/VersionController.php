@@ -202,7 +202,7 @@ class VersionController extends BaseController
         $version_data = array(
             'platform_id' => $post['new_platform'],
             'upgrade_path_id' => $post['new_upgrade_path'],
-            'create_user' => 'luis',
+            'create_user' => yii::$app->getUser()->getIdentity()->account,
             'change_log' => $post['changelog'],
         );
         $bool_version = Version::createVersion($version_data);
