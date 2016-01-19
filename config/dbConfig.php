@@ -44,6 +44,13 @@ return [
             'password' => 'wW#3HdCDp&9r',
             'charset' => 'utf8',
         ],
+        'xianpro' => [
+            'class' => 'yii\db\Connection',
+            'dsn' => 'mysql:host=127.0.0.1;dbname=walle_dev_xianpro',
+            'username' => 'walle',
+            'password' => 'wW#3HdCDp&9r',
+            'charset' => 'utf8',
+        ],
     ]
 ];
 
