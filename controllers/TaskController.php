@@ -88,7 +88,7 @@ class TaskController extends BaseController
         //调用脚本执行kill job 
         $scriptPath = Yii::$app->params['scriptPath'];
         //log-level 固定DEBUG
-        $command = "{$scriptPath}walle job kill \
+        $command = "LANG=en_US.UTF-8 {$scriptPath}walle job kill \
                         --log-level DEBUG \
                         --game {$gameAlias} \
                         --job-id {$job_id}";
