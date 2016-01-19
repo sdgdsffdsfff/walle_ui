@@ -38,7 +38,6 @@ class SiteController extends BaseController
         if (!Yii::$app->getUser()->getIsGuest()) {
             return $this->goHome();
         }
-
         //callback
         $callback = Url::toRoute('site/callback', true);
         $loginUrl = Common::loginUrl($callback);
@@ -67,6 +66,9 @@ class SiteController extends BaseController
         }
         $uid = (int)$uid;
         $user = User::findIdentity($uid);
+        if(!$user){
+            $this->error403();
+        }
 
         Yii::$app->getUser()->login($user);
         return $this->goHome();

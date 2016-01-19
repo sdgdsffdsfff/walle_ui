@@ -48,6 +48,10 @@ class User extends Object implements IdentityInterface
         if (is_null($userInfo)) {
             return null;
         }
+        $userinfo = Identity::getRolesById($uid);
+       if(count($userinfo)==0){
+        return null;
+       }
 
         // 将获取的用户信息封装成 IdentityInterface 实例
         $user = new self();
