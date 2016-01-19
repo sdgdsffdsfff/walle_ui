@@ -63,7 +63,7 @@ class ClientpackageController extends BaseController
             $countSql .= ' and a.deployment_id=' . $params['deployment_id'];
             $deployment_id = $params['deployment_id'];
         }
-        $sql.="order by id desc";
+        $sql.=" order by id desc";
         $res = Clientpackage::findBySql($countSql)->asArray()->all();
         $totalCount = $res[0]['count']; 
 
