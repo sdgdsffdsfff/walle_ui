@@ -33,14 +33,7 @@ use yii\helpers\Html;
                 <li class=""><a data-toggle="tab" href="#tab-1">任务参数</a></li>
                 <li class="active"><a data-toggle="tab" href="#tab-2">任务状态</a></li>
                 <!--根据job_status判断是否显示终止任务按钮-->
-<!--
-                <button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("");'>终止任务</a></button>
--->
-<?php
-if ($job_status == 1) {
-    echo '<button class="btn-outline w-xs btn-danger col-lg-offset-8" onclick=\'javascript:stop_task("'.$job_id.'");\'>终止任务</a></button>';
-}
-?>
+                <button id="kill_job" style="display:none;" class="btn-outline w-xs btn-danger col-lg-offset-8" onclick='javascript:stop_task("<?php echo $job_id;?>");'>终止任务</a></button>
 
             </ul>
             <div class="tab-content">
@@ -216,7 +209,7 @@ function checkJobStatus(id) {
     );
 }
 
-//更改job status 页面显示,status为当前job的状态1，2，3
+//更改job status 页面显示,status为当前job的状态0,1，2，3, 4
 function updateJobStatus(status) {
     switch(status){
         case 0:
@@ -243,6 +236,11 @@ function updateJobStatus(status) {
             document.getElementById("taskstatus").style.backgroundColor = "#e74c3c";
             document.getElementById("statuscontent").textContent = "执行终止";
             break;
+    }
+    if (status < 2) {
+        document.getElementById("kill_job").style.display = "inline";
+    } else {
+        document.getElementById("kill_job").style.display = "none";
     }
 }
 
