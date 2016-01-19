@@ -543,7 +543,7 @@ class TaskController extends BaseController
                                 "</div> ".
                                 "</div>" ;
                          
-                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, number:true,min:1,max:4, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
+                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, number:true,min:1,max:4, messages:{required:\"请输入{$value['parameter']['description']}\",number:\"请输入数字\",min:\"请输入大于0的数字\",max:\"请输入小于5的数字\"}});\n";
                     }
                     else
                     {
