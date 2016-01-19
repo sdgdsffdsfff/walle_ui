@@ -195,7 +195,7 @@ function checkJobStatus(id) {
                 $("#task_body").html("");
                 //更新job 状态
                 updateJobStatus(job_info.status);
-                if(job_info.status != 1) {
+                if(job_info.status != 1 && job_info.status !=0) {
                     clearInterval(setIntervalFun);
                 }                
                 //更新table 中task 的信息
