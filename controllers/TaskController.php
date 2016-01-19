@@ -280,9 +280,12 @@ class TaskController extends BaseController
         $job_status = $job->status;
         $log_url = $job->log_url;
         $job_config = $job->job_config;
-        //job_config 需要解析json，查找对应key 在parameter表中对应的description值,拼成数组传递到view层
-        $job_config_arr = $this->replaceJobConfigDescription($job_config);
-        
+        $job_config_arr = array();
+        if (!empty($job_config))
+        {
+            //job_config 需要解析json，查找对应key 在parameter表中对应的description值,拼成数组传递到view层
+            $job_config_arr = $this->replaceJobConfigDescription($job_config);
+        }
         $rend_data['job_status'] = $job_status;
         $rend_data['log_url'] = $log_url;
         $rend_data['job_config'] = $job_config_arr;
