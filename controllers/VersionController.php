@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
 use app\models\Version;
 use app\models\Platform;
+use app\models\Region;
 use app\models\Module;
 use app\models\ModuleTag;
 use app\models\UpgradePath;
@@ -127,7 +128,11 @@ class VersionController extends BaseController
                             ->with('module')
                             ->asArray()
                             ->all();
+            $region=Region::find()->where('id='.$v['platform']['region_id'])->select(['name'])
+            ->asArray()
+            ->one();
             $models[$k]['modules']=$res;
+            $models[$k]['region']=$region['name'];
         }
 
         $pageCount = $pages->pageCount;
