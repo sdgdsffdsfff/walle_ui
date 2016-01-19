@@ -50,7 +50,7 @@ use yii\widgets\LinkPager;
                         <div class="form-group">
                             <label for="exampleInputEmail2">升级序列：</label>
                             <select class="js-source-states" name="upgrade_path_id" style="width:180px; margin-right: 12px;">
-                                <optgroup label="请选择升级序列">
+                                
                                     <option value="">请选择升级序列</option>
                                         <?php 
                                             foreach ($upgradePath as $v) {
@@ -62,13 +62,13 @@ use yii\widgets\LinkPager;
 
                                             }
                                         ?>
-                                </optgroup>
+                                
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">平台：</label>
                             <select class="js-source-states" name="platform_id" style="width:180px; margin-right: 12px;">
-                                <optgroup label="请选择发行区域-平台">
+                               
                                     <option value="">请选择发行区域-平台</option>
                                     <?php 
                                         foreach ($platform as $v) {
@@ -80,17 +80,17 @@ use yii\widgets\LinkPager;
 
                                         }
                                     ?>
-                                </optgroup>
+                               
                             </select>
                         </div>
                         <div class="form-group" >
                             <label for="exampleInputEmail2">上线状态：</label>
                             <select class="js-source-states" name="release" style="margin-right: 12px;">
-                                <optgroup label="请选择">
+                               
                                     <option value="">请选择</option>
                                     <option value="1" <?php if($release==1){echo "selected";}?>>已上线</option>
                                     <option value="2" <?php if($release==2){echo "selected";}?>>未上线</option>
-                                </optgroup>
+                             
                             </select>
                         </div>
                         <button type="submit" class="btn btn-warning" >查询</button>
