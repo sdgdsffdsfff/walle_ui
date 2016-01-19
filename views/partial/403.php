@@ -21,15 +21,17 @@ use yii\helpers\Html;
         <?= Html::cssFile('@web/static/styles/style.css'); ?>
     </head>
     <body class="blank">
+        <?php if($flag){ ?>
         <div class="back-link">
             <a href="/" class="btn btn-primary">返回首页</a>
         </div>
+        <?php } ?>
         <div class="error-container">
             <i class="pe-7s-way text-success big-icon"></i>
             <h1>403</h1>
             <strong>您没有权限访问，请联系系统管理员！</strong>
             <p></p>
-            <a href="/" class="btn btn-xs btn-success">返回首页</a>
+            <?php if($flag){ ?><a href="/" class="btn btn-xs btn-success">返回首页</a><?php } ?>
         </div>
 
         <!-- Vendor scripts -->

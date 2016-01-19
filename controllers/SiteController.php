@@ -62,12 +62,12 @@ class SiteController extends BaseController
         $uid = Common::checkToken($token);
 
         if (!$uid) {
-            $this->error403();
+            $this->error403(false);
         }
         $uid = (int)$uid;
         $user = User::findIdentity($uid);
         if(!$user){
-            $this->error403();
+            $this->error403(false);
         }
 
         Yii::$app->getUser()->login($user);

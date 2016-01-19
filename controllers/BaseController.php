@@ -153,11 +153,11 @@ class BaseController extends Controller
      *
      * @return void
      */
-    protected function error403()
+    protected function error403($flag = true)
     {
         $response = Yii::$app->getResponse();
         $response->setStatusCode(403);
-        $response->content = $this->renderPartial(self::TPL_JUMP_ERROR_403);
+        $response->content = $this->renderPartial(self::TPL_JUMP_ERROR_403, array('flag' => $flag));
         $response->send();
 
         if (YII_ENV_TEST) {
