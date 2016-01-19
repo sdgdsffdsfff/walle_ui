@@ -415,7 +415,6 @@ class TaskController extends BaseController
         {
             $this->ajaxReturn(self::STATUS_FAILS, array(), "发布任务失败！");
         }
-        $this->ajaxReturn(self::STATUS_SUCCESS,  $params, "成功");
     }
     
     /**
