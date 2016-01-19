@@ -110,7 +110,7 @@ use yii\widgets\LinkPager;
                                     echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
                                     echo "<td>".$k['upgrade_name']."</td>";
                                     echo "<td>".$k['deployment_name']."</td>";
-                                    echo "<td>".$k['url']."</td>";
+                                    echo "<td><a name='download' href='".$k['url']."' target='_blank'>".$k['url']."</a></td>";
                                     echo "</tr>";
 
                                 }
@@ -130,8 +130,10 @@ use yii\widgets\LinkPager;
 <!-- Vendor scripts -->
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
+<?= Html::jsFile('@web/static/codymenu.js'); ?>
 <script type="text/javascript">
     $(function () {
         $(".js-source-states").select2();
+        $("[name='download']").codyMenu();
     });
 </script>
