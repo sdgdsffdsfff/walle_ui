@@ -88,7 +88,7 @@ class TaskController extends BaseController
         //调用脚本执行kill job 
         $scriptPath = Yii::$app->params['scriptPath'];
         //log-level 固定DEBUG
-        $command = "{$scriptPath}walle job kill \
+        $command = "LANG=en_US.UTF-8 {$scriptPath}walle job kill \
                         --log-level DEBUG \
                         --game {$gameAlias} \
                         --job-id {$job_id}";
@@ -401,30 +401,20 @@ class TaskController extends BaseController
             foreach ($targetTask as $value) {
                 $targetTaskContent .= " --target-task {$value} ";
             }
-           
             
-            //调用脚本执行job TODO
+           //调用脚本执行job TODO
+            $logPath='/data/work/walle/log/jobrun_'.time().'.log';
+            touch($logPath);
             $scriptPath = Yii::$app->params['scriptPath'];
-            $command = "{$scriptPath}walle job run \
-                            --log-level DEBUG\
-                            --game {$gameAlias} \
-                            --job-id {$resJob}";
-            $command .= $targetTaskContent ." &";
-            exec($command, $output, $returnVar);
-            if($returnVar == 0)
-            {
-                $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
-            }
-            else
-            {
-                $this->ajaxReturn(self::STATUS_FAILS, array(),"执行发布任务脚本错误，请重新发布！");
-            }
+            $command = "(LANG=en_US.UTF-8 {$scriptPath}walle job run --log-level DEBUG --game {$gameAlias} --job-id {$resJob}";
+            $command .= $targetTaskContent .") >{$logPath} 2>&1 &";
+            exec($command);
+            $this->ajaxReturn(self::STATUS_SUCCESS, $resJob,"发布任务成功！");
         }
         else
         {
             $this->ajaxReturn(self::STATUS_FAILS, array(), "发布任务失败！");
         }
-        $this->ajaxReturn(self::STATUS_SUCCESS,  $params, "成功");
     }
     
     /**
