@@ -477,6 +477,7 @@ class TaskController extends BaseController
                                     "<thead>".
                                     "<tr>".
                                     "<th>版本号</th>".
+                                    "<th>创建时间</th>".
                                     "<th>上线时间</th>".
                                     "<th>是否选择</th>".
                                     "</tr>".
@@ -487,6 +488,7 @@ class TaskController extends BaseController
         foreach ($versionUpdateList as $key => $value) {
             $trContent .= "<tr>".
                             "<td>{$value['id']}</td>".
+                            "<td>{$value['create_time']}</td>".
                             "<td>{$value['release_time']}</td>".
                             "<td><input id=\"chk_all_{$key}\"  type=\"checkbox\" name=\"package_update_config[]\" value=\"{$value['id']}\" checked></td>".
             "</tr>";

@@ -126,6 +126,7 @@ $this->title = 'My Yii Application';
                                     <thead>
                                     <tr>
                                     <th>版本号</th>
+                                    <th>创建时间</th>
                                     <th>上线时间</th>
                                     <th>是否选择</th>
                                     </tr>
@@ -134,6 +135,7 @@ $this->title = 'My Yii Application';
                                          <?php  foreach ($data['versionUpdateList'] as $key => $value) {?>
                                              <tr>
                                                    <td><?php echo $value['id']?></td>
+                                                   <td><?php echo $value['create_time']?></td>
                                                    <td><?php echo $value['release_time']?></td>
                                                    <td><input id="chk_all_<?php echo $key?>"  type="checkbox" name="package_update_config[]" value="<?php echo $value['id']?>" checked></td>
                                            </tr>
@@ -215,6 +217,23 @@ $this->title = 'My Yii Application';
 	
 	</form>
 </div>
+</div>
+<div class="modal fade" id="myModal6" tabindex="-1" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">提示</h4>
+                <!--<small class="font-bold">设置时间</small>-->
+            </div>
+            <div class="modal-body">
+                <div class="input-group date">
+                    任务发布中，请等待。。。。。。。
+                </div>
+            </div>
+          
+        </div>
+    </div>
 </div>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
@@ -301,7 +320,7 @@ $this->title = 'My Yii Application';
                     },
                     function (isConfirm) {
                     if (isConfirm) {
-                    	 
+                    	 $("#myModal6").modal('show');
                     	 if(submiting == 0)
                  		 {
                  			submiting = 1;
@@ -331,6 +350,7 @@ $this->title = 'My Yii Application';
                                     	 if(json.status == 10000)
                                          {
                                         	 toastr.success(json.description);
+                                        	 $("#myModal6").modal('hide');
                                         	 var jobId = json.data;
                                         	 window.location.href="/task/detail?job_id="+jobId;
                                          }
