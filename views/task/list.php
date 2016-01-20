@@ -121,6 +121,13 @@ foreach ($job_list as $job) {
         $status = "执行失败";
         $operate = "";
         break;
+    case 4:
+        $status = "执行终止";
+        $operate = "";
+        break;
+    default:
+        $status = "";
+        $operate = "";
     }
     echo "<tr>";
     echo "<td><a style='text-decoration:underline' href='/task/detail?job_id=".$job['id']."'>".$job['id']."</a></td>";

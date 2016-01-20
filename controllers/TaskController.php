@@ -534,14 +534,29 @@ class TaskController extends BaseController
                     $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
                     break;
                 case 'string' :
-                    $content.= "<div class=\"form-group\">".
-                                    "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>".
-                                    "<div class=\"col-sm-8\">".
-                                        "<input id=\"{$value['parameter']['name']}\" type=\"text\"  class=\"form-control\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$value['value']}\" style=\"width: 100%\"></label>\n".
-                                    "</div> ".
-         						"</div>" ;
+                    if($value['parameter']['name'] == 'concurrent_task_count')
+                    {
+                        $content.= "<div class=\"form-group\">".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>".
+                                "<div class=\"col-sm-8\">".
+                                "<input id=\"{$value['parameter']['name']}\" type=\"text\"  class=\"form-control\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$value['value']}\" style=\"width: 100%\"></label>\n".
+                                "</div> ".
+                                "</div>" ;
+                         
+                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, number:true,min:1,max:4, messages:{required:\"请输入{$value['parameter']['description']}\",number:\"请输入数字\",min:\"请输入大于0的数字\",max:\"请输入小于5的数字\"}});\n";
+                    }
+                    else
+                    {
+                        $content.= "<div class=\"form-group\">".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>".
+                                "<div class=\"col-sm-8\">".
+                                "<input id=\"{$value['parameter']['name']}\" type=\"text\"  class=\"form-control\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$value['value']}\" style=\"width: 100%\"></label>\n".
+                                "</div> ".
+                                "</div>" ;
+                         
+                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
+                    }
                    
-                    $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
                     break;
                 case 'bool' :
                     if(trim($value['value']) === 'true')
