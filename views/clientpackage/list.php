@@ -108,6 +108,7 @@ use yii\widgets\LinkPager;
 
                                     echo "<tr>";
                                     echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                    echo "<td>".$k['region_name'].'-'.$k['platform_name']."</td>";
                                     echo "<td>".$k['upgrade_name']."</td>";
                                     echo "<td>".$k['deployment_name']."</td>";
                                     echo "<td><a name='download' href='".$k['url']."' target='_blank'>".$k['url']."</a></td>";

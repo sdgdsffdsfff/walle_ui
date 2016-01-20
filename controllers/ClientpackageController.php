@@ -75,9 +75,12 @@ class ClientpackageController extends BaseController
         {
  			$up = UpgradePath::find()->where('id=' . $v['upgrade_path_id'])->one();
  			$de = Deployment::find()->where('id=' . $v['deployment_id'])->one();
-            
+            $pl = Platform::find()->where('id=' . $v['platform_id'])->with('region')->asArray()->one();
+
  			$models[$k]['upgrade_name'] = $up['name'];
  			$models[$k]['deployment_name'] = $de['name'];
+            $models[$k]['platform_name'] = $pl['name'];
+            $models[$k]['region_name'] = $pl['region']['name'];
  		}
    
         $pageCount=$pages->pageCount;
