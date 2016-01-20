@@ -352,7 +352,7 @@ $this->title = 'My Yii Application';
                                  else{
                                     	 if(json.status == 10000)
                                          {
-                                        	 toastr.success(json.description);
+//                                         	 toastr.success(json.description);
 //                                         	 $("#myModal6").modal('hide');
                                         	 var jobId = json.data;
                                         	 window.location.href="/task/detail?job_id="+jobId;
