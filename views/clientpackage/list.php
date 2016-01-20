@@ -97,6 +97,7 @@ use yii\widgets\LinkPager;
                         <thead>
                             <tr>
                                 <th data-toggle="true">版本号</th>
+                                <th>平台</th>
                                 <th>升级序列</th>
                                 <th>发布位置</th>
                                 <th>安装包下载地址</th>
