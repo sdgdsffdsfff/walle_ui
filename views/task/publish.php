@@ -8,6 +8,7 @@ $this->title = 'My Yii Application';
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweetalert2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <?= Html::cssFile('@web/static/plugins//toastr/build/toastr.min.css'); ?>
 
@@ -238,6 +239,7 @@ $this->title = 'My Yii Application';
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweetalert2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 
 <script type="text/javascript">
@@ -320,6 +322,7 @@ $this->title = 'My Yii Application';
                     },
                     function (isConfirm) {
                     if (isConfirm) {
+                    	swal.disableButtons();
 //                     	 $("#myModal6").modal('show');
                     	 if(submiting == 0)
                  		 {
