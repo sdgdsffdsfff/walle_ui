@@ -477,7 +477,7 @@ class TaskController extends BaseController
                                     "<thead>".
                                     "<tr>".
                                     "<th>版本号</th>".
-                                    "<th>发布时间</th>".
+                                    "<th>上线时间</th>".
                                     "<th>是否选择</th>".
                                     "</tr>".
                                     "</thead>".
