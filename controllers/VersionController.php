@@ -262,6 +262,7 @@ class VersionController extends BaseController
             $moduleTag_array[] = [
                 'name' => $value['name'],
                 'tag' => empty($result['tag']) ? 'null' : $result['tag'],
+                'description' => $value['description'],
             ];
         }
 

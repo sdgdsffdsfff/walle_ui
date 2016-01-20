@@ -26,7 +26,7 @@ use yii\helpers\Html;
                             <table class="table table-hover table-bordered table-striped">
                                 <tbody>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">版本号</label>
                                         </td>
                                         <td class="issue-info">
@@ -36,7 +36,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">发行区域</label>
                                         </td>
                                         <td class="issue-info">
@@ -46,7 +46,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">平台</label>
                                         </td>
                                         <td class="issue-info">
@@ -56,7 +56,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">升级序列</label>
                                         </td>
                                         <td class="issue-info">
@@ -66,7 +66,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">创建人</label>
                                         </td>
                                         <td class="issue-info">
@@ -76,7 +76,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">创建时间</label>
                                         </td>
                                         <td class="issue-info">
@@ -86,7 +86,7 @@ use yii\helpers\Html;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="col-md-2 text-center">
+                                        <td class="col-md-3 text-center">
                                             <label class="control-label">修改日志</label>
                                         </td>
                                         <td class="issue-info">
@@ -119,8 +119,8 @@ use yii\helpers\Html;
                             <tbody>
                                 <?php foreach($moduleTags as $tag){ ?>
                                 <tr>
-                                    <td class="col-md-2 text-center">
-                                        <label class="control-label"><?= ucwords($tag['name']); ?></label>
+                                    <td class="col-md-4 text-center">
+                                        <label class="control-label"><?= $tag['description']; ?></label>
                                     </td>
                                     <td class="issue-info">
                                         <small>

@@ -50,7 +50,7 @@ use yii\helpers\Html;
                         </div>
                         <?php foreach($module_list as $module){ ?>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><?= ucwords($module['name']); ?></label>
+                            <label class="col-sm-2 control-label"><?= $module['description']; ?></label>
                             <div class="col-sm-10">
                                 <input type="text" placeholder="<?= ucwords($module['name']); ?>" class="form-control" id="<?= $module['name']; ?>" name="<?= $module['name']; ?>" disabled="" />
                             </div>
@@ -98,7 +98,7 @@ use yii\helpers\Html;
                         </div>
                         <?php foreach($module_list as $module){ ?>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label"><?= ucwords($module['name']); ?></label>
+                            <label class="col-sm-2 control-label"><?= $module['description']; ?></label>
                             <div class="col-sm-10">
                                 <?php if(((strtolower($module['name']) == 'asset') || (strtolower($module['name']) == 'config')) && ($module['repo_type'] == 'SVN')){ ?>
                                 <input type="text" placeholder="<?= ucwords($module['name']); ?>" class="form-control" id="new_<?= $module['name']; ?>" name="new_<?= $module['name']; ?>" />
