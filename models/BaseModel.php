@@ -15,7 +15,7 @@ class BaseModel extends ActiveRecord
 
 	public function init() 
     {
-		$this->db = static::getDb();
+		$this->db = self::getDb();
 	}
     
     /**
