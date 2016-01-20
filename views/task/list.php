@@ -44,7 +44,7 @@ use yii\widgets\LinkPager;
                         <div class="form-group">
                             <label class="control-label">发布位置：</label>
                             <select class="js-source-states" name="deployment_id" style="width:200px; margin-right: 40px;">
-                                <optgroup label="请选择发布位置">
+                                <optgroup label="">
                                     <option value="">请选择发布位置</option>
                                     <!---  php foreach work table-->
 <?php
