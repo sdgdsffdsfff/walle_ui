@@ -320,7 +320,7 @@ $this->title = 'My Yii Application';
                     },
                     function (isConfirm) {
                     if (isConfirm) {
-                    	 $("#myModal6").modal('show');
+//                     	 $("#myModal6").modal('show');
                     	 if(submiting == 0)
                  		 {
                  			submiting = 1;
@@ -350,7 +350,7 @@ $this->title = 'My Yii Application';
                                     	 if(json.status == 10000)
                                          {
                                         	 toastr.success(json.description);
-                                        	 $("#myModal6").modal('hide');
+//                                         	 $("#myModal6").modal('hide');
                                         	 var jobId = json.data;
                                         	 window.location.href="/task/detail?job_id="+jobId;
                                          }
