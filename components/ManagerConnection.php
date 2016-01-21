@@ -5,12 +5,17 @@ namespace app\components;
  * 建立新的数据库连接
  * @author zhaolu@playcrab.com
  */
-use yii;
 use yii\db\Connection;
 use yii\db\Exception;
 
 class ManagerConnection
 {
+    private static $_instance;
+    
+    private function __construct() { }
+    
+    private function __clone() { }
+
     /**
      * 切换数据库时,建立新的数据库连接
      * @param array $config 数据库配置信息
@@ -26,24 +31,27 @@ class ManagerConnection
             //throw new Exception('数据库配信息错误!');
         }
         
-        try
+        if(!(self::$_instance instanceof Connection))
         {
-            $connection = new Connection([
-                'dsn' => $config['dsn'],
-                'username' => $config['username'],
-                'password' => $config['password'],
-                'charset' => $config['charset'],
-            ]);
-            
-            $connection->open();
-        } 
-        catch (Exception $e)
-        {
-//            header('Location:/error/connection-error');
-//            exit;
-            throw new Exception();
+            try
+            {
+                self::$_instance = new Connection([
+                    'dsn' => $config['dsn'],
+                    'username' => $config['username'],
+                    'password' => $config['password'],
+                    'charset' => $config['charset'],
+                ]);
+
+                self::$_instance->open();
+            } 
+            catch (Exception $e)
+            {
+    //            header('Location:/error/connection-error');
+    //            exit;
+                throw new Exception();
+            }
         }
-        
-        return $connection;
+
+        return self::$_instance;
     }
 }
