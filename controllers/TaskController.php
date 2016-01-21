@@ -115,6 +115,9 @@ class TaskController extends BaseController
         $packageListData       = array();
         $versionUpdateListData = array();
         
+        $isVersionsUpdatePackage = true;
+        $isPackageListContent = true;
+        
         if(!empty($versionId))
         {
             $versionData = Version::getById($versionId);
@@ -136,16 +139,20 @@ class TaskController extends BaseController
             
             //获得平台下安装包
             $packageListData = Package::getDataByPlatformId($platformId);
-            if(!$packageListData)
-            {
+//             if(!$packageListData)
+//             {
 //                 $this->error('平台下无安装包！', Url::toRoute('index/index'));
-            }
+//             }
             //         var_dump($packageListData);
             
             // 获得升级序列下的30天发布的已上线版本列表
             $startDate = date('Y-m-d 00:00:00', strtotime('-30 day'));
             $endDate = date('Y-m-d H:i:s', time());
-             $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId);
+            $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId);
+//             if(!$versionUpdateListData)
+//             {
+//                  $this->error('平台下无安装包！', Url::toRoute('index/index'));
+//             } 
             //         var_dump($versionUpdateListData);
         }
         
@@ -181,9 +188,8 @@ class TaskController extends BaseController
         $data['deploymentListContent']  = $this->getDeploymentList($deploymentListData);
         $data['packageListContent']     = $this->getPackagelist($packageListData);
         $data['versionUpdateContent']   = $this->getVersionupdatelist($versionUpdateListData);
-        
-//         var_dump($data);
-        
+        $data['isPackageListContent']   = $data['packageListContent']!= null? true:false;
+        $data['isVersionsUpdatePackage']  = $data['versionUpdateContent']!= null? true:false;
         return $this->render('publish',['data'=>$data]);
     }
     
@@ -353,7 +359,17 @@ class TaskController extends BaseController
         
         if(empty($targetTasks))
         {
-            $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择发布任务！");
+            $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择发布任务目标！");
+        }
+        
+        if(in_array('create_client_update_package', $targetTasks) && empty($versionsUpdatePackage))
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择客户端更新包！");
+        }
+        
+        if(in_array('create_client_package', $targetTasks) && empty($packageConfig))
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择客户端安装包！");
         }
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";

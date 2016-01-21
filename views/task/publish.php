@@ -9,7 +9,6 @@ $this->title = 'My Yii Application';
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweetalert2.css'); ?>
-<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <?= Html::cssFile('@web/static/plugins//toastr/build/toastr.min.css'); ?>
 
 <div class="normalheader transition small-header">
@@ -80,7 +79,16 @@ $this->title = 'My Yii Application';
 								<div class="col-md-2 col-md-offset-7">
 									<div class="checkbox checkbox-warning">
 										<input id="create_client_update_package" type="checkbox"
-											name="target_tasks[]" checked
+											name="target_tasks[]"  
+											<?php if (!$data['isVersionsUpdatePackage']) 
+    										{
+    										    echo "disabled";
+    										}
+    										else
+    										{
+    										    echo  "checked";
+    										}
+                                            ?>
 											onclick="javascript:checkUpdateClient()"
 											value="create_client_update_package"> <label
 											for="create_client_update_package"> </label>
@@ -96,7 +104,12 @@ $this->title = 'My Yii Application';
 										<input id="create_client_package" type="checkbox"
 											name="target_tasks[]" 
 											onclick="javascript:checkClient()"
-											value="create_client_package"> <label
+											value="create_client_package"
+											<?php if (!$data['isPackageListContent']) 
+    										{
+    										    echo "disabled";
+    										}
+                                            ?>> <label
 											for="create_client_package"> </label>
 									</div>
 								</div>
@@ -115,7 +128,11 @@ $this->title = 'My Yii Application';
 								<div class="col-sm-6">选择客户端更新包</div>
 								<div class="col-sm-6">
 									<input id="chk_update_all" type="checkbox"
-										name="chk_update_all" checked value="1"
+										name="chk_update_all" <?php if ($data['isVersionsUpdatePackage']) 
+    										{
+    										   echo  "checked";
+    										}
+                                            ?> value="1"
 										onclick="chkUpdateAll()" />选择全部
 								</div>
 							</div>
@@ -238,7 +255,6 @@ $this->title = 'My Yii Application';
 </div>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweetalert2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 
@@ -432,6 +448,17 @@ $this->title = 'My Yii Application';
 	 $("#package_table").remove();
 	 var deployment_select =  $("#deployment_select");
 	 deployment_select.html("").select2();
+
+	 $('#chk_update_all').prop('disabled',true);
+	 $('#chk_update_all').prop('checked',false);
+	 $('#create_client_update_package').attr('disabled',true);
+	 $('#create_client_update_package').attr('checked',false);
+
+	 $('#chk_install_all').attr('disabled',true);
+	 $('#chk_install_all').prop('checked',false);
+	 $('#create_client_package').attr('disabled',true);
+	 $('#create_client_package').prop('checked',false);
+     
 	 if(version_value == "")
 	 {
 		 return;
@@ -457,14 +484,34 @@ $this->title = 'My Yii Application';
         	    	 toastr.success("切换版本数据成功");
                      if(json.data.versionUpdateContent)
                      {
-                    	 
+                    	 $('#chk_update_all').prop('disabled',false);
+                    	 $('#chk_update_all').prop('checked',true);
+                    	 $('#create_client_update_package').prop('disabled',false);
+                    	 $('#create_client_update_package').prop('checked',true);
                     	 $("#version_update_div").append(json.data.versionUpdateContent);
+                     }
+                     else
+                     {
+                    	 $('#chk_update_all').prop('disabled',true);
+                    	 $('#chk_update_all').prop('checked',false);
+                    	 $('#create_client_update_package').prop('disabled',true);
+                    	 $('#create_client_update_package').prop('checked',false);
                      }
                      if(json.data.packageListContent)
                      {
-                    	
+                    	 $('#chk_install_all').prop('disabled',false);
+                    	 $('#chk_install_all').prop('checked',false);
+                    	 $('#create_client_package').prop('disabled',false);
                     	 $("#package_div").append(json.data.packageListContent);
                      }
+                     else
+                     {
+                    	 $('#chk_install_all').prop('disabled',true);
+                    	 $('#chk_install_all').prop('checked',false);
+                    	 $('#create_client_package').prop('disabled',true);
+                    	 $('#create_client_package').prop('checked',false);
+                     }
+                     $("#div4").hide();
                      if(json.data.deploymentListContent)
                      {
                     	 deployment_select.html(json.data.deploymentListContent).select2();
