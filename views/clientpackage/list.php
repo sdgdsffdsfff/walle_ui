@@ -29,11 +29,11 @@ use yii\widgets\LinkPager;
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="exampleInputName2">版本号：</label>
-                            <input type="text" class="form-control" name="vid" value="<?php echo $vid; ?>" placeholder="版本号" style="margin-right: 20px;" />
+                            <input type="text" class="form-control" name="vid" value="<?php echo $vid; ?>" placeholder="版本号" style="width:120px; margin-right: 20px;" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">升级序列：</label>
-                            <select class="js-source-states" name="upgrade_path_id" style="width:200px; margin-right: 20px;">
+                            <select class="js-source-states" name="upgrade_path_id" style="width:180px; margin-right: 20px;">
                               
                                     <option value="">请选择升级序列</option>
                                     <?php 
@@ -51,7 +51,7 @@ use yii\widgets\LinkPager;
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">平台：</label>
-                            <select class="js-source-states" name="platform_id" style="width:200px;margin-right: 20px;">
+                            <select class="js-source-states" name="platform_id" style="width:180px;margin-right: 20px;">
                               
                                     <option value="">请选择发行区域-平台</option>
                                     <?php 
@@ -69,7 +69,7 @@ use yii\widgets\LinkPager;
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">发布位置：</label>
-                            <select class="js-source-states" name="deployment_id" style="width:200px;margin-right: 20px;">
+                            <select class="js-source-states" name="deployment_id" style="width:180px;margin-right: 20px;">
                               
                                     <option value="">请选择发布位置</option>
                                     <?php 
