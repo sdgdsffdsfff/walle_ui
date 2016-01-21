@@ -47,7 +47,7 @@ class PermissionFilter extends Behavior
             $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
             
             //通用权限
-            $common_sec = ['index/index', 'index/seldb','site/logout','task/jpublish','error/config-error','error/connection-error','debug/default/index'];
+            $common_sec = ['index/index', 'index/seldb','site/logout','task/jpublish','error/config-error','error/connection-error'];
             if(!empty($permission) && is_array($permission))
             {
                 //将通用权限加到数组中
