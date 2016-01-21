@@ -9,7 +9,8 @@ $params = array_merge(
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
+    //'bootstrap' => ['log'],
+    'bootstrap' => ['debug'],
     //yii debug tools
     'modules' => [
         'debug' => [
