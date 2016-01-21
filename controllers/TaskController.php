@@ -82,7 +82,7 @@ class TaskController extends BaseController
         $job = Job::findOne($job_id);
         if (empty($job) || $job->status != 1)
         {
-            $this->newajaxReturn(self::STATUS_FAILS, array(), "当前任务信息或状态不合法！");
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "终止任务失败，当前任务已完成！");
         }
         $gameAlias = yii::$app->session->get('game_alias');
         //调用脚本执行kill job 
