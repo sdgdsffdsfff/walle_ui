@@ -14,7 +14,7 @@ $config = [
     'modules' => [
         'debug' => [
             'class' => 'yii\debug\Module',
-            'allowedIPs' => ['172.16.30.50', '127.0.0.1', '::1']
+            'allowedIPs' => ['172.16.148.244', '127.0.0.1', '::1']
         ]
     ],
     'defaultRoute' => 'index', //默认控制器
