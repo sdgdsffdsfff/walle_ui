@@ -51,7 +51,7 @@ use yii\widgets\LinkPager;
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">平台：</label>
-                            <select class="js-source-states" name="platform_id" style="margin-right: 20px;">
+                            <select class="js-source-states" name="platform_id" style="width:200px;margin-right: 20px;">
                               
                                     <option value="">请选择发行区域-平台</option>
                                     <?php 
@@ -69,7 +69,7 @@ use yii\widgets\LinkPager;
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail2">发布位置：</label>
-                            <select class="js-source-states" name="deployment_id" style="margin-right: 20px;">
+                            <select class="js-source-states" name="deployment_id" style="width:200px;margin-right: 20px;">
                               
                                     <option value="">请选择发布位置</option>
                                     <?php 

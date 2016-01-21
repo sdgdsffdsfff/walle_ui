@@ -39,9 +39,9 @@ class ManagerConnection
         } 
         catch (Exception $e)
         {
-            header('Location:/error/connection-error');
-            exit;
-            //throw new Exception('数据库连接失败!');
+//            header('Location:/error/connection-error');
+//            exit;
+            throw new Exception();
         }
         
         return $connection;
