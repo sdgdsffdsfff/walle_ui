@@ -46,9 +46,9 @@ class ManagerConnection
             } 
             catch (Exception $e)
             {
-    //            header('Location:/error/connection-error');
-    //            exit;
-                throw new Exception();
+                header('Location:/error/connection-error');
+                exit;
+                //throw new Exception();
             }
         }
 
