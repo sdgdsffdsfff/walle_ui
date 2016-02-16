@@ -102,10 +102,10 @@ class SiteController extends BaseController
             $this->ajaxError();
             $this->error403();
         } 
-        else 
-        {
-            $this->error500();
-        }
+//        else 
+//        {
+//            $this->error500();
+//        }
     }
     
     /**
