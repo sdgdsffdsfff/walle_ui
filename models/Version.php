@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-use yii\helpers\ArrayHelper;
 /**
  * This is the model class for table "version".
  *
@@ -25,6 +21,7 @@ use yii\helpers\ArrayHelper;
  * @property Platform $platform
  * @property UpgradePath $upgradePath
  */
+
 class Version extends BaseModel
 {
     /**

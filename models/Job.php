@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-
 /**
  * This is the model class for table "job".
  *
@@ -25,6 +21,7 @@ use Yii;
  * @property Worker $worker
  * @property Task[] $tasks
  */
+
 class Job extends BaseModel
 {
     /**
@@ -123,6 +120,7 @@ class Job extends BaseModel
     {
         return $this->hasMany(Task::className(), ['job_id' => 'id']);
     }
+    
     /**
      * 添加新数据
      * @param array $datas 新增的版本数据
@@ -164,5 +162,28 @@ class Job extends BaseModel
         $bool = $job->save();
     
         return $bool;
+    }
+    
+    /**
+     * 根据打包机id,判断该打包机是否空闲
+     * @param int $worker_id 打包机id
+     * @return boolean
+     */
+    public static function getJobStatusByWorkerId($worker_id)
+    {
+        $condition = ['worker_id'=> $worker_id, 'status' => 1];
+        $result = Job::find()
+                ->where($condition)
+                ->asArray()
+                ->all();
+        
+        if($result)
+        {
+            return true;  //非空闲状态
+        }
+        else
+        {
+            return false;  //空闲状态
+        }
     }
 }

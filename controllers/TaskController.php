@@ -6,7 +6,6 @@ namespace app\controllers;
  * @author zhaolu@playcrab.com
  */
 use yii;
-use yii\web\Controller;
 use app\models\Version;
 use app\models\Platform;
 use app\models\Deployment;
@@ -15,7 +14,6 @@ use app\models\Worker;
 use yii\helpers\ArrayHelper;
 use app\models\Package;
 use app\models\Job;
-use yii\db\Connection as Connection;
 use yii\helpers\Url;
 use yii\data\Pagination;
 use app\models\UpgradePath;
@@ -37,6 +35,7 @@ class TaskController extends BaseController
     {
         return $this->render('index');
     }
+    
     /**
      * 任务状态js轮询此接口，获取当前job status and all tasks status然后渲染页面
      * @param job_id
@@ -160,17 +159,25 @@ class TaskController extends BaseController
         $dynamicConfigListData = DynamicConfig::getData();
 //         var_dump($dynamicConfigListData);
         
-        //获得空闲打包机
+        //获得非禁用打包机
         $workerListData = Worker::getFreeData();
-        if(!$workerListData)
+        //将空闲打包机筛选出来
+        $workerList = array();
+        foreach ($workerListData as $worker)
         {
-//             $this->error('平台下无空闲打包机！', Url::toRoute('index/index'));
+            $bool = Job::getJobStatusByWorkerId($worker['id']);
+            if($bool)
+            {
+                continue;
+            }
+            
+            $workerList[] = $worker;
         }
         
         // 随机选择空闲的一台打包机
-        $randMax = count($workerListData);
+        $randMax = count($workerList);
         $randIndex = rand(0, $randMax-1);
-        $freeWorker = $workerListData[$randIndex];
+        $freeWorker = $workerList[$randIndex];
 
 //         var_dump($workerListData);
 
@@ -181,7 +188,7 @@ class TaskController extends BaseController
         $data['packageList']            = $packageListData;
         $data['versionUpdateList']      = $versionUpdateListData;
         $data['dynamicConfigList']      = $dynamicConfigListData;
-        $data['workerList']             = $workerListData;
+        $data['workerList']             = $workerList;
         $data['freeWorker']             = $freeWorker;
         $data['rules']                  = $contentList['rules'];
         $data['dynamicConfigContent']   = $contentList['content'];

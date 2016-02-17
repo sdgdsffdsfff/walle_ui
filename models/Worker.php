@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-
 /**
  * This is the model class for table "worker".
  *
@@ -13,6 +9,7 @@ use Yii;
  *
  * @property Job[] $jobs
  */
+
 class Worker extends BaseModel
 {
     /**
@@ -63,13 +60,14 @@ class Worker extends BaseModel
      */
     public static function getFreeData()
     {
-        $condition = ['disable'=> 0 ];
+        $condition = ['disable'=> 0];
         $result = Worker::find()
-        ->where($condition)
-        ->asArray()
-        ->all();
+                ->where($condition)
+                ->asArray()
+                ->all();
         return $result;
     }
+    
     /**
      *  根据id获取数据
      * @param int id 平台id
@@ -81,9 +79,9 @@ class Worker extends BaseModel
     
         $condition = ['id' => $id];
         $result = Worker::find()->select($fields)
-        ->where($condition)
-        ->asArray()
-        ->one();
+                ->where($condition)
+                ->asArray()
+                ->one();
         return $result;
     }
 }
