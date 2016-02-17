@@ -23,25 +23,42 @@ class IndexController extends BaseController
         
         $userRoles = Yii::$app->getUser()->getIdentity()->getUserRoles();
             // var_dump($userRoles);die; 
-        foreach ($userRoles as $key => $role)
+        if($userRoles)
         {
-            if($role['game_id'] == 0)
+            if((count($userRoles) == 1) && ($userRoles[0]['game_id'] > 0))
             {
-                $gameInfo = Game::getAll();              
-                break;
+                $id = $userRoles[0]['game_id'];
+                $info = Game::getGameById((int)$id);
+                yii::$app->session->set('game_name', $info['name']);
+                
+                //默认会开启session
+                yii::$app->session->set('game_alias', $info['alias']);
+                header('Location:/version/list'); 
+                exit;
             }
             else
             {
-                $info = Game::getGameById($role['game_id']);
-                $gameInfo[$key] = array(
-                    'id' => $role['game_id'],
-                    'name' => $info['name'],  //获取游戏名称
-                    'alias'=>$info['alias']
-                );
+                foreach ($userRoles as $key => $role)
+                {
+                    if($role['game_id'] == 0)
+                    {
+                        $gameInfo = Game::getAll();              
+                        break;
+                    }
+                    else
+                    {
+                        $info = Game::getGameById($role['game_id']);
+                        $gameInfo[$key] = array(
+                            'id' => $role['game_id'],
+                            'name' => $info['name'],  //获取游戏名称
+                            'alias'=>$info['alias']
+                        );
+                    }
+                }
+
+                return $this->render('index',['gameInfo'=>$gameInfo]);
             }
         }
-
-        return $this->render('index',['gameInfo'=>$gameInfo]);
     }
 
     /**
@@ -61,7 +78,7 @@ class IndexController extends BaseController
                 
                 //默认会开启session
                 yii::$app->session->set('game_alias', $alias);
-                header('Location:/version/add-version'); 
+                header('Location:/version/list'); 
                 exit;
             }
            
