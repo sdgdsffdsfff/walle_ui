@@ -43,8 +43,14 @@ class PermissionFilter extends Behavior
         {
             $controller = Yii::$app->controller->id;
             $action = $event->action->id;
-
-            $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+            
+            session_set_cookie_params(24 * 3600);   //设置过期时间1天
+            $permission = yii::$app->session->get('permissions');
+            if(empty($permission))
+            {
+                $permission = Yii::$app->getUser()->getIdentity()->getUserFunctions();
+                yii::$app->session->set('permissions', $permission);
+            }
             
             //通用权限
             $common_sec = ['index/index', 'index/seldb','site/logout','task/jpublish','error/config-error','error/connection-error'];
