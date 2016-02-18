@@ -82,7 +82,7 @@ foreach ($job_config as $v) {
                         <!-- 任务状态-->
                         <div class="hpanel hblue">
                             <div class="panel-heading">
-                            <h5>任务日志下载链接：<a style="text-decoration:underline" href="<?php echo $log_url;?>"><?php echo $log_url;?></a></h5>
+                            <h5>任务日志下载链接：<a id="log_url" style="text-decoration:underline" href="<?php echo $log_url;?>"><?php echo $log_url;?></a></h5>
                             </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
@@ -188,6 +188,7 @@ function checkJobStatus(id) {
                 $("#task_body").html("");
                 //更新job 状态
                 updateJobStatus(job_info.status);
+                showLogUrl(job_info.log_url);
                 if(job_info.status != 1 && job_info.status !=0) {
                     clearInterval(setIntervalFun);
                 }                
@@ -314,6 +315,13 @@ function showTasksTable(arr) {
 
         tbody.appendChild(row);
     }
+}
+
+//显示log_url,异步获取
+function showLogUrl(log_url) {
+    var aTag = document.getElementById("log_url");
+    aTag.setAttribute("href", log_url);
+    aTag.innerHTML = log_url;
 }
 
 </script>
