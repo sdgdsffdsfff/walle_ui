@@ -54,6 +54,7 @@ class TaskController extends BaseController
             $this->newajaxReturn(self::STATUS_FAILS, array(), "参数错误,此Job不存在！");
         }
         $job_status = $job->status;
+        $job_log_url = $job->log_url;
         $tasks = $job->tasks;
         foreach ($tasks as $task)
         {
@@ -62,6 +63,7 @@ class TaskController extends BaseController
         $data = array(
             "status" => $job_status,
             "tasks" => $job_tasks,
+            "log_url" => $job_log_url,
         );
         $this->newajaxReturn(self::STATUS_SUCCESS, $data);
     }
