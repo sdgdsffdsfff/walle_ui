@@ -90,10 +90,11 @@ foreach ($job_list as $job) {
     $target = "";
     foreach ($targets as $v) {
         switch($v){
-            case "create_server_update_package":
+            case "upload_server_update_package":
                 $v = "服务端更新包";
                 break;
-            case "create_client_update_package":
+            case "upload_client_update_package":
+            case "upload_client_update_config":
                 $v = "客户端更新包";
                 break;
             case "create_client_package":
@@ -104,30 +105,26 @@ foreach ($job_list as $job) {
         }
         $target .= $v."</br>";
     }
+    $operate = '<a href="/task/clonepublish?job_id='.$job['id'].'" class="btn btn-info btn-sm active" >clone</a>&nbsp&nbsp';
     switch($job['status']){
     case 0:
         $status = "创建";
-        $operate = "";
         break;
     case 1:
         $status = "执行中";
-        $operate = '<a href="javascript:stop_task(\''.$job['id'].'\');">'."<button class='btn-outline btn-sm btn-danger stoptask'>终止任务</button></a>";
+        $operate .= '<a href="javascript:stop_task(\''.$job['id'].'\');">'."<button class='btn btn-sm btn-danger stoptask'>终止任务</button></a>";
         break;
     case 2:
         $status = "执行成功";
-        $operate = "";
         break;
     case 3:
         $status = "执行失败";
-        $operate = "";
         break;
     case 4:
         $status = "执行终止";
-        $operate = "";
         break;
     default:
         $status = "";
-        $operate = "";
     }
     echo "<tr>";
     echo "<td><a style='text-decoration:underline' href='/task/detail?job_id=".$job['id']."'>".$job['id']."</a></td>";
