@@ -96,13 +96,16 @@ foreach ($job_list as $job) {
             case "upload_client_update_package":
                 $v = "客户端更新包";
                 break;
+            case "upload_client_update_config":
+                $v = "";
+                break;
             case "create_client_package":
                 $v = "客户端安装包";
                 break;
             default:
                 break;
         }
-        $target .= $v."</br>";
+        $target .= empty($v) ? $v : "$v</br>";
     }
     $operate = '<a href="/task/clonepublish?job_id='.$job['id'].'" class="btn btn-info btn-sm active" >clone</a>&nbsp&nbsp';
     switch($job['status']){

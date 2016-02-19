@@ -1099,7 +1099,7 @@ class TaskController extends BaseController
                                 {
                                     $v="";
                                 }
-                                $tmp_v .= $v."</br>";
+                                $tmp_v .= empty($v) ? $v : "$v</br>";
                             }
                             break;
                         case "versions_need_client_update_package":
