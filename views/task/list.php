@@ -94,7 +94,6 @@ foreach ($job_list as $job) {
                 $v = "服务端更新包";
                 break;
             case "upload_client_update_package":
-            case "upload_client_update_config":
                 $v = "客户端更新包";
                 break;
             case "create_client_package":
