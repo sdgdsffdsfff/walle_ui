@@ -294,7 +294,7 @@ $this->title = 'My Yii Application';
              deployment_id: {
                  required: true,
              },
-             work_id: {
+             worker_id: {
                  required: true,
              },
 //              log_level: {
@@ -313,7 +313,7 @@ $this->title = 'My Yii Application';
              deployment_id: {
                  required: "无发布位置",
              },
-             work_id: {
+             worker_id: {
                  required: "无空闲打包机",
              },
          },
