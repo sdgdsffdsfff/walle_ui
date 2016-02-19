@@ -7,38 +7,151 @@ return [
     'menuData' => [
         [
             'name' => '首页',
-            'path' => 'index/index',
+            'path' => '/index/index',
             'icon' => 'fa-home',
         ],
         [
-            'name' => '版本列表',
-            'path' => 'version/list',
+            'name' => '版本管理',
+            'path' => 'javascript:void(0);',
             'icon' => 'fa-list',
+            'subMenu' => [
+                [
+                    'name' => '版本列表',
+                    'path' => 'version/list',
+                ],
+                [
+                    'name' => '创建版本',
+                    'path' => 'version/add-version',
+                ],
+                [
+                    'name' => '版本对比',
+                    'path' => '',
+                ],
+                [
+                    'name' => '业务模块配置(module)',
+                    'path' => '',
+                ],
+            ],
         ],
         [
-            'name' => '创建版本',
-            'path' => 'version/add-version',
-            'icon' => 'pe-7s-news-paper',
-        ],
-        [
-            'name' => '创建发布任务',
-            'path' => 'task/publish',
-            'icon' => 'fa-volume-up',
-        ],
-        [
-            'name' => '发布任务列表',
-            'path' => 'task/list',
+            'name' => '任务管理',
+            'path' => 'javascript:void(0);',
             'icon' => 'fa-list-alt',
+            'subMenu' => [
+                [
+                    'name' => '发布任务列表',
+                    'path' => 'task/list',
+                ],
+                [
+                    'name' => '创建发布任务',
+                    'path' => 'task/publish',
+                ],
+                [
+                    'name' => '发布任务对比',
+                    'path' => '',
+                ],
+                [
+                    'name' => '参数配置(parameter)',
+                    'path' => '',
+                ],
+                [
+                    'name' => '动态参数配置',
+                    'path' => '',
+                ],
+            ],
         ],
         [
-            'name' => '安装包下载',
-            'path' => 'clientpackage/list',
-            'icon' => 'fa-cloud-download',
+            'name' => '安装包管理',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-suitcase',
+            'subMenu' => [
+                [
+                    'name' => '安装包下载',
+                    'path' => 'clientpackage/list',
+                ],
+                [
+                    'name' => '客户端更新包状态',
+                    'path' => '',
+                ],
+                [
+                    'name' => '安装包列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '安装包配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
+            'name' => '升级序列管理',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-cloud-upload',
+            'subMenu' => [
+                [
+                    'name' => '升级序列列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '升级序列配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
+            'name' => '发行地区管理',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-globe',
+            'subMenu' => [
+                [
+                    'name' => '发行地区列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '发行地区配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
+            'name' => '平台管理',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-desktop',
+            'subMenu' => [
+                [
+                    'name' => '平台信息列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '平台信息配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
+            'name' => '部署位置管理',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-map-marker',
+            'subMenu' => [
+                [
+                    'name' => '部署位置列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '部署位置配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
+            'name' => '打包机管理',
+            'path' => '',
+            'icon' => 'fa-folder',
         ],
         [
             'name' => '更新模块版本列表',
-            'path' => 'module/index',
+            'path' => '/module/index',
             'icon' => 'fa-stack-exchange',
-        ]
+        ],
     ],
 ];

@@ -16,11 +16,16 @@ use yii\helpers\Html;
         </div>
         <ul class="nav" id="side-menu">
             <?php foreach($this->params['menuData'] as $menu){ ?>
-                <?php if(in_array($menu['path'], $this->params['requestUrl'])){ ?>
-                    <li <?php if(($this->context->id.'/'.$this->context->action->id) == $menu['path']){ ?>class="active"<?php } ?>>
-                        <a href="/<?= $menu['path']; ?>"><i class="fa <?= $menu['icon']; ?>"></i>&nbsp;&nbsp;&nbsp;<span class="nav-label"><?= $menu['name']; ?></span></a>
-                    </li>
-                <?php } ?>
+                <li>
+                    <a href="<?= $menu['path']; ?>"><i class="fa <?= $menu['icon']; ?>"></i>&nbsp;&nbsp;&nbsp;<span class="nav-label"><?= $menu['name']; ?></span><?php if(count($menu['subMenu']) > 0){ ?><span class="fa arrow"></span><?php } ?></a>
+                    <?php if(isset($menu['subMenu']) && count($menu['subMenu']) > 0){ ?>
+                        <?php foreach($menu['subMenu'] as $submenu){ ?>
+                            <ul class="nav nav-second-level">
+                                <li <?php if(($this->context->id.'/'.$this->context->action->id) == $menu['path']){ ?>class="active"<?php } ?>><a href="/<?= $submenu['path']; ?>"><?= $submenu['name']; ?></a></li>
+                            </ul>
+                        <?php } ?>
+                    <?php } ?>
+                </li>
             <?php } ?>
         </ul>
     </div>
