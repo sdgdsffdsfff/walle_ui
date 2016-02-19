@@ -66,7 +66,15 @@ $this->title = 'My Yii Application';
 								<div class="col-md-2 col-md-offset-7">
 									<div class="checkbox checkbox-success">
 										<input id="upload_server_update_package" type="checkbox"
-											name="target_tasks[]" checked
+											name="target_tasks[]"
+											 <?php if (!$data['isServerUpdatePackage']) 
+    										{
+    										}
+    										else
+    										{
+    										    echo  "checked";
+    										}
+                                            ?>
 											value="upload_server_update_package"> <label
 											for="create_server_update_package"> </label>
 									</div>
@@ -82,7 +90,6 @@ $this->title = 'My Yii Application';
 											name="target_tasks[]"  
 											<?php if (!$data['isVersionsUpdatePackage']) 
     										{
-    										    echo "disabled";
     										}
     										else
     										{
@@ -107,7 +114,9 @@ $this->title = 'My Yii Application';
 											value="create_client_package"
 											<?php if (!$data['isPackageListContent']) 
     										{
-    										    echo "disabled";
+    										}else
+    										{
+    										    echo  "checked";
     										}
                                             ?>> <label
 											for="create_client_package"> </label>
@@ -128,11 +137,7 @@ $this->title = 'My Yii Application';
 								<div class="col-sm-6">选择客户端更新包</div>
 								<div class="col-sm-6">
 									<input id="chk_update_all" type="checkbox"
-										name="chk_update_all" <?php if ($data['isVersionsUpdatePackage']) 
-    										{
-    										   echo  "checked";
-    										}
-                                            ?> value="1"
+										name="chk_update_all"  value="1"
 										onclick="chkUpdateAll()" />选择全部
 								</div>
 							</div>
@@ -155,7 +160,13 @@ $this->title = 'My Yii Application';
                                                    <td><?php echo $value['id']?></td>
                                                    <td><?php echo $value['create_time']?></td>
                                                    <td><?php echo $value['release_time']?></td>
-                                                   <td><input id="chk_all_<?php echo $key?>"  type="checkbox" name="package_update_config[]" value="<?php echo $value['id']?>" checked></td>
+                                                   <td><input id="chk_all_<?php echo $key?>"  type="checkbox" name="package_update_config[]" value="<?php echo $value['id']?>"
+                                                       <?php if (in_array($value['id'], $data['cloneUpdatePackage'] )) 
+                										{
+                										   echo  "checked";
+                										}
+                                                         ?> >
+                                                   </td>
                                            </tr>
                                        <?php }?>
                                     </tbody>
@@ -219,7 +230,13 @@ $this->title = 'My Yii Application';
                                          <?php  foreach ($data['packageList'] as $key => $value) {?>
                                              <tr>
                                                    <td><?php echo $value['name']?></td>
-                                                   <td><input id="package_<?php echo $key?>"  type="checkbox" name="package_config[]" value="<?php echo $value['id']?>"></td>
+                                                   <td><input id="package_<?php echo $key?>"  type="checkbox" name="package_config[]" value="<?php echo $value['id']?>"
+                                                    <?php if (in_array($value['id'], $data['cloneInstallPackage'] )) 
+                										{
+                										   echo  "checked";
+                										}
+                                                    ?> >
+                                                   </td>
                                            </tr>
                                        <?php }?>
                                     </tbody>

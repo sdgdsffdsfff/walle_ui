@@ -203,6 +203,146 @@ class TaskController extends BaseController
     }
     
     /**
+     * 克隆任务
+     * @return Ambigous <string, string>
+     */
+    public function actionClonepublish()
+    {
+        $jobId = yii::$app->getRequest()->get("job_id");
+        
+        if (empty($jobId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "job_id不能为空！");
+        }
+        $job = Job::findOne($jobId);
+        if (empty($job))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), "参数错误,此Job不存在！");
+        }
+        
+        $jobInfo = ArrayHelper::toArray($job);
+        $jobConfig = json_decode($jobInfo['job_config'], true);
+//        var_dump($jobConfig);die;
+        //获得版本号
+        $versionId = $jobInfo['version_id'];
+        $versionData           = array();
+        $deploymentListData    = array();
+        $packageListData       = array();
+        $versionUpdateListData = array();
+    
+        $targetTasks = $jobInfo['target_tasks'];
+        
+        $isServerUpdatePackage = true;
+        $isVersionsUpdatePackage = true;
+        $isPackageListContent = true;
+        
+        if(strpos($targetTasks,'upload_server_update_package') === false)
+        {
+            $isServerUpdatePackage = false;
+        }
+        if(strpos($targetTasks,'upload_client_update_config,upload_client_update_package') === false)
+        {
+            $isVersionsUpdatePackage = false;
+        }
+        if(strpos($targetTasks,'create_client_package') === false)
+        {
+            $isPackageListContent = false;
+        }
+        
+        //clone的更新包
+        $cloneUpdatePackage =  $jobConfig['versions_need_client_update_package'];
+        //clone的安装包
+        $cloneInstallPackage = array();
+        
+        foreach ($jobConfig['package_config'] as $key =>$value)
+        {
+            array_push($cloneInstallPackage, $value['package_id']);
+        }
+        if(!empty($versionId))
+        {
+            $versionData = Version::getById($versionId);
+            if(!$versionData)
+            {
+                $this->error('版本参数错误！', Url::toRoute('index/index'));
+            }
+    
+            $platformId   = $versionData['platform_id'];
+            $upgradPathId = $versionData['upgrade_path_id'];
+    
+            //获得平台下的发布位置
+            $deploymentListData =Deployment::getDataByPlatformId($platformId);
+//             if(!$deploymentListData)
+//             {
+                //                 $this->error('平台下无发布位置！', Url::toRoute('index/index'));
+//             }
+            //         var_dump($deploymentListData);
+    
+            //获得平台下安装包
+            $packageListData = Package::getDataByPlatformId($platformId);
+            //             if(!$packageListData)
+                //             {
+                //                 $this->error('平台下无安装包！', Url::toRoute('index/index'));
+                //             }
+                    //         var_dump($packageListData);
+    
+            // 获得升级序列下的30天发布的已上线版本列表
+            $startDate = date('Y-m-d 00:00:00', strtotime('-30 day'));
+            $endDate = date('Y-m-d H:i:s', time());
+            $versionUpdateListData = Version::getUpdateVersion($startDate, $endDate, $upgradPathId, $versionId);
+             //             if(!$versionUpdateListData)
+             //             {
+             //                  $this->error('平台下无安装包！', Url::toRoute('index/index'));
+             //             }
+             //         var_dump($versionUpdateListData);
+        }
+    
+        //获得动态参数
+        $dynamicConfigListData = DynamicConfig::getData();
+        //         var_dump($dynamicConfigListData);
+    
+        //获得非禁用打包机
+        $workerListData = Worker::getFreeData();
+        //将空闲打包机筛选出来
+        $workerList = array();
+        foreach ($workerListData as $worker)
+        {
+            $bool = Job::getJobStatusByWorkerId($worker['id']);
+            if($bool)
+            {
+                continue;
+            }
+    
+            $workerList[] = $worker;
+        }
+    
+        // 随机选择空闲的一台打包机
+        $randMax = count($workerList);
+        $randIndex = rand(0, $randMax-1);
+        $freeWorker = $workerList[$randIndex];
+    
+        //         var_dump($workerListData);
+        $dynamicConfig = $jobConfig['dynamic_config'];
+        $contentList = $this->getDynamicConfigContent2($dynamicConfigListData,$dynamicConfig);
+    
+        $data['version']                 = $versionData;
+        $data['deploymentList']          = $deploymentListData;
+        $data['packageList']             = $packageListData;
+        $data['versionUpdateList']       = $versionUpdateListData;
+        $data['dynamicConfigList']       = $dynamicConfigListData;
+        $data['workerList']              = $workerList;
+        $data['freeWorker']              = $jobConfig['worker_id'];//clone任务选择的打包机
+        $data['rules']                   = $contentList['rules'];
+        $data['dynamicConfigContent']    = $contentList['content'];
+        $data['deploymentListContent']   = $this->getDeploymentList($deploymentListData, $jobInfo['deployment_id']);
+        $data['isServerUpdatePackage']   = $isServerUpdatePackage;
+        $data['isPackageListContent']    = $isPackageListContent;
+        $data['isVersionsUpdatePackage'] = $isVersionsUpdatePackage;
+        $data['cloneUpdatePackage']      = $cloneUpdatePackage;
+        $data['cloneInstallPackage']     = $cloneInstallPackage;
+        return $this->render('clonepublish',['data'=>$data]);
+    }
+    
+    /**
      *  确认发布任务
      * @return
      */
@@ -371,7 +511,7 @@ class TaskController extends BaseController
             $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择发布任务目标！");
         }
         
-        if(in_array('create_client_update_package', $targetTasks) && empty($versionsUpdatePackage))
+        if(in_array('upload_client_update_config,upload_client_update_package', $targetTasks) && empty($versionsUpdatePackage))
         {
             $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择客户端更新包！");
         }
@@ -382,9 +522,8 @@ class TaskController extends BaseController
         }
         
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
-        $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('create_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
+        $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('upload_client_update_config,upload_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
         $packageConfigStr = !empty($packageConfig) &&  in_array('create_client_package', $targetTasks)? implode(",", $packageConfig) : "";
-        
         
         //模板参数
         $dynamicConfig = array();
@@ -446,12 +585,19 @@ class TaskController extends BaseController
      *  获得发布位置
      * @return
      */
-    public function getDeploymentList($deploymentList)
+    public function getDeploymentList($deploymentList, $defaultValue ="")
     {
         $deploymentListContent= "<select id=\"deployment_select\" class=\"js-source-states\" name=\"deployment_id\" style=\"width: 100%\">";
         $trContent ="";
         foreach ($deploymentList as $key => $value) {
-            $trContent .=  "<option value=\"{$value['id']}\">{$value['name']}</option>";
+            if($defaultValue != "" && $value['id'] == $defaultValue)
+            {
+              $trContent .=  "<option value=\"{$value['id']}\" selected = selected>{$value['name']}</option>";
+            }
+            else
+            {
+              $trContent .=  "<option value=\"{$value['id']}\">{$value['name']}</option>";
+            }
         }
         $deploymentListContent .= $trContent;
         $deploymentListContent .=  "</select>";
@@ -613,6 +759,96 @@ class TaskController extends BaseController
         $contentList['rules']=$rules;
         return $contentList;
        
+    }
+    /**
+     * 获得动态参数内容
+     * @param unknown $dynamicConfigData
+     * @return string
+     */
+    private function getDynamicConfigContent2($dynamicConfigData, $dynamicConfig)
+    {
+        $content = "";
+        $rules   = "";
+        foreach ($dynamicConfigData as $value) {
+            switch ($value['parameter']['value_type'])
+            {
+    
+                case 'enum' :
+                    $optionsList  = explode(',', $value['parameter']['options']);
+                    $valueContent = "";
+                    foreach ($optionsList as $option) {
+                        if( trim($dynamicConfig[$value['parameter']['name']]) === trim($option))
+                        {
+                            $valueContent .= "<option value=\"$option\"  selected = selected>$option</option>";
+                        }
+                        else
+                        {
+                            $valueContent .= "<option value=\"$option\">$option</option>";
+                        }
+                    }
+                    $content.="<div class=\"form-group\">\n".
+                            "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>\n".
+                            "<div class=\"col-sm-8\">\n".
+                            "<select id=\"{$value['parameter']['name']}\"  class=\"js-source-states\" name=\"dynamic_config_{$value['parameter']['name']}\" style=\"width: 100%\">\n".
+                            $valueContent.
+                            "</select>\n".
+                            "</div> \n".
+                            "</div>\n" ;
+                    $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
+                    break;
+                case 'string' :
+                    if($value['parameter']['name'] == 'concurrent_task_count')
+                    {
+                        $content.= "<div class=\"form-group\">".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>".
+                                "<div class=\"col-sm-8\">".
+                                "<input id=\"{$value['parameter']['name']}\" type=\"text\"  class=\"form-control\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$dynamicConfig[$value['parameter']['name']]}\" style=\"width: 100%\"></label>\n".
+                                "</div> ".
+                                "</div>" ;
+                         
+                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, number:true,min:1,max:4, messages:{required:\"请输入{$value['parameter']['description']}\",number:\"请输入数字\",min:\"请输入大于0的数字\",max:\"请输入小于5的数字\"}});\n";
+                    }
+                    else
+                    {
+                        $content.= "<div class=\"form-group\">".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>".
+                                "<div class=\"col-sm-8\">".
+                                "<input id=\"{$value['parameter']['name']}\" type=\"text\"  class=\"form-control\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"{$dynamicConfig[$value['parameter']['name']]}\" style=\"width: 100%\"></label>\n".
+                                "</div> ".
+                                "</div>" ;
+                         
+                        $rules  .= "$(\"#{$value['parameter']['name']}\").rules(\"add\",{required: true, messages:{required:\"请输入{$value['parameter']['description']}\"}});\n";
+                    }
+                     
+                    break;
+                case 'bool' :
+                    if(trim($dynamicConfig[$value['parameter']['name']]) === 'true')
+                    {
+                        $content.= "<div class=\"form-group\">\n".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>\n".
+                                "<div class=\"col-sm-8\">\n".
+                                "<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"true\" checked>\n".
+                                "</div>\n".
+                                "</div>\n" ;
+                    }
+                    else
+                    {
+                        $content.="<div class=\"form-group\">\n".
+                                "<label class=\"col-sm-4 control-label\">{$value['parameter']['description']}</label>\n".
+                                "<div class=\"col-sm-8\">". "<input id=\"{$value['parameter']['name']}\" type=\"checkbox\" name=\"dynamic_config_{$value['parameter']['name']}\" value=\"true\">".
+                                "</div> ".
+                                "</div>" ;
+                    }
+                    break;
+                default :
+                    break;
+            }
+    
+        }
+        $contentList['content']=$content;
+        $contentList['rules']=$rules;
+        return $contentList;
+         
     }
     
     /**
