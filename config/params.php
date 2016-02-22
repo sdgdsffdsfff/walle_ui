@@ -26,7 +26,7 @@ return [
                 ],
                 [
                     'name' => '版本对比',
-                    'path' => '',
+                    'path' => 'version/compare',
                 ],
                 [
                     'name' => '业务模块配置(module)',
