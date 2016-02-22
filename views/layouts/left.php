@@ -16,7 +16,7 @@ use yii\helpers\Html;
         <ul class="nav" id="side-menu">
             <?php foreach($this->params['menuData'] as $menu){ ?>
                 <li <?php if(isset($menu['controller']) && ($this->context->id == $menu['controller'])){ ?>class="active"<?php } ?>>
-                    <a href="<?= $menu['path']; ?>"><i class="fa <?= $menu['icon']; ?>"></i>&nbsp;&nbsp;&nbsp;<span class="nav-label"><?= $menu['name']; ?></span><?php if(count($menu['subMenu']) > 0){ ?><span class="fa arrow"></span><?php } ?></a>
+                    <a href="<?= $menu['path']; ?>"><i class="fa <?= $menu['icon']; ?>"></i>&nbsp;&nbsp;&nbsp;<span class="nav-label"><?= $menu['name']; ?></span><?php if(isset($menu['subMenu']) && count($menu['subMenu']) > 0){ ?><span class="fa arrow"></span><?php } ?></a>
                     <?php if(isset($menu['subMenu']) && count($menu['subMenu']) > 0){ ?>
                         <ul class="nav nav-second-level">
                             <?php foreach($menu['subMenu'] as $submenu){ ?>
