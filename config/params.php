@@ -12,6 +12,7 @@ return [
         ],
         [
             'name' => '版本管理',
+            'controller' => 'version',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list',
             'subMenu' => [
@@ -35,6 +36,7 @@ return [
         ],
         [
             'name' => '任务管理',
+            'controller' => 'task',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list-alt',
             'subMenu' => [
@@ -48,11 +50,11 @@ return [
                 ],
                 [
                     'name' => '发布任务对比',
-                    'path' => '',
+                    'path' => 'task/compare',
                 ],
                 [
                     'name' => '参数配置(parameter)',
-                    'path' => '',
+                    'path' => 'parameter/index',
                 ],
                 [
                     'name' => '动态参数配置',
@@ -62,6 +64,7 @@ return [
         ],
         [
             'name' => '安装包管理',
+            'controller' => 'clientpackage',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-suitcase',
             'subMenu' => [
@@ -85,6 +88,7 @@ return [
         ],
         [
             'name' => '升级序列管理',
+            'controller' => 'upgradepath',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-cloud-upload',
             'subMenu' => [
@@ -100,6 +104,7 @@ return [
         ],
         [
             'name' => '发行地区管理',
+            'controller' => 'region',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-globe',
             'subMenu' => [
@@ -115,6 +120,7 @@ return [
         ],
         [
             'name' => '平台管理',
+            'controller' => 'platform',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-desktop',
             'subMenu' => [
@@ -130,6 +136,7 @@ return [
         ],
         [
             'name' => '部署位置管理',
+            'controller' => 'deployment',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-map-marker',
             'subMenu' => [
@@ -145,13 +152,15 @@ return [
         ],
         [
             'name' => '打包机管理',
+            'controller' => 'worker',
             'path' => '',
             'icon' => 'fa-folder',
         ],
         [
             'name' => '更新模块版本列表',
+            'controller' => 'module',
             'path' => '/module/index',
-            'icon' => 'fa-stack-exchange',
+            'icon' => 'fa-cube',
         ],
     ],
 ];
