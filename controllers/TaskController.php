@@ -1083,18 +1083,23 @@ class TaskController extends BaseController
                         case "target_tasks":
                             foreach ($value as $v)
                             {
-                                if ($v == "create_server_update_package")
+                                if ($v == "upload_server_update_package")
                                 {
                                     $v="服务端更新包";
                                 }
                                 else if ($v == "create_client_package")
                                 {
                                     $v="客户端安装包";
-                                } else if ($v == "create_client_update_package")
-                                {
+                                } 
+                                else if ($v == "upload_client_update_package")
+                                { 
                                     $v="客户端更新包";
+                                } 
+                                else 
+                                {
+                                    $v="";
                                 }
-                                $tmp_v .= $v."</br>";
+                                $tmp_v .= empty($v) ? $v : "$v</br>";
                             }
                             break;
                         case "versions_need_client_update_package":
