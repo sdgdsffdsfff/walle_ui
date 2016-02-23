@@ -2,11 +2,10 @@
 namespace app\controllers;
 /**
  * Description of IndexController
- * 版本控制器类
+ * 业务模块控制器类
  * @author zhaolu@playcrab.com
  */
 use yii;
-use yii\web\Controller;
 use app\models\Module;
 
 class ModuleController extends BaseController
@@ -49,5 +48,35 @@ class ModuleController extends BaseController
 
     }
 
-  
+    /**
+     * 业务模块列表
+     */
+    public function actionList()
+    {
+        return $this->render('list');
+    }
+    
+    /**
+     * 新增业务模块
+     */
+    public function actionCreate()
+    {
+        return $this->render('edit');
+    }
+    
+    /**
+     * 业务模块编辑
+     */
+    public function actionEdit()
+    {
+        return $this->render('edit');
+    }
+    
+    /**
+     * 业务模块删除
+     */
+    public function actionDelete()
+    {
+        return $this->render('edit');
+    }
 }
