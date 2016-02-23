@@ -33,7 +33,7 @@ use yii\helpers\Html;
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <label class="control-label">name</label>
+                                                <label class="control-label">参数名称</label>
                                             </td>
                                             <td>                                               
                                                 <input type="text" class="form-control" id="param_name" name="param_name" placeholder="name" />
@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">value_type</label>
+                                                <label class="control-label">参数类型</label>
                                             </td>
                                             <td>
                                                 <select class="js-source-states" id="param_value_type" name="param_value_type" style="width: 100%">
@@ -54,7 +54,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">description</label>
+                                                <label class="control-label">描述信息</label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="param_description" name="param_description" placeholder="description" />
@@ -62,7 +62,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">default_value</label>
+                                                <label class="control-label">默认值</label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" />
@@ -70,7 +70,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">options</label>
+                                                <label class="control-label">备选项</label>
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" />

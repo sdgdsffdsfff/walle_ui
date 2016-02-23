@@ -175,7 +175,7 @@ return [
         [
             'name' => '打包机管理',
             'controller' => 'worker',
-            'path' => '',
+            'path' => '/worker/list',
             'icon' => 'fa-folder',
         ],
     ],

@@ -31,11 +31,11 @@
                         <thead>
                             <tr>
                                 <th data-toggle="true">ID</th>
-                                <th>name</th>
-                                <th>value_type</th>
-                                <th>description</th>
-                                <th>default_value</th>
-                                <th>options</th>
+                                <th>参数名称</th>
+                                <th>参数类型</th>
+                                <th>描述信息</th>
+                                <th>默认值</th>
+                                <th>备选项</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
