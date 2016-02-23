@@ -14,6 +14,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -29,13 +30,13 @@ use yii\helpers\Html;
 		<div class="hpanel">
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<button class="btn w-xs btn-warning">新增</button>
+					<button class="btn w-xs btn-info">新增</button>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">upgrade path：</label>
+					<label class="control-label">region：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
-							<option value="">请选择upgrade path</option>
+							<option value="">全部</option>
 						</optgroup>
 					</select>
 				</div>
@@ -43,7 +44,7 @@ use yii\helpers\Html;
 					<label class="control-label">parameter：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
-							<option value="">请选择parameter</option>
+							<option value="">全部</option>
 						</optgroup>
 					</select>
 			    </div>	
@@ -63,19 +64,28 @@ use yii\helpers\Html;
 							<td>China</td>
 							<td>language</td>
 							<td>zh_CN</td>
-							<td align="center"><a href="" class=""><button class='btn btn-sm btn-info'>编辑</button></a><a href="" class=""><button class='btn btn-sm btn-danger'>删除</button></a></td>
-						</tr>
-						<tr>
-							<td>China</td>
-							<td>language</td>
-							<td>zh_CNadfafdsfasfasfasdfasfasdafasasfasfsadfasf</td>
-							<td><a href=""><button class='btn btn-sm btn-danger'>删除</button></a></td>
+							<td align="center">
+								<a href="" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+							</td>
 						</tr>
 						<tr>
 							<td>China</td>
 							<td>language</td>
 							<td>zh_CN</td>
-							<td><a href=""><button class='btn btn-sm btn-danger'>删除</button></a></td>
+							<td align="center">
+								<a href="" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+							</td>
+						</tr>
+						<tr>
+							<td>China</td>
+							<td>language</td>
+							<td>zh_CN</td>
+							<td align="center">
+								<a href="" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -88,6 +98,8 @@ use yii\helpers\Html;
 
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
@@ -100,4 +112,30 @@ $(function() {
                 "toastClass": "animated fadeInDown",
             };
 });
+
+function delete_regionconfig(region_id, parameter_id) {
+	swal({
+		title: "删除发行地区相关配置确认",
+		type: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#DD6B55",
+		confirmButtonText: "确认",
+		cancelButtonText: "取消",
+	},
+	function(isConfirm){
+		if (isConfirm) {
+			//ajax调用后台脚本,根据ajax返回结果提示成功、失败
+			toastr.success("删除成功！");
+			window.location.href="/region/config-list";
+		} else {
+
+		}
+	});
+}
+
+
+
+
+
+
 </script>
