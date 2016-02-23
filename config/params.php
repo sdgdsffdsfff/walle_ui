@@ -74,11 +74,11 @@ return [
                 ],
                 [
                     'name' => '客户端更新包状态',
-                    'path' => '',
+                    'path' => 'clientpackage/liststatus',
                 ],
                 [
                     'name' => '安装包列表',
-                    'path' => '',
+                    'path' => 'package/list',
                 ],
                 [
                     'name' => '安装包配置',
@@ -94,7 +94,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '升级序列列表',
-                    'path' => '',
+                    'path' => 'upgradepath/list',
                 ],
                 [
                     'name' => '升级序列配置',
@@ -110,7 +110,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '发行地区列表',
-                    'path' => '',
+                    'path' => 'region/list',
                 ],
                 [
                     'name' => '发行地区配置',
@@ -126,7 +126,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '平台信息列表',
-                    'path' => '',
+                    'path' => 'platform/list',
                 ],
                 [
                     'name' => '平台信息配置',
@@ -142,7 +142,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '部署位置列表',
-                    'path' => '',
+                    'path' => 'deplayment/list',
                 ],
                 [
                     'name' => '部署位置配置',
