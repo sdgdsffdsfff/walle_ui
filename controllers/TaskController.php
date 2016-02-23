@@ -1134,4 +1134,17 @@ class TaskController extends BaseController
 
         return $job_config_cn;
     } 
+    
+    /**
+     * 发布任务对比
+     */
+    public function actionCompare()
+    {
+        return $this->render('compare');
+    }
+    
+    public function actionCompareDetail()
+    {
+        return $this->render('comparedetail');
+    }
 }

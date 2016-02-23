@@ -438,4 +438,12 @@ EOT;
              $this->ajaxReturn(self::STATUS_FAILS,'参数不全');
         }
     }
+
+    /**
+     * 版本对比
+     */
+    public function actionCompare()
+    {
+        return $this->render('compare');
+    }
 }

@@ -1,10 +1,6 @@
 <?php
 namespace app\controllers;
-/**
- * Description of IndexController
- * 版本控制器类
- * @author zhaolu@playcrab.com
- */
+
 use yii;
 use yii\web\Controller;
 use app\controllers\BaseController;
@@ -28,4 +24,16 @@ class RegionController extends BaseController
     {   
        return $this->render('edit');
     }
+
+
+class RegionController extends BaseController
+{
+    /**
+     * 发行地区配置列表
+     */
+    public function actionConfigList()
+    {
+        return $this->render('configlist');
+    }
+
 }
