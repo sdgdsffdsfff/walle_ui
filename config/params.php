@@ -12,7 +12,7 @@ return [
         ],
         [
             'name' => '版本管理',
-            'controller' => 'version',
+            'controller' => 'version,module',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list',
             'subMenu' => [
@@ -28,15 +28,11 @@ return [
                     'name' => '版本对比',
                     'path' => '',
                 ],
-                [
-                    'name' => '业务模块配置(module)',
-                    'path' => '',
-                ],
             ],
         ],
         [
             'name' => '任务管理',
-            'controller' => 'task',
+            'controller' => 'task, parameter',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list-alt',
             'subMenu' => [
@@ -54,7 +50,7 @@ return [
                 ],
                 [
                     'name' => '参数配置(parameter)',
-                    'path' => 'parameter/index',
+                    'path' => 'parameter/list',
                 ],
                 [
                     'name' => '动态参数配置',
@@ -63,26 +59,18 @@ return [
             ],
         ],
         [
-            'name' => '安装包管理',
-            'controller' => 'clientpackage',
+            'name' => '业务模块管理',
+            'controller' => 'module',
             'path' => 'javascript:void(0);',
-            'icon' => 'fa-suitcase',
+            'icon' => 'fa-cube',
             'subMenu' => [
                 [
-                    'name' => '安装包下载',
-                    'path' => 'clientpackage/list',
-                ],
-                [
-                    'name' => '客户端更新包状态',
+                    'name' => '业务模块配置(module)',
                     'path' => '',
                 ],
                 [
-                    'name' => '安装包列表',
-                    'path' => '',
-                ],
-                [
-                    'name' => '安装包配置',
-                    'path' => '',
+                    'name' => '更新模块版本列表',
+                    'path' => 'module/index',
                 ],
             ],
         ],
@@ -151,16 +139,34 @@ return [
             ],
         ],
         [
+            'name' => '安装包管理',
+            'controller' => 'clientpackage',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-suitcase',
+            'subMenu' => [
+                [
+                    'name' => '安装包下载',
+                    'path' => 'clientpackage/list',
+                ],
+                [
+                    'name' => '客户端更新包状态',
+                    'path' => '',
+                ],
+                [
+                    'name' => '安装包列表',
+                    'path' => '',
+                ],
+                [
+                    'name' => '安装包配置',
+                    'path' => '',
+                ],
+            ],
+        ],
+        [
             'name' => '打包机管理',
             'controller' => 'worker',
             'path' => '',
             'icon' => 'fa-folder',
-        ],
-        [
-            'name' => '更新模块版本列表',
-            'controller' => 'module',
-            'path' => '/module/index',
-            'icon' => 'fa-cube',
         ],
     ],
 ];
