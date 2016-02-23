@@ -54,7 +54,7 @@ return [
                 ],
                 [
                     'name' => '动态参数配置',
-                    'path' => '',
+                    'path' => 'parameter/dynamic-config',
                 ],
             ],
         ],
@@ -168,7 +168,7 @@ return [
                 ],
                 [
                     'name' => '安装包配置',
-                    'path' => '',
+                    'path' => 'clientpackage/package-config-list',
                 ],
             ],
         ],

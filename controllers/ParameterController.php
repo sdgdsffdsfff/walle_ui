@@ -28,4 +28,14 @@ class ParameterController extends BaseController
     {
         return true;
     }
+
+    public function actionDynamicConfig()
+    {
+        return $this->render('dynamic');
+    }
+
+    public function actionDynamicConfigEdit()
+    {
+        return $this->render('dynamicedit');
+    }
 }

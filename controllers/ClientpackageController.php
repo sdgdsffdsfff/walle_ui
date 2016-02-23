@@ -100,4 +100,20 @@ class ClientpackageController extends BaseController
             'deployment'=>$deployment
         ]);
     }
+
+    /**
+     * 安装包配置列表
+     */
+    public function actionPackageConfigList()
+    {
+        return $this->render('packageConfigList');
+    }
+
+    /**
+     * 安装包配置编辑
+     */
+    public function actionPackageConfigEdit()
+    {
+        return $this->render('packageConfigEdit');
+    }
 }
