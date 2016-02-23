@@ -102,7 +102,7 @@ return [
                 ],
                 [
                     'name' => '发行地区配置',
-                    'path' => '',
+                    'path' => 'region/config-list',
                 ],
             ],
         ],
