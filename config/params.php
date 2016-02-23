@@ -66,7 +66,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '业务模块配置(module)',
-                    'path' => '',
+                    'path' => 'module/list',
                 ],
                 [
                     'name' => '更新模块版本列表',
