@@ -12,7 +12,7 @@ return [
         ],
         [
             'name' => '版本管理',
-            'controller' => 'version,module',
+            'controller' => 'version',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list',
             'subMenu' => [
