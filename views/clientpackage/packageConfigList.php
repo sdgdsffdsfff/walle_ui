@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                发行地区配置列表
+                安装包参数配置列表
             </h5>
         </div>
     </div>
@@ -30,10 +30,10 @@ use yii\helpers\Html;
 		<div class="hpanel">
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<a href="config-edit" class="btn w-xs btn-info">新增</a>
+					<a href="package-config-edit" class="btn w-xs btn-info">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">region：</label>
+					<label class="control-label">package_name:</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
@@ -53,7 +53,7 @@ use yii\helpers\Html;
 				<table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>region</th>
+							<th>package_name</th>
 							<th>parameter</th>
 							<th>value</th>
 							<th>操作</th>
@@ -61,7 +61,7 @@ use yii\helpers\Html;
 					</thead>
 					<tbody>
 						<tr>
-							<td>China</td>
+							<td>appstore_online</td>
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
@@ -70,7 +70,7 @@ use yii\helpers\Html;
 							</td>
 						</tr>
 						<tr>
-							<td>China</td>
+							<td>appstore_debug</td>
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
@@ -79,7 +79,7 @@ use yii\helpers\Html;
 							</td>
 						</tr>
 						<tr>
-							<td>China</td>
+							<td>appstore_test</td>
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
@@ -115,7 +115,7 @@ $(function() {
 
 function delete_regionconfig(region_id, parameter_id) {
 	swal({
-		title: "删除发行地区相关配置确认",
+		title: "删除安装包参数配置确认",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#DD6B55",

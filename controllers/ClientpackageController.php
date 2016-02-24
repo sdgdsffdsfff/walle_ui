@@ -150,6 +150,7 @@ class ClientpackageController extends BaseController
         }
         return $this->render('liststatus',array('data'=>$data));
     }
+    
     public function actionRequest(){ 
         $url=yii::$app->getRequest()->post('url_info');
         $curl = curl_init(); 
@@ -162,5 +163,22 @@ class ClientpackageController extends BaseController
         curl_close($curl); 
         $this->ajaxReturn($info['http_code'],array('msg'=>'ok'));
 
-}
+    }   
+
+    /**
+     * 安装包配置列表
+     */
+    public function actionPackageConfigList()
+    {
+        return $this->render('packageConfigList');
+    }
+
+    /**
+     * 安装包配置编辑
+     */
+    public function actionPackageConfigEdit()
+    {
+        return $this->render('packageConfigEdit');
+    }
+
 }

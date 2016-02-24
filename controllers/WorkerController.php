@@ -1,41 +1,44 @@
 <?php
 namespace app\controllers;
 /**
- * Description of ParameterController
- * 配置参数控制器类
+ * Description of WorkerController
+ * 打包机控制器类
  * @author zhaolu@playcrab.com
- * @time 2016-02-22
+ * @time 2016-02-23
  */
 
-class ParameterController extends BaseController
+class WorkerController extends BaseController
 {
+    /**
+     * 打包机配置列表
+     * @return type
+     */
     public function actionList()
     {
         return $this->render('list');
     }
     
+    /**
+     * 新增打包机
+     */
     public function actionCreate()
     {
         return $this->render('edit');
     }
     
+    /**
+     * 打包机编辑
+     */
     public function actionEdit()
     {
         return $this->render('edit');
     }
     
+    /**
+     * 打包机删除
+     */
     public function actionDelete()
     {
-        return true;
-    }
-
-    public function actionDynamicConfig()
-    {
-        return $this->render('dynamic');
-    }
-
-    public function actionDynamicConfigEdit()
-    {
-        return $this->render('dynamicedit');
+        
     }
 }
