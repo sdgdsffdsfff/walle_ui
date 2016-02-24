@@ -49,7 +49,6 @@
                                 <td>SVN</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -60,7 +59,6 @@
                                 <td>SVN</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -71,7 +69,6 @@
                                 <td>GIT</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -82,7 +79,6 @@
                                 <td>GIT</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -93,7 +89,6 @@
                                 <td>GIT</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -104,7 +99,6 @@
                                 <td>GIT</td>
                                 <td>
                                     <a href="/module/edit" class="btn btn-info">编辑</a>
-                                    <a href="/module/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                         </tbody>

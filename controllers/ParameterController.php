@@ -23,11 +23,6 @@ class ParameterController extends BaseController
     {
         return $this->render('edit');
     }
-    
-    public function actionDelete()
-    {
-        return true;
-    }
 
     public function actionDynamicConfig()
     {

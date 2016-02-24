@@ -33,12 +33,4 @@ class WorkerController extends BaseController
     {
         return $this->render('edit');
     }
-    
-    /**
-     * 打包机删除
-     */
-    public function actionDelete()
-    {
-        
-    }
 }
