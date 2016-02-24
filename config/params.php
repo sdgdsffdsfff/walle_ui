@@ -65,16 +65,6 @@ return [
             'icon' => 'fa-cube',
             'subMenu' => [
                 [
-                    'name' => '安装包下载',
-                    'path' => 'clientpackage/list',
-                ],
-                [
-                    'name' => '客户端更新包状态',
-                    'path' => 'clientpackage/liststatus',
-                ],
-                [
-                    'name' => '安装包列表',
-                    'path' => 'package/list',
                     'name' => '业务模块配置(module)',
                     'path' => 'module/list',
                 ],
@@ -96,7 +86,7 @@ return [
                 ],
                 [
                     'name' => '升级序列配置',
-                    'path' => '',
+                    'path' => 'upgradepath/config-list',
                 ],
             ],
         ],
