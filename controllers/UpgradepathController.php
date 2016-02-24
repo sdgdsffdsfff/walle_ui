@@ -26,7 +26,7 @@ class UpgradepathController extends BaseController
     }
 
    public function actionEdit()
-    {   
+    {  
        return $this->render('edit');
     }
      public function actionCopy()

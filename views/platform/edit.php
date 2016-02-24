@@ -30,7 +30,7 @@ use yii\widgets\LinkPager;
                    
                         <tbody>
                            <tr>
-                       <td>平台</td>
+                       <td>发行区域</td>
                        <td>
                           <select class="js-source-states" id="new_platform" name="new_platform" style="width: 100%">
                                     <option value="">请选择发行区域</option>

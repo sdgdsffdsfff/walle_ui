@@ -22,16 +22,11 @@ use yii\widgets\LinkPager;
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
-                <!--<div class="panel-heading">
-                    高级筛选
-                </div>-->
-                <div class="panel-body">
+             
           
                   
-     <a  class="btn btn-warning" href="/deplayment/edit?action=create&id='.$k['id'].'" style="margin-left: 20px;">新增</a>
+     <a  class="btn w-xs btn-success" style="margin-bottom: 10px;"href="/deplayment/edit" >新增</a>
    
-  
-                </div>
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
                   
@@ -39,7 +34,8 @@ use yii\widgets\LinkPager;
                         <thead>
                             <tr>
                                 <th data-toggle="true">ID</th>
-                                <th>升级序列名称</th>
+                                <th>平台</th>
+                                <th>名称</th>
                                  <th>是否启用</th>
                                 <th>描述</th>
                                 <th>操作</th>
@@ -47,9 +43,10 @@ use yii\widgets\LinkPager;
                         </thead>
                         <tbody>
                        <td>1</td>
-                       <td>ios</td>
+                       <td>appstore</td>
+                       <td>appstoreonline</td>
                        <td><input type="checkbox"/></td>
-                       <td>200</td>
+                       <td>appstoreonline</td>
                         <td><a  class="btn btn-info btn-sm active" href="/deplayment/edit?action=opt&id='.$k['id'].'" >编辑</a>
                             <a  class="btn btn-danger btn-sm active" >删除</a>
 </td>

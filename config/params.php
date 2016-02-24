@@ -150,11 +150,11 @@ return [
                 ],
                 [
                     'name' => '客户端更新包状态',
-                    'path' => '',
+                    'path' => 'clientpackage/liststatus',
                 ],
                 [
                     'name' => '安装包列表',
-                    'path' => '',
+                    'path' => 'package/list',
                 ],
                 [
                     'name' => '安装包配置',

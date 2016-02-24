@@ -25,6 +25,7 @@ use yii\widgets\LinkPager;
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
                   <form id="upgradepath_form" method="get" class="form-horizontal">
+                    <input type="hidden" name="act" value="ok"> 
                     <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" style="width:50%;margin-left:200px;margin-right:200px">
                    
                         <tbody>
