@@ -30,7 +30,7 @@ use yii\helpers\Html;
 		<div class="hpanel">
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<a href="package-config-edit" class="btn w-xs btn-info">新增</a>
+					<a href="package-config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
 					<label class="control-label">package_name:</label>
@@ -49,7 +49,7 @@ use yii\helpers\Html;
 					</select>
 			    </div>	
 			</div>
-			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 10px;">
+			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
 				<table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 					<thead>
 						<tr>

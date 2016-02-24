@@ -1,25 +1,14 @@
 <?php
-/**
-* configedit.php
-* 
-* Developed by Ocean.Liu<liuhaiyang@playcrab.com>
-* Copyright (c) 2016 www.playcrab.com
-* 
-* Changelog:
-* 2016-02-23 - created
-* 
-*/
 use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
-
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑发行地区配置
+                编辑升级序列配置
             </h5>
         </div>
     </div>
@@ -34,25 +23,28 @@ use yii\helpers\Html;
                     <form id="edit_regionconfig_form" method="get" class="form-horizontal">
                         <div class="table-responsive">
                             <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
-
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label class="control-label">发行区域：</label>
+                                            <label class="control-label">升级序列：</label>
                                         </td>
                                         <td>                                               
                                             <select name="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="1">中国大陆区域发行</option>
+                                                <option value="">请选择升级序列</option>
+                                                <option value="1">ios</option>
+                                                <option value="2">android</option>
                                             </select>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="control-label">参数名称：</label>
+                                            <label class="control-label">参数：</label>
                                         </td>
                                         <td>
                                             <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="1">language</option>
+                                                <option value="">请选择参数</option>
+                                                <option value="1">haha</option>
+                                                <option value="2">gege</option>
                                             </select>
                                         </td>
                                     </tr>
@@ -84,12 +76,13 @@ use yii\helpers\Html;
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
-        toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-center",
-            "closeButton": true,
-            "toastClass": "animated fadeInDown"
-        };
+    
+    toastr.options = {
+        "debug": false,
+        "newestOnTop": false,
+        "positionClass": "toast-top-center",
+        "closeButton": true,
+        "toastClass": "animated fadeInDown"
+    };
 });
 </script>

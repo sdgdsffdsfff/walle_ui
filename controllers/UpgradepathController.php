@@ -2,7 +2,7 @@
 namespace app\controllers;
 /**
  * Description of IndexController
- * 版本控制器类
+ * 升级序列制器类
  * @author zhaolu@playcrab.com
  */
 use yii;
@@ -25,12 +25,49 @@ class UpgradepathController extends BaseController
        return $this->render('list',array('data'=>$data));
     }
 
-   public function actionEdit()
+    public function actionEdit()
     {   
        return $this->render('edit');
     }
-     public function actionCopy()
+    
+    public function actionCopy()
     {   
        return $this->render('copy');
+    }
+    
+    /**
+     * 升级序列配置列表
+     * @return type
+     */
+    public function actionConfigList()
+    {
+        return $this->render('configlist');
+    }
+    
+    /**
+     * 新增升级序列
+     * @return type
+     */
+    public function actionConfigCreate()
+    {
+        return $this->render('configedit');
+    }
+    
+    /**
+     * 编辑升级序列
+     * @return type
+     */
+    public function actionConfigEdit()
+    {
+        return $this->render('configedit');
+    }
+    
+    /**
+     * 删除升级序列
+     * @return boolean
+     */
+    public function actionConfigDelete()
+    {
+        return true;
     }
 }
