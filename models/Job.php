@@ -171,7 +171,7 @@ class Job extends BaseModel
      */
     public static function getJobStatusByWorkerId($worker_id)
     {
-        $condition = "worker_id={$worker_id} and (status=1)";
+        $condition = "worker_id={$worker_id} and (status=0 or status=1)";
         $result = Job::find()
                 ->where($condition)
                 ->asArray()
