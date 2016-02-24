@@ -175,7 +175,6 @@ class Job extends BaseModel
 
         $result = Job::find()
                 ->where($condition)
-                ->orWhere(['status' => 0, 'status' => 1])
                 ->asArray()
                 ->all();
         
