@@ -25,13 +25,13 @@ use yii\widgets\LinkPager;
                 <!--<div class="panel-heading">
                     高级筛选
                 </div>-->
-                <div class="panel-body">
+       
           
                   
-     <a  class="btn btn-success" href="/region/edit" style="margin-left: 20px;">新增</a>
+     <a   href="/region/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
    
   
-                </div>
+           
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
                   
@@ -47,9 +47,9 @@ use yii\widgets\LinkPager;
                         </thead>
                         <tbody>
                        <td>1</td>
-                       <td>ios</td>
+                       <td>china</td>
                        <td><input type="checkbox"/></td>
-                       <td>200</td>
+                       <td>中国大陆</td>
                         <td><a  class="btn btn-info btn-sm active" href="/region/edit?action=opt&id='.$k['id'].'" >编辑</a>
                             <a  class="btn btn-danger btn-sm active" >删除</a>
 </td>
