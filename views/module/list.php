@@ -24,7 +24,7 @@
         <div class="col-lg-1"></div>
         <div class="col-lg-10">
             <div class="hpanel hgreen">
-                <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 10px;">
+                <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
 <!--                    <div style="float:right">
                         <?php //echo LinkPager::widget(['pagination' => $pages]); ?>
                     </div> 
