@@ -16,7 +16,7 @@ use app\models\Deployment;
 use app\models\Clientpackage;
 
 
-class DeplaymentController extends BaseController
+class DeploymentController extends BaseController
 {
     
     public function actionList()

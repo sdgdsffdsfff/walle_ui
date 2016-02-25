@@ -11,7 +11,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看deplayment
+                查看deployment
             </h5>
         </div>
     </div>
