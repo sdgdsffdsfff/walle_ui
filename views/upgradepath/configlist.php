@@ -23,7 +23,7 @@ use yii\helpers\Html;
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">upgrade_path：</label>
+					<label class="control-label">升级序列：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
                         <option value="1">1</option>
@@ -32,7 +32,7 @@ use yii\helpers\Html;
 					</select>
 				</div>
 				<div class="col-lg-4">
-					<label class="control-label">parameter：</label>
+					<label class="control-label">参数：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
                         <option value="1">1</option>

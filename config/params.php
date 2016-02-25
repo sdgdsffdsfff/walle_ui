@@ -123,7 +123,7 @@ return [
             ],
         ],
         [
-            'name' => '部署位置管理',
+            'name' => '部署管理',
             'controller' => 'deployment',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-map-marker',
