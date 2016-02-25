@@ -28,4 +28,20 @@ class PlatformController extends BaseController
     {   
        return $this->render('edit');
     }
+
+    /**
+     * 平台配置参数列表
+     */
+    public function actionConfigList()
+    {
+        return $this->render('configList');
+    }
+
+    /**
+     * 平台配置参数编辑页面
+     */
+    public function actionConfigEdit()
+    {
+        return $this->render('configEdit');
+    }
 }

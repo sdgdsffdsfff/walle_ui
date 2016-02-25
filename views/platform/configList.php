@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看发行地区配置列表
+                查看平台信息配置列表
             </h5>
         </div>
     </div>
@@ -34,13 +34,13 @@ use yii\helpers\Html;
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">region：</label>
+					<label class="control-label">平台名称：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
 					</select>
 				</div>
 				<div class="col-lg-4">
-					<label class="control-label">parameter：</label>
+					<label class="control-label">参数：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
 					</select>
@@ -50,7 +50,7 @@ use yii\helpers\Html;
 				<table id="region_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th>发行地区</th>
+							<th>平台名称</th>
 							<th>参数</th>
 							<th>参数值</th>
 							<th>操作</th>

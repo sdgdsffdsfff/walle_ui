@@ -33,7 +33,7 @@ use yii\helpers\Html;
 					<a href="package-config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">package_name:</label>
+					<label class="control-label">安装包名称：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
@@ -41,7 +41,7 @@ use yii\helpers\Html;
 					</select>
 				</div>
 				<div class="col-lg-4">
-					<label class="control-label">parameter：</label>
+					<label class="control-label">参数：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
@@ -53,9 +53,9 @@ use yii\helpers\Html;
 				<table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>package_name</th>
-							<th>parameter</th>
-							<th>value</th>
+							<th>安装包名称</th>
+							<th>参数</th>
+							<th>参数值</th>
 							<th>操作</th>
 						</tr>
 					</thead>

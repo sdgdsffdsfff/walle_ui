@@ -126,23 +126,23 @@ return [
                 ],
                 [
                     'name' => '平台信息配置',
-                    'path' => '',
+                    'path' => 'platform/config-list',
                 ],
             ],
         ],
         [
             'name' => '部署管理',
-            'controller' => 'deplayment',
+            'controller' => 'deployment',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-map-marker',
             'subMenu' => [
                 [
                     'name' => '部署位置列表',
-                    'path' => 'deplayment/list',
+                    'path' => 'deployment/list',
                 ],
                 [
                     'name' => '部署位置配置',
-                    'path' => '',
+                    'path' => 'deployment/config-list',
                 ],
             ],
         ],

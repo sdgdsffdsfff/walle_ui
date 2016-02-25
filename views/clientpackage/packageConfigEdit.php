@@ -69,7 +69,7 @@ use yii\helpers\Html;
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-sm-offset-5">
-                                    <button id="create_worker_btn" class="btn btn-success" type="submit">保存</button>
+                                    <button id="save_config" class="btn btn-success" type="submit">保存</button>
                                 </div>
                             </div>
                         </form>
