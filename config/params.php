@@ -124,7 +124,7 @@ return [
         ],
         [
             'name' => '部署管理',
-            'controller' => 'deployment',
+            'controller' => 'deplayment',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-map-marker',
             'subMenu' => [
