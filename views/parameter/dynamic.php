@@ -30,7 +30,7 @@ use yii\helpers\Html;
 		<div class="hpanel">
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<a href="dynamic-config-edit" class="btn w-xs btn-info">新增</a>
+					<a href="dynamic-config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
 					
