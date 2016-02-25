@@ -38,7 +38,7 @@ use yii\helpers\Html;
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <label class="control-label">package_name：</label>
+                                                <label class="control-label">安装包名称：</label>
                                             </td>
                                             <td>                                               
                                                 <select name="region_id" class="js-source-states" style="width:200px; margin-right: 40px;">
@@ -48,7 +48,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">参数名称：</label>
+                                                <label class="control-label">参数：</label>
                                             </td>
                                             <td>
                                                 <select name="parameter_id" class="js-source-states" style="width:200px; margin-right: 40px;">

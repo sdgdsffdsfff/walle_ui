@@ -28,4 +28,20 @@ class DeploymentController extends BaseController
     {   
        return $this->render('edit');
     }
+
+    /**
+     * 部署位置配置列表
+     */
+    public function actionConfigList()
+    {
+        return $this->render('configList');
+    }
+
+    /**
+     * 编辑部署位置
+     */
+    public function actionConfigEdit()
+    {
+        return $this->render('configEdit');
+    }
 }
