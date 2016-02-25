@@ -8,7 +8,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑Parameter配置
+                编辑参数配置
             </h5>
         </div>
     </div>

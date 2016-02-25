@@ -2,7 +2,7 @@
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看Worker配置
+                查看打包机配置
             </h5>
         </div>
     </div>
