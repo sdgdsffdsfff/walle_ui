@@ -2,6 +2,7 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
@@ -35,15 +36,42 @@ use yii\widgets\LinkPager;
                             </tr>
                         </thead>
                         <tbody>
+
+                        <?php
+                            if($data){
+                                foreach ($data as $k => $v) {
+                                    echo "<tr>";
+                                    echo "<td>".$v['id']."</td>";
+                                   echo "<td>".$v['name']."</td>";
+                                   if($v['disable']==0){
+                                    $ch="checked";
+                                   }else{
+                                    $ch='';
+                                 }
+                                    echo '<td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled '.$ch.'/><label></label></div></td>';
+                                    echo "<td>".$v['description']."</td>";
+                                    echo '<td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
+                         
+    <a href="/task/list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
+
+    <a href="/upgradepath/copy?id='.$v['id'].'" class="btn btn-warning btn-sm active" >复制升级序列相关配置</a></td>';
+                                    echo "</tr>";
+                                }
+                            }
+                            
+
+                        ?>
+                            <tr>
                        <td>1</td>
                        <td>ios</td>
                        <td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled/><label></label></div></td>
                        <td>200</td>
-                        <td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$k['id'].'" >编辑</a>
-                            <a  class="btn btn-danger btn-sm active" >删除</a>
-    <a href="/task/list?version_id='.$k['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
+                        <td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
+                            
+    <a href="/task/list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
 
-    <a href="/upgradepath/copy?vid='.$k['id'].'" class="btn btn-warning btn-sm active" >复制升级序列相关配置</a></td>
+    <a href="/upgradepath/copy?id='.$v['id'].'" class="btn btn-warning btn-sm active" >复制升级序列相关配置</a></td>
+</tr>
                         </tbody>
                     </table>
                    
@@ -54,12 +82,13 @@ use yii\widgets\LinkPager;
 </div>
 
 <!-- Vendor scripts -->
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
 <?= Html::jsFile('@web/static/codymenu.js'); ?>
 <script type="text/javascript">
     $(function () {
         $(".js-source-states").select2();
-       
+
     });
 </script>

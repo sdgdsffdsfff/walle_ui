@@ -2,12 +2,13 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                复制upgrade path
+                编辑upgrade path
             </h5>
         </div>
     </div>
@@ -16,47 +17,105 @@ use yii\widgets\LinkPager;
 <!-- Main Wrapper -->
 <div class="content animate-panel">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-10">
             <div class="hpanel">
-                <!--<div class="panel-heading">
-                    高级筛选
-                </div>-->
-                <form>
-                <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-                  
-                    <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" style="width:50%;margin-left:200px;margin-right:200px">
-                   
+               <div class="col-xs-5 col-md-3"></div>
+                <div class="col-xs-5 col-md-7">
+                    <div class="panel-body">
+                 <form id="upgradepath_form"  class="form-horizontal">
+                <div class="table-responsive" >
+                 
+                    <input type="hidden" name="id" id="up_id" value="<?php echo $id;?>"> 
+                    <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" >
+                    <thead>
+                                        <tr>
+                                            <th>字段</th>
+                                            <th>取值</th>
+                                        </tr>
+                                    </thead>
                         <tbody>
                        <tr>
                        <td>名称</td>
-                       <td><input type="text"  class="form-control" name="showname"  /> </td>
+                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php echo $info['name']; ?>"/> </td>
                    </tr>
                     <tr>
                        <td>描述</td>
-                       <td><input type="text"  class="form-control"  name="description"  /></td> 
+                       <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php echo $info['description'];?>"/></td> 
                    </tr>
                         <tr>
                         <td>是否启用</td>
-                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" name="subBox" checked ><label></label></div>  </td> </tr>
+                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($info['disable']==0) echo "checked";?> ><label></label></div>  </td> </tr>
                         </tbody>
                     </table>
-
-                   <div style="width:50%;margin-left:400px;"> <button type="button" class="btn w-xs btn-primary" id="uptag">复制</button></div>
-                   
-                </div>
+                       <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-5">
+                                    <button id="create_module_btn" class="btn btn-success" type="submit">复制</button>
+                                </div>
+                            </div>
+    </div>
                 </form>
+            </div></div>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Vendor scripts -->
-<?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
-<?= Html::jsFile('@web/static/codymenu.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
+<?= Html::jsFile('@web/static/stringCheck.js'); ?>
 <script type="text/javascript">
     $(function () {
-        $(".js-source-states").select2();
+            $('#upgradepath_form').validate({
+            ignore: '.ignore',
+            rules: {
+                up_name: {
+                    required: true,
+                    stringCheck: true
+                },
+                up_description: {
+                    required: true
+                },
+         
+            },
+            messages: {
+                up_name: {
+                    required: '请输入模块英文名称',
+                    stringCheck: '只能由英文字母,数字,下划线组成,以英文字母开头'
+                },
+                up_description: {
+                    required: '请输入模块中文描述'
+                },
+           
+            },
+            submitHandler: function(form){
+                var id=$("#up_id").val();
+                var name=$("#up_name").val();
+                var description=$("#up_description").val();
+                if($("#up_option").is(":checked")){
+                    var disable=0;
+                }else{
+                    var disable=1;
+                }
+                
+                var post = {id : id,name:name,description:description,disable:disable};
+                 $.ajax({
+                type:'post',
+                url:'/upgradepath/docopy',
+                data:post,
+                dataType:'json',
+            }).done(function(data){
+                console.log(data);
+                if (data.status == '10000') {
+                    swal({ title:"编辑upgrade path", text:data.data, type:"success",timer: 5000,
+                        showConfirmButton: false});
+                }else{
+                    swal({ title:"编辑upgrade path", text:data.data, type:"error"});
+                }
+            });
+  
+            }
+        });
        
     });
 </script>
