@@ -43,7 +43,6 @@
                                 <td>是</td>
                                 <td>
                                     <a href="/worker/edit" class="btn btn-info">编辑</a>
-                                    <a href="/worker/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -52,7 +51,6 @@
                                 <td>是</td>
                                 <td>
                                     <a href="/worker/edit" class="btn btn-info">编辑</a>
-                                    <a href="/worker/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -61,7 +59,6 @@
                                 <td>是</td>
                                 <td>
                                     <a href="/worker/edit" class="btn btn-info">编辑</a>
-                                    <a href="/worker/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -70,7 +67,6 @@
                                 <td>否</td>
                                 <td>
                                     <a href="/worker/edit" class="btn btn-info">编辑</a>
-                                    <a href="/worker/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                         </tbody>

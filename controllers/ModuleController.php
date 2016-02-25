@@ -71,12 +71,4 @@ class ModuleController extends BaseController
     {
         return $this->render('edit');
     }
-    
-    /**
-     * 业务模块删除
-     */
-    public function actionDelete()
-    {
-        return $this->render('edit');
-    }
 }

@@ -49,7 +49,6 @@
                                 <td>DEBUG,INFO,WARNNING,ERROR</td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -61,7 +60,6 @@
                                 <td></td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -73,7 +71,6 @@
                                 <td>true,false</td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -85,7 +82,6 @@
                                 <td></td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -97,7 +93,6 @@
                                 <td>DEBUG,INFO,WARNNING,ERROR</td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                             <tr>
@@ -109,7 +104,6 @@
                                 <td>DEBUG,INFO,WARNNING,ERROR</td>
                                 <td>
                                     <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                    <a href="/parameter/delete" class="btn btn-danger">删除</a>
                                 </td>
                             </tr>
                         </tbody>
