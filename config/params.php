@@ -140,7 +140,7 @@ return [
         ],
         [
             'name' => '安装包管理',
-            'controller' => 'clientpackage',
+            'controller' => 'clientpackage,package',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-suitcase',
             'subMenu' => [
