@@ -32,7 +32,7 @@
                             <tr>
                                 <th data-toggle="true">ID</th>
                                 <th>主机名</th>
-                                <th>是否禁用</th>
+                                <th>是否启用</th>
                                 <th>操作</th>
                             </tr>
                         </thead>

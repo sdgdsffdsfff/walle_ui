@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">是否禁用</label>
+                                                <label class="control-label">是否启用</label>
                                             </td>
                                             <td>
                                                 <input type="checkbox" class="i-checks checkbox" id="worker_disable" name="worker_disable" />
