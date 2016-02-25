@@ -521,6 +521,12 @@ class TaskController extends BaseController
             $this->ajaxReturn(self::STATUS_FAILS, array(),"请选择客户端安装包！");
         }
         
+        $bool = Job::getJobStatusByWorkerId($workerId);
+        if($bool)
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, array(),"选择的打包机正在使用中！");
+        }
+        
         $targetTasksStr = !empty($targetTasks)? implode(",", $targetTasks) : "";
         $versionsUpdatePackageStr = !empty($versionsUpdatePackage) && in_array('upload_client_update_config,upload_client_update_package', $targetTasks)? implode(",", $versionsUpdatePackage) :"";
         $packageConfigStr = !empty($packageConfig) &&  in_array('create_client_package', $targetTasks)? implode(",", $packageConfig) : "";
