@@ -45,7 +45,7 @@ use yii\helpers\Html;
 					</select>
 			    </div>	
 			</div>
-			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 10px;">
+			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
 				<table id="dynamic_config_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 					<thead>
 						<tr>
