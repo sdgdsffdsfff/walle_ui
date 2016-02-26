@@ -1,0 +1,151 @@
+<?php
+use yii\helpers\Html;
+use yii\widgets\LinkPager;
+?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
+<?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
+<?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
+<div class="normalheader transition small-header">
+    <div class="hpanel">
+        <div class="panel-body">
+            <h5 class="font-light m-b-xs">
+              编辑部署位置
+            </h5>
+        </div>
+    </div>
+</div>
+
+<!-- Main Wrapper -->
+<div class="content animate-panel">
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="hpanel">
+               <div class="col-xs-5 col-md-3"></div>
+                <div class="col-xs-5 col-md-7">
+                    <div class="panel-body">
+                 <form id="upgradepath_form"  class="form-horizontal">
+                <div class="table-responsive" >
+                 
+                    <input type="hidden" name="id" id="up_id" value="<?php echo $id;?>"> 
+                    <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" >
+                    <thead>
+                                        <tr>
+                                            <th>字段</th>
+                                            <th>取值</th>
+                                        </tr>
+                                    </thead>
+                        <tbody>
+                               <tr>
+                       <td>平台</td>
+                   
+                       <td>
+                          <select class="js-source-states"  name="region" id="region" style="width: 100%">
+                                    <option value="">请选择平台</option>
+                                   <?php 
+                                    foreach ($region as $k => $v) {
+                                      if(isset($info['platform_id'])&&$info['platform_id']==$v['id']){
+                                         echo '<option value="'.$v['id'].'" selected>'.$v['name'].'</option>';
+                                      }else{
+                                        echo '<option value="'.$v['id'].'">'.$v['name'].'</option>';
+                                      }
+                                      
+                                                                          }
+                                   ?>
+                                </select>
+                              </td></tr>
+                       <tr>
+                       <td>名称</td>
+                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php if($id){echo $info['name']; }?>"/> </td>
+                   </tr>
+                    <tr>
+                       <td>描述</td>
+                       <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php if($id){echo $info['description'];}?>"/></td> 
+                   </tr>
+                        <tr>
+                        <td>是否启用</td>
+                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($id&&$info['disable']==0) echo "checked";?> ><label></label></div>  </td> </tr>
+                        </tbody>
+                    </table>
+                       <div class="form-group">
+                                <div class="col-sm-2 col-sm-offset-5">
+                                    <button id="create_module_btn" class="btn btn-success" type="submit">保存</button>
+                                </div>
+                            </div>
+
+                  
+                   
+                </div>
+                </form>
+            </div></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Vendor scripts -->
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
+<?= Html::jsFile('@web/static/stringCheck.js'); ?>
+<script type="text/javascript">
+    $(function () {
+       $(".js-source-states").select2();
+            $('#upgradepath_form').validate({
+            ignore: '.ignore',
+            rules: {
+                up_name: {
+                    required: true,
+                },
+                up_description: {
+                    required: true
+                },
+                region: {
+                    required: true
+                },
+            },
+            messages: {
+                up_name: {
+                    required: '请输入模块英文名称',
+                    stringCheck: '只能由英文字母,数字,下划线组成,以英文字母开头'
+                },
+                up_description: {
+                    required: '请输入模块中文描述'
+                },
+                region: {
+                    required:'请选择平台'
+                },
+           
+            },
+            submitHandler: function(form){
+                var id=$("#up_id").val();
+                var region=$("#region").val();
+                var name=$("#up_name").val();
+                var description=$("#up_description").val();
+                if($("#up_option").is(":checked")){
+                    var disable=0;
+                }else{
+                    var disable=1;
+                }
+                
+                var post = {id : id,name:name,description:description,disable:disable,region:region};
+                 $.ajax({
+                type:'post',
+                url:'/clientpackage/doedit',
+                data:post,
+                dataType:'json',
+            }).done(function(data){
+                console.log(data);
+                if (data.status == '10000') {
+                    swal({ title:"编辑平台", text:data.data, type:"success",timer: 5000,
+                        showConfirmButton: false});
+                }else{
+                    swal({ title:"编辑平台", text:data.data, type:"error"});
+                }
+            });
+  
+            }
+        });
+       
+    });
+</script>
