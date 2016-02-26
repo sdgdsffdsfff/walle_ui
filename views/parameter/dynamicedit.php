@@ -31,14 +31,14 @@ use yii\helpers\Html;
                 <div class="col-xs-5 col-md-4"></div>
                 <div class="col-xs-5 col-md-7">
                     <div class="panel-body">
-                        <form id="edit_regionconfig_form" method="get" class="form-horizontal">
+                        <form id="edit_dynamic_form" method="get" class="form-horizontal">
                             <div class="table-responsive">
                                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <label class="control-label">参数名称：</label>
+                                                <label class="control-label">参数：</label>
                                             </td>
                                             <td>
                                                 <select name="parameter_id" class="js-source-states" style="width:200px; margin-right: 40px;">
@@ -59,7 +59,7 @@ use yii\helpers\Html;
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-sm-offset-5">
-                                    <button id="create_worker_btn" class="btn btn-success" type="submit">保存</button>
+                                    <button id="save_config" class="btn btn-success" type="submit">保存</button>
                                 </div>
                             </div>
                         </form>

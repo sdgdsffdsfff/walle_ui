@@ -32,7 +32,7 @@ return [
         ],
         [
             'name' => '任务管理',
-            'controller' => 'task, parameter',
+            'controller' => 'task',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-list-alt',
             'subMenu' => [
@@ -48,6 +48,14 @@ return [
                     'name' => '发布任务对比',
                     'path' => 'task/compare',
                 ],
+            ],
+        ],
+        [
+            'name' => '参数管理',
+            'controller' => 'parameter',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-behance-square',
+            'subMenu' => [
                 [
                     'name' => '参数配置(parameter)',
                     'path' => 'parameter/list',
@@ -62,7 +70,7 @@ return [
             'name' => '业务模块管理',
             'controller' => 'module',
             'path' => 'javascript:void(0);',
-            'icon' => 'fa-cube',
+            'icon' => 'fa-puzzle-piece',
             'subMenu' => [
                 [
                     'name' => '业务模块配置(module)',
@@ -118,31 +126,31 @@ return [
                 ],
                 [
                     'name' => '平台信息配置',
-                    'path' => '',
+                    'path' => 'platform/config-list',
                 ],
             ],
         ],
         [
             'name' => '部署管理',
-            'controller' => 'deplayment',
+            'controller' => 'deployment',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-map-marker',
             'subMenu' => [
                 [
                     'name' => '部署位置列表',
-                    'path' => 'deplayment/list',
+                    'path' => 'deployment/list',
                 ],
                 [
                     'name' => '部署位置配置',
-                    'path' => '',
+                    'path' => 'deployment/config-list',
                 ],
             ],
         ],
         [
             'name' => '安装包管理',
-            'controller' => 'clientpackage',
+            'controller' => 'clientpackage,package',
             'path' => 'javascript:void(0);',
-            'icon' => 'fa-suitcase',
+            'icon' => 'fa-dropbox',
             'subMenu' => [
                 [
                     'name' => '安装包下载',
@@ -165,8 +173,14 @@ return [
         [
             'name' => '打包机管理',
             'controller' => 'worker',
-            'path' => '/worker/list',
-            'icon' => 'fa-folder',
+            'path' => 'javascript:void(0);',
+            'icon' => 'fa-suitcase',
+            'subMenu' => [
+                [
+                    'name' => '打包机列表',
+                    'path' => 'worker/list',
+                ]
+            ],
         ],
     ],
 ];

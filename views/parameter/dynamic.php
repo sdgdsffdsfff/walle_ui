@@ -15,6 +15,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -30,13 +31,13 @@ use yii\helpers\Html;
 		<div class="hpanel">
 			<div class="panel-body">
 				<div class="col-lg-3">
-					<a href="dynamic-config-edit" class="btn w-xs btn-info">新增</a>
+					<a href="dynamic-config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
 					
 				</div>
 				<div class="col-lg-4">
-					<label class="control-label">parameter：</label>
+					<label class="control-label">参数：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
@@ -45,11 +46,11 @@ use yii\helpers\Html;
 			    </div>	
 			</div>
 			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 10px;">
-				<table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
+				<table id="dynamic_config_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
 					<thead>
 						<tr>
-							<th>parameter</th>
-							<th>value</th>
+							<th>参数</th>
+							<th>参数值</th>
 							<th>操作</th>
 						</tr>
 					</thead>
@@ -91,9 +92,25 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); ?>
+
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
+
+    //表数据排序
+    $('#dynamic_config_table').dataTable({
+        //操作列不排序
+        "aoColumnDefs": [{ "bSortable": false, "aTargets": [2] }],
+        //去掉分页
+        "bPaginate": false,
+        //去掉左下角显示记录数
+        "bInfo": false,
+        //去掉过滤,搜索功能
+        "bFilter": false
+    });
+
      toastr.options = {
                 "debug": false,
                 "newestOnTop": false,

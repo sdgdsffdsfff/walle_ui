@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看发行地区配置列表
+                查看平台信息配置列表
             </h5>
         </div>
     </div>
@@ -34,7 +34,7 @@ use yii\helpers\Html;
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">发行地区：</label>
+					<label class="control-label">平台名称：</label>
 					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
 					</select>
@@ -47,10 +47,10 @@ use yii\helpers\Html;
 			    </div>	
 			</div>
 			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="region_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
+				<table id="platform_config_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th>发行地区</th>
+							<th>平台名称</th>
 							<th>参数</th>
 							<th>参数值</th>
 							<th>操作</th>
@@ -62,8 +62,8 @@ use yii\helpers\Html;
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
 							</td>
 						</tr>
 						<tr>
@@ -71,8 +71,8 @@ use yii\helpers\Html;
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
 							</td>
 						</tr>
 						<tr>
@@ -80,8 +80,8 @@ use yii\helpers\Html;
 							<td>language</td>
 							<td>zh_CN</td>
 							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
+								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
 							</td>
 						</tr>
 					</tbody>
@@ -100,7 +100,7 @@ use yii\helpers\Html;
 $(function() {
     $(".js-source-states").select2();
     //表数据排序
-    $('#region_table').dataTable({
+    $('#platform_config_table').dataTable({
         //操作列不排序
         "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
         //去掉分页

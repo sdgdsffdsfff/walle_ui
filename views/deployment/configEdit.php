@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑发行地区配置
+                编辑部署位置配置
             </h5>
         </div>
     </div>
@@ -38,10 +38,10 @@ use yii\helpers\Html;
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label class="control-label">发行区域：</label>
+                                            <label class="control-label">部署位置：</label>
                                         </td>
                                         <td>                                               
-                                            <select name="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="deployment_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                                 <option value="1">中国大陆区域发行</option>
                                             </select>
                                         </td>
@@ -69,7 +69,7 @@ use yii\helpers\Html;
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-sm-offset-5">
-                                <button id="create_worker_btn" class="btn btn-success" type="submit">保存</button>
+                                <button id="save_config" class="btn btn-success" type="submit">保存</button>
                             </div>
                         </div>
                     </form>

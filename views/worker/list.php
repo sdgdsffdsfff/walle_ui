@@ -2,7 +2,7 @@
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看Worker配置
+                查看打包机配置
             </h5>
         </div>
     </div>
@@ -32,7 +32,7 @@
                             <tr>
                                 <th data-toggle="true">ID</th>
                                 <th>主机名</th>
-                                <th>是否禁用</th>
+                                <th>是否启用</th>
                                 <th>操作</th>
                             </tr>
                         </thead>

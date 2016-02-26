@@ -8,7 +8,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑Worker配置
+                编辑打包机配置
             </h5>
         </div>
     </div>
@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                         </tr>
                                         <tr>
                                             <td>
-                                                <label class="control-label">是否禁用</label>
+                                                <label class="control-label">是否启用</label>
                                             </td>
                                             <td>
                                                 <input type="checkbox" class="i-checks checkbox" id="worker_disable" name="worker_disable" />

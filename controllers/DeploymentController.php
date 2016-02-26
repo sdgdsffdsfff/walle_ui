@@ -16,7 +16,7 @@ use app\models\Deployment;
 use app\models\Clientpackage;
 
 
-class DeplaymentController extends BaseController
+class DeploymentController extends BaseController
 {
     
     public function actionList()
@@ -27,5 +27,21 @@ class DeplaymentController extends BaseController
    public function actionEdit()
     {   
        return $this->render('edit');
+    }
+
+    /**
+     * 部署位置配置列表
+     */
+    public function actionConfigList()
+    {
+        return $this->render('configList');
+    }
+
+    /**
+     * 编辑部署位置
+     */
+    public function actionConfigEdit()
+    {
+        return $this->render('configEdit');
     }
 }
