@@ -55,7 +55,7 @@ class UpgradepathController extends BaseController
       $disable = yii::$app->getRequest()->post('disable');
       if($name&&$description){
         $sameName=UpgradePath::find()->where(array('name'=>$name))->one();
-        if($sameName){
+        if($sameName&&$sameName['id']!=$id){
           $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
         }else{
           if($id){

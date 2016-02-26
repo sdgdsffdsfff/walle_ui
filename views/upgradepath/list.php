@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看upgrade path
+                查看升级序列
             </h5>
         </div>
     </div>
@@ -52,7 +52,7 @@ use yii\widgets\LinkPager;
                                     echo "<td>".$v['description']."</td>";
                                     echo '<td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
                          
-    <a href="/task/list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
+    <a href="/upgradepath/config-list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
 
     <a href="/upgradepath/copy?id='.$v['id'].'" class="btn btn-warning btn-sm active" >复制升级序列相关配置</a></td>';
                                     echo "</tr>";
@@ -61,17 +61,6 @@ use yii\widgets\LinkPager;
                             
 
                         ?>
-                            <tr>
-                       <td>1</td>
-                       <td>ios</td>
-                       <td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled/><label></label></div></td>
-                       <td>200</td>
-                        <td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
-                            
-    <a href="/task/list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
-
-    <a href="/upgradepath/copy?id='.$v['id'].'" class="btn btn-warning btn-sm active" >复制升级序列相关配置</a></td>
-</tr>
                         </tbody>
                     </table>
                    

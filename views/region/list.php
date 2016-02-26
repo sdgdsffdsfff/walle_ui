@@ -2,16 +2,13 @@
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
 ?>
-<?= Html::cssFile('@web/static/plugins/fooTable/css/footable.core.min.css'); ?>
-<?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
-<?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
-<?= Html::cssFile('@web/static/plugins/summernote/dist/summernote.css'); ?>
-<?= Html::cssFile('@web/static/plugins/summernote/dist/summernote-bs3.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
+<?= Html::cssFile('@web/static/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看region
+                查看发行区域
             </h5>
         </div>
     </div>
@@ -22,16 +19,9 @@ use yii\widgets\LinkPager;
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
-                <!--<div class="panel-heading">
-                    高级筛选
-                </div>-->
-       
-          
-                  
-     <a   href="/region/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
-   
-  
-           
+               
+                    <a href="/region/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
                   
@@ -46,13 +36,28 @@ use yii\widgets\LinkPager;
                             </tr>
                         </thead>
                         <tbody>
-                       <td>1</td>
-                       <td>china</td>
-                       <td><input type="checkbox"/></td>
-                       <td>中国大陆</td>
-                        <td><a  class="btn btn-info btn-sm active" href="/region/edit?action=opt&id='.$k['id'].'" >编辑</a>
-                            <a  class="btn btn-danger btn-sm active" >删除</a>
-</td>
+
+                        <?php
+                            if($data){
+                                foreach ($data as $k => $v) {
+                                    echo "<tr>";
+                                    echo "<td>".$v['id']."</td>";
+                                   echo "<td>".$v['name']."</td>";
+                                   if($v['disable']==0){
+                                    $ch="checked";
+                                   }else{
+                                    $ch='';
+                                 }
+                                    echo '<td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled '.$ch.'/><label></label></div></td>';
+                                    echo "<td>".$v['description']."</td>";
+                                    echo '<td><a  class="btn btn-info btn-sm active" href="/region/edit?id='.$v['id'].'" >编辑</a></td>';
+                                    echo "</tr>";
+                                }
+                            }
+                            
+
+                        ?>
+
                         </tbody>
                     </table>
                    
@@ -63,12 +68,13 @@ use yii\widgets\LinkPager;
 </div>
 
 <!-- Vendor scripts -->
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/summernote/dist/summernote.min.js'); ?>
 <?= Html::jsFile('@web/static/codymenu.js'); ?>
 <script type="text/javascript">
     $(function () {
         $(".js-source-states").select2();
-       
+
     });
 </script>

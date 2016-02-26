@@ -148,7 +148,7 @@ class ClientpackageController extends BaseController
 
             
         }
-        return $this->render('liststatus',array('data'=>$data));
+        return $this->render('liststatus',array('data'=>$data,'job_id'=>$job_id));
     }
     
     public function actionRequest(){ 

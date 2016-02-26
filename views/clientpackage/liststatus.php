@@ -23,7 +23,7 @@ use yii\helpers\Html;
                     <form class="form-inline">
                         <div class="form-group">
                             <label for="exampleInputName2">发布任务ID：</label>
-                            <input type="text" class="form-control" name="id" value="<?php //echo $vid; ?>" placeholder="版本号" style="width:120px; margin-right: 20px;" />
+                            <input type="text" class="form-control" name="id" value="<?php echo $job_id; ?>" placeholder="版本号" style="width:120px; margin-right: 20px;" />
                         </div>
      
    
