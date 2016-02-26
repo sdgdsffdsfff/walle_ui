@@ -23,10 +23,10 @@ use yii\widgets\LinkPager;
             <div class="hpanel">
                <div class="col-xs-5 col-md-3"></div>
                 <div class="col-xs-5 col-md-7">
-                    <div class="panel-body">
-                 <form id="upgradepath_form"  class="form-horizontal">
-                <div class="table-responsive" >
+                
                  
+                <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
+                 <form id="upgradepath_form"  class="form-horizontal">
                     <input type="hidden" name="id" id="up_id" value="<?php echo $id;?>"> 
                     <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" >
                     <thead>
@@ -74,10 +74,9 @@ use yii\widgets\LinkPager;
                             </div>
 
                   
-                   
+                   </form>
                 </div>
-                </form>
-            </div></div>
+                </div>
             </div>
         </div>
     </div>
