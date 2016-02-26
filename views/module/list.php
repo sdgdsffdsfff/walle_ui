@@ -11,7 +11,7 @@
 <div class="content animate-panel">
     <div class="row">
         <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <div class="hpanel">
                 <div class="col-xs-6 col-md-4">
                     <a href="/module/create" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
@@ -22,7 +22,7 @@
     
     <div class="row">
         <div class="col-lg-1"></div>
-        <div class="col-lg-10">
+        <div class="col-lg-12">
             <div class="hpanel hgreen">
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
 <!--                    <div style="float:right">

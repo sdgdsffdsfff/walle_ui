@@ -19,8 +19,18 @@ use yii\widgets\LinkPager;
     <div class="row">
         <div class="col-lg-12">
             <div class="hpanel">
-               
+                <div class="col-xs-6 col-md-4">
                     <a href="/clientpackage/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="hpanel">
+               
+                    <!--<a href="/clientpackage/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>-->
 
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
