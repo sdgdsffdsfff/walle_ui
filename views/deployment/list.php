@@ -20,7 +20,7 @@ use yii\widgets\LinkPager;
         <div class="col-lg-12">
             <div class="hpanel">
                
-                    <a href="/deplayment/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                    <a href="/deployment/edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
 
                 
                 <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
@@ -29,7 +29,7 @@ use yii\widgets\LinkPager;
                         <thead>
                             <tr>
                                 <th data-toggle="true">ID</th>
-                                <th>发行地区</th>
+                                <th>平台</th>
                                 <th>名称</th>
                                  <th>是否启用</th>
                                 <th>描述</th>
@@ -43,16 +43,16 @@ use yii\widgets\LinkPager;
                                 foreach ($data as $k => $v) {
                                     echo "<tr>";
                                     echo "<td>".$v['id']."</td>";
-                                    echo "<td>".$v['region']['name']."</td>";
+                                    echo "<td>".$v['platform']['name']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                    if($v['disable']==0){
-                                    $ch="checked";
+                                     echo '<td>是</td>';
                                    }else{
-                                    $ch='';
+                                     echo '<td>否</td>';
                                  }
-                                    echo '<td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled '.$ch.'/><label></label></div></td>';
+                                   
                                     echo "<td>".$v['description']."</td>";
-                                    echo '<td><a  class="btn btn-info btn-sm active" href="/deplayment/edit?id='.$v['id'].'" >编辑</a></td>';
+                                    echo '<td><a  class="btn btn-info btn-sm active" href="/deployment/edit?id='.$v['id'].'" >编辑</a></td>';
                                     echo "</tr>";
                                 }
                             }

@@ -43,7 +43,7 @@ use yii\widgets\LinkPager;
                                     <option value="">请选择发行区域</option>
                                    <?php 
                                     foreach ($region as $k => $v) {
-                                      if(isset($info['region_id'])==$v['id']){
+                                      if(isset($info['region_id'])&&$info['region_id']==$v['id']){
                                          echo '<option value="'.$v['id'].'" selected>'.$v['name'].'</option>';
                                       }else{
                                         echo '<option value="'.$v['id'].'">'.$v['name'].'</option>';

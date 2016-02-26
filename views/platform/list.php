@@ -46,11 +46,10 @@ use yii\widgets\LinkPager;
                                     echo "<td>".$v['region']['name']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                    if($v['disable']==0){
-                                    $ch="checked";
+                                     echo '<td>是</td>';
                                    }else{
-                                    $ch='';
+                                     echo '<td>否</td>';
                                  }
-                                    echo '<td><div class="checkbox checkbox-success" style="margin:0" > <input type="checkbox" disabled '.$ch.'/><label></label></div></td>';
                                     echo "<td>".$v['description']."</td>";
                                     echo '<td><a  class="btn btn-info btn-sm active" href="/platform/edit?id='.$v['id'].'" >编辑</a></td>';
                                     echo "</tr>";

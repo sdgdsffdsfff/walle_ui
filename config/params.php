@@ -162,7 +162,7 @@ return [
                 ],
                 [
                     'name' => '安装包列表',
-                    'path' => 'package/list',
+                    'path' => 'clientpackage/tolist',
                 ],
                 [
                     'name' => '安装包配置',
