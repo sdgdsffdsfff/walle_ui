@@ -56,7 +56,7 @@ use yii\helpers\Html;
 					</thead>
 					<tbody>
 						<tr>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
@@ -64,7 +64,7 @@ use yii\helpers\Html;
 							</td>
 						</tr>
 						<tr>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
@@ -72,7 +72,7 @@ use yii\helpers\Html;
 							</td>
 						</tr>
 						<tr>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>

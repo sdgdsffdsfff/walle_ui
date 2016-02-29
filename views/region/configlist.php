@@ -59,7 +59,7 @@ use yii\helpers\Html;
 					<tbody>
 						<tr>
 							<td>China</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
@@ -68,7 +68,7 @@ use yii\helpers\Html;
 						</tr>
 						<tr>
 							<td>China</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
@@ -77,7 +77,7 @@ use yii\helpers\Html;
 						</tr>
 						<tr>
 							<td>China</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="/region/config-edit" class='btn btn-info'>编辑</a>

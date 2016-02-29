@@ -63,7 +63,7 @@ use yii\helpers\Html;
 					<tbody>
 						<tr>
 							<td>appstore_online</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
@@ -72,7 +72,7 @@ use yii\helpers\Html;
 						</tr>
 						<tr>
 							<td>appstore_debug</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
@@ -81,7 +81,7 @@ use yii\helpers\Html;
 						</tr>
 						<tr>
 							<td>appstore_test</td>
-							<td>language</td>
+							<td>语言(language)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
