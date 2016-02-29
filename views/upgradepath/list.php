@@ -39,7 +39,7 @@ use yii\widgets\LinkPager;
                         <thead>
                             <tr>
                                 <th data-toggle="true">ID</th>
-                                <th>升级序列名称</th>
+                                <th>名称</th>
                                  <th>是否启用</th>
                                 <th>描述</th>
                                 <th>操作</th>
