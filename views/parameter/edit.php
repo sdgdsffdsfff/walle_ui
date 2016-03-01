@@ -76,14 +76,6 @@ use yii\helpers\Html;
                                                 <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" />
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td>
-                                                <label class="control-label">是否启用</label>
-                                            </td>
-                                            <td>
-                                                <input type="checkbox" class="i-checks checkbox" id="param_disabled" name="param_disabled" />
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
                             </div>

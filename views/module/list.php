@@ -35,8 +35,8 @@
                                 <th data-toggle="true">ID</th>
                                 <th>模块名称</th>
                                 <th>描述信息</th>
-                                <th>是否禁用</th>
                                 <th>仓库类型</th>
+                                <th>是否启用</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
