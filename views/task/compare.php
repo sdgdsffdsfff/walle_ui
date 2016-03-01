@@ -1,3 +1,8 @@
+<?php
+use yii\helpers\Html;
+?>
+<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -18,8 +23,8 @@
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal">
-                        <div class="table-responsive">
-                            <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
+                        <div>
+                            <table id="task_compare_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>任务ID</th>
@@ -47,7 +52,7 @@
                                 <input type="text" placeholder="任务ID" class="form-control" id="task_id" name="task_id" />
                             </div>
                             <span class="input-group-btn" style="right: -16px;">
-                                <input type="button" id="search_btn" name="search_btn" class="btn w-xs btn-success" value="添加至待对比列表" onclick="javascript:getVersion();" />
+                                <input type="button" id="add_task_btn" name="add_task_btn" class="btn w-xs btn-success" value="添加至待对比列表" />
                             </span>
                         </div>
                     </form>
@@ -67,3 +72,44 @@
         </div>
     </div>
 </div>
+
+<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var t = $('#task_compare_table').DataTable({
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
+            "bFilter":  false
+        });
+        var counter = 1;
+
+        $('#add_task_btn').on( 'click', function () {
+            if(counter > 3)
+            {
+                swal({
+                    title: "最多添加5条任务!",
+                    type: "error",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false
+                });
+            }
+            else
+            {
+                t.row.add( [
+                    counter +'.1',
+                    counter +'.2',
+                    counter +'.3',
+                    counter +'.4',
+                    counter +'.5'
+                ] ).draw();
+
+                counter++;
+            }
+        } );
+    } );
+</script>
