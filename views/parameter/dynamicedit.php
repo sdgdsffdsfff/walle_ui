@@ -34,7 +34,12 @@ use yii\helpers\Html;
                         <form id="edit_dynamic_form" method="get" class="form-horizontal">
                             <div class="table-responsive">
                                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
-
+                                    <thead>
+                                        <tr>
+                                            <th>字段</th>
+                                            <th>取值</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr>
                                             <td>
