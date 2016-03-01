@@ -35,13 +35,13 @@ use yii\helpers\Html;
 				</div>
 				<div class="col-lg-5">
 					<label class="control-label">平台名称：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="platform_id" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
 					</select>
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="param" style="width:200px; margin-right: 40px;">
                         <option value="">全部</option>
 					</select>
 			    </div>	
