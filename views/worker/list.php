@@ -32,6 +32,7 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
+                        <?php if(!empty($allData)){ ?>
                         <tbody>
                             <?php foreach($allData as $worker){ ?>
                             <tr>
@@ -44,6 +45,7 @@
                             </tr>
                             <?php } ?>
                         </tbody>
+                        <?php } ?>
                     </table>
                 </div>
             </div>
