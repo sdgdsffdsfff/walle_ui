@@ -42,7 +42,9 @@ use yii\helpers\Html;
                                         </td>
                                         <td>                                               
                                             <select name="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="1">中国大陆区域发行</option>
+                                                <option value="1" disabled>中国大陆区域发行</option>
+                                                <option value="2" selected="selected">中国区域发行</option>
+                                                <option value="3" disabled>中国域发行</option>
                                             </select>
                                         </td>
                                     </tr>

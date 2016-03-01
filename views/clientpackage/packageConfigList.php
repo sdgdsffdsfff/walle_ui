@@ -35,7 +35,7 @@ use yii\helpers\Html;
 				</div>
 				<div class="col-lg-5">
 					<label class="control-label">安装包名称：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="package_name" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
 						</optgroup>
@@ -43,7 +43,7 @@ use yii\helpers\Html;
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="param" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
 						</optgroup>

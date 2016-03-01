@@ -41,7 +41,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">安装包名称：</label>
                                             </td>
                                             <td>                                               
-                                                <select name="region_id" class="js-source-states" style="width:200px; margin-right: 40px;">
+                                                <select name="package_name" class="js-source-states" style="width:200px; margin-right: 40px;">
 							                        <option value="1">appstore_debug</option>
 						                        </select>
                                             </td>

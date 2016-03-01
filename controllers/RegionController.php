@@ -20,6 +20,7 @@ use yii\data\Pagination;
 use app\models\Deployment;
 use app\models\Clientpackage;
 use app\models\RegionConfig;
+use app\models\Parameter;
 use app\models\Region;
 
 
@@ -93,7 +94,21 @@ class RegionController extends BaseController
      */
     public function actionConfigList()
     {
-        return $this->render('configlist');
+        //获取region
+        $regions = Region::find()->addSelect(array('id', 'name'))->asArray()->all();
+        //获取parameter
+        $parameters = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
+        $regionConfigs = RegionConfig::find()->all();
+        $data = array();
+        if (!empty($regionConfigs))
+        {
+            foreach ($regionConfigs as $regionConfig)
+            {
+                $data[] = $regionConfig->toArray();
+            }
+        }
+        
+        return $this->render('configlist', array("data" => $data, "regions" => $regions, "parameters" => $parameters));
     }
 
     /**
@@ -101,6 +116,27 @@ class RegionController extends BaseController
      */
     public function actionConfigEdit()
     {
+        $regionId = yii::$app->getRequest()->get('region_id');
+        $parameterId = yii::$app->getRequest()->get('parameter_id');
+        if (empty($regionId))
+        {
+            //查找全部region
+        
+        }
+        else
+        {
+            $region = Region::findOne($regionId);
+        
+        }
+        if (empty($parameterId))
+        {
+            //查找全部parameter
+        }
+        else
+        {
+        
+        }
+
         return $this->render('configedit');
     }
 

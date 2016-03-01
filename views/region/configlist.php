@@ -35,14 +35,36 @@ use yii\helpers\Html;
 				</div>
 				<div class="col-lg-5">
 					<label class="control-label">发行地区：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="region_id" style="width:200px; margin-right: 40px;">
+                        <optgroup label="">
                         <option value="">全部</option>
+<?php
+if (!empty($regions))
+{
+    foreach ($regions as $region)
+    {
+        echo "<option value='" . $region['id'] . "'>" . $region['name'] . "</option>";
+    }
+}
+?>
+                        </optgroup>
 					</select>
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="param_id" style="width:200px; margin-right: 40px;" onchange="filter(this.options[this.options.selectedIndex].value, 1)">
+                        <optgroup label="">
                         <option value="">全部</option>
+<?php
+if (!empty($parameters))
+{
+    foreach ($parameters as $parameter)
+    {
+        echo "<option value='" . $parameter['id'] . "'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
+    }
+}
+?>
+                        </optgroup>
 					</select>
 			    </div>	
 			</div>
@@ -57,33 +79,17 @@ use yii\helpers\Html;
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/region/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
+<?php
+foreach ($data as $regionConfig)
+{
+    echo "<tr>";
+    echo "<td>".$regionConfig['region_name']."</td>";
+    echo "<td>".$regionConfig['parameter_des']."(".$regionConfig['parameter_name'].")</td>";
+    echo "<td>".$regionConfig['value']."</td>";
+    echo "<td align='center'>"."<a href='/region/config-edit?region_id=".$regionConfig['region_id']."&parameter_id=".$regionConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_regionconfig('.$regionConfig['region_id'].",".$regionConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "</tr>";
+}
+?>
 					</tbody>
 				</table>
             </div>
@@ -139,4 +145,26 @@ function delete_regionconfig(region_id, parameter_id) {
 		}
 	});
 }
+
+
+function filter(param, column) {
+	// //alert(param);
+	// var table = document.getElementsByTagName("table")[0];
+	// for (var i = 1; i < table.rows.length; i++) {
+		
+	// 	//alert(table.rows[i].cells[column].innerHTML);
+	// 	//alert(table.rows[i].cells[column].innerHTML.indexOf(param));
+
+	// 	if (table.rows[i].cells[column].innerHTML.indexOf(param) == -1) {
+	// 		table.rows[i].style.display="none";
+	// 	}
+	// 	//table.rows[i].style.display="none";
+
+		
+	// };
+}
+
+
+
+
 </script>

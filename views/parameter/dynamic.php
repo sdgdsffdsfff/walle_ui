@@ -38,7 +38,7 @@ use yii\helpers\Html;
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="dynamic_param" style="width:200px; margin-right: 40px;">
 						<optgroup label="">
 							<option value="">全部</option>
 						</optgroup>
@@ -64,7 +64,7 @@ use yii\helpers\Html;
 							</td>
 						</tr>
 						<tr>
-							<td>语言(language)</td>
+							<td>walle日志级别(log_level)</td>
 							<td>zh_CN</td>
 							<td align="center">
 								<a href="" class='btn btn-info'>编辑</a>
