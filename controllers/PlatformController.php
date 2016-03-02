@@ -63,8 +63,8 @@ class PlatformController extends BaseController
         }else{
           if($id){
           $info = Platform::findOne($id);
-          $info->name = $name;
-          $info->region_id=$region;
+          //$info->name = $name;
+          //$info->region_id=$region;
           $info->description = $description;
           $info->disable=$disable;
           $info->save();

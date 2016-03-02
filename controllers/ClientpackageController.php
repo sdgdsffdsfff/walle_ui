@@ -10,6 +10,7 @@ use yii\web\Controller;
 use app\controllers\BaseController;
 use app\models\Version;
 use app\models\Platform;
+use app\models\Region;
 use app\models\Job;
 use app\models\ClientUpdatePackage;
 use app\models\UpgradePath;
@@ -128,7 +129,7 @@ class ClientpackageController extends BaseController
 
                     foreach($from_version as $i=>$r){
                         $condition['from_version'] = $r;
-                        $config=ClientUpdatePackage::find()->where($condition)->one();
+                        $config=ClientUpdatePackage::find()->where($condition)->asArray()->one();
                         $data[$i]['filename']=array();
                         if($config){
                           $url_config=json_decode($config['packages'],true);
@@ -189,6 +190,10 @@ class ClientpackageController extends BaseController
     public function actionTolist()
     {    $data=array();
        $data=Package::find()->with('platform')->asArray()->all();
+       foreach ($data as $k => $v) {
+         $region=Region::findOne($v['platform']['region_id']);
+         $data[$k]['region_name']=$region['name'];
+       }
        return $this->render('tolist',array('data'=>$data));
     }
 
@@ -198,7 +203,7 @@ class ClientpackageController extends BaseController
      */
    public function actionEdit()
     { 
-        $region=Platform::find()->where(array('disable'=>0))->asArray()->all();
+        $region=Platform::find()->where(array('disable'=>0))->with('region')->asArray()->all();
      $info=array();
       $id = yii::$app->getRequest()->get('id');
       if($id){

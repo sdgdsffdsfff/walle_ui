@@ -60,7 +60,7 @@ class UpgradepathController extends BaseController
         }else{
           if($id){
           $info = UpgradePath::findOne($id);
-          $info->name = $name;
+          //$info->name = $name;
           $info->description = $description;
           $info->disable=$disable;
           $info->save();
