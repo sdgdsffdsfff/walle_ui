@@ -40,68 +40,22 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
+                        <?php if(!empty($allModule)){ ?>
                         <tbody>
+                            <?php foreach($allModule as $module){ ?>
                             <tr>
-                                <td>1</td>
-                                <td>asset</td>
-                                <td>美术资源</td>
-                                <td>否</td>
-                                <td>SVN</td>
+                                <td><?= $module['id']; ?></td>
+                                <td><?= $module['name']; ?></td>
+                                <td><?= $module['description']; ?></td>
+                                <td><?= $module['repo_type']; ?></td>
+                                <td><?php if($module['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
                                 <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
+                                    <a href="/module/edit?module_id=<?= $module['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>config</td>
-                                <td>数值配置</td>
-                                <td>否</td>
-                                <td>SVN</td>
-                                <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>script</td>
-                                <td>LUA脚本</td>
-                                <td>否</td>
-                                <td>GIT</td>
-                                <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>frontend</td>
-                                <td>前端C代码</td>
-                                <td>否</td>
-                                <td>GIT</td>
-                                <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>backend</td>
-                                <td>后端代码</td>
-                                <td>否</td>
-                                <td>GIT</td>
-                                <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>vms</td>
-                                <td>版本管理接口</td>
-                                <td>否</td>
-                                <td>GIT</td>
-                                <td>
-                                    <a href="/module/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
+                        <?php } ?>
                     </table>
 <!--                    <div style="float:right">
                         <?php //echo LinkPager::widget(['pagination' => $pages]); ?>
