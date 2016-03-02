@@ -39,7 +39,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">主机名</label>
                                             </td>
                                             <td>                                               
-                                                <input type="text" class="form-control" id="workerName" name="workerName" placeholder="hostname" <?php if($worker){ ?>value="<?= $worker['hostname']; ?>"<?php } ?> />
+                                                <input type="text" class="form-control" id="workerName" name="workerName" placeholder="hostname" <?php if($worker){ ?>value="<?= $worker['hostname']; ?>" readonly<?php } ?> />
                                             </td>
                                         </tr>
                                         <tr>
