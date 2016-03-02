@@ -1,6 +1,6 @@
 <?php
 /**
-* configedit.php
+* configadd.php
 * 
 * Developed by Ocean.Liu<liuhaiyang@playcrab.com>
 * Copyright (c) 2016 www.playcrab.com
@@ -31,7 +31,7 @@ use yii\helpers\Html;
             <div class="col-xs-5 col-md-4"></div>
             <div class="col-xs-5 col-md-7">
                 <div class="panel-body">
-                    <form id="edit_regionconfig_form" class="form-horizontal">
+                    <form id="edit_regionconfig_form" method="get" class="form-horizontal">
                         <div class="table-responsive">
                             <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
@@ -50,8 +50,11 @@ use yii\helpers\Html;
                                             <select name="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                             <optgroup label="">
 <?php
-if (isset($region)) {//编辑配置，只显示要编辑的发行地区
-    echo '<option value="'.$region['id'].'" selected="selected">'.$region['name'].'</option>';
+if (isset($regionList) && !empty($regionList)) {//新增配置，提供全部发行地区供选择
+    echo '<option value="">请选择发行地区</option>';
+    foreach ($regionList as $reg) {
+        echo '<option value="'.$reg['id'].'">'.$reg['name'].'</option>';
+    }
 }
 ?>
                                             </optgroup>
@@ -66,8 +69,11 @@ if (isset($region)) {//编辑配置，只显示要编辑的发行地区
                                             <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                             <optgroup label="">
 <?php
-if (isset($parameter)) {//编辑配置，只显示要编辑的参数
-    echo "<option value='" . $parameter['id'] . "' selected='selected'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
+if (isset($parameterList) && !empty($parameterList)) {
+    echo '<option value="">请选择配置参数</option>';
+    foreach ($parameterList as $param) {
+        echo "<option value='" . $param['id'] . "'>" . $param['description']."(".$param['name'].")" . "</option>";
+    }
 }
 ?>
                                             </optgroup>
@@ -79,32 +85,7 @@ if (isset($parameter)) {//编辑配置，只显示要编辑的参数
                                             <label class="control-label">参数值：</label>
                                         </td>
                                         <td>
-<?php
-if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据value_type的类型显示value输入框为input还是select
-    switch ($parameter['value_type']) {
-        case "string":
-            echo '<input type="text" class="form-control" id="parameter_value" name="parameter_value" value="'.$value.'" placeholder="参数值" style="width:300px; margin-right: 40px;"/>';
-            break;
-        case "bool":
-        case "enum":
-            echo '<select name="parameter_value" id="parameter_value" class="js-source-states" style="width:300px; margin-right: 40px;">';
-            echo '<optgroup label="">';
-            $options = explode(",", $parameter['options']);
-            foreach ($options as $option) {
-                if ($option == $value) {
-                    echo "<option value='" . trim($option) . "' selected='selected'>" . trim($option) . "</option>";
-                } else {
-                    echo "<option value='" . trim($option) . "'>" . trim($option) . "</option>";
-                }
-            }
-            echo '</optgroup>';
-            break;
-        default:
-            break;
-    }
-
-}
-?>
+                                            <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -112,7 +93,7 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-sm-offset-5">
-                                <button id="create_worker_btn" class="btn btn-success" type="button">保存</button>
+                                <button id="create_worker_btn" class="btn btn-success" type="submit">保存</button>
                             </div>
                         </div>
                     </form>
@@ -134,16 +115,5 @@ $(function() {
             "closeButton": true,
             "toastClass": "animated fadeInDown"
         };
-    $('#create_worker_btn').click(function() {
-        $.ajax({
-            type: "POST",
-            url: "/region/save-config",
-            data:$('#edit_regionconfig_form').serialize(),
-            dataType: "json",
-        }).done(function(data) {
-            alert(data);
-        });
-    });
-    
 });
 </script>

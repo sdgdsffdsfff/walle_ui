@@ -118,26 +118,42 @@ class RegionController extends BaseController
     {
         $regionId = yii::$app->getRequest()->get('region_id');
         $parameterId = yii::$app->getRequest()->get('parameter_id');
-        if (empty($regionId))
+        if (empty($regionId) && empty($parameterId))
         {
-            //查找全部region
+            //新增配置页面、查找全部region和parameter
+            $regionList = Region::find()->addSelect(array('id', 'name'))->asArray()->all();
+            $parameterList = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
         
+            return $this->render('configadd', array("regionList" => $regionList, "parameterList" => $parameterList));
         }
         else
         {
+            //编辑已存在配置
             $region = Region::findOne($regionId);
-        
-        }
-        if (empty($parameterId))
-        {
-            //查找全部parameter
-        }
-        else
-        {
-        
+            $parameter = Parameter::findOne($parameterId);
+            if (!$region || !$parameter)
+            {
+                $this->error('您要编辑的内容不存在', '/region/config-list');
+            }
+            $value = RegionConfig::find()->where(array("region_id" => $regionId, "parameter_id" => $parameterId))->one()->value;
+            if (!$value)
+            {
+                $this->error('您要编辑的内容不存在', '/region/config-list');
+            }
+
+            return $this->render('configedit', array("region" => $region, "parameter" => $parameter, "value" => $value));
         }
 
-        return $this->render('configedit');
+    }
+
+    /**
+     * 保存发行地区配置
+     */
+    public function actionSaveConfig()
+    {
+        $params = yii::$app->getRequest()->post();
+        echo json_encode($params);
+    
     }
 
 }
