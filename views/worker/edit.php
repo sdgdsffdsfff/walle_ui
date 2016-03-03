@@ -120,6 +120,8 @@ use yii\helpers\Html;
                         confirmButtonColor: "#e74c3c",
                         confirmButtonText: "确认",
                         closeOnConfirm: false
+                    },function(){
+                        window.location.href = response.data.redirect_url;
                     });
                 }
                 else

@@ -67,18 +67,20 @@ class ModuleController extends BaseController
     {
         if(yii::$app->request->isPost)
         {
+            $redirect_url = '/module/list';
+            
             $post = yii::$app->request->post();
             if(!isset($post['module_name']) || empty($post['module_name']))
             {
-                $this->error('请输入模块名称!', '/module/list');
+                $this->error('请输入模块名称!', $redirect_url);
             }
             if(!isset($post['module_description']) || empty($post['module_description']))
             {
-                $this->error('请输入模块描述信息!', '/module/list');
+                $this->error('请输入模块描述信息!', $redirect_url);
             }
             if(!isset($post['module_repo_type']) || empty($post['module_repo_type']))
             {
-                $this->error('请选择模块仓库类型!', '/module/list');
+                $this->error('请选择模块仓库类型!', $redirect_url);
             }
             
             $disabled = 1;  //禁用
@@ -102,7 +104,7 @@ class ModuleController extends BaseController
             $bool = Module::createModule($datas);
             if($bool)
             {
-                $this->ajaxReturn(self::STATUS_SUCCESS, array(), '创建模块成功!');
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '创建模块成功!');
             }
             else
             {
@@ -118,17 +120,19 @@ class ModuleController extends BaseController
      */
     public function actionEdit()
     {
+        $redirect_url = '/module/list';
+        
         //编辑
         if(yii::$app->request->isPost)
         {
             $post = yii::$app->request->post();
             if(!isset($post['module_description']) || empty($post['module_description']))
             {
-                $this->error('请输入模块描述信息!', '/module/list');
+                $this->error('请输入模块描述信息!', $redirect_url);
             }
             if(!isset($post['module_repo_type']) || empty($post['module_repo_type']))
             {
-                $this->error('请选择模块仓库类型!', '/module/list');
+                $this->error('请选择模块仓库类型!', $redirect_url);
             }
             
             $disabled = 1;  //禁用
@@ -146,7 +150,7 @@ class ModuleController extends BaseController
             $bool = Module::eidtModule($datas);
             if($bool)
             {
-                $this->ajaxReturn(self::STATUS_SUCCESS, array(), '编辑模块成功!');
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '编辑模块成功!');
             }
             else
             {
@@ -159,7 +163,7 @@ class ModuleController extends BaseController
             $module = Module::getModuleById($get['module_id']);
             if(!$module)
             {
-                $this->error('模块不存在!', '/module/list');
+                $this->error('模块不存在!', $redirect_url);
             }
         }
         
