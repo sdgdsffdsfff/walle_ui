@@ -48,11 +48,11 @@ use yii\helpers\Html;
                                             <label class="control-label">发行地区：</label>
                                         </td>
                                         <td>                                               
-                                            <select name="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="region_id" id="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                             <optgroup label="">
+                                            <option value="">请选择发行地区</option>
 <?php
 if (isset($regionList) && !empty($regionList)) {//新增配置，提供全部发行地区供选择
-    echo '<option value="">请选择发行地区</option>';
     foreach ($regionList as $reg) {
         echo '<option value="'.$reg['id'].'">'.$reg['name'].'</option>';
     }
@@ -67,17 +67,15 @@ if (isset($regionList) && !empty($regionList)) {//新增配置，提供全部发
                                             <label class="control-label">参数：</label>
                                         </td>
                                         <td>
-                                            <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;" onchange="changeInputType(this.value);">
-                                            <optgroup label="">
+                                            <select name="parameter_id" id="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;" >
+                                            <option value="">请选择配置参数</option>
 <?php
 if (isset($parameterList) && !empty($parameterList)) {
-    echo '<option value="">请选择配置参数</option>';
     foreach ($parameterList as $param) {
         echo "<option value='" . $param['id'] . "'>" . $param['description']."(".$param['name'].")" . "</option>";
     }
 }
 ?>
-                                            </optgroup>
                                             </select>
                                         </td>
                                     </tr>
@@ -86,7 +84,7 @@ if (isset($parameterList) && !empty($parameterList)) {
                                             <label class="control-label">参数值：</label>
                                         </td>
                                         <td id="parameter_value_field">
-                                            <input type="text" class="form-control" id="input_field" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
+                                            <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -109,12 +107,47 @@ if (isset($parameterList) && !empty($parameterList)) {
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
 <script type="text/javascript">
-//参数类型，默认为空
-var parameter_type = '';
 
 $(function() {
     $(".js-source-states").select2();
+    $('#add_regionconfig_form').validate({
+        ignore: '.ignore',
+        rules: {
+            region_id: {
+                required: true,
+            },
+            parameter_id: {
+                required: true,
+            }
+        },
+        messages: {
+            region_id: {
+                required: '请选择发行地区'
+            },
+            parameter_id: {
+                required: '请选择配置参数'
+            }
+        },
+        submitHandler: function(form){
+            submitForm();
+        }
+    });
+    $('#parameter_id').change(function(){
+        var param_id = $(this).find("option:selected").val();
+        $(this).valid();
+        $('#parameter_value').rules("remove");
+        $('#parameter_value').removeClass("error");
+        $('#parameter_value').next().remove("label");
+        changeInputType(param_id);
+    });
 
+
+    $("#region_id").change(function(){
+        $(this).valid();
+    });
+    $("#parameter_value").change(function(){
+        $(this).valid();
+    });
     toastr.options = {
         "debug": false,
         "newestOnTop": false,
@@ -124,7 +157,7 @@ $(function() {
     };
 
 
-    $('#create_worker_btn').click(function() {
+    function submitForm() {
         $.ajax({
             type: "POST",
             url: "/region/config-save",
@@ -148,14 +181,42 @@ $(function() {
             }
 
         });
-    });
+    }
 
 });
 
 //封装jquery validate 表单校验，根据parameter_type做不同的校验规则,返回validate对象
 function check(parameter_type) {
 
-        $('#add_regionconfig_form').validate({
+    alert(parameter_type);
+    if (parameter_type == 'string') {
+        alert("string");
+     return $('#add_regionconfig_form').validate({
+            ignore: '.ignore',
+            rules: {
+                region_id: {
+                    required: true,
+                },
+                parameter_id: {
+                    required: true,
+                }
+            },
+            messages: {
+                region_id: {
+                    required: '请选择发行地区'
+                },
+                parameter_id: {
+                    required: '请选择配置参数'
+                }
+            },
+            submitHandler: function(){}
+        
+        });
+    
+    } else {
+        alert("bool enum");
+     return $('#add_regionconfig_form').validate({
+            ignore: '.ignore',
             rules: {
                 region_id: {
                     required: true,
@@ -173,17 +234,21 @@ function check(parameter_type) {
                 },
                 parameter_id: {
                     required: '请选择配置参数'
+                },
+                parameter_value: {
+                    required: '请选择参数值'
                 }
-            }
+            },
+            submitHandler: function(){}
         
         });
-        return ;
 
+    }
 }
 
 //动态更改参数值页面输入格式
 function changeInputType(parameter_id) {
-    //ajax 后台获取选择的参数类型，更改全局变量parameter_type, js动态绘制参数值输入方式
+    //ajax 后台获取选择的参数类型，更改表单校验规则, js动态绘制参数值输入方式
     $.ajax({
         type: "POST",
         url: "/region/getparaminfo",
@@ -191,14 +256,10 @@ function changeInputType(parameter_id) {
         dataType: "json",
         success: function (json) {
             if (json.status == 10000) {
-                //设置参数类型
-                parameter_type = json.data.value_type;
                 //js 修改 parameter_value的输入格式
                 var field = document.getElementById("parameter_value_field");
+                $('#parameter_value_field').empty();
                 if (json.data.value_type == "bool" || json.data.value_type == "enum") {
-                    var old = document.getElementById("input_field");
-                    field.removeChild(old);
-                    
                     var sele = document.createElement("select");
                     sele.setAttribute("name", "parameter_value");
                     sele.setAttribute("id", "parameter_value");
@@ -218,10 +279,21 @@ function changeInputType(parameter_id) {
                         option.text = value;
                         sele.appendChild(option);
                     } 
-                }
+                    //添加校验规则
+                    $('#parameter_value').rules("remove");
+                    $('#parameter_value').rules("add",{required: true, messages: { required: "请选择参数值"}});
+                } else {
+                    var input = document.createElement("input");
+                    input.setAttribute("name", "parameter_value");
+                    input.setAttribute("id", "parameter_value");
+                    input.setAttribute("style", "width:300px; margin-right: 40px;");
+                    input.setAttribute("placeholder", "参数值");
+                    input.setAttribute("class", "form-control");
+                    field.appendChild(input);
+                } 
             } else {
                 //获取value_type 失败
-                alert(json.description);
+                alert("请选择参数");
 
             }
         }
