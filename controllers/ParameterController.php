@@ -86,7 +86,7 @@ class ParameterController extends BaseController
             }
             else
             {
-                $this->ajaxReturn(self::STATUS_FAILS, array('redirect_url' => $redirect_url), '创建参数失败!');
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '创建参数失败!');
             }
         }
         
@@ -99,7 +99,69 @@ class ParameterController extends BaseController
      */
     public function actionEdit()
     {
-        return $this->render('edit');
+        $redirect_url = '/parameter/list';
+        
+        //编辑
+        if(yii::$app->request->isPost)
+        {
+            $post = yii::$app->request->post();
+            if(!isset($post['param_value_type']) || empty($post['param_value_type']))
+            {
+                $this->error('请选择参数类型!', $redirect_url);
+            }
+            if(!isset($post['param_description']) || empty($post['param_description']))
+            {
+                $this->error('请输入参数描述信息!', $redirect_url);
+            }
+            if(!isset($post['param_default_value']) || empty($post['param_default_value']))
+            {
+                $this->error('请输入参数默认值!', $redirect_url);
+            }
+            
+            //根据参数类型,判断options字段是否必填
+            if(($post['param_value_type'] == 'enum' || $post['param_value_type'] == 'bool') && 
+              (!isset($post['param_options']) || empty($post['param_options'])))
+            {
+                $this->error('请输入备选项!', $redirect_url);
+            }
+            
+            $disabled = 1;  //禁用
+            if(isset($post['param_disable']) || !empty($post['param_disable']))
+            {
+                $disabled = 0;  //启用
+            }
+            
+            $datas['id'] = $post['param_id'];
+            $datas['name'] = str_replace(array(' ','\t','\n','\r'), '', $post['param_name']);
+            $datas['value_type'] = $post['param_value_type'];
+            $datas['description'] = $post['param_description'];
+            $datas['default_value'] = $post['param_default_value'];
+            $datas['disable'] = $disabled;
+            $datas['options'] = $post['param_options'];
+            
+            $bool = Parameter::eidtParameter($datas);
+            if($bool)
+            {
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '编辑参数成功!');
+            }
+            else
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '编辑参数失败!');
+            }
+        }
+        else
+        {
+            $get = yii::$app->request->get();
+            $parameter = Parameter::getParameterById($get['parameter_id']);
+            if(!$parameter)
+            {
+                $this->error('参数不存在!', $redirect_url);
+            }
+        }
+        
+        return $this->render('edit', [
+            'parameter' => $parameter
+        ]);
     }
 
     /**
