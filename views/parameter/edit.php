@@ -21,7 +21,7 @@ use yii\helpers\Html;
                 <div class="col-xs-5 col-md-4"></div>
                 <div class="col-xs-5 col-md-7">
                     <div class="panel-body">
-                        <form id="create_parameter_form" method="get" class="form-horizontal">
+                        <form id="create_parameter_form" method="post" class="form-horizontal">
                             <div class="table-responsive">
                                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                     <thead>
@@ -66,6 +66,14 @@ use yii\helpers\Html;
                                             </td>
                                             <td>
                                                 <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="control-label">是否启用</label>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" class="i-checks checkbox" id="param_disable" name="param_disable" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -117,9 +125,6 @@ use yii\helpers\Html;
                 },
                 param_default_value: {
                     required: true
-                },
-                param_options: {
-                    required: true
                 }
             },
             messages: {
@@ -135,14 +140,73 @@ use yii\helpers\Html;
                 },
                 param_default_value: {
                     required: '请输入参数默认值'
-                },
-                param_options: {
-                    required: '请输入被选值'
                 }
             },
             submitHandler: function(form){
-                form.submit();
+                submitForm();
+            }
+        });
+        $("#param_value_type").change(function(){
+            $(this).valid();
+            
+            $("#param_options").rules("remove");  
+            $('#param_options').removeClass('error');  //删除验证的error样式
+            $('#param_options').next().remove('label');  //删除验证信息的label
+            
+            var sel_val = $(this).find("option:selected").val();
+            if(sel_val == "enum" || sel_val == "bool")
+            {
+                $("#param_options").rules("remove");
+                $("#param_options").rules("add", { required: true, messages: { required: "请输入备选值"} });
             }
         });
     });
+    
+    //提交表单
+    function submitForm()
+    {
+        var url_str = '';
+        if($('#param_id').val())
+        {
+            url_str = '/parameter/edit';
+        }
+        else
+        {
+            url_str = '/parameter/create';
+        }
+        
+        $.ajax({
+            url: url_str,
+            type: 'post',
+            data: $('#create_parameter_form').serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.status == 10000)
+                {
+                    swal({
+                        title: response.description,
+                        type: "success",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        window.location.href = response.data.redirect_url;
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: response.description,
+                        type: "error",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
+                }
+            }
+        });
+    }
 </script>

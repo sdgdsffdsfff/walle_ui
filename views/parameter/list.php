@@ -35,78 +35,29 @@
                                 <th>参数类型</th>
                                 <th>描述信息</th>
                                 <th>默认值</th>
+                                <th>是否启用</th>
                                 <th>备选项</th>
                                 <th>操作</th>
                             </tr>
                         </thead>
+                        <?php if(!empty($allParameter)){ ?>
                         <tbody>
+                            <?php foreach ($allParameter as $parameter){ ?>
                             <tr>
-                                <td>1</td>
-                                <td>log_level</td>
-                                <td>enum</td>
-                                <td>walle日志级别</td>
-                                <td>DEBUG</td>
-                                <td>DEBUG,INFO,WARNNING,ERROR</td>
+                                <td><?= $parameter['id']; ?></td>
+                                <td><?= $parameter['name']; ?></td>
+                                <td><?= $parameter['value_type']; ?></td>
+                                <td><?= $parameter['description']; ?></td>
+                                <td><?= $parameter['default_value']; ?></td>
+                                <td><?php if($parameter['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
+                                <td><?= $parameter['options']; ?></td>
                                 <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
+                                    <a href="/parameter/edit?parameter_id=<?= $parameter['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>vms_url</td>
-                                <td>string</td>
-                                <td>客户端版本更新地址</td>
-                                <td></td>
-                                <td></td>
-                                <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>build_small_package</td>
-                                <td>bool</td>
-                                <td>是否是不带资源安装包</td>
-                                <td>false</td>
-                                <td>true,false</td>
-                                <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>backend_source_path</td>
-                                <td>string</td>
-                                <td>后端源代码路径</td>
-                                <td>/data/work/path/www</td>
-                                <td></td>
-                                <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>log_level</td>
-                                <td>enum</td>
-                                <td>walle日志级别</td>
-                                <td>DEBUG</td>
-                                <td>DEBUG,INFO,WARNNING,ERROR</td>
-                                <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>log_level</td>
-                                <td>enum</td>
-                                <td>walle日志级别</td>
-                                <td>DEBUG</td>
-                                <td>DEBUG,INFO,WARNNING,ERROR</td>
-                                <td>
-                                    <a href="/parameter/edit" class="btn btn-info">编辑</a>
-                                </td>
-                            </tr>
+                            <?php } ?>
                         </tbody>
+                        <?php } ?>
                     </table>
 <!--                    <div style="float:right">
                         <?php //echo LinkPager::widget(['pagination' => $pages]); ?>

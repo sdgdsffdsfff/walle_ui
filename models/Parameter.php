@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-
 /**
  * This is the model class for table "parameter".
  *
@@ -26,6 +22,7 @@ use Yii;
  * @property UpgradePathConfig[] $upgradePathConfigs
  * @property UpgradePath[] $upgradePaths
  */
+
 class Parameter extends BaseModel
 {
     /**
@@ -166,5 +163,94 @@ class Parameter extends BaseModel
             return $parameter->description;
         }
         return false;
+    }
+    
+    /**
+     * 获取所有参数
+     * @return array
+     */
+    public static function getAllParameters()
+    {
+        $resource = Parameter::find()->asArray()->all();
+        
+        return $resource;
+    }
+    
+    /**
+     * 根据id获取数据
+     * @param int id 参数id
+     * @return array
+     */
+    public static function getParameterById($id)
+    {
+        $fields = ['id','name','value_type','description','default_value','disable','options'];
+    
+        $condition = ['id' => $id];
+        $result = Parameter::find()->select($fields)
+                ->where($condition)
+                ->asArray()
+                ->one();
+        
+        return $result;
+    }
+    
+    /**
+     * 根据名称获取参数
+     * @param string $name 参数名称
+     * @return mixed
+     */
+    public static function getDataByName($name)
+    {
+        $condition = ['name' => $name];
+        $result = Parameter::findOne($condition);
+        
+        if(!empty($result))
+        {
+            return $result->toArray();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 添加新的记录
+     * @param array $datas 新数据
+     * @return bool
+     */
+    public static function createParameter($datas)
+    {
+        $parameter = new Parameter();
+        $parameter->name = $datas['name'];
+        $parameter->value_type = $datas['value_type'];
+        $parameter->description = $datas['description'];
+        $parameter->default_value = $datas['default_value'];
+        $parameter->disable = $datas['disable'];
+        $parameter->options = $datas['options'];
+
+        $bool = $parameter->save();
+        
+        return $bool;
+    }
+    
+    /**
+     * 编辑记录
+     * @param array $datas 所需数据
+     * @return bool
+     */
+    public static function eidtParameter($datas)
+    {
+        $parameter = Parameter::findOne($datas['id']);
+        $parameter->name = $datas['name'];
+        $parameter->value_type = $datas['value_type'];
+        $parameter->description = $datas['description'];
+        $parameter->default_value = $datas['default_value'];
+        $parameter->disable = $datas['disable'];
+        $parameter->options = $datas['options'];
+        
+        $bool = $parameter->save();
+        
+        return $bool;
     }
 }
