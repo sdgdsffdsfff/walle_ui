@@ -68,7 +68,7 @@ class RegionController extends BaseController
         }else{
           if($id){
           $info = Region::findOne($id);
-          $info->name = $name;
+          //$info->name = $name;
           $info->description = $description;
           $info->disable=$disable;
           $info->save();
@@ -149,11 +149,86 @@ class RegionController extends BaseController
     /**
      * 保存发行地区配置
      */
-    public function actionSaveConfig()
+    public function actionConfigSave()
     {
-        $params = yii::$app->getRequest()->post();
-        echo json_encode($params);
-    
+        $regionId = yii::$app->getRequest()->post('region_id');
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+        $parameterValue = yii::$app->getRequest()->post('parameter_value');
+
+        if (empty($regionId) || empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        $valueType = Parameter::findOne($parameterId)->value_type;
+        //value_type为string 的参数，参数值允许为空
+        if ($valueType != "string" && empty($parameterValue))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        //查找regionConfig判断请求为新增还是编辑
+        $regionConfig = RegionConfig::find()->where(array("region_id" => $regionId, "parameter_id" => $parameterId))->one();
+        if (!$regionConfig)
+        {
+            //新增配置
+            $regionConfig = new RegionConfig();
+            $regionConfig->region_id = $regionId;
+            $regionConfig->parameter_id = $parameterId;
+        }
+        $regionConfig->value = $parameterValue;
+
+        if ($regionConfig->save())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '保存成功!');
+        }
+
+        $this->newajaxReturn(self::STATUS_FAILS, array(), '保存失败!');
+    }
+
+    /**
+     * 删除发行地区配置
+     */
+    public function actionConfigDelete()
+    {
+        $regionId = yii::$app->getRequest()->post('region_id');
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+        
+        if (empty($regionId) || empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '请求参数有误!');
+        }
+        
+        $regionConfig = RegionConfig::find()->where(array("region_id" => $regionId, "parameter_id" => $parameterId))->one();
+
+        if (!$regionConfig)
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '未找到相关配置!');
+        }
+
+        if ($regionConfig->delete())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '删除成功!');
+        }
+
+        $this->newajaxReturn(self::STATUS_FAILS, '', '删除失败!');
+    }
+
+    /**
+     * ajax 获取参数的value_type和options
+     */
+    public function actionGetparaminfo()
+    {
+        $parameter_id = yii::$app->getRequest()->post('parameter_id');
+        $parameter = Parameter::findOne($parameter_id);
+        if (!$parameter)
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '请求信息有误，获取参数信息失败');
+        }
+        $data = array(
+            "value_type" => $parameter->value_type,
+            "options" => $parameter->options,
+        );
+
+        $this->newajaxReturn(self::STATUS_SUCCESS, $data, '获取参数信息成功!');
     }
 
 }

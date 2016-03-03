@@ -39,7 +39,7 @@ use yii\widgets\LinkPager;
                        <td>平台</td>
                    
                        <td>
-                          <select class="js-source-states"  name="region" id="region" style="width: 100%">
+                          <select class="js-source-states"  name="region" id="region" style="width: 100%" <?php if($id){ echo "disabled='disabled'";}?>>
                                     <option value="">请选择平台</option>
                                    <?php 
                                     foreach ($region as $k => $v) {
@@ -55,7 +55,7 @@ use yii\widgets\LinkPager;
                               </td></tr>
                        <tr>
                        <td>名称</td>
-                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php if($id){echo $info['name']; }?>"/> </td>
+                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  <?php if($id){ echo 'value="'.$info['name'].'"'.' disabled="disabled"'; }?>/> </td>
                    </tr>
                     <tr>
                        <td>描述</td>

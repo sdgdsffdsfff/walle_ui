@@ -35,7 +35,7 @@ use yii\widgets\LinkPager;
                         <tbody>
                        <tr>
                        <td>名称</td>
-                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php if($id){echo $info['name']; }?>"/> </td>
+                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  <?php if($id){ echo 'value="'.$info['name'].'"'.' disabled="disabled"'; }?> /> </td>
                    </tr>
                     <tr>
                        <td>描述</td>
