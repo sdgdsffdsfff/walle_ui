@@ -31,10 +31,12 @@ class WorkerController extends BaseController
     {
         if(yii::$app->request->isPost)
         {
+            $redirect_url = '/worker/list';
+            
             $post = yii::$app->request->post();
             if(!isset($post['workerName']) || empty($post['workerName']))
             {
-                $this->error('请输入主机名', '/worker/list');
+                $this->error('请输入主机名', $redirect_url);
             }
             
             $disabled = 1;  //禁用
@@ -56,7 +58,7 @@ class WorkerController extends BaseController
             $bool = Worker::createWorker($datas);
             if($bool)
             {
-                $this->ajaxReturn(self::STATUS_SUCCESS, array(), '创建打包机成功!');
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '创建打包机成功!');
             }
             else
             {
@@ -72,13 +74,15 @@ class WorkerController extends BaseController
      */
     public function actionEdit()
     {
+        $redirect_url = '/worker/list';
+        
         //编辑
         if(yii::$app->request->isPost)
         {
             $post = yii::$app->request->post();
             if(!isset($post['workerName']) || empty($post['workerName']))
             {
-                $this->error('请输入主机名', '/worker/list');
+                $this->error('请输入主机名', $redirect_url);
             }
             
             $disabled = 1;  //禁用
@@ -94,7 +98,7 @@ class WorkerController extends BaseController
             $bool = Worker::eidtWorker($datas);
             if($bool)
             {
-                $this->ajaxReturn(self::STATUS_SUCCESS, array(), '编辑打包机成功!');
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '编辑打包机成功!');
             }
             else
             {
@@ -107,7 +111,7 @@ class WorkerController extends BaseController
             $worker = Worker::getById($get['worker_id']);
             if(!$worker)
             {
-                $this->error('打包机不存在!', '/worker/list');
+                $this->error('打包机不存在!', $redirect_url);
             }
         }
         

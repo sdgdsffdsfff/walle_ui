@@ -4,7 +4,9 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
-<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
+<style type="text/css">
+.glyphicon { cursor: pointer; }
+</style>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -16,105 +18,129 @@ use yii\helpers\Html;
 </div>
 
 <div class="content animate-panel">
-	<div class="row">
-		<div class="hpanel">
-			<div class="panel-body">
-				<div class="col-lg-3">
-					<a href="config-edit" class="btn w-xs btn-success">新增</a>
-				</div>
-				<div class="col-lg-5">
-					<label class="control-label">升级序列：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
-                        <option value="">全部</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-					</select>
-				</div>
-				<div class="col-lg-4">
-					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="upgrade_path" style="width:200px; margin-right: 40px;">
-                        <option value="">全部</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-					</select>
-			    </div>	
-			</div>
-			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="upgrade_path_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
-					<thead>
-						<tr>
-							<th>升级序列</th>
-							<th>参数</th>
-							<th>参数值</th>
-							<th>操作</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>B</td>
-							<td>chinese</td>
-							<td>10</td>
-							<td align="center">
-								<a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>A</td>
-							<td>english</td>
-							<td>18</td>
-							<td align="center">
-								<a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>C</td>
-							<td>france</td>
-							<td>16</td>
-							<td align="center">
-								<a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-                        <tr>
-							<td>G</td>
-							<td>spanish</td>
-							<td>8</td>
-							<td align="center">
-								<a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="col-xs-6 col-md-4">
+                    <a href="config-edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                </div>
             </div>
-		</div>
-	</div>
+        </div>
+    </div>
+    
+	<div class="row">
+        <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
+            <table id="upgrade_path_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            升级序列
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>
+                            参数
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>
+                            参数值
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                        <th> 
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <option value="chinese">chinese</option>
+                                <option value="france">france</option>
+                                <option value="Brazie">Brazie</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <option value="18">18</option>
+                                <option value="16">16</option>
+                                <option value="8">8</option>
+                            </select>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>B</td>
+                        <td>chinese</td>
+                        <td>10</td>
+                        <td align="center">
+                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>A</td>
+                        <td>english</td>
+                        <td>18</td>
+                        <td align="center">
+                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>france</td>
+                        <td>16</td>
+                        <td align="center">
+                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>G</td>
+                        <td>spanish</td>
+                        <td>8</td>
+                        <td align="center">
+                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>Brazie</td>
+                        <td>190</td>
+                        <td align="center">
+                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); ?>
+<?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
 <script type="text/javascript">
 $(function() {
     //select2
-    $(".js-source-states").select2();
-    //表数据排序
-    $('#upgrade_path_table').dataTable({
-        //操作列不排序
-        "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
-        //去掉分页
-        "bPaginate": false,
-        //去掉左下角显示记录数
-        "bInfo": false,
-        //去掉过滤,搜索功能
-        "bFilter": false
+    $(".js-source-states").select2({ 
+        width: '100%' //设定select框宽度
     });
-    
+
     toastr.options = {
         "debug": false,
         "newestOnTop": false,
@@ -131,7 +157,7 @@ function delete_regionconfig(region_id, parameter_id) {
 		showCancelButton: true,
 		confirmButtonColor: "#DD6B55",
 		confirmButtonText: "确认",
-		cancelButtonText: "取消",
+		cancelButtonText: "取消"
 	},
 	function(isConfirm){
 		if (isConfirm) {

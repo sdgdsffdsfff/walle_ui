@@ -127,21 +127,37 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
-        toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-center",
-            "closeButton": true,
-            "toastClass": "animated fadeInDown"
-        };
+
+    toastr.options = {
+        "debug": false,
+        "newestOnTop": false,
+        "positionClass": "toast-top-center",
+        "closeButton": true,
+        "toastClass": "animated fadeInDown"
+    };
+
     $('#create_worker_btn').click(function() {
         $.ajax({
             type: "POST",
-            url: "/region/save-config",
+            url: "/region/config-save",
             data:$('#edit_regionconfig_form').serialize(),
             dataType: "json",
-        }).done(function(data) {
-            alert(data);
+            success: function(json) {
+                if (json.status == 10000) {
+                    toastr.success("编辑配置信息成功！");
+                    window.location.href="/region/config-list";
+                } else {
+                    swal({
+                        title: "操作失败",
+                        text: json.description,
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtionText: "确认",
+                        closeOnConfirm: false,
+                    });
+                }
+            }
         });
     });
     

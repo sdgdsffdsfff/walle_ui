@@ -52,7 +52,7 @@ if (!empty($regions))
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="param_id" style="width:200px; margin-right: 40px;" onchange="filter(this.options[this.options.selectedIndex].value, 1)">
+					<select class="js-source-states" name="param_id" style="width:200px; margin-right: 40px;">
                         <optgroup label="">
                         <option value="">全部</option>
 <?php
@@ -138,33 +138,33 @@ function delete_regionconfig(region_id, parameter_id) {
 	function(isConfirm){
 		if (isConfirm) {
 			//ajax调用后台脚本,根据ajax返回结果提示成功、失败
-			toastr.success("删除成功！");
-			window.location.href="/region/config-list";
+            $.ajax({
+                type: 'POST',
+                url: '/region/config-delete',
+                data: 'region_id='+region_id+'&parameter_id='+parameter_id,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 10000) {
+                        toastr.success("删除配置成功！");
+			            window.location.href="/region/config-list";
+                    } else {
+                        swal({
+                            title: "操作失败",
+                            text: json.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false, 
+                        });
+                    }
+                }
+            });
 		} else {
 
 		}
 	});
 }
-
-
-function filter(param, column) {
-	// //alert(param);
-	// var table = document.getElementsByTagName("table")[0];
-	// for (var i = 1; i < table.rows.length; i++) {
-		
-	// 	//alert(table.rows[i].cells[column].innerHTML);
-	// 	//alert(table.rows[i].cells[column].innerHTML.indexOf(param));
-
-	// 	if (table.rows[i].cells[column].innerHTML.indexOf(param) == -1) {
-	// 		table.rows[i].style.display="none";
-	// 	}
-	// 	//table.rows[i].style.display="none";
-
-		
-	// };
-}
-
-
 
 
 </script>

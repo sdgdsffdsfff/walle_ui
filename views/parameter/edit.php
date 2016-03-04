@@ -21,7 +21,10 @@ use yii\helpers\Html;
                 <div class="col-xs-5 col-md-4"></div>
                 <div class="col-xs-5 col-md-7">
                     <div class="panel-body">
-                        <form id="create_parameter_form" method="get" class="form-horizontal">
+                        <form id="create_parameter_form" method="post" class="form-horizontal">
+                            <?php if($parameter){ ?>
+                            <input type="hidden" id="param_id" name="param_id" value="<?= $parameter['id']; ?>" />
+                            <?php } ?>
                             <div class="table-responsive">
                                 <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                     <thead>
@@ -36,7 +39,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">参数名称</label>
                                             </td>
                                             <td>                                               
-                                                <input type="text" class="form-control" id="param_name" name="param_name" placeholder="name" />
+                                                <input type="text" class="form-control" id="param_name" name="param_name" placeholder="name" <?php if($parameter){ ?>value="<?= $parameter['name']; ?>" readonly=""<?php } ?> />
                                             </td>
                                         </tr>
                                         <tr>
@@ -46,9 +49,9 @@ use yii\helpers\Html;
                                             <td>
                                                 <select class="js-source-states" id="param_value_type" name="param_value_type" style="width: 100%">
                                                     <option value="">请选择值类型</option>
-                                                    <option value="enum">enum</option>
-                                                    <option value="bool">bool</option>
-                                                    <option value="string">string</option>
+                                                    <option value="enum" <?php if(strtolower($parameter['value_type']) == 'enum'){ ?>selected<?php } ?>>enum</option>
+                                                    <option value="bool" <?php if(strtolower($parameter['value_type']) == 'bool'){ ?>selected<?php } ?>>bool</option>
+                                                    <option value="string" <?php if(strtolower($parameter['value_type']) == 'string'){ ?>selected<?php } ?>>string</option>
                                                 </select>
                                             </td>
                                         </tr>
@@ -57,7 +60,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">描述信息</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_description" name="param_description" placeholder="description" />
+                                                <input type="text" class="form-control" id="param_description" name="param_description" placeholder="description" value="<?= $parameter['description']; ?>" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -65,7 +68,15 @@ use yii\helpers\Html;
                                                 <label class="control-label">默认值</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" />
+                                                <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" value="<?= $parameter['default_value']; ?>" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="control-label">是否启用</label>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" class="i-checks checkbox" id="param_disable" name="param_disable" <?php if($parameter && $parameter['disable'] == 0){ ?>checked="checked"<?php } ?> />
                                             </td>
                                         </tr>
                                         <tr>
@@ -73,7 +84,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">备选项</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" />
+                                                <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" value="<?= $parameter['options']; ?>" />
                                             </td>
                                         </tr>
                                     </tbody>
@@ -117,9 +128,6 @@ use yii\helpers\Html;
                 },
                 param_default_value: {
                     required: true
-                },
-                param_options: {
-                    required: true
                 }
             },
             messages: {
@@ -135,14 +143,73 @@ use yii\helpers\Html;
                 },
                 param_default_value: {
                     required: '请输入参数默认值'
-                },
-                param_options: {
-                    required: '请输入被选值'
                 }
             },
             submitHandler: function(form){
-                form.submit();
+                submitForm();
+            }
+        });
+        $("#param_value_type").change(function(){
+            $(this).valid();
+            
+            $("#param_options").rules("remove");  
+            $('#param_options').removeClass('error');  //删除验证的error样式
+            $('#param_options').next().remove('label');  //删除验证信息的label
+            
+            var sel_val = $(this).find("option:selected").val();
+            if(sel_val == "enum" || sel_val == "bool")
+            {
+                $("#param_options").rules("remove");
+                $("#param_options").rules("add", { required: true, messages: { required: "请输入备选值"} });
             }
         });
     });
+    
+    //提交表单
+    function submitForm()
+    {
+        var url_str = '';
+        if($('#param_id').val())
+        {
+            url_str = '/parameter/edit';
+        }
+        else
+        {
+            url_str = '/parameter/create';
+        }
+        
+        $.ajax({
+            url: url_str,
+            type: 'post',
+            data: $('#create_parameter_form').serialize(),
+            dataType: 'json',
+            success: function(response){
+                if(response.status == 10000)
+                {
+                    swal({
+                        title: response.description,
+                        type: "success",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    },
+                    function(){
+                        window.location.href = response.data.redirect_url;
+                    });
+                }
+                else
+                {
+                    swal({
+                        title: response.description,
+                        type: "error",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
+                }
+            }
+        });
+    }
 </script>
