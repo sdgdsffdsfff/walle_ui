@@ -138,6 +138,7 @@ use yii\widgets\LinkPager;
                 if (data.status == '10000') {
                     swal({ title:"编辑平台", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
+                    window.location.href="/clientpackage/tolist"; 
                 }else{
                     swal({ title:"编辑平台", text:data.data, type:"error"});
                 }
