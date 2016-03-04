@@ -49,6 +49,42 @@ class PlatformConfig extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function fields()
+    {
+        return array(
+            "platform_id",
+            "parameter_id",
+            "value",
+            "platform_name" => function() {
+                if (isset($this->platform))
+                {
+                    return $this->platform->name;
+                }
+            },
+            "region_name" => function() {
+                if (isset($this->platform->region))
+                {
+                    return $this->platform->region->name;
+                }
+            },
+            "parameter_name" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->name;
+                }
+            },
+            "parameter_des" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->description;
+                }
+            },
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParameter()

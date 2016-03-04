@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑平台信息配置
+                编辑平台配置信息
             </h5>
         </div>
     </div>
@@ -31,7 +31,7 @@ use yii\helpers\Html;
             <div class="col-xs-5 col-md-4"></div>
             <div class="col-xs-5 col-md-7">
                 <div class="panel-body">
-                    <form id="edit_regionconfig_form" method="get" class="form-horizontal">
+                    <form id="edit_platformconfig_form" class="form-horizontal">
                         <div class="table-responsive">
                             <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
@@ -40,14 +40,21 @@ use yii\helpers\Html;
                                         <th>取值</th>
                                     </tr>
                                 </thead>
+
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label class="control-label">平台名称：</label>
+                                            <label class="control-label">平台：</label>
                                         </td>
                                         <td>                                               
                                             <select name="platform_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="1">appstore</option>
+                                            <optgroup label="">
+<?php
+if (isset($platform)) {//编辑配置，只显示要编辑的发行地区
+    echo '<option value="'.$platform['id'].'" selected="selected">'.$platform['name']."-".$platform['region']['name'].'</option>';
+}
+?>
+                                            </optgroup>
                                             </select>
                                         </td>
                                     </tr>
@@ -57,7 +64,13 @@ use yii\helpers\Html;
                                         </td>
                                         <td>
                                             <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="1">language</option>
+                                            <optgroup label="">
+<?php
+if (isset($parameter)) {//编辑配置，只显示要编辑的参数
+    echo "<option value='" . $parameter['id'] . "' selected='selected'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
+}
+?>
+                                            </optgroup>
                                             </select>
                                         </td>
                                     </tr>
@@ -66,7 +79,32 @@ use yii\helpers\Html;
                                             <label class="control-label">参数值：</label>
                                         </td>
                                         <td>
-                                            <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
+<?php
+if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据value_type的类型显示value输入框为input还是select
+    switch ($parameter['value_type']) {
+        case "string":
+            echo '<input type="text" class="form-control" id="parameter_value" name="parameter_value" value="'.$value.'" placeholder="参数值" style="width:300px; margin-right: 40px;"/>';
+            break;
+        case "bool":
+        case "enum":
+            echo '<select name="parameter_value" id="parameter_value" class="js-source-states" style="width:300px; margin-right: 40px;">';
+            echo '<optgroup label="">';
+            $options = explode(",", $parameter['options']);
+            foreach ($options as $option) {
+                if ($option == $value) {
+                    echo "<option value='" . trim($option) . "' selected='selected'>" . trim($option) . "</option>";
+                } else {
+                    echo "<option value='" . trim($option) . "'>" . trim($option) . "</option>";
+                }
+            }
+            echo '</optgroup>';
+            break;
+        default:
+            break;
+    }
+
+}
+?>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -74,7 +112,7 @@ use yii\helpers\Html;
                         </div>
                         <div class="form-group">
                             <div class="col-sm-2 col-sm-offset-5">
-                                <button id="save_config" class="btn btn-success" type="submit">保存</button>
+                                <button id="create_worker_btn" class="btn btn-success" type="button">保存</button>
                             </div>
                         </div>
                     </form>
@@ -89,12 +127,39 @@ use yii\helpers\Html;
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
-        toastr.options = {
-            "debug": false,
-            "newestOnTop": false,
-            "positionClass": "toast-top-center",
-            "closeButton": true,
-            "toastClass": "animated fadeInDown"
-        };
+
+    toastr.options = {
+        "debug": false,
+        "newestOnTop": false,
+        "positionClass": "toast-top-center",
+        "closeButton": true,
+        "toastClass": "animated fadeInDown"
+    };
+
+    $('#create_worker_btn').click(function() {
+        $.ajax({
+            type: "POST",
+            url: "/platform/config-save",
+            data:$('#edit_platformconfig_form').serialize(),
+            dataType: "json",
+            success: function(json) {
+                if (json.status == 10000) {
+                    toastr.success("编辑配置信息成功！");
+                    window.location.href="/platform/config-list";
+                } else {
+                    swal({
+                        title: "操作失败",
+                        text: json.description,
+                        type: "warning",
+                        showCancelButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtionText: "确认",
+                        closeOnConfirm: false,
+                    });
+                }
+            }
+        });
+    });
+    
 });
 </script>

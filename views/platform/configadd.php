@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑发行地区配置
+                编辑平台配置信息
             </h5>
         </div>
     </div>
@@ -32,7 +32,7 @@ use yii\helpers\Html;
             <div class="col-xs-5 col-md-4"></div>
             <div class="col-xs-5 col-md-7">
                 <div class="panel-body">
-                    <form id="add_regionconfig_form" class="form-horizontal">
+                    <form id="add_platformconfig_form" class="form-horizontal">
                         <div class="table-responsive">
                             <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
@@ -45,16 +45,16 @@ use yii\helpers\Html;
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <label class="control-label">发行地区:</label>
+                                            <label class="control-label">平台:</label>
                                         </td>
                                         <td>                                               
-                                            <select name="region_id" id="region_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="platform_id" id="platform_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                             <optgroup label="">
-                                            <option value="">请选择发行地区</option>
+                                            <option value="">请选择平台</option>
 <?php
-if (isset($regionList) && !empty($regionList)) {//新增配置，提供全部发行地区供选择
-    foreach ($regionList as $reg) {
-        echo '<option value="'.$reg['id'].'">'.$reg['name'].'</option>';
+if (isset($platformList) && !empty($platformList)) {//新增配置，提供全部发行地区供选择
+    foreach ($platformList as $reg) {
+        echo '<option value="'.$reg['id'].'">'.$reg['name'].'-'.$reg['region']['name'].'</option>';
     }
 }
 ?>
@@ -64,7 +64,7 @@ if (isset($regionList) && !empty($regionList)) {//新增配置，提供全部发
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="control-label">参数：</label>
+                                            <label class="control-label">参数:</label>
                                         </td>
                                         <td>
                                             <select name="parameter_id" id="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;" >
@@ -81,7 +81,7 @@ if (isset($parameterList) && !empty($parameterList)) {
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="control-label">参数值：</label>
+                                            <label class="control-label">参数值:</label>
                                         </td>
                                         <td id="parameter_value_field">
                                             <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
@@ -110,10 +110,10 @@ if (isset($parameterList) && !empty($parameterList)) {
 
 $(function() {
     $(".js-source-states").select2();
-    $('#add_regionconfig_form').validate({
+    $('#add_platformconfig_form').validate({
         ignore: '.ignore',
         rules: {
-            region_id: {
+            platform_id: {
                 required: true,
             },
             parameter_id: {
@@ -121,8 +121,8 @@ $(function() {
             }
         },
         messages: {
-            region_id: {
-                required: '请选择发行地区'
+            platform_id: {
+                required: '请选平台'
             },
             parameter_id: {
                 required: '请选择配置参数'
@@ -142,9 +142,10 @@ $(function() {
     });
 
 
-    $("#region_id").change(function(){
+    $("#platform_id").change(function(){
         $(this).valid();
     });
+    //调用不到未找到原因
     $("#parameter_value").change(function(){
         $(this).valid();
     });
@@ -160,13 +161,13 @@ $(function() {
     function submitForm() {
         $.ajax({
             type: "POST",
-            url: "/region/config-save",
-            data:$('#add_regionconfig_form').serialize(),
+            url: "/platform/config-save",
+            data:$('#add_platformconfig_form').serialize(),
             dataType: "json",
             success: function (json) {
                 if (json.status == 10000) {
                     toastr.success("新增配置信息成功！");
-                    window.location.href="/region/config-list";
+                    window.location.href="/platform/config-list";
                 } else {
                     swal({
                         title: "操作失败",
@@ -188,13 +189,11 @@ $(function() {
 //封装jquery validate 表单校验，根据parameter_type做不同的校验规则,返回validate对象
 function check(parameter_type) {
 
-    alert(parameter_type);
     if (parameter_type == 'string') {
-        alert("string");
-     return $('#add_regionconfig_form').validate({
+     return $('#add_platformconfig_form').validate({
             ignore: '.ignore',
             rules: {
-                region_id: {
+                platform_id: {
                     required: true,
                 },
                 parameter_id: {
@@ -202,8 +201,8 @@ function check(parameter_type) {
                 }
             },
             messages: {
-                region_id: {
-                    required: '请选择发行地区'
+                platform_id: {
+                    required: '请选择平台'
                 },
                 parameter_id: {
                     required: '请选择配置参数'
@@ -214,11 +213,10 @@ function check(parameter_type) {
         });
     
     } else {
-        alert("bool enum");
-     return $('#add_regionconfig_form').validate({
+     return $('#add_platformconfig_form').validate({
             ignore: '.ignore',
             rules: {
-                region_id: {
+                platform_id: {
                     required: true,
                 },
                 parameter_id: {
@@ -229,8 +227,8 @@ function check(parameter_type) {
                 }
             },
             messages: {
-                region_id: {
-                    required: '请选择发行地区'
+                platform_id: {
+                    required: '请选择平台'
                 },
                 parameter_id: {
                     required: '请选择配置参数'

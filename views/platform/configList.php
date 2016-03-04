@@ -34,56 +34,62 @@ use yii\helpers\Html;
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">平台名称：</label>
+					<label class="control-label">平台：</label>
 					<select class="js-source-states" name="platform_id" style="width:200px; margin-right: 40px;">
+                        <optgroup label="">
                         <option value="">全部</option>
+<?php
+if (!empty($platforms))
+{
+    foreach ($platforms as $platform)
+    {
+        echo "<option value='" . $platform['id'] . "'>" . $platform['name'] ."-".$platform['region']['name']. "</option>";
+    }
+}
+?>
+                        </optgroup>
 					</select>
 				</div>
 				<div class="col-lg-4">
 					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="param" style="width:200px; margin-right: 40px;">
+					<select class="js-source-states" name="param_id" style="width:200px; margin-right: 40px;">
+                        <optgroup label="">
                         <option value="">全部</option>
+<?php
+if (!empty($parameters))
+{
+    foreach ($parameters as $parameter)
+    {
+        echo "<option value='" . $parameter['id'] . "'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
+    }
+}
+?>
+                        </optgroup>
 					</select>
 			    </div>	
 			</div>
 			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="platform_config_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
+				<table id="platform_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th>平台名称</th>
+							<th>平台</th>
 							<th>参数</th>
 							<th>参数值</th>
 							<th>操作</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
-						<tr>
-							<td>China</td>
-							<td>语言(language)</td>
-							<td>zh_CN</td>
-							<td align="center">
-								<a href="/platform/config-edit" class='btn btn-info'>编辑</a>
-								<button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$platform_id, $parameter_id";?>");'>删除</button>
-							</td>
-						</tr>
+<?php
+foreach ($data as $platformConfig)
+{
+    echo "<tr>";
+    echo "<td>".$platformConfig['platform_name']."-".$platformConfig['region_name']."</td>";
+    echo "<td>".$platformConfig['parameter_des']."(".$platformConfig['parameter_name'].")</td>";
+    echo "<td>".$platformConfig['value']."</td>";
+    echo "<td align='center'>"."<a href='/platform/config-edit?platform_id=".$platformConfig['platform_id']."&parameter_id=".$platformConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_platformconfig('.$platformConfig['platform_id'].",".$platformConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "</tr>";
+}
+?>
 					</tbody>
 				</table>
             </div>
@@ -100,7 +106,7 @@ use yii\helpers\Html;
 $(function() {
     $(".js-source-states").select2();
     //表数据排序
-    $('#platform_config_table').dataTable({
+    $('#platform_table').dataTable({
         //操作列不排序
         "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
         //去掉分页
@@ -120,7 +126,7 @@ $(function() {
     };
 });
 
-function delete_regionconfig(region_id, parameter_id) {
+function delete_platformconfig(platform_id, parameter_id) {
 	swal({
 		title: "删除发行地区相关配置确认",
 		type: "warning",
@@ -132,11 +138,33 @@ function delete_regionconfig(region_id, parameter_id) {
 	function(isConfirm){
 		if (isConfirm) {
 			//ajax调用后台脚本,根据ajax返回结果提示成功、失败
-			toastr.success("删除成功！");
-			window.location.href="/region/config-list";
+            $.ajax({
+                type: 'POST',
+                url: '/platform/config-delete',
+                data: 'platform_id='+platform_id+'&parameter_id='+parameter_id,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 10000) {
+                        toastr.success("删除配置成功！");
+			            window.location.href="/platform/config-list";
+                    } else {
+                        swal({
+                            title: "操作失败",
+                            text: json.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false, 
+                        });
+                    }
+                }
+            });
 		} else {
 
 		}
 	});
 }
+
+
 </script>
