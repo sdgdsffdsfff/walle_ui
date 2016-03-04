@@ -95,9 +95,9 @@ class RegionController extends BaseController
     public function actionConfigList()
     {
         //获取region
-        $regions = Region::find()->addSelect(array('id', 'name'))->asArray()->all();
+        $regions = Region::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
         //获取parameter
-        $parameters = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
+        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $regionConfigs = RegionConfig::find()->all();
         $data = array();
         if (!empty($regionConfigs))
@@ -121,8 +121,8 @@ class RegionController extends BaseController
         if (empty($regionId) && empty($parameterId))
         {
             //新增配置页面、查找全部region和parameter
-            $regionList = Region::find()->addSelect(array('id', 'name'))->asArray()->all();
-            $parameterList = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
+            $regionList = Region::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
+            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         
             return $this->render('configadd', array("regionList" => $regionList, "parameterList" => $parameterList));
         }

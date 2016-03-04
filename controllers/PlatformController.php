@@ -94,9 +94,9 @@ class PlatformController extends BaseController
     public function actionConfigList()
     {
         //获取platform
-        $platforms = Platform::find()->with('region')->asArray()->all();
+        $platforms = Platform::find()->with('region')->where(array("disable" => 0))->asArray()->all();
         //获取parameter
-        $parameters = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
+        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $platformConfigs = PlatformConfig::find()->all();
         $data = array();
         if (!empty($platformConfigs))
@@ -120,8 +120,8 @@ class PlatformController extends BaseController
         if (empty($platfromId) && empty($parameterId))
         {
             //新增配置页面、查找全部platform和parameter
-            $platformList = Platform::find()->with('region')->asArray()->all();
-            $parameterList = Parameter::find()->addSelect(array('id', 'name', 'description'))->asArray()->all();
+            $platformList = Platform::find()->with('region')->where(array("disable" => 0))->asArray()->all();
+            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
 
             return $this->render('configadd', array("platformList" => $platformList, "parameterList" => $parameterList));
         }

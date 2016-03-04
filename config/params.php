@@ -166,7 +166,7 @@ return [
                 ],
                 [
                     'name' => '安装包配置',
-                    'path' => 'clientpackage/package-config-list',
+                    'path' => 'clientpackage/config-list',
                 ],
             ],
         ],

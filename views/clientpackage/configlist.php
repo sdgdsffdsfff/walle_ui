@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看部署位置配置列表
+                安装包参数配置列表
             </h5>
         </div>
     </div>
@@ -34,16 +34,16 @@ use yii\helpers\Html;
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
 				<div class="col-lg-5">
-					<label class="control-label">部署位置：</label>
-					<select class="js-source-states" name="deployment_id" style="width:200px; margin-right: 40px;">
+					<label class="control-label">安装包名称：</label>
+					<select class="js-source-states" name="package_id" style="width:200px; margin-right: 40px;">
                         <optgroup label="">
                         <option value="">全部</option>
 <?php
-if (!empty($deployments))
+if (!empty($packages))
 {
-    foreach ($deployments as $deployment)
+    foreach ($packages as $package)
     {
-        echo "<option value='" . $deployment['id'] . "'>" . $deployment['name'] . "</option>";
+        echo "<option value='" . $package['id'] . "'>" . $package['name'] . "</option>";
     }
 }
 ?>
@@ -69,10 +69,10 @@ if (!empty($parameters))
 			    </div>	
 			</div>
 			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="deployment_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
+				<table id="package_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th>部署位置</th>
+							<th>安装包名称</th>
 							<th>参数</th>
 							<th>参数值</th>
 							<th>操作</th>
@@ -80,13 +80,13 @@ if (!empty($parameters))
 					</thead>
 					<tbody>
 <?php
-foreach ($data as $deploymentConfig)
+foreach ($data as $packageConfig)
 {
     echo "<tr>";
-    echo "<td>".$deploymentConfig['deployment_name']."</td>";
-    echo "<td>".$deploymentConfig['parameter_des']."(".$deploymentConfig['parameter_name'].")</td>";
-    echo "<td>".$deploymentConfig['value']."</td>";
-    echo "<td align='center'>"."<a href='/deployment/config-edit?deployment_id=".$deploymentConfig['deployment_id']."&parameter_id=".$deploymentConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_deploymentconfig('.$deploymentConfig['deployment_id'].",".$deploymentConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "<td>".$packageConfig['package_name']."</td>";
+    echo "<td>".$packageConfig['parameter_des']."(".$packageConfig['parameter_name'].")</td>";
+    echo "<td>".$packageConfig['value']."</td>";
+    echo "<td align='center'>"."<a href='/clientpackage/config-edit?package_id=".$packageConfig['package_id']."&parameter_id=".$packageConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_packageconfig('.$packageConfig['package_id'].",".$packageConfig['parameter_id'].');">删除</button>'."</td>";
     echo "</tr>";
 }
 ?>
@@ -106,7 +106,7 @@ foreach ($data as $deploymentConfig)
 $(function() {
     $(".js-source-states").select2();
     //表数据排序
-    $('#deployment_table').dataTable({
+    $('#package_table').dataTable({
         //操作列不排序
         "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
         //去掉分页
@@ -126,9 +126,9 @@ $(function() {
     };
 });
 
-function delete_deploymentconfig(deployment_id, parameter_id) {
+function delete_packageconfig(package_id, parameter_id) {
 	swal({
-		title: "删除部署位置相关配置确认",
+		title: "删除安装包相关配置确认",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#DD6B55",
@@ -140,13 +140,13 @@ function delete_deploymentconfig(deployment_id, parameter_id) {
 			//ajax调用后台脚本,根据ajax返回结果提示成功、失败
             $.ajax({
                 type: 'POST',
-                url: '/deployment/config-delete',
-                data: 'deployment_id='+deployment_id+'&parameter_id='+parameter_id,
+                url: '/clientpackage/config-delete',
+                data: 'package_id='+package_id+'&parameter_id='+parameter_id,
                 dataType: 'json',
                 success: function(data) {
                     if (data.status == 10000) {
                         toastr.success("删除配置成功！");
-			            window.location.href="/deployment/config-list";
+			            window.location.href="/clientpackage/config-list";
                     } else {
                         swal({
                             title: "操作失败",

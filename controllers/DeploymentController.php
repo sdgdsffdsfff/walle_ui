@@ -12,7 +12,9 @@ use app\models\Version;
 use app\models\Platform;
 use app\models\UpgradePath;
 use yii\data\Pagination;
+use app\models\Parameter;
 use app\models\Deployment;
+use app\models\DeploymentConfig;
 use app\models\Clientpackage;
 
 
@@ -91,7 +93,20 @@ class DeploymentController extends BaseController
      */
     public function actionConfigList()
     {
-        return $this->render('configList');
+        $deployments = Deployment::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
+        //获取parameter
+        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
+        $deploymentConfigs = DeploymentConfig::find()->all();
+        $data = array();
+        if (!empty($deploymentConfigs))
+        {
+            foreach ($deploymentConfigs as $deploymentConfig)
+            {
+                $data[] = $deploymentConfig->toArray();
+            }
+        }
+
+        return $this->render('configlist', array("data" => $data, "deployments" => $deployments, "parameters" => $parameters));
     }
 
     /**
@@ -99,6 +114,100 @@ class DeploymentController extends BaseController
      */
     public function actionConfigEdit()
     {
-        return $this->render('configEdit');
+        $deploymentId = yii::$app->getRequest()->get('deployment_id');
+        $parameterId = yii::$app->getRequest()->get('parameter_id');
+        if (empty($deploymentId) && empty($parameterId))
+        {
+            //新增配置页面、查找全部deployment和parameter
+            $deploymentList = Deployment::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
+            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
+
+            return $this->render('configadd', array("deploymentList" => $deploymentList, "parameterList" => $parameterList));
+        }
+        else
+        {
+            //编辑已存在配置
+            $deployment = Deployment::findOne($deploymentId);
+            $parameter = Parameter::findOne($parameterId);
+            if (!$deployment || !$parameter)
+            {
+                $this->error('您要编辑的内容不存在', '/deployment/config-list');
+            }
+            $deploymentConfig = DeploymentConfig::find()->where(array("deployment_id" => $deploymentId, "parameter_id" => $parameterId))->one();
+            if (!$deploymentConfig)
+            {
+                $this->error('您要编辑的内容不存在', '/deployment/config-list');
+            }
+
+            return $this->render('configedit', array("deployment" => $deployment, "parameter" => $parameter, "value" => $deploymentConfig->value));
+        }
+
     }
+
+    /**
+     * 保存部署位置配置
+     */
+    public function actionConfigSave()
+    {
+        $deploymentId = yii::$app->getRequest()->post('deployment_id');
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+        $parameterValue = yii::$app->getRequest()->post('parameter_value');
+
+        if (empty($deploymentId) || empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        $valueType = Parameter::findOne($parameterId)->value_type;
+        //value_type为string 的参数，参数值允许为空
+        if ($valueType != "string" && empty($parameterValue))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        //查找deploymentConfig判断请求为新增还是编辑
+        $deploymentConfig = DeploymentConfig::find()->where(array("deployment_id" => $deploymentId, "parameter_id" => $parameterId))->one();
+        if (!$deploymentConfig)
+        {
+            //新增配置
+            $deploymentConfig = new DeploymentConfig();
+            $deploymentConfig->deployment_id = $deploymentId;
+            $deploymentConfig->parameter_id = $parameterId;
+        }
+        $deploymentConfig->value = $parameterValue;
+
+        if ($deploymentConfig->save())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '保存成功!');
+        }
+
+        $this->newajaxReturn(self::STATUS_FAILS, array(), '保存失败!');
+    }
+
+    /**
+     * 删除部署位置配置
+     */
+    public function actionConfigDelete()
+    {
+        $deploymentId = yii::$app->getRequest()->post('deployment_id');
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+
+        if (empty($deploymentId) || empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '请求参数有误!');
+        }
+
+        $deploymentConfig = deploymentConfig::find()->where(array("deployment_id" => $deploymentId, "parameter_id" => $parameterId))->one();
+
+        if (!$deploymentConfig)
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '未找到相关配置!');
+        }
+
+        if ($deploymentConfig->delete())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '删除成功!');
+        }
+
+        $this->newajaxReturn(self::STATUS_FAILS, '', '删除失败!');
+    }
+
 }

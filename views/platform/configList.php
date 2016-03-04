@@ -128,7 +128,7 @@ $(function() {
 
 function delete_platformconfig(platform_id, parameter_id) {
 	swal({
-		title: "删除发行地区相关配置确认",
+		title: "删除平台相关配置确认",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#DD6B55",

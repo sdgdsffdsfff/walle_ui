@@ -19,7 +19,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑平台配置信息
+                编辑安装包配置信息
             </h5>
         </div>
     </div>
@@ -31,7 +31,7 @@ use yii\helpers\Html;
             <div class="col-xs-5 col-md-4"></div>
             <div class="col-xs-5 col-md-7">
                 <div class="panel-body">
-                    <form id="edit_deploymentconfig_form" class="form-horizontal">
+                    <form id="edit_packageconfig_form" class="form-horizontal">
                         <div class="table-responsive">
                             <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
@@ -47,11 +47,11 @@ use yii\helpers\Html;
                                             <label class="control-label">平台：</label>
                                         </td>
                                         <td>                                               
-                                            <select name="deployment_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="package_id" class="js-source-states" style="width:300px; margin-right: 40px;">
                                             <optgroup label="">
 <?php
-if (isset($deployment)) {//编辑配置，只显示要编辑的发行地区
-    echo '<option value="'.$deployment['id'].'" selected="selected">'.$deployment['name'].'</option>';
+if (isset($package)) {//编辑配置，只显示要编辑的发行地区
+    echo '<option value="'.$package['id'].'" selected="selected">'.$package['name'].'</option>';
 }
 ?>
                                             </optgroup>
@@ -139,13 +139,13 @@ $(function() {
     $('#create_worker_btn').click(function() {
         $.ajax({
             type: "POST",
-            url: "/deployment/config-save",
-            data:$('#edit_deploymentconfig_form').serialize(),
+            url: "/clientpackage/config-save",
+            data:$('#edit_packageconfig_form').serialize(),
             dataType: "json",
             success: function(json) {
                 if (json.status == 10000) {
                     toastr.success("编辑配置信息成功！");
-                    window.location.href="/deployment/config-list";
+                    window.location.href="/clientpackage/config-list";
                 } else {
                     swal({
                         title: "操作失败",

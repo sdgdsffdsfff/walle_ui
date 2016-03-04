@@ -49,6 +49,36 @@ class DeploymentConfig extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function fields()
+    {
+        return array(
+            "deployment_id",
+            "parameter_id",
+            "value",
+            "deployment_name" => function() {
+                if (isset($this->deployment))
+                {
+                    return $this->deployment->name;
+                }
+            },
+            "parameter_name" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->name;
+                }
+            },
+            "parameter_des" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->description;
+                }
+            },
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParameter()
