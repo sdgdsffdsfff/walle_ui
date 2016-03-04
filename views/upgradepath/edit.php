@@ -109,6 +109,7 @@ use yii\widgets\LinkPager;
                 if (data.status == '10000') {
                     swal({ title:"编辑upgrade path", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
+                    window.location.href="/upgradepath/list"; 
                 }else{
                     swal({ title:"编辑upgrade path", text:data.data, type:"error"});
                 }
