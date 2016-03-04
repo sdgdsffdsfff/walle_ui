@@ -55,77 +55,51 @@ use yii\helpers\Html;
                         <th> 
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
+                                <?php if($upgradePathSelect){ ?>
+                                    <?php foreach($upgradePathSelect as $value){ ?>
+                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
                             </select>
                         </th>
                         <th>
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <option value="chinese">chinese</option>
-                                <option value="france">france</option>
-                                <option value="Brazie">Brazie</option>
+                                <?php if($parameterSelect){ ?>
+                                    <?php foreach($parameterSelect as $value){ ?>
+                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
                             </select>
                         </th>
                         <th>
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <option value="18">18</option>
-                                <option value="16">16</option>
-                                <option value="8">8</option>
+                                <?php if($upgradePathConfigSelect){ ?>
+                                    <?php foreach($upgradePathConfigSelect as $value){ ?>
+                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
                             </select>
                         </th>
                         <th></th>
                     </tr>
                 </thead>
+                <?php if($list){ ?>
                 <tbody>
+                    <?php foreach($list as $config){ ?>
                     <tr>
-                        <td>B</td>
-                        <td>chinese</td>
-                        <td>10</td>
+                        <td><?= $config['upgradePath']['name']; ?></td>
+                        <td><?= $config['parameter']['description'].'('.$config['parameter']['name'].')'; ?></td>
+                        <td><?= $config['value']; ?></td>
                         <td align="center">
-                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
+                            <a href="/upgradepath/config-edit?param_id=<?= $config['parameter_id']; ?>&upgradepath_id=<?= $config['upgrade_path_id']; ?>" class='btn btn-info'>编辑</a>
                             <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
                         </td>
                     </tr>
-                    <tr>
-                        <td>A</td>
-                        <td>english</td>
-                        <td>18</td>
-                        <td align="center">
-                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>C</td>
-                        <td>france</td>
-                        <td>16</td>
-                        <td align="center">
-                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>G</td>
-                        <td>spanish</td>
-                        <td>8</td>
-                        <td align="center">
-                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>C</td>
-                        <td>Brazie</td>
-                        <td>190</td>
-                        <td align="center">
-                            <a href="/upgradepath/config-edit" class='btn btn-info'>编辑</a>
-                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
-                        </td>
-                    </tr>
+                    <?php } ?>
                 </tbody>
+                <?php } ?>
             </table>
         </div>
     </div>

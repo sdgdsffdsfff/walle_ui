@@ -6,7 +6,6 @@ namespace app\controllers;
  * @author zhaolu@playcrab.com
  */
 use yii;
-use yii\web\Controller;
 use app\controllers\BaseController;
 use app\models\Version;
 use app\models\Platform;
@@ -144,7 +143,26 @@ class UpgradepathController extends BaseController
      */
     public function actionConfigList()
     {
-        return $this->render('configlist');
+        $upgradePathSelect = $parameterSelect = $upgradePathConfigSelect = array();
+        
+        $result = UpgradePathConfig::getAllUpgradePathConfig();
+        if($result)
+        {
+            //获取下拉框数据
+            foreach ($result as $upgradePathConfig)
+            {
+                $upgradePathConfigSelect[] = $upgradePathConfig['value'];
+                $upgradePathSelect[] = $upgradePathConfig['upgradePath']['name'];
+                $parameterSelect[] = $upgradePathConfig['parameter']['name'];
+            }
+        }
+        
+        return $this->render('configlist', [
+            'upgradePathSelect' => $upgradePathSelect,
+            'parameterSelect' => array_unique($parameterSelect),
+            'upgradePathConfigSelect' => array_unique($upgradePathConfigSelect),
+            'list' => $result
+        ]);
     }
     
     /**

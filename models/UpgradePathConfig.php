@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-
 /**
  * This is the model class for table "upgrade_path_config".
  *
@@ -14,6 +10,7 @@ use Yii;
  * @property UpgradePath $upgradePath
  * @property Parameter $parameter
  */
+
 class UpgradePathConfig extends BaseModel
 {
     /**
@@ -63,6 +60,7 @@ class UpgradePathConfig extends BaseModel
     {
         return $this->hasOne(Parameter::className(), ['id' => 'parameter_id']);
     }
+    
     /**
      * 根据升级序列id获得升级序列配置
      * @param int upgrade_path_id 升级序列id
@@ -74,12 +72,35 @@ class UpgradePathConfig extends BaseModel
         
         $resource = UpgradePathConfig::find()->where($condition);
         $result = $resource->select('*')
-        ->with([
-                'parameter' => function($resource)
-                {
-                    $resource->select('*');
-                }
-        ])->asArray()->all();
+                ->with([
+                        'parameter' => function($resource)
+                        {
+                            $resource->select('*');
+                        }
+                ])->asArray()->all();
+        
+        return $result;
+    }
+    
+    /**
+     * 获取全部升级序列配置信息
+     * @return array
+     */
+    public static function getAllUpgradePathConfig()
+    {
+        $resource = UpgradePathConfig::find();
+        $result = $resource->select('*')
+                  ->with([
+                      'upgradePath' => function($resource)
+                      {
+                           $resource->select(['id', 'name', 'description']);
+                      },
+                      'parameter' => function($resource)
+                      {
+                          $resource->select(['id', 'name', 'description']);
+                      }
+                  ])->asArray()->all();
+                  
         return $result;
     }
 }
