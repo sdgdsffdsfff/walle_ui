@@ -8,8 +8,8 @@ function generalElement(table, obj)
     {   
         //创建select元素
         var sele = document.createElement("select");
-        sele.setAttribute("name", "sel_parameter_value");
-        sele.setAttribute("id", "sel_parameter_value");
+        sele.setAttribute("name", "parameter_value");
+        sele.setAttribute("id", "parameter_value");
         sele.setAttribute("onchange", "javascript:$(this).valid();");
         sele.setAttribute("style", "width:300px; margin-right: 40px;");
 
@@ -25,13 +25,17 @@ function generalElement(table, obj)
             sele.appendChild(option);
         }
         //添加校验规则
-        $('#sel_parameter_value').rules("remove");
-        $('#sel_parameter_value').rules("add",{required: true, messages: { required: "请选择参数值"}});
+        $('#parameter_value').rules("remove");
+        $('#parameter_value').rules("add",{required: true, messages: { required: "请选择参数值"}});
     }
     else
     {
         var html = "<input type='text' class='form-control' id='parameter_value' name='parameter_value' placeholder='参数值' style='width:300px; margin-right: 40px;' />";
         $('#'+table+' tbody').find('tr:last').children(':last').append(html);
+        
+        $("#parameter_value").rules("remove");  
+        $('#parameter_value').removeClass('error');  //删除验证的error样式
+        $('#parameter_value').next().remove('label');  //删除验证信息的label
     }
 }
 

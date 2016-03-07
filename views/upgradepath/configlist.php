@@ -4,6 +4,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <style type="text/css">
 .glyphicon { cursor: pointer; }
 </style>
@@ -23,7 +24,7 @@ use yii\helpers\Html;
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="col-xs-6 col-md-4">
-                    <a href="config-edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                    <a href="/upgradepath/config-create" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
                 </div>
             </div>
         </div>
@@ -66,8 +67,8 @@ use yii\helpers\Html;
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
                                 <?php if($parameterSelect){ ?>
-                                    <?php foreach($parameterSelect as $value){ ?>
-                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <?php foreach($parameterSelect as $key => $value){ ?>
+                                    <option value="<?= $value.'（'.$key.'）'; ?>"><?= $value.'（'.$key.'）'; ?></option>
                                     <?php } ?>
                                 <?php } ?>
                             </select>
@@ -90,11 +91,11 @@ use yii\helpers\Html;
                     <?php foreach($list as $config){ ?>
                     <tr>
                         <td><?= $config['upgradePath']['name']; ?></td>
-                        <td><?= $config['parameter']['description'].'('.$config['parameter']['name'].')'; ?></td>
+                        <td><?= $config['parameter']['description'].'（'.$config['parameter']['name'].'）'; ?></td>
                         <td><?= $config['value']; ?></td>
                         <td align="center">
                             <a href="/upgradepath/config-edit?param_id=<?= $config['parameter_id']; ?>&upgradepath_id=<?= $config['upgrade_path_id']; ?>" class='btn btn-info'>编辑</a>
-                            <button class='btn btn-danger' onclick='javascript:delete_regionconfig("<?php echo "$region_id, $parameter_id";?>");'>删除</button>
+                            <button class='btn btn-danger' onclick='javascript:deleteUpgradeConfig(<?= $config['parameter_id']; ?>, <?= $config['upgrade_path_id']; ?>);'>删除</button>
                         </td>
                     </tr>
                     <?php } ?>
@@ -105,6 +106,7 @@ use yii\helpers\Html;
     </div>
 </div>
 
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
@@ -124,23 +126,76 @@ $(function() {
     };
 });
 
-function delete_regionconfig(region_id, parameter_id) {
+function deleteUpgradeConfig(parameter_id, upgradePath_id) 
+{
 	swal({
-		title: "删除发行地区相关配置确认",
-		type: "warning",
-		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
-		confirmButtonText: "确认",
-		cancelButtonText: "取消"
-	},
-	function(isConfirm){
-		if (isConfirm) {
-			//ajax调用后台脚本,根据ajax返回结果提示成功、失败
-			toastr.success("删除成功！");
-			window.location.href="/region/config-list";
-		} else {
+        title: "确定要删除该配置信息吗?",
+        type: "warning",
+        showCancelButton: true, //是否显示'取消'按钮
+        confirmButtonColor: "#e74c3c",
+        confirmButtonText: "确认",
+        cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: true
+    },
+    function(isConfirm){
+        if(isConfirm) 
+        {
+            submitForm(parameter_id, upgradePath_id);
+        } 
+        else 
+        {
+            //swal("取消", "取消发布任务", "error");
+        }
+    });
+}
 
-		}
-	});
+function submitForm(parameter_id, upgradePath_id)
+{
+    $.ajax({
+        url: '/upgradepath/config-delete',
+        type: 'post',
+        data: 'parameter_id='+parameter_id+'&upgradePath_id='+upgradePath_id,
+        dataType: 'json',
+        success: function(response){
+            if(response.status == '40003')
+            {
+                swal({
+                    title: "权限提示",
+                    text: response.description,
+                    type: "warning",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false
+                });
+            }
+            if(response.status == '10000')
+            {
+                swal({
+                    title: response.description,
+                    type: "success",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false
+                },
+                function(){
+                    window.location.href = '/upgradepath/config-list';
+                });
+            }
+            if(response.status == '99999')
+            {
+                swal({
+                    text: response.description,
+                    type: "error",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false,
+                });
+            }
+        }
+    });
 }
 </script>

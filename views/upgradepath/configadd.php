@@ -21,12 +21,10 @@ use yii\helpers\Html;
             <div class="col-xs-5 col-md-4"></div>
             <div class="col-xs-5 col-md-7">
                 <div class="panel-body">
-                    <form id="edit_upgradepathconfig_form" method="get" class="form-horizontal">
-                        <input type="hidden" id="upgradePath_id" name="upgradePath_id" value="<?= $upgradePathConfig['upgrade_path_id']; ?>" />
-                        <input type="hidden" id="parameter_id" name="parameter_id" value="<?= $upgradePathConfig['parameter_id']; ?>" />
-                        <input type="hidden" id="parameter_type" name="parameter_type" value="<?= $parame['value_type']; ?>" />
+                    <form id="create_upgradepathconfig_form" method="get" class="form-horizontal">
+                        <input type="hidden" id="parameter_type" name="parameter_type" value="" />
                         <div class="table-responsive">
-                            <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
+                            <table id="create_upgradepathconfig_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
                                         <th>字段</th>
@@ -39,9 +37,12 @@ use yii\helpers\Html;
                                             <label class="control-label">升级序列：</label>
                                         </td>
                                         <td>
-                                            <select id="sel_upgradepath" name="sel_upgradepath" class="js-source-states" style="width:300px; margin-right: 40px;" disabled>
-                                                <?php if($upgradePath){ ?>
-                                                    <option value="<?= $upgradePath['id']; ?>"><?= $upgradePath['name']; ?></option>
+                                            <select id="sel_upgradepath" name="sel_upgradepath" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                                <option value="">请选择升级序列</option>
+                                                <?php if($upgradePathList){ ?>
+                                                    <?php foreach($upgradePathList as $value){ ?>
+                                                    <option value="<?= $value['id']; ?>"><?= $value['name']; ?></option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </td>
@@ -51,9 +52,12 @@ use yii\helpers\Html;
                                             <label class="control-label">参数：</label>
                                         </td>
                                         <td>
-                                            <select id="sel_parameter" name="sel_parameter" class="js-source-states" style="width:300px; margin-right: 40px;" disabled>
-                                                <?php if($parame){ ?>
-                                                    <option value="<?= $parame['id']; ?>"><?= $parame['description']; ?>(<?= $parame['name']; ?>)</option>
+                                            <select id="sel_parameter" name="sel_parameter" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                                <option value="">请选择参数</option>
+                                                <?php if($parameters){ ?>
+                                                    <?php foreach($parameters as $value){ ?>
+                                                    <option value="<?= $value['id']; ?>" valType="<?= $value['value_type']; ?>" optVal="<?= $value['options']; ?>"><?= $value['description']; ?>(<?= $value['name']; ?>)</option>
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </select>
                                         </td>
@@ -62,17 +66,8 @@ use yii\helpers\Html;
                                         <td style="width: 50%;">
                                             <label class="control-label">参数值：</label>
                                         </td>
-                                        <td>
-                                            <?php if($parame['value_type'] == 'enum' || $parame['value_type'] == 'bool'){ ?>
-                                            <select id="sel_parameter_value" name="sel_parameter_value" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                                <option value="">请选择参数值</option>
-                                                <?php foreach(explode(',', $parame['options']) as $val){ ?>
-                                                <option value="<?= $val; ?>" <?php if($val == $upgradePathConfig['value']){ ?>selected<?php } ?>><?= $val; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                            <?php }else{ ?>
-                                            <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;" value="<?= $upgradePathConfig['value']; ?>" />
-                                            <?php } ?>
+                                        <td>     
+                                            <input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;" />
                                         </td>
                                     </tr>
                                 </tbody>
@@ -99,32 +94,43 @@ use yii\helpers\Html;
 $(function() {
     $(".js-source-states").select2();
     /*表单验证*/
-    $('#edit_upgradepathconfig_form').validate({
+    $('#create_upgradepathconfig_form').validate({
         ignore: '.ignore',
         rules: {
-            sel_parameter_value: {
+            sel_upgradepath: {
+                required: true
+            },
+            sel_parameter: {
                 required: true
             }
         },
         messages: {
-            sel_parameter_value: {
-                required: '请选择参数值'
+            sel_upgradepath: {
+                required: '请选择升级序列'
+            },
+            sel_parameter: {
+                required: '请选择参数'
             }
         },
         submitHandler: function(form){
             submitForm();
         }
     });
-    $("#sel_parameter_value").change(function(){
+    $("#sel_upgradepath").change(function(){
         $(this).valid();
+    });
+    $("#sel_parameter").change(function(){
+        $(this).valid();
+        //动态生成select和input
+        generalElement('create_upgradepathconfig_table', this);
     });
     
     function submitForm()
     {
         $.ajax({
-            url: '/upgradepath/config-edit',
+            url: '/upgradepath/config-create',
             type: 'post',
-            data: $('#edit_upgradepathconfig_form').serialize(),
+            data: $('#create_upgradepathconfig_form').serialize(),
             dataType: 'json',
             success: function(response){
                 if(response.status == 10000)

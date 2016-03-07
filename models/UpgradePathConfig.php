@@ -103,4 +103,84 @@ class UpgradePathConfig extends BaseModel
                   
         return $result;
     }
+    
+    /**
+     * 根据主机名获取记录
+     * @param array $datas 条件
+     * @return mixed
+     */
+    public static function getDataByUpgradePathAndParameter($datas)
+    {
+        $condition = [
+            'upgrade_path_id' => $datas['upgrade_path_id'],
+            'parameter_id' => $datas['parameter_id']
+        ];
+        $result = UpgradePathConfig::findOne($condition);
+        
+        if(!empty($result))
+        {
+            return $result->toArray();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 添加新的记录
+     * @param array $datas 新数据
+     * @return bool
+     */
+    public static function createUpgradePathConfig($datas)
+    {
+        $upgradePathConfig = new UpgradePathConfig();
+        $upgradePathConfig->upgrade_path_id = $datas['upgrade_path_id'];
+        $upgradePathConfig->parameter_id = $datas['parameter_id'];
+        $upgradePathConfig->value = $datas['value'];
+
+        $bool = $upgradePathConfig->save();
+        
+        return $bool;
+    }
+    
+    /**
+     * 编辑记录
+     * @param array $datas 所需数据
+     * @return bool
+     */
+    public static function eidtUpgradePathConfig($datas)
+    {
+        $condition = [
+            'upgrade_path_id' => $datas['upgrade_path_id'],
+            'parameter_id' => $datas['parameter_id']
+        ];
+        
+        $upgradePathConfig = UpgradePathConfig::findOne($condition);
+        $upgradePathConfig->upgrade_path_id = $datas['upgrade_path_id'];
+        $upgradePathConfig->parameter_id = $datas['parameter_id'];
+        $upgradePathConfig->value = $datas['value'];
+        
+        $bool = $upgradePathConfig->save();
+        
+        return $bool;
+    }
+    
+    /**
+     * 删除记录
+     * @param array $datas 所需数据
+     * @return type
+     */
+    public static function deleteUpgradePathConfig($datas)
+    {
+        $condition = [
+            'upgrade_path_id' => $datas['upgrade_path_id'],
+            'parameter_id' => $datas['parameter_id']
+        ];
+        
+        $upgradePathConfig = UpgradePathConfig::findOne($condition);
+        $bool = $upgradePathConfig->delete();
+        
+        return $bool;
+    }
 }

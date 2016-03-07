@@ -7,14 +7,9 @@ namespace app\controllers;
  */
 use yii;
 use app\controllers\BaseController;
-use app\models\Version;
-use app\models\Platform;
 use app\models\UpgradePath;
 use app\models\UpgradePathConfig;
-use yii\data\Pagination;
-use app\models\Deployment;
-use app\models\Clientpackage;
-
+use app\models\Parameter;
 
 class UpgradepathController extends BaseController
 {
@@ -153,12 +148,12 @@ class UpgradepathController extends BaseController
             {
                 $upgradePathConfigSelect[] = $upgradePathConfig['value'];
                 $upgradePathSelect[] = $upgradePathConfig['upgradePath']['name'];
-                $parameterSelect[] = $upgradePathConfig['parameter']['name'];
+                $parameterSelect[$upgradePathConfig['parameter']['name']] = $upgradePathConfig['parameter']['description'];
             }
         }
         
         return $this->render('configlist', [
-            'upgradePathSelect' => $upgradePathSelect,
+            'upgradePathSelect' => array_unique($upgradePathSelect),
             'parameterSelect' => array_unique($parameterSelect),
             'upgradePathConfigSelect' => array_unique($upgradePathConfigSelect),
             'list' => $result
@@ -171,7 +166,66 @@ class UpgradepathController extends BaseController
      */
     public function actionConfigCreate()
     {
-        return $this->render('configedit');
+        $upgradePathList = array();
+        //获取升级序列信息
+        $objects = UpgradePath::getAbleUpgradepath();
+        foreach ($objects as $obj)
+        {
+            $upgradePathList[] = [
+                'id' => $obj->id,
+                'name' => $obj->name
+            ];
+        }
+        //获取可用参数信息
+        $parametars = Parameter::getAllParameterByEnable();
+        
+        if(yii::$app->request->isPost)
+        {
+            $redirect_url = '/upgradepath/config-list';
+            
+            $post = yii::$app->request->post();
+            if(!isset($post['sel_upgradepath']) || empty($post['sel_upgradepath']))
+            {
+                $this->error('请选择升级序列', $redirect_url);
+            }
+            if(!isset($post['sel_parameter']) || empty($post['sel_parameter']))
+            {
+                $this->error('请选择参数', $redirect_url);
+            }
+            
+            //根据参数类型判断
+            if((!isset($post['parameter_value']) || empty($post['parameter_value'])) && 
+                ($post['parameter_type'] == 'enum' || $post['parameter_type'] == 'bool'))
+            {
+                $this->error('请选择参数值', $redirect_url);
+            }
+            
+            $datas['upgrade_path_id'] = $post['sel_upgradepath'];
+            $datas['parameter_id'] = $post['sel_parameter'];
+            $datas['value'] = $post['parameter_value'];
+            
+            //确保升级序列和参数对的唯一性
+            $record = UpgradePathConfig::getDataByUpgradePathAndParameter($datas);
+            if($record)
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '该升级序列配置已存在!');
+            }
+            
+            $bool = UpgradePathConfig::createUpgradePathConfig($datas);
+            if($bool)
+            {
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '创建升级序列配置成功!');
+            }
+            else
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '创建升级序列配置失败!');
+            }
+        }
+        
+        return $this->render('configadd', [
+            'upgradePathList' => $upgradePathList,
+            'parameters' => $parametars
+        ]);
     }
     
     /**
@@ -180,7 +234,67 @@ class UpgradepathController extends BaseController
      */
     public function actionConfigEdit()
     {
-        return $this->render('configedit');
+        $redirect_url = '/upgradepath/config-list';
+        
+        //编辑
+        if(yii::$app->request->isPost)
+        {
+            $post = yii::$app->request->post();
+            if((!isset($post['sel_parameter_value']) || empty($post['sel_parameter_value'])) && 
+                ($post['parameter_type'] == 'enum' || $post['parameter_type'] == 'bool'))
+            {
+                $this->error('请选择参数值', $redirect_url);
+            }
+            
+            $parameterVal = '';
+            if($post['parameter_type'] == 'enum' || $post['parameter_type'] == 'bool')
+            {
+                $parameterVal = $post['sel_parameter_value'];
+            }
+            else
+            {
+                $parameterVal = $post['parameter_value'];
+            }
+            
+            $datas['upgrade_path_id'] = $post['upgradePath_id'];
+            $datas['parameter_id'] = $post['parameter_id'];
+            $datas['value'] = $parameterVal;
+            
+            $bool = UpgradePathConfig::eidtUpgradePathConfig($datas);
+            if($bool)
+            {
+                $this->ajaxReturn(self::STATUS_SUCCESS, array('redirect_url' => $redirect_url), '编辑升级序列配置成功!');
+            }
+            else
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '编辑升级序列配置失败!');
+            }
+        }
+        else
+        {
+            $get = yii::$app->request->get();
+            $datas = [
+                'upgrade_path_id' => $get['upgradepath_id'],
+                'parameter_id' => $get['param_id'],
+            ];
+            
+            $upgradePathConfig = UpgradePathConfig::getDataByUpgradePathAndParameter($datas);
+            if(!$upgradePathConfig)
+            {
+                $this->error('参数配置不存在!', $redirect_url);
+            }
+            
+            //根据升级序列id获取升级序列信息
+            $upgradePath = UpgradePath::getById($get['upgradepath_id']);
+            //根据参数id获取参数信息
+            $parame = Parameter::getParameterById($get['param_id']);
+        }
+        
+        return $this->render('configedit', [
+            'upgradePathConfig' => $upgradePathConfig,
+            'upgradePath' => $upgradePath,
+            'parame' => $parame
+        ]);
     }
     
     /**
@@ -189,6 +303,19 @@ class UpgradepathController extends BaseController
      */
     public function actionConfigDelete()
     {
-        return true;
+        $post = yii::$app->request->post();
+        
+        $datas['upgrade_path_id'] = $post['upgradePath_id'];
+        $datas['parameter_id'] = $post['parameter_id'];
+        
+        $bool = UpgradePathConfig::deleteUpgradePathConfig($datas);
+        if($bool)
+        {
+            $this->ajaxReturn(self::STATUS_SUCCESS, array(), '删除配置信息成功!');
+        }
+        else
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, array(), '删除配置信息失败!');
+        }
     }
 }
