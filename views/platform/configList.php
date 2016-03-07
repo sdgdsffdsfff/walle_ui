@@ -15,7 +15,10 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
-<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
+<style type="text/css">
+.glyphicon { cursor: pointer; }
+</style>
+
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -33,50 +36,82 @@ use yii\helpers\Html;
 				<div class="col-lg-3">
 					<a href="config-edit" class="btn w-xs btn-success">新增</a>
 				</div>
-				<div class="col-lg-5">
-					<label class="control-label">平台：</label>
-					<select class="js-source-states" name="platform_id" style="width:200px; margin-right: 40px;">
-                        <optgroup label="">
-                        <option value="">全部</option>
-<?php
-if (!empty($platforms))
-{
-    foreach ($platforms as $platform)
-    {
-        echo "<option value='" . $platform['id'] . "'>" . $platform['name'] ."-".$platform['region']['name']. "</option>";
-    }
-}
-?>
-                        </optgroup>
-					</select>
-				</div>
-				<div class="col-lg-4">
-					<label class="control-label">参数：</label>
-					<select class="js-source-states" name="param_id" style="width:200px; margin-right: 40px;">
-                        <optgroup label="">
-                        <option value="">全部</option>
-<?php
-if (!empty($parameters))
-{
-    foreach ($parameters as $parameter)
-    {
-        echo "<option value='" . $parameter['id'] . "'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
-    }
-}
-?>
-                        </optgroup>
-					</select>
-			    </div>	
 			</div>
 			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="platform_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
+				<table id="platform_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
 					<thead>
 						<tr>
-							<th>平台</th>
-							<th>参数</th>
-							<th>参数值</th>
+                            <th>
+                                平台
+                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                            </th>
+                            <th>
+                                参数
+                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                            </th>
+                            <th>
+                                参数值
+                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                            </th>
 							<th>操作</th>
 						</tr>
+                    <tr>
+                        <th>
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <?php if($data){ ?>
+<?php
+$region_names = array();
+foreach ($data as $platformConfig) {
+    $platform_names[] = $platformConfig['platform_name']."-".$platformConfig['region_name'];
+}
+$platform_names = array_unique($platform_names);
+?>
+                                    <?php foreach($platform_names as $platform_name){ ?>
+                                    <option value="<?= $platform_name; ?>"><?= $platform_name; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </th>
+                        <th>
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <?php if($data){ ?>
+<?php
+$parameters = array();
+foreach ($data as $platformConfig) {
+    $parameters[] = $platformConfig['parameter_des']."（".$platformConfig['parameter_name']."）";
+}
+$parameters = array_unique($parameters);
+?>
+                                    <?php foreach($parameters as $parameter){ ?>
+                                    <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </th>
+                        <th>
+                            <select class="js-filter js-source-states">
+                                <option value="">全部</option>
+                                <?php if($data){ ?>
+<?php
+$values = array();
+foreach ($data as $platformConfig) {
+    $values[] = $platformConfig['value'];
+}
+$values = array_unique($values);
+?>
+                                    <?php foreach($values as $value){ ?>
+                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <?php } ?>
+                                <?php } ?>
+                            </select>
+                        </th>
+                        <th></th>
+                    </tr>
 					</thead>
 					<tbody>
 <?php
@@ -84,7 +119,7 @@ foreach ($data as $platformConfig)
 {
     echo "<tr>";
     echo "<td>".$platformConfig['platform_name']."-".$platformConfig['region_name']."</td>";
-    echo "<td>".$platformConfig['parameter_des']."(".$platformConfig['parameter_name'].")</td>";
+    echo "<td>".$platformConfig['parameter_des']."（".$platformConfig['parameter_name']."）</td>";
     echo "<td>".$platformConfig['value']."</td>";
     echo "<td align='center'>"."<a href='/platform/config-edit?platform_id=".$platformConfig['platform_id']."&parameter_id=".$platformConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_platformconfig('.$platformConfig['platform_id'].",".$platformConfig['parameter_id'].');">删除</button>'."</td>";
     echo "</tr>";
@@ -100,21 +135,11 @@ foreach ($data as $platformConfig)
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); ?>
+<?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
 <script type="text/javascript">
 $(function() {
-    $(".js-source-states").select2();
-    //表数据排序
-    $('#platform_table').dataTable({
-        //操作列不排序
-        "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
-        //去掉分页
-        "bPaginate": false,
-        //去掉左下角显示记录数
-        "bInfo": false,
-        //去掉过滤,搜索功能
-        "bFilter": false
+    $(".js-source-states").select2({
+        width: '100%' //设定select框宽度
     });
     
     toastr.options = {
