@@ -166,6 +166,18 @@ class Parameter extends BaseModel
     }
     
     /**
+     * 获取所有可用的参数
+     * @return array
+     */
+    public static function getAllParameterByEnable()
+    {
+        $condition = ['disable' => 0];
+        $resource = Parameter::find()->where($condition)->asArray()->all();
+        
+        return $resource;
+    }
+    
+    /**
      * 获取所有参数
      * @return array
      */

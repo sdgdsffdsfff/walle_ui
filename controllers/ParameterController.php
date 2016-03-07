@@ -179,7 +179,12 @@ class ParameterController extends BaseController
      */
     public function actionDynamicConfigEdit()
     {
-        return $this->render('dynamicedit');
+        //获取可用参数信息
+        $parametars = Parameter::getAllParameterByEnable();
+        
+        return $this->render('dynamicedit', [
+            'parameters' => $parametars
+        ]);
     }
 
     /**
