@@ -10,6 +10,7 @@ use yii\web\Controller;
 use app\controllers\BaseController;
 use app\models\Version;
 use app\models\Platform;
+use app\models\Region;
 use app\models\UpgradePath;
 use yii\data\Pagination;
 use app\models\Parameter;
@@ -28,6 +29,10 @@ class DeploymentController extends BaseController
     public function actionList()
     {    $data=array();
        $data=Deployment::find()->with('platform')->asArray()->all();
+       foreach ($data as $k => $v) {
+         $region=Region::findOne($v['platform']['region_id']);
+         $data[$k]['region']=$v['platform']['name'].'-'.$region['name'];
+       }
        return $this->render('list',array('data'=>$data));
     }
 
@@ -37,7 +42,7 @@ class DeploymentController extends BaseController
      */
    public function actionEdit()
     { 
-        $region=Platform::find()->where(array('disable'=>0))->asArray()->all();
+        $region=Platform::find()->where(array('disable'=>0))->with('region')->asArray()->all();
      $info=array();
       $id = yii::$app->getRequest()->get('id');
       if($id){
@@ -59,7 +64,7 @@ class DeploymentController extends BaseController
       $description = yii::$app->getRequest()->post('description');
       $disable = yii::$app->getRequest()->post('disable');
       if($name&&$description&&$region){
-        $sameName=Deployment::find()->where(array('name'=>$name))->one();
+        $sameName=Deployment::find()->where(array('name'=>$name,'platform_id'=>$region))->one();
         if($sameName&&$sameName['id']!=$id){
           $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
         }else{

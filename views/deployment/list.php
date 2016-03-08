@@ -40,7 +40,7 @@ use yii\widgets\LinkPager;
                             <tr>
                                 <th data-toggle="true">ID</th>
                                 <th>平台</th>
-                                <th>名称</th>
+                                <th>部署位置名称</th>
                                  <th>是否启用</th>
                                 <th>描述</th>
                                 <th>操作</th>
@@ -53,7 +53,7 @@ use yii\widgets\LinkPager;
                                 foreach ($data as $k => $v) {
                                     echo "<tr>";
                                     echo "<td>".$v['id']."</td>";
-                                    echo "<td>".$v['platform']['name']."</td>";
+                                    echo "<td>".$v['region']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                    if($v['disable']==0){
                                      echo '<td>是</td>';

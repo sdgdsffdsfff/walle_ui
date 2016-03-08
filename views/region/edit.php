@@ -110,6 +110,7 @@ use yii\widgets\LinkPager;
                 if (data.status == '10000') {
                     swal({ title:"编辑发行区域", text:data.data, type:"success",timer: 5000,
                         showConfirmButton: false});
+                    window.location.href="/region/list"; 
                 }else{
                     swal({ title:"编辑u发行区域", text:data.data, type:"error"});
                 }
