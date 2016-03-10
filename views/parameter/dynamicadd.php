@@ -48,13 +48,12 @@ use yii\helpers\Html;
                                             </td>
                                             <td>
                                                 <select id="parameter_id" name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
-                                            <optgroup label="">
-<?php
-if (isset($parameter)) {//编辑配置，只显示要编辑的参数
-    echo "<option value='" . $parameter['id'] . "' selected='selected'>" . $parameter['description']."(".$parameter['name'].")" . "</option>";
-}
-?>
-                                            </optgroup>
+							                        <option value="">请选择参数</option>
+                                                    <?php if($parameters){ ?>
+                                                        <?php foreach($parameters as $value){ ?>
+                                                        <option value="<?= $value['id']; ?>" valType="<?= $value['value_type']; ?>" optVal="<?= $value['options']; ?>"><?= $value['description']; ?>(<?= $value['name']; ?>)</option>
+                                                        <?php } ?>
+                                                    <?php } ?>
 						                        </select>
                                             </td>
                                         </tr>
@@ -63,32 +62,7 @@ if (isset($parameter)) {//编辑配置，只显示要编辑的参数
                                         		<label class="control-label">参数值：</label>
                                         	</td>
                                         	<td>
-<?php
-if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据value_type的类型显示value输入框为input还是select
-    switch ($parameter['value_type']) {
-        case "string":
-            echo '<input type="text" class="form-control" id="parameter_value" name="parameter_value" value="'.$value.'" placeholder="参数值" style="width:300px; margin-right: 40px;"/>';
-            break;
-        case "bool":
-        case "enum":
-            echo '<select name="parameter_value" id="parameter_value" class="js-source-states" style="width:300px; margin-right: 40px;">';
-            echo '<optgroup label="">';
-            $options = explode(",", $parameter['options']);
-            foreach ($options as $option) {
-                if (trim($option) == $value) {
-                    echo "<option value='" . trim($option) . "' selected='selected'>" . trim($option) . "</option>";
-                } else {
-                    echo "<option value='" . trim($option) . "'>" . trim($option) . "</option>";
-                }
-            }
-            echo '</optgroup>';
-            break;
-        default:
-            break;
-    }
-
-}
-?>
+                                        		<input type="text" class="form-control" id="parameter_value" name="parameter_value" placeholder="参数值" style="width:300px; margin-right: 40px;"/>
                                         	</td>
                                         </tr>
                                     </tbody>
@@ -96,7 +70,7 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-2 col-sm-offset-5">
-                                    <button id="create_worker_btn" class="btn btn-success" type="button">保存</button>
+                                    <button id="save_config" class="btn btn-success" type="submit">保存</button>
                                 </div>
                             </div>
                         </form>
@@ -109,10 +83,34 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
+<?= Html::jsFile('@web/static/generalElement.js'); ?>
 
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
+    /*表单验证*/
+    $('#edit_dynamic_form').validate({
+        ignore: '.ignore',
+        rules: {
+            parameter_id: {
+                required: true
+            }
+        },
+        messages: {
+            parameter_id: {
+                required: '请选择配置参数'
+            }
+        },
+        submitHandler: function(form){
+            submitForm();
+        }
+    });
+    $("#parameter_id").change(function(){
+        $(this).valid();
+        //动态生成select和input
+        generalElement('create_dynamicparameter_table', this);
+    });
     
     toastr.options = {
         "debug": false,
@@ -123,16 +121,16 @@ $(function() {
         "toastClass": "animated fadeInDown",
     };
 
-    $('#create_worker_btn').click(function() {
+    function submitForm() {
         $.ajax({
             type: "POST",
             url: "/parameter/config-save",
             data:$('#edit_dynamic_form').serialize(),
             dataType: "json",
-            success: function(json) {
+            success: function (json) {
                 if (json.status == 10000) {
                     swal({
-                        title: "编辑配置信息成功！",
+                        title: "新增配置信息成功！",
                         type: "success",
                         showCancelButton: false, //是否显示'取消'按钮
                         confirmButtonColor: "#e74c3c",
@@ -153,8 +151,8 @@ $(function() {
                     });
                 }
             }
-        });
-    });
 
+        });
+    }
 });
 </script>

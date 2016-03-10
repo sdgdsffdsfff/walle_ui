@@ -174,9 +174,6 @@ class ClientpackageController extends BaseController
      */
     public function actionConfigList()
     {
-        $packages = Package::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
-        //获取parameter
-        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $packageConfigs = PackageConfig::find()->all();
         $data = array();
         if (!empty($packageConfigs))
@@ -187,7 +184,7 @@ class ClientpackageController extends BaseController
             }
         }
 
-        return $this->render('configlist', array("data" => $data, "packages" => $packages, "parameters" => $parameters));
+        return $this->render('configlist', array("data" => $data));
     }
 
     /**

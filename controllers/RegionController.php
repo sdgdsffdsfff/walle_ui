@@ -94,10 +94,6 @@ class RegionController extends BaseController
      */
     public function actionConfigList()
     {
-        //获取region
-        $regions = Region::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
-        //获取parameter
-        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $regionConfigs = RegionConfig::find()->all();
         $data = array();
         if (!empty($regionConfigs))
@@ -108,7 +104,7 @@ class RegionController extends BaseController
             }
         }
         
-        return $this->render('configlist', array("data" => $data, "regions" => $regions, "parameters" => $parameters));
+        return $this->render('configlist', array("data" => $data));
     }
 
     /**
@@ -135,13 +131,13 @@ class RegionController extends BaseController
             {
                 $this->error('您要编辑的内容不存在', '/region/config-list');
             }
-            $value = RegionConfig::find()->where(array("region_id" => $regionId, "parameter_id" => $parameterId))->one()->value;
-            if (!$value)
+            $regionConfig = RegionConfig::find()->where(array("region_id" => $regionId, "parameter_id" => $parameterId))->one();
+            if (!$regionConfig)
             {
                 $this->error('您要编辑的内容不存在', '/region/config-list');
             }
 
-            return $this->render('configedit', array("region" => $region, "parameter" => $parameter, "value" => $value));
+            return $this->render('configedit', array("region" => $region, "parameter" => $parameter, "value" => $regionConfig->value));
         }
 
     }
@@ -178,7 +174,7 @@ class RegionController extends BaseController
 
         if ($regionConfig->save())
         {
-            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '保存成功!');
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '配置信息保存成功!');
         }
 
         $this->newajaxReturn(self::STATUS_FAILS, array(), '保存失败!');
@@ -206,7 +202,7 @@ class RegionController extends BaseController
 
         if ($regionConfig->delete())
         {
-            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '删除成功!');
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '删除配置信息成功!');
         }
 
         $this->newajaxReturn(self::STATUS_FAILS, '', '删除失败!');

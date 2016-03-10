@@ -167,8 +167,27 @@ function delete_deploymentconfig(deployment_id, parameter_id) {
                 dataType: 'json',
                 success: function(data) {
                     if (data.status == 10000) {
-                        toastr.success("删除配置成功！");
-			            window.location.href="/deployment/config-list";
+                        swal({
+                            title: data.description,
+                            type: "success",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        },
+                        function(){
+			                window.location.href="/deployment/config-list";
+                        });
+                    } else if (data.status == 4003) {
+                        swal({
+                            title: "权限提示",
+                            text: data.description,
+                            type: "warning",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        });
                     } else {
                         swal({
                             title: "操作失败",

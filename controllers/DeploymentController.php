@@ -98,9 +98,6 @@ class DeploymentController extends BaseController
      */
     public function actionConfigList()
     {
-        $deployments = Deployment::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
-        //获取parameter
-        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $deploymentConfigs = DeploymentConfig::find()->all();
         $data = array();
         if (!empty($deploymentConfigs))
@@ -111,7 +108,7 @@ class DeploymentController extends BaseController
             }
         }
 
-        return $this->render('configlist', array("data" => $data, "deployments" => $deployments, "parameters" => $parameters));
+        return $this->render('configlist', array("data" => $data));
     }
 
     /**

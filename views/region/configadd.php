@@ -160,8 +160,16 @@ $(function() {
             dataType: "json",
             success: function (json) {
                 if (json.status == 10000) {
-                    toastr.success("新增配置信息成功！");
-                    window.location.href="/region/config-list";
+                    swal({
+                        title: "新增配置信息成功！",
+                        type: "success",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    },function(){
+                        window.location.href="/region/config-list";
+                    });
                 } else {
                     swal({
                         title: "操作失败",

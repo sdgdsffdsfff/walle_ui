@@ -8,6 +8,7 @@ namespace app\controllers;
  */
 use yii;
 use app\models\Parameter;
+use app\models\DynamicConfig;
 
 class ParameterController extends BaseController
 {
@@ -170,7 +171,17 @@ class ParameterController extends BaseController
      */
     public function actionDynamicConfig()
     {
-        return $this->render('dynamic');
+        $dynamicConfigs = DynamicConfig::find()->all();
+        $data = array();
+        if (!empty($dynamicConfigs))
+        {
+            foreach ($dynamicConfigs as $dynamicConfig)
+            {
+                $data[] = $dynamicConfig->toArray();
+            }
+        }
+
+        return $this->render('dynamic', array("data" => $data));
     }
 
     /**
@@ -179,12 +190,83 @@ class ParameterController extends BaseController
      */
     public function actionDynamicConfigEdit()
     {
-        //获取可用参数信息
-        $parametars = Parameter::getAllParameterByEnable();
-        
-        return $this->render('dynamicedit', [
-            'parameters' => $parametars
-        ]);
+        $parameterId = yii::$app->request->get('parameter_id');
+        if (empty($parameterId))
+        {
+            //获取可用参数信息
+            $parameters = Parameter::getAllParameterByEnable();
+
+            return $this->render('dynamicadd', array("parameters" => $parameters));
+        }
+        else
+        {
+            //编辑已存在的配置
+            $parameter = Parameter::findOne($parameterId);
+            $dynamicConfig = DynamicConfig::findOne($parameterId);
+
+            if (!$parameter || !$dynamicConfig)
+            {
+                $this->error('您要编辑的内容不存在', '/parameter/dynamic-config');
+            }
+
+            return $this->render('dynamicedit', array("parameter" => $parameter, "value" => $dynamicConfig->value));
+        }
+    }
+
+    /**
+     * 保存动态参数配置
+     */
+    public function actionConfigSave()
+    {
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+        $parameterValue = yii::$app->getRequest()->post('parameter_value');
+
+        if (empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        $valueType = Parameter::findOne($parameterId)->value_type;
+        if ($valueType != "string" && empty($parameterValue))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+        }
+        $dynamicConfig = DynamicConfig::findOne($parameterId);
+        if (!$dynamicConfig)
+        {
+            $dynamicConfig = new DynamicConfig();
+            $dynamicConfig->parameter_id = $parameterId;
+        }
+        $dynamicConfig->value = $parameterValue;
+
+        if ($dynamicConfig->save())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '配置信息保存成功!');
+        }
+    
+        $this->newajaxReturn(self::STATUS_FAILS, array(), '保存失败!');
+    }
+
+    /**
+     * 删除动态参数配置
+     */
+    public function actionConfigDelete()
+    {
+        $parameterId = yii::$app->getRequest()->post('parameter_id');
+        if (empty($parameterId))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '请求参数有误!');
+        }
+        $dynamicConfig = DynamicConfig::findOne($parameterId);
+        if (empty($dynamicConfig))
+        {
+            $this->newajaxReturn(self::STATUS_FAILS, '', '未找到相关配置!');
+        }
+        if ($dynamicConfig->delete())
+        {
+            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '删除配置信息成功!');
+        }
+
+        $this->newajaxReturn(self::STATUS_FAILS, '', '删除失败!');
     }
 
 }

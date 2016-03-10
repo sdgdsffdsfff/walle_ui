@@ -98,10 +98,6 @@ class PlatformController extends BaseController
      */
     public function actionConfigList()
     {
-        //获取platform
-        $platforms = Platform::find()->with('region')->where(array("disable" => 0))->asArray()->all();
-        //获取parameter
-        $parameters = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
         $platformConfigs = PlatformConfig::find()->all();
         $data = array();
         if (!empty($platformConfigs))
@@ -112,7 +108,7 @@ class PlatformController extends BaseController
             }
         }
 
-        return $this->render('configList', array("data" => $data, "platforms" => $platforms, "parameters" => $parameters));
+        return $this->render('configList', array("data" => $data));
     }
 
     /**
