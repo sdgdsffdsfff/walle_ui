@@ -39,7 +39,7 @@ class Platform extends BaseModel
             [['name'], 'required'],
             [['name'], 'string', 'max' => 32],
             [['description'], 'string', 'max' => 255],
-            [['name'], 'unique']
+            //[['name'], 'unique']
         ];
     }
 

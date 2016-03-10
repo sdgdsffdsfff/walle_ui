@@ -20,8 +20,8 @@ function generalElement(table, obj)
         for(var i = 0; i < options.length; i++)
         {
             var option = document.createElement("option");
-            option.setAttribute("value", options[i]);
-            option.text = options[i];
+            option.setAttribute("value", $.trim(options[i]));
+            option.text = $.trim(options[i]);
             sele.appendChild(option);
         }
         //添加校验规则

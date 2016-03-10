@@ -2,6 +2,7 @@
 
 return [
     'scriptPath' => '/data/work/walle/walle3/env/bin/',
+    'uploadPath' => 'http://rc.walle.playcrab-inc.com/walle/package/',
     'adminEmail' => 'admin@example.com',
     //左侧菜单
     'menuData' => [

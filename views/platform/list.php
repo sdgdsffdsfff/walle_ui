@@ -40,7 +40,7 @@ use yii\widgets\LinkPager;
                             <tr>
                                 <th data-toggle="true">ID</th>
                                 <th>发行地区</th>
-                                <th>名称</th>
+                                <th>平台名称</th>
                                  <th>是否启用</th>
                                 <th>描述</th>
                                 <th>操作</th>

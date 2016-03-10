@@ -1,5 +1,7 @@
 <?php
 namespace app\models;
+use app\models\ModuleTag;
+use app\models\Deployment;
 /**
  * This is the model class for table "version".
  *
@@ -60,6 +62,31 @@ class Version extends BaseModel
             'release_time' => 'Release Time',
             'released' => 'Released',
         ];
+    }
+
+    /**
+     * expand parameter of toArray()
+     */
+    public function extraFields()
+    {
+        return array(
+            'region' => function() {
+                if (isset($this->platform) && isset($this->platform->region)) {
+                    return $this->platform->region->name;
+                }
+            },
+            'platform' => function() {
+                if (isset($this->platform)) {
+                    return $this->platform->name;
+                }
+            },
+            'upgrade_path' => function() {
+                if (isset($this->upgradePath)) {
+                    return $this->upgradePath->name;
+                }
+            }
+        );
+    
     }
 
     /**
@@ -224,5 +251,32 @@ class Version extends BaseModel
                             ->orderBy('id desc')
                             ->all();
         return $versionUpdateList;
+    }
+
+    /**
+     * 获取版本详情，包括部署位置、module等信息，供版本对比使用
+     * @param version id
+     * @return array
+     */
+    public static function getVersionDetial($id)
+    {
+        $versionInfo = Version::findOne($id)->toArray(array(),array("region", "platform", "upgrade_path"));
+        $deployment = Deployment::getDataByPlatformId($versionInfo['platform_id']);
+        $moduleInfo = ModuleTag::getVersionModuleTag($id);
+        if (empty($versionInfo) || empty($deployment) || empty($moduleInfo))
+        {
+            return false;
+        }
+        foreach ($deployment as $value)
+        {
+            $versionInfo['deployment'][] = $value['name']; 
+        }
+        $versionInfo['module'] = array();
+        foreach ($moduleInfo as $value)
+        {
+            $versionInfo['module'][$value['module']['name']] = $value['tag'];
+        }
+    
+        return $versionInfo;
     }
 }

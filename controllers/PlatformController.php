@@ -59,7 +59,7 @@ class PlatformController extends BaseController
       $description = yii::$app->getRequest()->post('description');
       $disable = yii::$app->getRequest()->post('disable');
       if($name&&$description&&$region){
-        $sameName=Platform::find()->where(array('name'=>$name))->one();
+        $sameName=Platform::find()->where(array('name'=>$name,'region_id'=>$region))->one();
         if($sameName&&$sameName['id']!=$id){
           $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
         }else{
@@ -69,17 +69,22 @@ class PlatformController extends BaseController
           //$info->region_id=$region;
           $info->description = $description;
           $info->disable=$disable;
-          $info->save();
+          $res=$info->save();
          
         }else{
           $info = new Platform();
           $info->name = $name;
-           $info->region_id=$region;
+          $info->region_id=$region;
           $info->description = $description;
           $info->disable=$disable;
-          $info->insert();
+          $res=$info->insert();
         }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          if($res){
+            $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          }else{
+            $this->ajaxReturn(self::STATUS_FAILS, '保存失败');
+          }
+          
         }
         
       }else{
@@ -121,7 +126,7 @@ class PlatformController extends BaseController
         {
             //新增配置页面、查找全部platform和parameter
             $platformList = Platform::find()->with('region')->where(array("disable" => 0))->asArray()->all();
-            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
+            $parameterList = Parameter::getAllParameterByEnable();
 
             return $this->render('configadd', array("platformList" => $platformList, "parameterList" => $parameterList));
         }

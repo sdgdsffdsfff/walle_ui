@@ -74,4 +74,16 @@ class ClientUpdatePackage extends BaseModel
     {
         return $this->hasOne(Job::className(), ['id' => 'job_id']);
     }
+
+    /**
+     * 通过源版本号和目标版本号获取客户端更新包信息
+     * @params from_version to_version
+     * @return array
+     */
+    public static function getUpdatePackages($from_version, $to_version)
+    {
+        $packages = ClientUpdatePackage::find()->where(array("from_version" => $from_version, "to_version" => $to_version))->one()->packages;
+        return json_decode($packages,true);
+        
+    }
 }
