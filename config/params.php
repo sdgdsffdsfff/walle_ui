@@ -52,10 +52,22 @@ return [
             ],
         ],
         [
-            'name' => '参数管理',
-            'controller' => 'parameter',
+            'name' => '安装包下载',
+            'controller' => 'clientpackage',
+            'path' => '/clientpackage/list',
+            'icon' => 'fa-cloud-download',
+        ],
+        [
+            'name' => '更新模块版本列表',
+            'controller' => 'module',
+            'path' => '/module/index',
+            'icon' => 'fa-puzzle-piece',
+        ],
+        [
+            'name' => '基础信息配置',
+            'controller' => 'parameter,upgradepath,region,platform,deployment,worker',
             'path' => 'javascript:void(0);',
-            'icon' => 'fa-behance-square',
+            'icon' => 'fa-cogs',
             'subMenu' => [
                 [
                     'name' => '参数配置(parameter)',
@@ -65,30 +77,10 @@ return [
                     'name' => '动态参数配置',
                     'path' => 'parameter/dynamic-config',
                 ],
-            ],
-        ],
-        [
-            'name' => '业务模块管理',
-            'controller' => 'module',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-puzzle-piece',
-            'subMenu' => [
                 [
                     'name' => '业务模块配置(module)',
                     'path' => 'module/list',
                 ],
-                [
-                    'name' => '更新模块版本列表',
-                    'path' => 'module/index',
-                ],
-            ],
-        ],
-        [
-            'name' => '升级序列管理',
-            'controller' => 'upgradepath',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-cloud-upload',
-            'subMenu' => [
                 [
                     'name' => '升级序列列表',
                     'path' => 'upgradepath/list',
@@ -97,14 +89,6 @@ return [
                     'name' => '升级序列配置',
                     'path' => 'upgradepath/config-list',
                 ],
-            ],
-        ],
-        [
-            'name' => '发行地区管理',
-            'controller' => 'region',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-globe',
-            'subMenu' => [
                 [
                     'name' => '发行地区列表',
                     'path' => 'region/list',
@@ -113,14 +97,6 @@ return [
                     'name' => '发行地区配置',
                     'path' => 'region/config-list',
                 ],
-            ],
-        ],
-        [
-            'name' => '平台管理',
-            'controller' => 'platform',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-desktop',
-            'subMenu' => [
                 [
                     'name' => '平台信息列表',
                     'path' => 'platform/list',
@@ -129,14 +105,6 @@ return [
                     'name' => '平台信息配置',
                     'path' => 'platform/config-list',
                 ],
-            ],
-        ],
-        [
-            'name' => '部署管理',
-            'controller' => 'deployment',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-map-marker',
-            'subMenu' => [
                 [
                     'name' => '部署位置列表',
                     'path' => 'deployment/list',
@@ -144,18 +112,6 @@ return [
                 [
                     'name' => '部署位置配置',
                     'path' => 'deployment/config-list',
-                ],
-            ],
-        ],
-        [
-            'name' => '安装包管理',
-            'controller' => 'clientpackage,package',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-dropbox',
-            'subMenu' => [
-                [
-                    'name' => '安装包下载',
-                    'path' => 'clientpackage/list',
                 ],
                 [
                     'name' => '客户端更新包状态',
@@ -169,19 +125,11 @@ return [
                     'name' => '安装包配置',
                     'path' => 'clientpackage/config-list',
                 ],
-            ],
-        ],
-        [
-            'name' => '打包机管理',
-            'controller' => 'worker',
-            'path' => 'javascript:void(0);',
-            'icon' => 'fa-suitcase',
-            'subMenu' => [
                 [
                     'name' => '打包机列表',
                     'path' => 'worker/list',
                 ]
-            ],
+            ]
         ],
     ],
 ];

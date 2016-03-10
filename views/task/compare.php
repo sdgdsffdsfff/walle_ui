@@ -126,7 +126,6 @@ use yii\helpers\Html;
 
                                 counter++;
 
-
                                 compare_ids += job_id+',';
                                 $('#compare_jobIds').val(compare_ids);
                             }
