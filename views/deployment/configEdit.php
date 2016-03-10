@@ -14,6 +14,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 
 <div class="normalheader transition small-header">
     <div class="hpanel">
@@ -91,7 +92,7 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
             echo '<optgroup label="">';
             $options = explode(",", $parameter['options']);
             foreach ($options as $option) {
-                if ($option == $value) {
+                if (trim($option) == $value) {
                     echo "<option value='" . trim($option) . "' selected='selected'>" . trim($option) . "</option>";
                 } else {
                     echo "<option value='" . trim($option) . "'>" . trim($option) . "</option>";
@@ -124,6 +125,7 @@ if (isset($parameter) && isset($value)) {//编辑配置，指定参数，根据v
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <script type="text/javascript">
 $(function() {
     $(".js-source-states").select2();
@@ -144,8 +146,16 @@ $(function() {
             dataType: "json",
             success: function(json) {
                 if (json.status == 10000) {
-                    toastr.success("编辑配置信息成功！");
-                    window.location.href="/deployment/config-list";
+                    swal({
+                        title: "编辑配置信息成功！",
+                        type: "success",
+                        showCancelButton: false, //是否显示'取消'按钮
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    },function(){
+                        window.location.href="/deployment/config-list";
+                    });
                 } else {
                     swal({
                         title: "操作失败",
