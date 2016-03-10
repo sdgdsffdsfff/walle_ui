@@ -22,7 +22,8 @@ use yii\helpers\Html;
                     待对比任务列表
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
+                    <form id="task_compare_form" method="post" class="form-horizontal" action="/task/compare-detail">
+                        <input type="hidden" id="compare_jobIds" name="compare_jobIds" value="" />
                         <div>
                             <table id="task_compare_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped">
                                 <thead>
@@ -32,14 +33,6 @@ use yii\helpers\Html;
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>197</td>
-                                        <td>133</td>
-                                    </tr>
-                                    <tr>
-                                        <td>206</td>
-                                        <td>136</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -49,7 +42,7 @@ use yii\helpers\Html;
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="margin-left: -10px;">任务ID: </label>
                             <div class="col-sm-4" style="margin-left: -16px;">
-                                <input type="text" placeholder="任务ID" class="form-control" id="task_id" name="task_id" />
+                                <input type="text" id="job_id" name="job_id" placeholder="任务ID" class="form-control" />
                             </div>
                             <span class="input-group-btn" style="right: -16px;">
                                 <input type="button" id="add_task_btn" name="add_task_btn" class="btn w-xs btn-success" value="添加至待对比列表" />
@@ -66,7 +59,7 @@ use yii\helpers\Html;
             <div class="hpanel">
                 <div class="col-xs-6 col-md-4"></div>
                 <div class="col-xs-6 col-md-4">
-                    <a href="/task/compare-detail" class="btn w-xs btn-success" style="margin-left: 126px;">任务对比</a>
+                    <button type="submit" id="task_compare_btn" name="task_compare_btn" class="btn w-xs btn-success" style="margin-left: 126px;">任务对比</button>
                 </div>
             </div>
         </div>
@@ -77,8 +70,9 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function(){
         var t = $('#task_compare_table').DataTable({
+            'language': { "emptyTable": '暂无有效数据' },
             "paging":   false,
             "ordering": false,
             "info":     false,
@@ -86,8 +80,8 @@ use yii\helpers\Html;
         });
         var counter = 1;
 
-        $('#add_task_btn').on( 'click', function () {
-            if(counter > 3)
+        $('#add_task_btn').on('click', function(){
+            if(counter > 5)
             {
                 swal({
                     title: "最多添加5条任务!",
@@ -100,16 +94,92 @@ use yii\helpers\Html;
             }
             else
             {
-                t.row.add( [
-                    counter +'.1',
-                    counter +'.2',
-                    counter +'.3',
-                    counter +'.4',
-                    counter +'.5'
-                ] ).draw();
+                var job_id = $('#job_id').val();
+                //根据任务id获取相应的信息
+                $.ajax({
+                    url: '/task/compare',
+                    type: 'post',
+                    data: 'job_id='+job_id,
+                    dataType: 'json',
+                    success: function(response){
+                        if(response.status == 10000)
+                        {
+                            var compare_ids = $('#compare_jobIds').val();
+                            var search_str = new RegExp(job_id);
+                            if(search_str.test(compare_ids))
+                            {
+                                swal({
+                                    title: '该任务id已存在,请更换任务id!',
+                                    type: "error",
+                                    showCancelButton: false, //是否显示'取消'按钮
+                                    confirmButtonColor: "#e74c3c",
+                                    confirmButtonText: "确认",
+                                    closeOnConfirm: false
+                                });
+                            }
+                            else
+                            {
+                                t.row.add( [
+                                    response.data.id,
+                                    response.data.version_id
+                                ] ).draw();
 
-                counter++;
+                                counter++;
+
+
+                                compare_ids += job_id+',';
+                                $('#compare_jobIds').val(compare_ids);
+                            }
+                        }
+                        else
+                        {
+                            swal({
+                                title: response.description,
+                                type: "error",
+                                showCancelButton: false, //是否显示'取消'按钮
+                                confirmButtonColor: "#e74c3c",
+                                confirmButtonText: "确认",
+                                closeOnConfirm: false
+                            });
+                        }
+                    }
+                });
             }
-        } );
-    } );
+        });
+        
+        $('#task_compare_btn').on('click', function(){
+            var columns = $('#task_compare_table tbody').children(':first').find('td').length;
+            var rows = $('#task_compare_table tbody').children().length;
+            if(columns <= 1)
+            {
+                swal({
+                    title: "请添加对比任务!",
+                    type: "error",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false
+                });
+                
+                return false;
+            }
+            else if(rows < 2)
+            {
+                swal({
+                    title: "至少需要2个对比任务!",
+                    type: "error",
+                    showCancelButton: false, //是否显示'取消'按钮
+                    confirmButtonColor: "#e74c3c",
+                    confirmButtonText: "确认",
+                    closeOnConfirm: false
+                });
+                
+                return false;
+            }
+            else
+            {
+                $('#task_compare_form').submit();
+            }
+        });
+    });
 </script>

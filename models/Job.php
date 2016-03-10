@@ -186,4 +186,21 @@ class Job extends BaseModel
             return false;  //空闲状态
         }
     }
+    
+    /**
+     * 根据任务id获取任务信息
+     * @param string $job_id 任务id
+     * @return array
+     */
+    public static function getJobById($job_id)
+    {
+        $fields = ['id','version_id'];
+        
+        $job = Job::find()->select($fields)
+                ->where(['id' => $job_id])
+                ->asArray()
+                ->one();
+        
+        return $job;
+    }
 }

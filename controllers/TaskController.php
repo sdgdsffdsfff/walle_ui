@@ -17,11 +17,9 @@ use app\models\Job;
 use yii\helpers\Url;
 use yii\data\Pagination;
 use app\models\UpgradePath;
-use app\models\Module;
 use app\models\ModuleTag;
 use app\models\PackageConfig;
 use app\models\Parameter;
-use app\models\Region;
 use app\models\RegionConfig;
 use app\models\PlatformConfig;
 use app\models\DeploymentConfig;
@@ -1146,11 +1144,98 @@ class TaskController extends BaseController
      */
     public function actionCompare()
     {
+        if(yii::$app->request->isPost)
+        {
+            $post = yii::$app->request->post();
+            
+            //根据任务id,判断任务是否合法
+            $job = Job::getJobById($post['job_id']);
+            if(!$job)
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, array(), '没有此任务!');
+            }
+            
+            $this->ajaxReturn(self::STATUS_SUCCESS, $job, '');
+        }
+        
         return $this->render('compare');
     }
     
+    /**
+     * 任务对比详情
+     * @return type
+     */
     public function actionCompareDetail()
     {
-        return $this->render('comparedetail');
+        $post = yii::$app->request->post();
+        //获取要对比的任务id数组
+        $jobIds = explode(',', trim($post['compare_jobIds'], ','));
+        
+        //根据获取的任务id查询相关配置信息
+        if($jobIds)
+        {
+            $job_config_arr = array();
+            foreach ($jobIds as $id)
+            {
+                $job = Job::findOne($id);
+                //job_config 需要解析json，查找对应key 在parameter表中对应的description值,拼成数组传递到view层
+                $job_config_arr[$id] = $this->replaceJobConfigDescription($job['job_config']);
+            }
+            //var_dump($job_config_arr);exit;
+            //获取全部任务参数组
+            $fields_array = $this->getEveryJobField($job_config_arr);
+            //var_dump($fields_array);exit;
+            
+            foreach ($job_config_arr as $jId => $data)
+            {
+                foreach ($data as $value)
+                {
+                    $name = str_replace(' ', '', trim($value['name']));
+                    foreach ($fields_array as $key => $field)
+                    {
+                        if($field['type'] == $value['type'] && $field['name'] == $name)
+                        {
+                            $fields_array[$key]['value'][$jId] = $value['value'];
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        //var_dump($fields_array);exit;
+        return $this->render('comparedetail', [
+            'jobConfigs' => $job_config_arr,
+            'fieldsConfig' => $fields_array
+        ]);
+    }
+    
+    /**
+     * 获取各个任务的字段
+     * @param array $jobConfigArr 任务配置参数组
+     * @return array
+     */
+    private function getEveryJobField($jobConfigArr)
+    {
+        $fields = $typeNameArr = [];
+        foreach ($jobConfigArr as $jobConfig)
+        {
+            foreach ($jobConfig as $value)
+            {
+                $name = str_replace(' ', '', trim($value['name']));
+                $fields[] = $value['type'].':'.$name;
+            }
+        }
+
+        $fields_unique = array_unique($fields);
+        foreach ($fields_unique as $data)
+        {
+            $temp = explode(':', $data);
+            $typeNameArr[] = [
+                'type' => $temp[0],
+                'name' => $temp[1]
+            ];
+        }
+        
+        return $typeNameArr;
     }
 }
