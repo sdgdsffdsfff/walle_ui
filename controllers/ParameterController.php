@@ -187,22 +187,4 @@ class ParameterController extends BaseController
         ]);
     }
 
-    /**
-     * ajax 获取参数的value_type和options
-     */
-    public function actionGetparaminfo()
-    {
-        $parameter_id = yii::$app->getRequest()->post('parameter_id');
-        $parameter = Parameter::findOne($parameter_id);
-        if (!$parameter)
-        {
-            $this->newajaxReturn(self::STATUS_FAILS, '', '请求信息有误，获取参数信息失败');
-        }
-        $data = array(
-            "value_type" => $parameter->value_type,
-            "options" => $parameter->options,
-        );
-
-        $this->newajaxReturn(self::STATUS_SUCCESS, $data, '获取参数信息成功!');
-    }
 }

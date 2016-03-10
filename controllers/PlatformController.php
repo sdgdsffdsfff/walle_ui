@@ -126,7 +126,7 @@ class PlatformController extends BaseController
         {
             //新增配置页面、查找全部platform和parameter
             $platformList = Platform::find()->with('region')->where(array("disable" => 0))->asArray()->all();
-            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
+            $parameterList = Parameter::getAllParameterByEnable();
 
             return $this->render('configadd', array("platformList" => $platformList, "parameterList" => $parameterList));
         }

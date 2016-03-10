@@ -125,7 +125,7 @@ class DeploymentController extends BaseController
         {
             //新增配置页面、查找全部deployment和parameter
             $deploymentList = Deployment::find()->where(array("disable" => 0))->addSelect(array('id', 'name'))->asArray()->all();
-            $parameterList = Parameter::find()->where(array("disable" => 0))->addSelect(array('id', 'name', 'description'))->asArray()->all();
+            $parameterList = Parameter::getAllParameterByEnable();
 
             return $this->render('configadd', array("deploymentList" => $deploymentList, "parameterList" => $parameterList));
         }
