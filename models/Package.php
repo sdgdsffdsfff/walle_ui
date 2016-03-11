@@ -36,7 +36,7 @@ class Package extends BaseModel
         return [
             [['platform_id', 'disable'], 'integer'],
             [['name', 'description'], 'string', 'max' => 255],
-            [['name'], 'unique']
+            //[['name'], 'unique']
         ];
     }
 

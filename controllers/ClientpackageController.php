@@ -107,53 +107,7 @@ class ClientpackageController extends BaseController
         ]);
     }
 
-    public function actionListstatus()
-    {
-        $job_id=yii::$app->getRequest()->get('id');
-        $data=array();
-        $condition=array();
-        if(isset($job_id)){
-            $job=Job::findOne($job_id);
-            if($job){
-                $job_config=json_decode($job['job_config'],true);
-                $to_version=$job['version_id'];
-                if(isset($job_config['versions_need_client_update_package'])){
-                    $from_version=$job_config['versions_need_client_update_package'];
-                    $condition['to_version'] = trim($to_version);
-                    $getArr=array('upgrade_path_config','deployment_config','platform_config','region_config','default_config');
-                    $url_root='';
-                    foreach ($getArr as $value) {
-                        if(isset($job_config[$value]['cdn_url_root'])&&!empty($job_config[$value]['cdn_url_root'])){
-                            $url_root=$job_config[$value]['cdn_url_root'];
-                            break;
-                        }
-                    }
 
-                    foreach($from_version as $i=>$r){
-                        $condition['from_version'] = $r;
-                        $config=ClientUpdatePackage::find()->where($condition)->asArray()->one();
-                        $data[$i]['filename']=array();
-                        if($config){
-                          $url_config=json_decode($config['packages'],true);
-                           foreach ($url_config as $key => $res) {
-                               $arr[$key]=$res['filename'];
-                           }
-                            $data[$i]['filename']=$arr;
-                        }
-                        $data[$i]['to_version']=$to_version;
-                        $data[$i]['from_version']=$r;
-                        $data[$i]['url']=$url_root.yii::$app->session->get('game_alias').'/update/';
-                        
-                    }            
-                }
-            }
-             
-                
-
-            
-        }
-        return $this->render('liststatus',array('data'=>$data,'job_id'=>$job_id));
-    }
     
     public function actionRequest(){ 
         $url=yii::$app->getRequest()->post('url_info');
@@ -169,75 +123,6 @@ class ClientpackageController extends BaseController
 
     }   
 
-     /**
-    * [列表页]
-    * @return [type] [description]
-    */
-    public function actionTolist()
-    {    $data=array();
-       $data=Package::find()->with('platform')->asArray()->all();
-       foreach ($data as $k => $v) {
-         $region=Region::findOne($v['platform']['region_id']);
-         $data[$k]['region_name']=$region['name'];
-       }
-       return $this->render('tolist',array('data'=>$data));
-    }
 
-    /**
-     * [新增编辑页]
-     * @return [type] [description]
-     */
-   public function actionEdit()
-    { 
-        $region=Platform::find()->where(array('disable'=>0))->with('region')->asArray()->all();
-     $info=array();
-      $id = yii::$app->getRequest()->get('id');
-      if($id){
-        $info=Package::findOne($id);
-        if(!$info){
-          $this->error('您要编辑的内容不存在', '/clientpackage/list');
-        }
-      }
-       return $this->render('edit',array('info'=>$info,'id'=>$id,"region"=>$region));
-    }
-    /**
-     * [编辑保存操作]
-     * @return [type] [description]
-     */
-    public function actionDoedit(){
-      $id = yii::$app->getRequest()->post('id');
-      $region = yii::$app->getRequest()->post('region');
-      $name = yii::$app->getRequest()->post('name');
-      $description = yii::$app->getRequest()->post('description');
-      $disable = yii::$app->getRequest()->post('disable');
-      if($name&&$description&&$region){
-        $sameName=Package::find()->where(array('name'=>$name))->one();
-        if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
-        }else{
-          if($id){
-          $info = Package::findOne($id);
-          $info->name = $name;
-          $info->platform_id=$region;
-          $info->description = $description;
-          $info->disable=$disable;
-          $info->save();
-         
-        }else{
-          $info = new Package();
-          $info->name = $name;
-           $info->platform_id=$region;
-          $info->description = $description;
-          $info->disable=$disable;
-          $info->insert();
-        }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
-        }
-        
-      }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
-      }
-      
-    }
 
 }
