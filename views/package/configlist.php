@@ -163,9 +163,11 @@ function delete_packageconfig(package_id, parameter_id) {
 		title: "删除安装包相关配置确认",
 		type: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
+		confirmButtonColor: "#e74c3c",
 		confirmButtonText: "确认",
 		cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: true
 	},
 	function(isConfirm){
 		if (isConfirm) {
@@ -177,43 +179,37 @@ function delete_packageconfig(package_id, parameter_id) {
                 dataType: 'json',
                 success: function(data) {
                     if (data.status == 10000) {
-                        setTimeout(function() {
-                            swal({
-                                title: data.description,
-                                type: "success",
-                                showCancelButton: false, //是否显示'取消'按钮
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtonText: "确认",
-                                closeOnConfirm: false
-                            },
-                            function(){
-                                window.location.href="/package/config-list";
-                            });
-                        }, 400);
+                        swal({
+                            title: data.description,
+                            type: "success",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        },
+                        function(){
+                            window.location.href="/package/config-list";
+                        });
                     } else if (data.status == 40003) {
-                        setTimeout(function() {
-                            swal({
-                                title: "权限提示",
-                                text: data.description,
-                                type: "warning",
-                                showCancelButton: false, //是否显示'取消'按钮
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtonText: "确认",
-                                closeOnConfirm: false
-                            });
-                        }, 400);
+                        swal({
+                            title: "权限提示",
+                            text: data.description,
+                            type: "warning",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        });
                     } else {
-                        setTimeout(function() {
-                            swal({
-                                title: "操作失败",
-                                text: json.description,
-                                type: "warning",
-                                showCancelButton: false,
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtionText: "确认",
-                                closeOnConfirm: false, 
-                            });
-                        }, 400);
+                        swal({
+                            title: "操作失败",
+                            text: json.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false
+                        });
                     }
                 }
             });
@@ -222,6 +218,4 @@ function delete_packageconfig(package_id, parameter_id) {
 		}
 	});
 }
-
-
 </script>

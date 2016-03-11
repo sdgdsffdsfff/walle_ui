@@ -62,15 +62,15 @@ use yii\helpers\Html;
                         <select class="js-filter js-source-states">
                             <option value="">全部</option>
                             <?php if($data){ ?>
-<?php
-$parameters = array();
-foreach ($data as $dynamicConfig) {
-$parameters[] = $dynamicConfig['alias'];
-}
-$parameters = array_unique($parameters);
-?>
+                                <?php
+                                    $parameters = array();
+                                    foreach ($data as $dynamicConfig) {
+                                    $parameters[] = $dynamicConfig['alias'];
+                                    }
+                                    $parameters = array_unique($parameters);
+                                ?>
                                 <?php foreach($parameters as $parameter){ ?>
-                                <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
+                                    <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
@@ -79,15 +79,15 @@ $parameters = array_unique($parameters);
                         <select class="js-filter js-source-states">
                             <option value="">全部</option>
                             <?php if($data){ ?>
-<?php
-$values = array();
-foreach ($data as $dynamicConfig) {
-$values[] = $dynamicConfig['value'];
-}
-$values = array_unique($values);
-?>
+                                <?php
+                                    $values = array();
+                                    foreach ($data as $dynamicConfig) {
+                                        $values[] = $dynamicConfig['value'];
+                                    }
+                                    $values = array_unique($values);
+                                ?>
                                 <?php foreach($values as $value){ ?>
-                                <option value="<?= $value; ?>"><?= $value; ?></option>
+                                    <option value="<?= $value; ?>"><?= $value; ?></option>
                                 <?php } ?>
                             <?php } ?>
                         </select>
@@ -96,18 +96,18 @@ $values = array_unique($values);
                     </tr>
                 </thead>
                 <tbody>
-<?php
-if (!empty($data)) {
-foreach ($data as $dynamicConfig)
-{
-    echo "<tr>";
-    echo "<td>".$dynamicConfig['alias']."</td>";
-    echo "<td>".$dynamicConfig['value']."</td>";
-    echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
-    echo "</tr>";
-}
-}
-?>
+                    <?php
+                    if (!empty($data)) {
+                        foreach ($data as $dynamicConfig)
+                        {
+                            echo "<tr>";
+                            echo "<td>".$dynamicConfig['alias']."</td>";
+                            echo "<td>".$dynamicConfig['value']."</td>";
+                            echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -115,9 +115,9 @@ foreach ($data as $dynamicConfig)
     </div>
 </div>
 
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
 <script type="text/javascript">
 $(function() {
@@ -125,24 +125,27 @@ $(function() {
         width: '100%'
     });
 
-     toastr.options = {
-                "debug": false,
-                "newestOnTop": false,
-                "positionClass": "toast-top-center",
-                "closeButton": true,
-                "debug": false,
-                "toastClass": "animated fadeInDown",
-            };
+    toastr.options = {
+        "debug": false,
+        "newestOnTop": false,
+        "positionClass": "toast-top-center",
+        "closeButton": true,
+        "debug": false,
+        "toastClass": "animated fadeInDown"
+    };
 });
 
-function delete_dynamicconfig(parameter_id) {
+function delete_dynamicconfig(parameter_id) 
+{
 	swal({
-		title: "删除动态参数配置确认",
+		title: "确定要删除动态参数配置吗?",
 		type: "warning",
 		showCancelButton: true,
-		confirmButtonColor: "#DD6B55",
+		confirmButtonColor: "#e74c3c",
 		confirmButtonText: "确认",
 		cancelButtonText: "取消",
+        closeOnConfirm: false,
+        closeOnCancel: true //true表示点取消按钮时,关闭弹窗和模式窗口
 	},
 	function(isConfirm){
 		if (isConfirm) {
@@ -154,43 +157,37 @@ function delete_dynamicconfig(parameter_id) {
                 dataType: 'json',
                 success: function(data) {
                     if (data.status == 10000) {
-                        setTimeout(function() {
-                            swal({
-                                title: data.description,
-                                type: "success",
-                                showCancelButton: false, //是否显示'取消'按钮
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtonText: "确认",
-                                closeOnConfirm: false
-                            },
-                            function(){
-                                window.location.href="/parameter/dynamic-config";
-                            });
-                        }, 400);
+                        swal({
+                            title: data.description,
+                            type: "success",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        },
+                        function(){
+                            window.location.href="/parameter/dynamic-config";
+                        });
                     } else if (data.status == 40003) {
-                        setTimeout(function() {
-                            swal({
-                                title: "权限提示",
-                                text: data.description,
-                                type: "warning",
-                                showCancelButton: false, //是否显示'取消'按钮
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtonText: "确认",
-                                closeOnConfirm: false
-                            });
-                        }, 400);
+                        swal({
+                            title: "权限提示",
+                            text: data.description,
+                            type: "warning",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        });
                     } else {
-                        setTimeout(function() {
-                            swal({
-                                title: "操作失败",
-                                text: data.description,
-                                type: "warning",
-                                showCancelButton: false,
-                                confirmButtonColor: "#e74c3c",
-                                confirmButtionText: "确认",
-                                closeOnConfirm: false,
-                            });
-                        }, 400);
+                        swal({
+                            title: "操作失败",
+                            text: data.description,
+                            type: "warning",
+                            showCancelButton: false,
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtionText: "确认",
+                            closeOnConfirm: false
+                        });
                     }
                 }
             });
