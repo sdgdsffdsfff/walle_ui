@@ -65,7 +65,9 @@ use yii\helpers\Html;
                                 <?php
                                     $parameters = array();
                                     foreach ($data as $dynamicConfig) {
-                                    $parameters[] = $dynamicConfig['alias'];
+                                        $dynamicConfig['alias'] = str_replace('(', '（', $dynamicConfig['alias']);
+                                        $dynamicConfig['alias'] = str_replace(')', '）', $dynamicConfig['alias']);
+                                        $parameters[] = $dynamicConfig['alias'];
                                     }
                                     $parameters = array_unique($parameters);
                                 ?>
@@ -100,6 +102,8 @@ use yii\helpers\Html;
                     if (!empty($data)) {
                         foreach ($data as $dynamicConfig)
                         {
+                            $dynamicConfig['alias'] = str_replace('(', '（', $dynamicConfig['alias']);
+                            $dynamicConfig['alias'] = str_replace(')', '）', $dynamicConfig['alias']);
                             echo "<tr>";
                             echo "<td>".$dynamicConfig['alias']."</td>";
                             echo "<td>".$dynamicConfig['value']."</td>";
