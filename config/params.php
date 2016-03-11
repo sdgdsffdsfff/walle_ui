@@ -65,7 +65,7 @@ return [
         ],
         [
             'name' => '基础信息配置',
-            'controller' => 'parameter,upgradepath,region,platform,deployment,worker',
+            'controller' => 'parameter,upgradepath,region,platform,deployment,worker,business,package',
             'path' => 'javascript:void(0);',
             'icon' => 'fa-cogs',
             'subMenu' => [
@@ -79,7 +79,7 @@ return [
                 ],
                 [
                     'name' => '业务模块配置(module)',
-                    'path' => 'module/list',
+                    'path' => 'business/list',
                 ],
                 [
                     'name' => '升级序列列表',
@@ -115,15 +115,15 @@ return [
                 ],
                 [
                     'name' => '客户端更新包状态',
-                    'path' => 'clientpackage/liststatus',
+                    'path' => 'package/liststatus',
                 ],
                 [
                     'name' => '安装包列表',
-                    'path' => 'clientpackage/tolist',
+                    'path' => 'package/tolist',
                 ],
                 [
                     'name' => '安装包配置',
-                    'path' => 'clientpackage/config-list',
+                    'path' => 'package/config-list',
                 ],
                 [
                     'name' => '打包机列表',
