@@ -14,7 +14,7 @@
         <div class="col-lg-12">
             <div class="hpanel">
                 <div class="col-xs-6 col-md-4">
-                    <a href="/module/create" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                    <a href="/business/create" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                                 <td><?= $module['repo_type']; ?></td>
                                 <td><?php if($module['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
                                 <td>
-                                    <a href="/module/edit?module_id=<?= $module['id']; ?>" class="btn btn-info">编辑</a>
+                                    <a href="/business/edit?module_id=<?= $module['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>
                             <?php } ?>

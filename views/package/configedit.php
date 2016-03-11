@@ -141,7 +141,7 @@ $(function() {
     $('#create_worker_btn').click(function() {
         $.ajax({
             type: "POST",
-            url: "/clientpackage/config-save",
+            url: "/package/config-save",
             data:$('#edit_packageconfig_form').serialize(),
             dataType: "json",
             success: function(json) {
@@ -154,7 +154,7 @@ $(function() {
                         confirmButtonText: "确认",
                         closeOnConfirm: false
                     },function(){
-                        window.location.href="/clientpackage/config-list";
+                        window.location.href="/package/config-list";
                     });
                 } else {
                     swal({

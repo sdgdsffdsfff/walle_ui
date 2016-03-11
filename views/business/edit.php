@@ -137,11 +137,11 @@ use yii\helpers\Html;
         var url_str = '';
         if($('#module_id').val())
         {
-            url_str = '/module/edit';
+            url_str = '/business/edit';
         }
         else
         {
-            url_str = '/module/create';
+            url_str = '/business/create';
         }
         
         $.ajax({
