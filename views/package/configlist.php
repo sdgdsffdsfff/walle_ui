@@ -62,8 +62,6 @@ use yii\helpers\Html;
                          </th>
                         <th>
                             操作
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
                          </th>
                     </tr>
                 <tr>
@@ -160,7 +158,7 @@ $(function() {
 
 function delete_packageconfig(package_id, parameter_id) {
 	swal({
-		title: "删除安装包相关配置确认",
+		title: "确定要删除该配置信息吗?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#e74c3c",

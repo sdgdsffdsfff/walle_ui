@@ -154,7 +154,7 @@ $(function() {
 
 function delete_deploymentconfig(deployment_id, parameter_id) {
 	swal({
-		title: "删除部署位置相关配置确认",
+		title: "确定要删除该配置信息吗?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#e74c3c",

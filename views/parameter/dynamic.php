@@ -142,7 +142,7 @@ $(function() {
 function delete_dynamicconfig(parameter_id) 
 {
 	swal({
-		title: "确定要删除动态参数配置吗?",
+		title: "确定要删除该配置信息吗?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#e74c3c",

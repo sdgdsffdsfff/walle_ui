@@ -157,7 +157,7 @@ $(function() {
 
 function delete_regionconfig(region_id, parameter_id) {
 	swal({
-		title: "删除发行地区相关配置确认",
+		title: "确定要删除该配置信息吗?",
 		type: "warning",
 		showCancelButton: true,
 		confirmButtonColor: "#e74c3c",
