@@ -72,7 +72,7 @@ use yii\helpers\Html;
 <script type="text/javascript">
     $(document).ready(function(){
         var t = $('#task_compare_table').DataTable({
-            'language': { "emptyTable": '暂无有效数据' },
+            'language': { "emptyTable": '暂无对比数据' },
             "paging":   false,
             "ordering": false,
             "info":     false,
