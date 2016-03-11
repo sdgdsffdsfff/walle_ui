@@ -13,8 +13,8 @@ use yii\helpers\Html;
 ?>
 <?= Html::cssFile('@web/static/plugins/select2-3.5.2/select2.css'); ?>
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
-<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
 <style type="text/css">
 .glyphicon { cursor: pointer; }
 </style>
@@ -133,9 +133,9 @@ if (!empty($data)) {
 	</div>
 </div>
 
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
-<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
 <script type="text/javascript">
 $(function() {
@@ -170,37 +170,43 @@ function delete_regionconfig(region_id, parameter_id) {
                 dataType: 'json',
                 success: function(data) {
                     if (data.status == 10000) {
-                        swal({
-                            title: data.description,
-                            type: "success",
-                            showCancelButton: false, //是否显示'取消'按钮
-                            confirmButtonColor: "#e74c3c",
-                            confirmButtonText: "确认",
-                            closeOnConfirm: false
-                        },
-                        function(){
-			                window.location.href="/region/config-list";
-                        });
+                        setTimeout(function() {
+                            swal({
+                                title: data.description,
+                                type: "success",
+                                showCancelButton: false, //是否显示'取消'按钮
+                                confirmButtonColor: "#e74c3c",
+                                confirmButtonText: "确认",
+                                closeOnConfirm: false
+                            },
+                            function(){
+                                window.location.href="/region/config-list";
+                            });
+                        }, 400);
                     } else if (data.status == 40003) {
-                        swal({
-                            title: "权限提示",
-                            text: data.description,
-                            type: "warning",
-                            showCancelButton: false, //是否显示'取消'按钮
-                            confirmButtonColor: "#e74c3c",
-                            confirmButtonText: "确认",
-                            closeOnConfirm: false
-                        });
+                        setTimeout(function() {
+                            swal({
+                                title: "权限提示",
+                                text: data.description,
+                                type: "warning",
+                                showCancelButton: false, //是否显示'取消'按钮
+                                confirmButtonColor: "#e74c3c",
+                                confirmButtonText: "确认",
+                                closeOnConfirm: false
+                            });
+                        }, 400);
                     } else {
-                        swal({
-                            title: "操作失败",
-                            text: data.description,
-                            type: "warning",
-                            showCancelButton: false,
-                            confirmButtonColor: "#e74c3c",
-                            confirmButtionText: "确认",
-                            closeOnConfirm: false, 
-                        });
+                        setTimeout(function() {
+                            swal({
+                                title: "操作失败",
+                                text: data.description,
+                                type: "warning",
+                                showCancelButton: false,
+                                confirmButtonColor: "#e74c3c",
+                                confirmButtionText: "确认",
+                                closeOnConfirm: false, 
+                            });
+                        }, 400);
                     }
                 }
             });
