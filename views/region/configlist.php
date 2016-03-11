@@ -30,107 +30,111 @@ use yii\helpers\Html;
 
 <div class="content animate-panel">
 	<div class="row">
-		<div class="hpanel">
-			<div class="panel-body">
-				<div class="col-lg-3">
-					<a href="config-edit" class="btn w-xs btn-success">新增</a>
-				</div>
-			</div>
-			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="region_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
-					<thead>
-						<tr>
-                            <th>
-                                发行地区
-                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                            </th>
-                            <th>
-                                参数
-                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                            </th>
-                            <th>
-                                参数值
-                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                            </th>
-							<th>操作</th>
-						</tr>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="col-xs-6 col-md-4">
+                    <a href="/region/config-edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <div class="row">      
+        <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
+            <table id="region_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
+                <thead>
                     <tr>
                         <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($data){ ?>
+                            发行地区
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>
+                            参数
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>
+                            参数值
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                <tr>
+                    <th>
+                        <select class="js-filter js-source-states">
+                            <option value="">全部</option>
+                            <?php if($data){ ?>
 <?php
 $region_names = array();
 foreach ($data as $regionConfig) {
-    $region_names[] = $regionConfig['region_name'];
+$region_names[] = $regionConfig['region_name'];
 }
 $region_names = array_unique($region_names);
 ?>
-                                    <?php foreach($region_names as $region_name){ ?>
-                                    <option value="<?= $region_name; ?>"><?= $region_name; ?></option>
-                                    <?php } ?>
+                                <?php foreach($region_names as $region_name){ ?>
+                                <option value="<?= $region_name; ?>"><?= $region_name; ?></option>
                                 <?php } ?>
-                            </select>
-                        </th>
-                        <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($data){ ?>
+                            <?php } ?>
+                        </select>
+                    </th>
+                    <th>
+                        <select class="js-filter js-source-states">
+                            <option value="">全部</option>
+                            <?php if($data){ ?>
 <?php
 $parameters = array();
 foreach ($data as $regionConfig) {
-    $parameters[] = $regionConfig['parameter_des']."（".$regionConfig['parameter_name']."）";
+$parameters[] = $regionConfig['parameter_des']."（".$regionConfig['parameter_name']."）";
 }
 $parameters = array_unique($parameters);
 ?>
-                                    <?php foreach($parameters as $parameter){ ?>
-                                    <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
-                                    <?php } ?>
+                                <?php foreach($parameters as $parameter){ ?>
+                                <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
                                 <?php } ?>
-                            </select>
-                        </th>
-                        <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($data){ ?>
+                            <?php } ?>
+                        </select>
+                    </th>
+                    <th>
+                        <select class="js-filter js-source-states">
+                            <option value="">全部</option>
+                            <?php if($data){ ?>
 <?php
 $values = array();
 foreach ($data as $regionConfig) {
-    $values[] = $regionConfig['value'];
+$values[] = $regionConfig['value'];
 }
 $values = array_unique($values);
 ?>
-                                    <?php foreach($values as $value){ ?>
-                                    <option value="<?= $value; ?>"><?= $value; ?></option>
-                                    <?php } ?>
+                                <?php foreach($values as $value){ ?>
+                                <option value="<?= $value; ?>"><?= $value; ?></option>
                                 <?php } ?>
-                            </select>
-                        </th>
-                        <th></th>
-                    </tr>
-					</thead>
-					<tbody>
+                            <?php } ?>
+                        </select>
+                    </th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
 <?php
 if (!empty($data)) {
-    foreach ($data as $regionConfig)
-    {
-        echo "<tr>";
-        echo "<td>".$regionConfig['region_name']."</td>";
-        echo "<td>".$regionConfig['parameter_des']."（".$regionConfig['parameter_name']."）</td>";
-        echo "<td>".$regionConfig['value']."</td>";
-        echo "<td align='center'>"."<a href='/region/config-edit?region_id=".$regionConfig['region_id']."&parameter_id=".$regionConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_regionconfig('.$regionConfig['region_id'].",".$regionConfig['parameter_id'].');">删除</button>'."</td>";
-        echo "</tr>";
-    }
+foreach ($data as $regionConfig)
+{
+    echo "<tr>";
+    echo "<td>".$regionConfig['region_name']."</td>";
+    echo "<td>".$regionConfig['parameter_des']."（".$regionConfig['parameter_name']."）</td>";
+    echo "<td>".$regionConfig['value']."</td>";
+    echo "<td align='center'>"."<a href='/region/config-edit?region_id=".$regionConfig['region_id']."&parameter_id=".$regionConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_regionconfig('.$regionConfig['region_id'].",".$regionConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "</tr>";
+}
 }
 ?>
-					</tbody>
-				</table>
-            </div>
-		</div>
-	</div>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>

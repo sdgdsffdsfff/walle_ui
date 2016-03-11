@@ -30,85 +30,89 @@ use yii\helpers\Html;
 
 <div class="content animate-panel">
 	<div class="row">
-		<div class="hpanel">
-			<div class="panel-body">
-				<div class="col-lg-3">
-					<a href="dynamic-config-edit" class="btn w-xs btn-success">新增</a>
-				</div>
-			</div>
-			<div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-				<table id="dynamic_config_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped">
-					<thead>
-						<tr>
-                            <th>
-                                参数
-                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                            </th>
-                            <th>
-                                参数值
-                                <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                                <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                            </th>
-                            <th>操作</th>
-						</tr>
-                        <tr>
+        <div class="col-lg-1"></div>
+        <div class="col-lg-12">
+            <div class="hpanel">
+                <div class="col-xs-6 col-md-4">
+                    <a href="/parameter/dynamic-config-edit" class="btn w-xs btn-success" style="margin-bottom: 10px;">新增</a>
+                </div>
+            </div>
+        </div>
+    </div>
+            
+    <div class="row">
+        <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
+            <table id="dynamic_config_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped">
+                <thead>
+                    <tr>
                         <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($data){ ?>
+                            参数
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>
+                            参数值
+                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
+                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                    <tr>
+                    <th>
+                        <select class="js-filter js-source-states">
+                            <option value="">全部</option>
+                            <?php if($data){ ?>
 <?php
 $parameters = array();
 foreach ($data as $dynamicConfig) {
-    $parameters[] = $dynamicConfig['alias'];
+$parameters[] = $dynamicConfig['alias'];
 }
 $parameters = array_unique($parameters);
 ?>
-                                    <?php foreach($parameters as $parameter){ ?>
-                                    <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
-                                    <?php } ?>
+                                <?php foreach($parameters as $parameter){ ?>
+                                <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
                                 <?php } ?>
-                            </select>
-                        </th>
-                        <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($data){ ?>
+                            <?php } ?>
+                        </select>
+                    </th>
+                    <th>
+                        <select class="js-filter js-source-states">
+                            <option value="">全部</option>
+                            <?php if($data){ ?>
 <?php
 $values = array();
 foreach ($data as $dynamicConfig) {
-    $values[] = $dynamicConfig['value'];
+$values[] = $dynamicConfig['value'];
 }
 $values = array_unique($values);
 ?>
-                                    <?php foreach($values as $value){ ?>
-                                    <option value="<?= $value; ?>"><?= $value; ?></option>
-                                    <?php } ?>
+                                <?php foreach($values as $value){ ?>
+                                <option value="<?= $value; ?>"><?= $value; ?></option>
                                 <?php } ?>
-                            </select>
-                        </th>
-                        <th></th>
-                        </tr>
-					</thead>
-					<tbody>
+                            <?php } ?>
+                        </select>
+                    </th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
 <?php
 if (!empty($data)) {
-    foreach ($data as $dynamicConfig)
-    {
-        echo "<tr>";
-        echo "<td>".$dynamicConfig['alias']."</td>";
-        echo "<td>".$dynamicConfig['value']."</td>";
-        echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
-        echo "</tr>";
-    }
+foreach ($data as $dynamicConfig)
+{
+    echo "<tr>";
+    echo "<td>".$dynamicConfig['alias']."</td>";
+    echo "<td>".$dynamicConfig['value']."</td>";
+    echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "</tr>";
+}
 }
 ?>
-					</tbody>
-				</table>
-            </div>
+                </tbody>
+            </table>
+        </div>
 
-		</div>
-	</div>
+    </div>
 </div>
 
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
