@@ -129,8 +129,8 @@ foreach ($job_list as $job) {
         $status = "";
     }
     echo "<tr>";
-    echo "<td><a style='text-decoration:underline' href='/task/detail?job_id=".$job['id']."'>".$job['id']."</a></td>";
-    echo "<td><a style='text-decoration:underline' href='/version/version-detail?version_id={$job['version_id']}'>".$job['version_id']."</a></td>";
+    echo "<td><a style='text-decoration:underline' href='/task/detail?job_id=".$job['id']."' target='black'>".$job['id']."</a></td>";
+    echo "<td><a style='text-decoration:underline' href='/version/version-detail?version_id={$job['version_id']}' target='black'>".$job['version_id']."</a></td>";
     echo "<td>".$job['deployment_name']."</td>";
     echo "<td>".$job['create_time']."</td>";
     echo "<td>".$job['finish_time']."</td>";

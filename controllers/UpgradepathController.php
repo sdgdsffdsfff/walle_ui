@@ -42,37 +42,45 @@ class UpgradepathController extends BaseController
      * [升级序列编辑保存操作]
      * @return [type] [description]
      */
-    public function actionDoedit(){
-      $id = yii::$app->getRequest()->post('id');
-      $name = yii::$app->getRequest()->post('name');
-      $description = yii::$app->getRequest()->post('description');
-      $disable = yii::$app->getRequest()->post('disable');
-      if($name&&$description){
-        $sameName=UpgradePath::find()->where(array('name'=>$name))->one();
-        if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
-        }else{
-          if($id){
-          $info = UpgradePath::findOne($id);
-          //$info->name = $name;
-          $info->description = $description;
-          $info->disable=$disable;
-          $info->save();
-         
-        }else{
-          $info = new UpgradePath();
-          $info->name = $name;
-          $info->description = $description;
-          $info->disable=$disable;
-          $info->insert();
+    public function actionDoedit()
+    {
+        $id = yii::$app->getRequest()->post('id');
+        $name = yii::$app->getRequest()->post('name');
+        $description = yii::$app->getRequest()->post('description');
+        $disable = yii::$app->getRequest()->post('disable');
+        if($name && $description)
+        {
+            $sameName=UpgradePath::find()->where(array('name'=>$name))->one();
+            if($sameName&&$sameName['id']!=$id)
+            {
+                $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
+            }
+            else
+            {
+                if($id)
+                {
+                    $info = UpgradePath::findOne($id);
+                    //$info->name = $name;
+                    $info->description = $description;
+                    $info->disable=$disable;
+                    $info->save();
+
+                }
+                else
+                {
+                    $info = new UpgradePath();
+                    $info->name = $name;
+                    $info->description = $description;
+                    $info->disable=$disable;
+                    $info->insert();
+                }
+                $this->ajaxReturn(self::STATUS_SUCCESS,'编辑升级序列成功!');
+            }
         }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+        else
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
         }
-        
-      }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
-      }
-      
     }
 
     /**
@@ -87,7 +95,7 @@ class UpgradepathController extends BaseController
       if($cid&&$name&&$description){
         $sameName=UpgradePath::find()->where(array('name'=>$name))->one();
         if($sameName){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
+          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
         }else{
           
           $info = new UpgradePath();
@@ -108,11 +116,11 @@ class UpgradepathController extends BaseController
           }
        
         
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          $this->ajaxReturn(self::STATUS_SUCCESS,'复制升级序列相关配置成功!');
         }
         
       }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
+        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
       }
     }
     /**
@@ -138,9 +146,20 @@ class UpgradepathController extends BaseController
      */
     public function actionConfigList()
     {
+        //获取升级序列列表传来的升级序列id
+        $upgrade_path_id = yii::$app->request->get('id');
+        
         $upgradePathSelect = $parameterSelect = $upgradePathConfigSelect = array();
         
-        $result = UpgradePathConfig::getAllUpgradePathConfig();
+        if(!empty($upgrade_path_id))
+        {
+            $result = UpgradePathConfig::getUpgradePathById($upgrade_path_id, true);
+        }
+        else
+        {
+            $result = UpgradePathConfig::getAllUpgradePathConfig();
+        }
+        
         if($result)
         {
             //获取下拉框数据

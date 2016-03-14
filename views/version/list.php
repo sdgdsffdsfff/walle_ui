@@ -120,7 +120,7 @@ use yii\widgets\LinkPager;
                             <?php 
                                 foreach ($models as $k) {
                                     echo "<tr>";
-                                    echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                    echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'" target="black">'.$k['id'].'</a></td>';
                                     echo "<td>".$k['create_time']."</td>";
                                     echo "<td>".$k['region'].'-'.$k['platform']['name']."</td>";
                                     echo "<td>".$k['upgradePath']['name']."</td>";

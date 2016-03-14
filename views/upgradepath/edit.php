@@ -105,13 +105,28 @@ use yii\widgets\LinkPager;
                 data:post,
                 dataType:'json',
             }).done(function(data){
-                console.log(data);
+                //console.log(data);
                 if (data.status == '10000') {
-                    swal({ title:"编辑upgrade path", text:data.data, type:"success",timer: 5000,
-                        showConfirmButton: false});
-                    window.location.href="/upgradepath/list"; 
+                    swal({ 
+                        title:data.data, 
+                        type:"success",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    },function(){
+                        window.location.href="/upgradepath/list"; 
+                    });
                 }else{
-                    swal({ title:"编辑upgrade path", text:data.data, type:"error"});
+                    swal({ 
+                        title:"编辑upgrade path", 
+                        text:data.data, 
+                        type:"error",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
                 }
             });
   

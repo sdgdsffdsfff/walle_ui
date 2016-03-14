@@ -21,10 +21,10 @@ use app\models\Parameter;
 class PlatformController extends BaseController
 {
     
-             /**
-    * [列表页]
-    * @return [type] [description]
-    */
+    /**
+     * [列表页]
+     * @return [type] [description]
+     */
     public function actionList()
     {    $data=array();
        $data=Platform::find()->with('region')->asArray()->all();
@@ -61,7 +61,7 @@ class PlatformController extends BaseController
       if($name&&$description&&$region){
         $sameName=Platform::find()->where(array('name'=>$name,'region_id'=>$region))->one();
         if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
+          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
         }else{
           if($id){
           $info = Platform::findOne($id);
@@ -80,15 +80,15 @@ class PlatformController extends BaseController
           $res=$info->insert();
         }
           if($res){
-            $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+            $this->ajaxReturn(self::STATUS_SUCCESS,'编辑平台信息成功!');
           }else{
-            $this->ajaxReturn(self::STATUS_FAILS, '保存失败');
+            $this->ajaxReturn(self::STATUS_FAILS, '保存失败!');
           }
           
         }
         
       }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
+        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
       }
       
     }

@@ -64,7 +64,7 @@ class RegionController extends BaseController
       if($name&&$description){
         $sameName=Region::find()->where(array('name'=>$name))->one();
         if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
+          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
         }else{
           if($id){
           $info = Region::findOne($id);
@@ -80,11 +80,11 @@ class RegionController extends BaseController
           $info->disable=$disable;
           $info->insert();
         }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          $this->ajaxReturn(self::STATUS_SUCCESS,'编辑发行区域成功!');
         }
         
       }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
+        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
       }
       
     }

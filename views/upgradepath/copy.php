@@ -23,7 +23,6 @@ use yii\widgets\LinkPager;
                 <div class="col-xs-5 col-md-7">
                     <div class="panel-body">
                  <form id="upgradepath_form"  class="form-horizontal">
-                <div class="table-responsive" >
                  
                     <input type="hidden" name="id" id="up_id" value="<?php echo $id;?>"> 
                     <table cellpadding="1" cellspacing="1" class="table table-bordered table-striped" >
@@ -36,15 +35,15 @@ use yii\widgets\LinkPager;
                         <tbody>
                        <tr>
                        <td>名称</td>
-                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php echo $info['name']; ?>"/> </td>
+                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php echo $info['name']; ?>" /> </td>
                    </tr>
                     <tr>
                        <td>描述</td>
-                       <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php echo $info['description'];?>"/></td> 
+                       <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php echo $info['description'];?>" /></td> 
                    </tr>
                         <tr>
                         <td>是否启用</td>
-                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($info['disable']==0) echo "checked";?> ><label></label></div>  </td> </tr>
+                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($info['disable']==0) echo "checked";?> /><label></label></div>  </td> </tr>
                         </tbody>
                     </table>
                        <div class="form-group">
@@ -52,7 +51,6 @@ use yii\widgets\LinkPager;
                                     <button id="create_module_btn" class="btn btn-success" type="submit">复制</button>
                                 </div>
                             </div>
-    </div>
                 </form>
             </div></div>
             </div>
@@ -107,10 +105,24 @@ use yii\widgets\LinkPager;
             }).done(function(data){
                 console.log(data);
                 if (data.status == '10000') {
-                    swal({ title:"编辑upgrade path", text:data.data, type:"success",timer: 5000,
-                        showConfirmButton: false});
+                    swal({ 
+                        title:data.data, 
+                        type:"success",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
                 }else{
-                    swal({ title:"编辑upgrade path", text:data.data, type:"error"});
+                    swal({ 
+                        title:"编辑upgrade path", 
+                        text:data.data, 
+                        type:"error",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
                 }
             });
   

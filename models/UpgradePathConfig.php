@@ -64,20 +64,38 @@ class UpgradePathConfig extends BaseModel
     /**
      * 根据升级序列id获得升级序列配置
      * @param int upgrade_path_id 升级序列id
+     * @param bool $flag 决定是否获取升级序列相关信息
      * @return array
      */
-    public static function getUpgradePathById($upgradePathId)
+    public static function getUpgradePathById($upgradePathId, $flag = false)
     {
         $condition = ['upgrade_path_id' => $upgradePathId];
         
         $resource = UpgradePathConfig::find()->where($condition);
-        $result = $resource->select('*')
-                ->with([
+        if($flag)
+        {
+            $result = $resource->select('*')
+                    ->with([
+                        'upgradePath' => function($resource)
+                        {
+                             $resource->select(['id', 'name', 'description']);
+                        },
+                        'parameter' => function($resource)
+                        {
+                            $resource->select(['id', 'name', 'description']);
+                        }
+                    ])->asArray()->all();
+        }
+        else
+        {
+            $result = $resource->select('*')
+                    ->with([
                         'parameter' => function($resource)
                         {
                             $resource->select('*');
                         }
-                ])->asArray()->all();
+                    ])->asArray()->all();
+        }
         
         return $result;
     }
