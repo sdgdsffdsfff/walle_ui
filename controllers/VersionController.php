@@ -538,12 +538,12 @@ EOT;
         $sql = "select n.filename, n.size, n.md5, n.url from
             (
                 select * from client_module_file where
-                upgrade_path_id=$upgrade_path_id and module_id=$module_id and module_tag=$new_module_tag
+                upgrade_path_id={$upgrade_path_id} and module_id={$module_id} and module_tag='{$new_module_tag}'
             ) n
             left join
             (
                 select * from client_module_file where
-                upgrade_path_id=$upgrade_path_id and module_id=$module_id and module_tag=$old_module_tag
+                upgrade_path_id={$upgrade_path_id} and module_id={$module_id} and module_tag='{$old_module_tag}'
             ) o
             ON n.filename = o.filename
             WHERE 
