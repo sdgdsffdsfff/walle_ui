@@ -119,7 +119,7 @@ use yii\widgets\LinkPager;
                     });
                 }else{
                     swal({ 
-                        title:"编辑upgrade path", 
+                        title:"操作失败", 
                         text:data.data, 
                         type:"error",
                         showConfirmButton: false,

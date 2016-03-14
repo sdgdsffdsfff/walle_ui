@@ -231,7 +231,7 @@ class PackageController extends BaseController
       if($name&&$description&&$region){
         $sameName=Package::find()->where(array('name'=>$name,'platform_id'=>$region))->one();
         if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
+          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
         }else{
           if($id){
           $info = Package::findOne($id);
@@ -249,11 +249,11 @@ class PackageController extends BaseController
           $info->disable=$disable;
           $info->insert();
         }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          $this->ajaxReturn(self::STATUS_SUCCESS,'编辑安装包信息成功!');
         }
         
       }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
+        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
       }
       
     }

@@ -66,7 +66,7 @@ class DeploymentController extends BaseController
       if($name&&$description&&$region){
         $sameName=Deployment::find()->where(array('name'=>$name,'platform_id'=>$region))->one();
         if($sameName&&$sameName['id']!=$id){
-          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在');
+          $this->ajaxReturn(self::STATUS_FAILS, '该名称已经存在!');
         }else{
           if($id){
           $info = Deployment::findOne($id);
@@ -84,11 +84,11 @@ class DeploymentController extends BaseController
           $info->disable=$disable;
           $info->insert();
         }
-          $this->ajaxReturn(self::STATUS_SUCCESS,'保存成功');
+          $this->ajaxReturn(self::STATUS_SUCCESS,'编辑部署位置成功!');
         }
         
       }else{
-        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数');
+        $this->ajaxReturn(self::STATUS_FAILS, '缺少参数!');
       }
       
     }

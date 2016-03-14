@@ -136,11 +136,26 @@ use yii\widgets\LinkPager;
             }).done(function(data){
                 console.log(data);
                 if (data.status == '10000') {
-                    swal({ title:"编辑平台", text:data.data, type:"success",timer: 5000,
-                        showConfirmButton: false});
-                    window.location.href="/deployment/list"; 
+                    swal({ 
+                        title:data.data, 
+                        type:"success",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    }, function(){
+                        window.location.href="/deployment/list"; 
+                    });
                 }else{
-                    swal({ title:"编辑平台", text:data.data, type:"error"});
+                    swal({ 
+                        title:"操作失败", 
+                        text:data.data, 
+                        type:"warning",
+                        showConfirmButton: false,
+                        confirmButtonColor: "#e74c3c",
+                        confirmButtonText: "确认",
+                        closeOnConfirm: false
+                    });
                 }
             });
   
