@@ -15,7 +15,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                发布任务列表
+                版本对比
             </h5>
         </div>
     </div>

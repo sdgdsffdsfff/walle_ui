@@ -15,7 +15,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                发布任务列表
+                版本对比
             </h5>
         </div>
     </div>
@@ -58,8 +58,8 @@ use yii\helpers\Html;
     					<tbody>
     						<tr>
     							<td>版本号</td>
-                                <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $oldVersionInfo['id'];?>"><?php echo $oldVersionInfo['id'];?></a></td>
-                                <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $newVersionInfo['id'];?>"><?php echo $newVersionInfo['id'];?></a></td>
+                                <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $oldVersionInfo['id'];?>" target="black"><?php echo $oldVersionInfo['id'];?></a></td>
+                                <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $newVersionInfo['id'];?>" target="black"><?php echo $newVersionInfo['id'];?></a></td>
     						</tr>
     						<tr>
     							<td>发行地区</td>
@@ -122,7 +122,7 @@ if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
 if (!empty($clientUpdatePackageList)) {
     foreach ($clientUpdatePackageList as $clientUpdatePackage) {
         echo "<tr>";
-        echo "<td><a style='text-decoration:underline' href='".$clientUpdatePackage['url']."'>".$clientUpdatePackage['url']."</a></td>";
+        echo "<td><a style='text-decoration:underline' href='".$clientUpdatePackage['url']."' target='black'>".$clientUpdatePackage['url']."</a></td>";
         echo "<td>".$clientUpdatePackage['size']."KB</td>";
         echo "</tr>";
     }
@@ -181,7 +181,7 @@ if (!empty($updateFileList)) {
             echo "<tr>";
             echo "<td>$type</td>";
             echo "<td>".$file['filename']."</td>";
-            echo "<td><a style='text-decoration:underline' href='".$file['url']."'>".$file['url']."</a></td>";
+            echo "<td><a style='text-decoration:underline' href='".$file['url']."' target='black'>".$file['url']."</a></td>";
             echo "<td>".$file['size']."</td>";
             echo "</tr>";
         }
