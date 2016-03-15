@@ -8,7 +8,7 @@ return [
     'menuData' => [
         [
             'name' => '首页',
-            'path' => '/index/index',
+            'path' => 'index/index',
             'icon' => 'fa-home',
         ],
         [
@@ -54,13 +54,13 @@ return [
         [
             'name' => '安装包下载',
             'controller' => 'clientpackage',
-            'path' => '/clientpackage/list',
+            'path' => 'clientpackage/list',
             'icon' => 'fa-cloud-download',
         ],
         [
             'name' => '更新模块版本列表',
             'controller' => 'module',
-            'path' => '/module/index',
+            'path' => 'module/index',
             'icon' => 'fa-puzzle-piece',
         ],
         [
