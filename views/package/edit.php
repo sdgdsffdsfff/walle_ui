@@ -161,6 +161,8 @@ use yii\widgets\LinkPager;
   
             }
         });
-       
+         $("#region").change(function(){
+            $(this).valid();
+        });
     });
 </script>
