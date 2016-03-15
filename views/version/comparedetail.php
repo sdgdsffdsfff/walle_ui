@@ -108,7 +108,7 @@ if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
     					</tbody>
     				</table>
 
-    				<hr style="height:1px;border:none;border-top:1px solid #6a6c6f;" />
+    				<hr style="height:1px;border:none;border-top:1px solid orange;" />
 
     				<table class="table table-bordered table-striped" cellpadding="1" cellspacing="1">
     					<thead>
@@ -131,7 +131,7 @@ if (!empty($clientUpdatePackageList)) {
     					</tbody>
     				</table>
 
-    				<hr style="height:1px;border:none;border-top:1px solid #6a6c6f;" />
+    				<hr style="height:1px;border:none;border-top:1px solid orange;" />
 
     				<table class="table table-bordered table-striped" cellpadding="1" cellspacing="1">
     					<thead>
@@ -161,7 +161,7 @@ if (!empty($updateStatistics)) {
     					</tbody>
     				</table>
 
-    				<hr style="height:1px;border:none;border-top:1px solid #6a6c6f;" />
+    				<hr style="height:1px;border:none;border-top:1px solid orange;" />
 
                     <div style="height: 200px; overflow-y: scroll; overflow-x: hidden;">
     				<table class="table table-bordered table-striped" cellpadding="1" cellspacing="1">
