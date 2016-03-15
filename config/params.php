@@ -19,7 +19,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '版本列表',
-                    'path' => ['version/list'],
+                    'path' => ['version/list','version/version-detail'],
                 ],
                 [
                     'name' => '创建版本',
@@ -39,7 +39,7 @@ return [
             'subMenu' => [
                 [
                     'name' => '发布任务列表',
-                    'path' => ['task/list'],
+                    'path' => ['task/list','task/detail'],
                 ],
                 [
                     'name' => '创建发布任务',
@@ -47,7 +47,7 @@ return [
                 ],
                 [
                     'name' => '发布任务对比',
-                    'path' => ['task/compare'],
+                    'path' => ['task/compare', 'task/compare-detail'],
                 ],
             ],
         ],
@@ -79,7 +79,7 @@ return [
                 ],
                 [
                     'name' => '业务模块配置(module)',
-                    'path' => ['business/list','business/edit']
+                    'path' => ['business/list','business/edit','business/create']
                 ],
                 [
                     'name' => '升级序列列表',
@@ -87,7 +87,7 @@ return [
                 ],
                 [
                     'name' => '升级序列配置',
-                    'path' => ['upgradepath/config-list','upgradepath/config-create']
+                    'path' => ['upgradepath/config-list','upgradepath/config-create','upgradepath/config-edit']
                 ],
                 [
                     'name' => '发行地区列表',
@@ -107,7 +107,7 @@ return [
                 ],
                 [
                     'name' => '部署位置列表',
-                    'path' => ['deployment/list','deployment/list']
+                    'path' => ['deployment/list','deployment/edit']
                 ],
                 [
                     'name' => '部署位置配置',
@@ -127,7 +127,7 @@ return [
                 ],
                 [
                     'name' => '打包机列表',
-                    'path' => ['worker/list','worker/edit']
+                    'path' => ['worker/list','worker/edit','worker/create']
                 ]
             ]
         ],
