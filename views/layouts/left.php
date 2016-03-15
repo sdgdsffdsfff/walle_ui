@@ -21,7 +21,7 @@ use yii\helpers\Html;
                         <?php if(isset($menu['subMenu']) && count($menu['subMenu']) > 0){ ?>
                             <ul class="nav nav-second-level">
                                 <?php foreach($menu['subMenu'] as $submenu){ ?>
-                                    <li <?php if(($this->context->id.'/'.$this->context->action->id) == $submenu['path']){ ?>class="active"<?php } ?>><a href="/<?= $submenu['path']; ?>"><?= $submenu['name']; ?></a></li>
+                                    <li <?php if(in_array($this->context->id.'/'.$this->context->action->id,$submenu['path'])){ ?>class="active"<?php } ?>><a href="/<?= $submenu['path'][0]; ?>"><?= $submenu['name']; ?></a></li>
                                 <?php } ?>
                             </ul>
                         <?php } ?>

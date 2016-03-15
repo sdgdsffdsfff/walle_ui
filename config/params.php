@@ -19,15 +19,15 @@ return [
             'subMenu' => [
                 [
                     'name' => '版本列表',
-                    'path' => 'version/list',
+                    'path' => ['version/list'],
                 ],
                 [
                     'name' => '创建版本',
-                    'path' => 'version/add-version',
+                    'path' => ['version/add-version'],
                 ],
                 [
                     'name' => '版本对比',
-                    'path' => 'version/compare',
+                    'path' => ['version/compare'],
                 ],
             ],
         ],
@@ -39,15 +39,15 @@ return [
             'subMenu' => [
                 [
                     'name' => '发布任务列表',
-                    'path' => 'task/list',
+                    'path' => ['task/list'],
                 ],
                 [
                     'name' => '创建发布任务',
-                    'path' => 'task/publish',
+                    'path' => ['task/publish'],
                 ],
                 [
                     'name' => '发布任务对比',
-                    'path' => 'task/compare',
+                    'path' => ['task/compare'],
                 ],
             ],
         ],
@@ -71,63 +71,63 @@ return [
             'subMenu' => [
                 [
                     'name' => '参数配置(parameter)',
-                    'path' => 'parameter/list',
+                    'path' => ['parameter/list','parameter/edit','parameter/create']
                 ],
                 [
                     'name' => '动态参数配置',
-                    'path' => 'parameter/dynamic-config',
+                    'path' => ['parameter/dynamic-config','parameter/dynamic-config-edit']
                 ],
                 [
                     'name' => '业务模块配置(module)',
-                    'path' => 'business/list',
+                    'path' => ['business/list','business/edit']
                 ],
                 [
                     'name' => '升级序列列表',
-                    'path' => 'upgradepath/list',
+                    'path' => ['upgradepath/list','upgradepath/edit','upgradepath/copy']
                 ],
                 [
                     'name' => '升级序列配置',
-                    'path' => 'upgradepath/config-list',
+                    'path' => ['upgradepath/config-list','upgradepath/config-create']
                 ],
                 [
                     'name' => '发行地区列表',
-                    'path' => 'region/list',
+                    'path' => ['region/list','region/edit']
                 ],
                 [
                     'name' => '发行地区配置',
-                    'path' => 'region/config-list',
+                    'path' => ['region/config-list','region/config-edit']
                 ],
                 [
                     'name' => '平台信息列表',
-                    'path' => 'platform/list',
+                    'path' => ['platform/list','platform/edit']
                 ],
                 [
                     'name' => '平台信息配置',
-                    'path' => 'platform/config-list',
+                    'path' => ['platform/config-list','platform/config-edit']
                 ],
                 [
                     'name' => '部署位置列表',
-                    'path' => 'deployment/list',
+                    'path' => ['deployment/list','deployment/list']
                 ],
                 [
                     'name' => '部署位置配置',
-                    'path' => 'deployment/config-list',
+                    'path' => ['deployment/config-list','deployment/config-edit']
                 ],
                 [
                     'name' => '客户端更新包状态',
-                    'path' => 'package/liststatus',
+                    'path' => ['package/liststatus']
                 ],
                 [
                     'name' => '安装包列表',
-                    'path' => 'package/tolist',
+                    'path' => ['package/tolist','package/edit']
                 ],
                 [
                     'name' => '安装包配置',
-                    'path' => 'package/config-list',
+                    'path' => ['package/config-list','package/config-edit']
                 ],
                 [
                     'name' => '打包机列表',
-                    'path' => 'worker/list',
+                    'path' => ['worker/list','worker/edit']
                 ]
             ]
         ],
