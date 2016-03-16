@@ -48,7 +48,7 @@ class ParameterController extends BaseController
             {
                 $this->error('请输入参数描述信息!', $redirect_url);
             }
-            if(!isset($post['param_default_value']) || empty($post['param_default_value']))
+            if(!isset($post['param_default_value']))
             {
                 $this->error('请输入参数默认值!', $redirect_url);
             }
