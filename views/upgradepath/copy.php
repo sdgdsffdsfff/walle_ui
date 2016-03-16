@@ -115,8 +115,7 @@ use yii\widgets\LinkPager;
                     });
                 }else{
                     swal({ 
-                        title:"编辑upgrade path", 
-                        text:data.data, 
+                        title:data.data, 
                         type:"error",
                         showConfirmButton: false,
                         confirmButtonColor: "#e74c3c",
