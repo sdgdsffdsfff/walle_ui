@@ -21,8 +21,9 @@ use yii\helpers\Html;
                         $subMenu_path = array_merge($submenu['path'], $subMenu_path);
                     }
                 }
+                $inter=array_intersect($this->params['requestUrl'], $subMenu_path);
             ?>
-                <?php if(in_array($menu['path'], $this->params['requestUrl']) || !empty(array_intersect($this->params['requestUrl'], $subMenu_path))){ //控制是否显示模块 ?>    
+                <?php if(in_array($menu['path'], $this->params['requestUrl']) || !empty($inter)){ //控制是否显示模块 ?>    
                     
                     <li <?php if((isset($menu['controller']) && preg_match('/\b'.$this->context->id.'\b/', $menu['controller'])) !== false){ ?>class="active"<?php } ?>>
                         <a href="/<?= $menu['path']; ?>">
