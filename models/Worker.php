@@ -91,7 +91,7 @@ class Worker extends BaseModel
      */
     public static function getAllData()
     {
-        $result = Worker::find()->asArray()
+        $result = Worker::find()->orderBy(['id' => SORT_DESC])->asArray()
                   ->all();
         
         return $result;

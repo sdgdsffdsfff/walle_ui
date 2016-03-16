@@ -61,7 +61,7 @@ use yii\widgets\LinkPager;
                                      echo '<td>否</td>';
                                  }
                                     echo "<td>".$v['description']."</td>";
-                                    echo '<td><a  class="btn btn-info btn-sm active" href="/platform/edit?id='.$v['id'].'" >编辑</a></td>';
+                                    echo '<td align="center"><a  class="btn btn-info btn-sm active" href="/platform/edit?id='.$v['id'].'" >编辑</a></td>';
                                     echo "</tr>";
                                 }
                             }

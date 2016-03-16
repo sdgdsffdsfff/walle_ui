@@ -49,7 +49,7 @@
                                 <td><?= $module['description']; ?></td>
                                 <td><?= $module['repo_type']; ?></td>
                                 <td><?php if($module['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
-                                <td>
+                                <td align="center">
                                     <a href="/business/edit?module_id=<?= $module['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>

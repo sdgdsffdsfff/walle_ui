@@ -183,7 +183,7 @@ class Parameter extends BaseModel
      */
     public static function getAllParameters()
     {
-        $resource = Parameter::find()->asArray()->all();
+        $resource = Parameter::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
         
         return $resource;
     }

@@ -113,7 +113,7 @@ class Module extends BaseModel
      */
     public static function getAllModules()
     {
-        $resource = Module::find()->asArray()->all();
+        $resource = Module::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
         
         return $resource;
     }

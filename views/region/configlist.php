@@ -126,7 +126,7 @@ foreach ($data as $regionConfig)
     echo "<td>".$regionConfig['region_name']."</td>";
     echo "<td>".$regionConfig['parameter_des']."（".$regionConfig['parameter_name']."）</td>";
     echo "<td>".$regionConfig['value']."</td>";
-    echo "<td align='center'>"."<a href='/region/config-edit?region_id=".$regionConfig['region_id']."&parameter_id=".$regionConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_regionconfig('.$regionConfig['region_id'].",".$regionConfig['parameter_id'].');">删除</button>'."</td>";
+    echo "<td align='center'>"."<a href='/region/config-edit?region_id=".$regionConfig['region_id']."&parameter_id=".$regionConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_regionconfig('.$regionConfig['region_id'].",".$regionConfig['parameter_id'].');">删除</button>'."</td>";
     echo "</tr>";
 }
 }

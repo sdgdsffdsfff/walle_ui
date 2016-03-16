@@ -51,7 +51,7 @@
                                 <td><?= $parameter['default_value']; ?></td>
                                 <td><?php if($parameter['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
                                 <td><?= $parameter['options']; ?></td>
-                                <td>
+                                <td align="center">
                                     <a href="/parameter/edit?parameter_id=<?= $parameter['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>

@@ -171,7 +171,7 @@ class ParameterController extends BaseController
      */
     public function actionDynamicConfig()
     {
-        $dynamicConfigs = DynamicConfig::find()->all();
+        $dynamicConfigs = DynamicConfig::find()->orderBy(['parameter_id' => SORT_DESC])->all();
         $data = array();
         if (!empty($dynamicConfigs))
         {

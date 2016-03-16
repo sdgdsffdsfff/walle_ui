@@ -125,7 +125,7 @@ echo "<tr>";
 echo "<td>".$deploymentConfig['deployment_name']."</td>";
 echo "<td>".$deploymentConfig['parameter_des']."（".$deploymentConfig['parameter_name']."）</td>";
 echo "<td>".$deploymentConfig['value']."</td>";
-echo "<td align='center'>"."<a href='/deployment/config-edit?deployment_id=".$deploymentConfig['deployment_id']."&parameter_id=".$deploymentConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_deploymentconfig('.$deploymentConfig['deployment_id'].",".$deploymentConfig['parameter_id'].');">删除</button>'."</td>";
+echo "<td align='center'>"."<a href='/deployment/config-edit?deployment_id=".$deploymentConfig['deployment_id']."&parameter_id=".$deploymentConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_deploymentconfig('.$deploymentConfig['deployment_id'].",".$deploymentConfig['parameter_id'].');">删除</button>'."</td>";
 echo "</tr>";
 }
 ?>

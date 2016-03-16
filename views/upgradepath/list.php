@@ -59,7 +59,7 @@ use yii\widgets\LinkPager;
                                      echo '<td>否</td>';
                                  }
                                     echo "<td>".$v['description']."</td>";
-                                    echo '<td><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
+                                    echo '<td align="center"><a  class="btn btn-info btn-sm active" href="/upgradepath/edit?id='.$v['id'].'" >编辑</a>
                          
     <a href="/upgradepath/config-list?id='.$v['id'].'" class="btn btn-success btn-sm active"  >查看升级序列相关配置</a>
 

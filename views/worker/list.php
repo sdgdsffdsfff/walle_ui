@@ -39,7 +39,7 @@
                                 <td><?= $worker['id']; ?></td>
                                 <td><?= $worker['hostname']; ?></td>
                                 <td><?php if($worker['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
-                                <td>
+                                <td align="center">
                                     <a href="/worker/edit?worker_id=<?= $worker['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>
                             </tr>

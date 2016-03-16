@@ -107,7 +107,7 @@ use yii\helpers\Html;
                             echo "<tr>";
                             echo "<td>".$dynamicConfig['alias']."</td>";
                             echo "<td>".$dynamicConfig['value']."</td>";
-                            echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
+                            echo "<td align='center'>"."<a href='/parameter/dynamic-config-edit?parameter_id=".$dynamicConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_dynamicconfig('.$dynamicConfig['parameter_id'].');">删除</button>'."</td>";
                             echo "</tr>";
                         }
                     }

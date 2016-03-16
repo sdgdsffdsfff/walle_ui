@@ -126,7 +126,7 @@ echo "<tr>";
 echo "<td>".$platformConfig['platform_name']."-".$platformConfig['region_name']."</td>";
 echo "<td>".$platformConfig['parameter_des']."（".$platformConfig['parameter_name']."）</td>";
 echo "<td>".$platformConfig['value']."</td>";
-echo "<td align='center'>"."<a href='/platform/config-edit?platform_id=".$platformConfig['platform_id']."&parameter_id=".$platformConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_platformconfig('.$platformConfig['platform_id'].",".$platformConfig['parameter_id'].');">删除</button>'."</td>";
+echo "<td align='center'>"."<a href='/platform/config-edit?platform_id=".$platformConfig['platform_id']."&parameter_id=".$platformConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_platformconfig('.$platformConfig['platform_id'].",".$platformConfig['parameter_id'].');">删除</button>'."</td>";
 echo "</tr>";
 }
 ?>

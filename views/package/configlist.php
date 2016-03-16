@@ -127,7 +127,7 @@ echo "<tr>";
 echo "<td>".$packageConfig['package_name']."</td>";
 echo "<td>".$packageConfig['parameter_des']."（".$packageConfig['parameter_name']."）</td>";
 echo "<td>".$packageConfig['value']."</td>";
-echo "<td align='center'>"."<a href='/package/config-edit?package_id=".$packageConfig['package_id']."&parameter_id=".$packageConfig['parameter_id']."' class='btn btn-info'>编辑</a>".'<button class="btn btn-danger" onclick="javascript:delete_packageconfig('.$packageConfig['package_id'].",".$packageConfig['parameter_id'].');">删除</button>'."</td>";
+echo "<td align='center'>"."<a href='/package/config-edit?package_id=".$packageConfig['package_id']."&parameter_id=".$packageConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_packageconfig('.$packageConfig['package_id'].",".$packageConfig['parameter_id'].');">删除</button>'."</td>";
 echo "</tr>";
 }
 ?>

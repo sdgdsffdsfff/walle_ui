@@ -137,7 +137,7 @@ foreach ($job_list as $job) {
     echo "<td>".$status."</td>";
     echo "<td>".$job['create_user']."</td>";
     echo "<td>".$target."</td>";
-    echo "<td>".$operate."</td>";
+    echo "<td align='center'>".$operate."</td>";
     echo "</tr>";
 }
 ?>

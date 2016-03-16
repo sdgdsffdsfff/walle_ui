@@ -94,7 +94,7 @@ use yii\helpers\Html;
                         <td><?= $config['parameter']['description'].'（'.$config['parameter']['name'].'）'; ?></td>
                         <td><?= $config['value']; ?></td>
                         <td align="center">
-                            <a href="/upgradepath/config-edit?param_id=<?= $config['parameter_id']; ?>&upgradepath_id=<?= $config['upgrade_path_id']; ?>" class='btn btn-info'>编辑</a>
+                            <a href="/upgradepath/config-edit?param_id=<?= $config['parameter_id']; ?>&upgradepath_id=<?= $config['upgrade_path_id']; ?>" class='btn btn-info'>编辑</a>&nbsp;
                             <button class='btn btn-danger' onclick='javascript:deleteUpgradeConfig(<?= $config['parameter_id']; ?>, <?= $config['upgrade_path_id']; ?>);'>删除</button>
                         </td>
                     </tr>
