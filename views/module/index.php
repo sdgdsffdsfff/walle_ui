@@ -45,7 +45,7 @@ use yii\helpers\Html;
                         </tbody>
                         
                     </table>
-                    <button type="button" class="btn w-xs btn-primary" id="uptag">更新模块版本列表</button>
+                    <button type="button" class="btn w-xs btn-success" id="uptag">更新模块版本列表</button>
                     </form>
                 </div>
             </div>
