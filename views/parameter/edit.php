@@ -60,7 +60,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">描述信息</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_description" name="param_description" placeholder="description" value="<?= $parameter['description']; ?>" />
+                                                <input type="text" class="form-control" id="param_description" name="param_description" placeholder="description" value="<?php if($parameter){ ?><?= $parameter['description']; ?><?php } ?>" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -68,7 +68,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">默认值</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" value="<?= $parameter['default_value']; ?>" />
+                                                <input type="text" class="form-control" id="param_default_value" name="param_default_value" placeholder="default_value" value="<?php if($parameter){ ?><?= $parameter['default_value']; ?><?php } ?>" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -84,7 +84,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">备选项</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" value="<?= $parameter['options']; ?>" />
+                                                <input type="text" class="form-control" id="param_options" name="param_options" placeholder="options" value="<?php if($parameter){ ?><?= $parameter['options']; ?><?php } ?>" />
                                             </td>
                                         </tr>
                                     </tbody>

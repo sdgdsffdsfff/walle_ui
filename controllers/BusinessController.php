@@ -27,6 +27,7 @@ class BusinessController extends BaseController
      */
     public function actionCreate()
     {
+        $module = [];
         if(yii::$app->request->isPost)
         {
             $redirect_url = '/business/list';
@@ -74,7 +75,9 @@ class BusinessController extends BaseController
             }
         }
         
-        return $this->render('edit');
+        return $this->render('edit', [
+            'module' => $module
+        ]);
     }
     
     /**

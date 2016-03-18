@@ -47,7 +47,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">描述信息</label>
                                             </td>
                                             <td>
-                                                <input type="text" class="form-control" id="module_description" name="module_description" placeholder="description" value="<?= $module['description']; ?>" />
+                                                <input type="text" class="form-control" id="module_description" name="module_description" placeholder="description" value="<?php if($module){ ?><?= $module['description']; ?><?php } ?>" />
                                             </td>
                                         </tr>
                                         <tr>
@@ -65,8 +65,8 @@ use yii\helpers\Html;
                                             <td>
                                                 <select class="js-source-states" id="module_repo_type" name="module_repo_type" style="width: 100%">
                                                     <option value="">请选择仓库类型</option>
-                                                    <option value="svn" <?php if(strtolower($module['repo_type']) == 'svn'){ ?>selected<?php } ?>>SVN</option>
-                                                    <option value="git" <?php if(strtolower($module['repo_type']) == 'git'){ ?>selected<?php } ?>>GIT</option>
+                                                    <option value="svn" <?php if($module && (strtolower($module['repo_type']) == 'svn')){ ?>selected<?php } ?>>SVN</option>
+                                                    <option value="git" <?php if($module && (strtolower($module['repo_type']) == 'git')){ ?>selected<?php } ?>>GIT</option>
                                                 </select>
                                             </td>
                                         </tr>
