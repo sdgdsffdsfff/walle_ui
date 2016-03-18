@@ -49,9 +49,9 @@ use yii\helpers\Html;
                                             <td>
                                                 <select class="js-source-states" id="param_value_type" name="param_value_type" style="width: 100%">
                                                     <option value="">请选择值类型</option>
-                                                    <option value="enum" <?php if(strtolower($parameter['value_type']) == 'enum'){ ?>selected<?php } ?>>enum</option>
-                                                    <option value="bool" <?php if(strtolower($parameter['value_type']) == 'bool'){ ?>selected<?php } ?>>bool</option>
-                                                    <option value="string" <?php if(strtolower($parameter['value_type']) == 'string'){ ?>selected<?php } ?>>string</option>
+                                                    <option value="enum" <?php if($parameter && (strtolower($parameter['value_type']) == 'enum')){ ?>selected<?php } ?>>enum</option>
+                                                    <option value="bool" <?php if($parameter && (strtolower($parameter['value_type']) == 'bool')){ ?>selected<?php } ?>>bool</option>
+                                                    <option value="string" <?php if($parameter && (strtolower($parameter['value_type']) == 'string')){ ?>selected<?php } ?>>string</option>
                                                 </select>
                                             </td>
                                         </tr>
