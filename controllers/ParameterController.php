@@ -31,6 +31,7 @@ class ParameterController extends BaseController
      */
     public function actionCreate()
     {
+        $parameter = [];
         if(yii::$app->request->isPost)
         {
             $redirect_url = '/parameter/list';
@@ -91,7 +92,9 @@ class ParameterController extends BaseController
             }
         }
         
-        return $this->render('edit');
+        return $this->render('edit', [
+            'parameter' => $parameter
+        ]);
     }
     
     /**
