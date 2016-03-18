@@ -43,4 +43,7 @@ nohup.out
 .settings/org.eclipse.core.resources.prefs
 
 # Ignore ucenter config
-app/librarys/clients/ucenter/config.inc.php
+walle_ui/librarys/clients/ucenter/config.inc.php
+
+# Ignore database config
+walle_ui/config/dbConfig.php
