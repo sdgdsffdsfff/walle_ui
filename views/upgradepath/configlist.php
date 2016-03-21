@@ -56,9 +56,9 @@ use yii\helpers\Html;
                         <th> 
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <?php if($upgradePathSelect){ ?>
-                                    <?php foreach($upgradePathSelect as $value){ ?>
-                                    <option value="<?= $value; ?>"><?= $value; ?></option>
+                                <?php if($upgradePathSelect && $flag){ ?>
+                                    <?php foreach($upgradePathSelect as $key => $value){ ?>
+                                    <option value="<?= $value; ?>" <?php if(isset($upgrade_path_id) && ($upgrade_path_id == $key)){ ?>selected<?php } ?>><?= $value; ?></option>
                                     <?php } ?>
                                 <?php } ?>
                             </select>
@@ -66,7 +66,7 @@ use yii\helpers\Html;
                         <th>
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <?php if($parameterSelect){ ?>
+                                <?php if($parameterSelect && $flag){ ?>
                                     <?php foreach($parameterSelect as $key => $value){ ?>
                                     <option value="<?= $value.'（'.$key.'）'; ?>"><?= $value.'（'.$key.'）'; ?></option>
                                     <?php } ?>
@@ -76,7 +76,7 @@ use yii\helpers\Html;
                         <th>
                             <select class="js-filter js-source-states">
                                 <option value="">全部</option>
-                                <?php if($upgradePathConfigSelect){ ?>
+                                <?php if($upgradePathConfigSelect && $flag){ ?>
                                     <?php foreach($upgradePathConfigSelect as $value){ ?>
                                     <option value="<?= $value; ?>"><?= $value; ?></option>
                                     <?php } ?>
@@ -86,7 +86,7 @@ use yii\helpers\Html;
                         <th></th>
                     </tr>
                 </thead>
-                <?php if($list){ ?>
+                <?php if($list && $flag){ ?>
                 <tbody>
                     <?php foreach($list as $config){ ?>
                     <tr>
