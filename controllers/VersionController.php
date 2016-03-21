@@ -469,7 +469,7 @@ EOT;
             foreach ($clientUpdatePackages as $clientUpdatePackage)
             {
                 $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
-                $tmp['size'] = $clientUpdatePackage['size'];
+                $tmp['size'] = $this->formatSize($clientUpdatePackage['size']);
                 array_push($clientUpdatePackageList, $tmp);
             }
         }
@@ -503,7 +503,7 @@ EOT;
                 }
             }
             $updateStatistics[$type]['num'] = $num;
-            $updateStatistics[$type]['size'] = $size;
+            $updateStatistics[$type]['size'] = $this->formatSize($size);
             $totalNum += $num;
             $totalSize += $size;
         }
@@ -513,7 +513,7 @@ EOT;
             "newVersionInfo" => $newVersionInfo,
             "clientUpdatePackageList" => $clientUpdatePackageList,
             "totalNum" => $totalNum,
-            "totalSize" => $totalSize,
+            "totalSize" => $this->formatSize($totalSize),
             "updateStatistics" => $updateStatistics,
             "updateFileList" => $updateFileList,
         );
@@ -564,5 +564,12 @@ EOT;
             }
         }
         return $result;
+    }
+
+    /**
+     * 统一文件单位和格式
+     */
+    private function formatSize($size) {
+        return number_format($size/1024, 2, '.', ',');
     }
 }

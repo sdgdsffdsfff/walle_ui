@@ -58,6 +58,12 @@ return [
             'icon' => 'fa-cloud-download',
         ],
         [
+            'name' => '客户端更新包状态',
+            'controller' => 'packagestatus',
+            'path' => 'packagestatus/list',
+            'icon' => 'fa-cloud-download',
+        ],
+        [
             'name' => '更新模块版本列表',
             'controller' => 'module',
             'path' => 'module/index',
@@ -112,10 +118,6 @@ return [
                 [
                     'name' => '部署位置配置',
                     'path' => ['deployment/config-list','deployment/config-edit']
-                ],
-                [
-                    'name' => '客户端更新包状态',
-                    'path' => ['package/liststatus']
                 ],
                 [
                     'name' => '安装包列表',
