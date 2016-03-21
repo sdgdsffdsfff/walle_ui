@@ -178,7 +178,7 @@ class PackageController extends BaseController
                             $url_config = json_decode($config['packages'], true);
                             foreach ($url_config as $key => $res) 
                             {
-                                $arr[$key] = $res['filename'];
+                                $arr[$key] = $res['url'];
                             }
                             $data[$i]['filename'] = $arr;
                         }
