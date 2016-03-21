@@ -13,7 +13,7 @@ use app\models\Platform;
 use app\models\UpgradePath;
 use yii\data\Pagination;
 use app\models\Deployment;
-use app\models\Clientpackage;
+use app\models\ClientPackage;
 
 class ClientpackageController extends BaseController
 {
@@ -64,13 +64,13 @@ class ClientpackageController extends BaseController
             $deployment_id = $params['deployment_id'];
         }
         $sql.=" order by id desc";
-        $res = Clientpackage::findBySql($countSql)->asArray()->all();
+        $res = ClientPackage::findBySql($countSql)->asArray()->all();
         $totalCount = $res[0]['count']; 
 
         $pages = new Pagination(['totalCount' =>$totalCount,'pageSize'=>10]);
         $sql .= " limit " . $pages->offset . "," . $pages->limit;
  
-     	$models = Clientpackage::findBySql($sql)->asArray()->all();
+     	$models = ClientPackage::findBySql($sql)->asArray()->all();
  		foreach ($models as $k => $v) 
         {
  			$up = UpgradePath::find()->where('id=' . $v['upgrade_path_id'])->one();
