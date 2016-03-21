@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看发行区域
+                查看发行地区
             </h5>
         </div>
     </div>
