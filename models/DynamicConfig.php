@@ -46,6 +46,23 @@ class DynamicConfig extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function fields()
+    {
+        return array(
+            "parameter_id",
+            "value",
+            "alias" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->description . "(" . $this->parameter->name . ")";
+                }
+            }
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getParameter()

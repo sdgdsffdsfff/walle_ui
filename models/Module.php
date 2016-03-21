@@ -1,9 +1,5 @@
 <?php
-
 namespace app\models;
-
-use Yii;
-
 /**
  * This is the model class for table "module".
  *
@@ -19,6 +15,7 @@ use Yii;
  * @property ModuleTag[] $moduleTags
  * @property Version[] $versions
  */
+
 class Module extends BaseModel
 {
     /**
@@ -108,5 +105,90 @@ class Module extends BaseModel
                     ->all();
         
         return $resource;
+    }
+    
+    /**
+     * 获取所有模块
+     * @return array
+     */
+    public static function getAllModules()
+    {
+        $resource = Module::find()->orderBy(['id' => SORT_DESC])->asArray()->all();
+        
+        return $resource;
+    }
+    
+    /**
+     * 根据id获取数据
+     * @param int id 模块id
+     * @return array
+     */
+    public static function getModuleById($id)
+    {
+        $fields = ['id','name','description','disable','repo_type'];
+    
+        $condition = ['id' => $id];
+        $result = Module::find()->select($fields)
+                ->where($condition)
+                ->asArray()
+                ->one();
+        
+        return $result;
+    }
+    
+    /**
+     * 根据名称获取模块
+     * @param string $name 模块名称
+     * @return mixed
+     */
+    public static function getDataByName($name)
+    {
+        $condition = ['name' => $name];
+        $result = Module::findOne($condition);
+        
+        if(!empty($result))
+        {
+            return $result->toArray();
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    /**
+     * 添加新的记录
+     * @param array $datas 新数据
+     * @return bool
+     */
+    public static function createModule($datas)
+    {
+        $module = new Module();
+        $module->name = $datas['name'];
+        $module->description = $datas['description'];
+        $module->disable = $datas['disable'];
+        $module->repo_type = $datas['repo_type'];
+
+        $bool = $module->save();
+        
+        return $bool;
+    }
+    
+    /**
+     * 编辑记录
+     * @param array $datas 所需数据
+     * @return bool
+     */
+    public static function eidtModule($datas)
+    {
+        $module = Module::findOne($datas['id']);
+        $module->name = $datas['name'];
+        $module->description = $datas['description'];
+        $module->disable = $datas['disable'];
+        $module->repo_type = $datas['repo_type'];
+        
+        $bool = $module->save();
+        
+        return $bool;
     }
 }

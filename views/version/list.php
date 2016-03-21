@@ -120,7 +120,7 @@ use yii\widgets\LinkPager;
                             <?php 
                                 foreach ($models as $k) {
                                     echo "<tr>";
-                                    echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'">'.$k['id'].'</a></td>';
+                                    echo '<td><a style="text-decoration:underline" href="/version/version-detail?version_id='.$k['id'].'" target="black">'.$k['id'].'</a></td>';
                                     echo "<td>".$k['create_time']."</td>";
                                     echo "<td>".$k['region'].'-'.$k['platform']['name']."</td>";
                                     echo "<td>".$k['upgradePath']['name']."</td>";
@@ -139,7 +139,7 @@ use yii\widgets\LinkPager;
                                     </button></td>';
                                     }
 
-                                    echo '<td><a href="/task/publish?version_id='.$k['id'].'" class="btn btn-info btn-sm active" style="margin-bottom:5px">发布版本</a>
+                                    echo '<td align="center"><a href="/task/publish?version_id='.$k['id'].'" class="btn btn-info btn-sm active" style="margin-bottom:5px">发布版本</a>
     <a href="/task/list?version_id='.$k['id'].'" class="btn btn-success btn-sm active" style="margin-bottom:5px" >查看相关任务</a>
     <br/>
     <a href="/clientpackage/list?vid='.$k['id'].'" class="btn-warning btn-sm active" >查看相关安装包</a></td>';

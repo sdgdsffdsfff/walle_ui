@@ -49,6 +49,36 @@ class PackageConfig extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function fields()
+    {
+        return array(
+            "package_id",
+            "parameter_id",
+            "value",
+            "package_name" => function() {
+                if (isset($this->package))
+                {
+                    return $this->package->name;
+                }
+            },
+            "parameter_name" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->name;
+                }
+            },
+            "parameter_des" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->description;
+                }
+            },
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getPackage()

@@ -49,6 +49,36 @@ class RegionConfig extends BaseModel
     }
 
     /**
+     * expand parameter of toArray()
+     */
+    public function fields()
+    {
+        return array(
+            "region_id",
+            "parameter_id",
+            "value",
+            "region_name" => function() {
+                if (isset($this->region))
+                {
+                    return $this->region->name;
+                }
+            },
+            "parameter_name" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->name;
+                }
+            },
+            "parameter_des" => function() {
+                if (isset($this->parameter))
+                {
+                    return $this->parameter->description;
+                }
+            },
+        );
+    }
+
+    /**
      * @return \yii\db\ActiveQuery
      */
     public function getRegion()

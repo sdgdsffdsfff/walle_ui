@@ -73,7 +73,7 @@ class IndexController extends BaseController
         {
             if($role['game_id'] == 0||$role['game_id'] == $id)
             {
-                $info = Game::getGameById((int)$id);
+                $info = Game::getGameById((int)$id, false);
                 yii::$app->session->set('game_name', $info['name']);
                 
                 //默认会开启session
