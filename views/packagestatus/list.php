@@ -55,7 +55,7 @@ use yii\helpers\Html;
                                                 echo "<td><a style='text-decoration:underline' href='/version/version-detail?version_id=".$value['from_version']."' >".$value['from_version']."</a></td>";
                                                 echo "<td><a style='text-decoration:underline' href='/version/version-detail?version_id=".$value['to_version']."' >".$value['to_version']."</a></td>";
                                                 //echo "<td><a style='text-decoration:underline' href='/version/version-detail?version_id=".$value['to_version']."‘ >".$value['to_version']."</a></td>";
-                                                echo "<td>".$value['url'].$v."</td>";
+                                                echo "<td><a style='text-decoration:underline' href='".$value['url'].$v."' target='_blank'>".$value['url'].$v."</a></td>";
                                                 echo "<td><img src='/static/images/loading2.gif' /></td>";
                                                 echo "</tr>";
                                             }
@@ -87,7 +87,7 @@ use yii\helpers\Html;
                     var post = {url_info : $(this).text()};
                     $.ajax({
                         type:'post',
-                        url:'/package/request',
+                        url:'/packagestatus/request',
                         data:post,
                         dataType:'json',
                     }).done(function(data){

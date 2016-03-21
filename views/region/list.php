@@ -54,10 +54,11 @@ use yii\widgets\LinkPager;
                                     echo "<td>".$v['id']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                     if($v['disable']==0){
-                                     echo '<td>是</td>';
+                                     echo '<td style="color:#66CD00">是</td>';
                                    }else{
-                                     echo '<td>否</td>';
+                                     echo '<td style="color:red;">否</td>';
                                  }
+                                
                                     echo "<td>".$v['description']."</td>";
                                     echo '<td align="center"><a  class="btn btn-info btn-sm active" href="/region/edit?id='.$v['id'].'" >编辑</a></td>';
                                     echo "</tr>";

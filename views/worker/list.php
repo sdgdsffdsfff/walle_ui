@@ -38,7 +38,12 @@
                             <tr>
                                 <td><?= $worker['id']; ?></td>
                                 <td><?= $worker['hostname']; ?></td>
-                                <td><?php if($worker['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
+                                     <?php if($worker['disable']==0){
+                                     echo '<td style="color:#66CD00">是</td>';
+                                   }else{
+                                     echo '<td style="color:red;">否</td>';
+                                 }
+                                 ?>
                                 <td align="center">
                                     <a href="/worker/edit?worker_id=<?= $worker['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>

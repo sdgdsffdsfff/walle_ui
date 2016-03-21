@@ -55,10 +55,10 @@ use yii\widgets\LinkPager;
                                     echo "<td>".$v['id']."</td>";
                                     echo "<td>".$v['platform']['name'].'-'.$v['region_name']."</td>";
                                    echo "<td>".$v['name']."</td>";
-                                   if($v['disable']==0){
-                                     echo '<td>是</td>';
+                                        if($v['disable']==0){
+                                     echo '<td style="color:#66CD00">是</td>';
                                    }else{
-                                     echo '<td>否</td>';
+                                     echo '<td style="color:red;">否</td>';
                                  }
                                    
                                     echo "<td>".$v['description']."</td>";
