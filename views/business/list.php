@@ -48,7 +48,12 @@
                                 <td><?= $module['name']; ?></td>
                                 <td><?= $module['description']; ?></td>
                                 <td><?= $module['repo_type']; ?></td>
-                                <td><?php if($module['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
+                                    <?php if($module['disable']==0){
+                                     echo '<td style="color:#66CD00">是</td>';
+                                   }else{
+                                     echo '<td style="color:red;">否</td>';
+                                 }
+                                 ?>
                                 <td align="center">
                                     <a href="/business/edit?module_id=<?= $module['id']; ?>" class="btn btn-info">编辑</a>
                                 </td>

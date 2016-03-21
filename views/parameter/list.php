@@ -49,7 +49,13 @@
                                 <td><?= $parameter['value_type']; ?></td>
                                 <td><?= $parameter['description']; ?></td>
                                 <td><?= $parameter['default_value']; ?></td>
-                                <td><?php if($parameter['disable'] == 1){ ?>否<?php }else{ ?>是<?php } ?></td>
+                                 <?php if($parameter['disable']==0){
+                                     echo '<td style="color:#66CD00">是</td>';
+                                   }else{
+                                     echo '<td style="color:red;">否</td>';
+                                 }
+                                 ?>
+                          
                                 <td><?= $parameter['options']; ?></td>
                                 <td align="center">
                                     <a href="/parameter/edit?parameter_id=<?= $parameter['id']; ?>" class="btn btn-info">编辑</a>
