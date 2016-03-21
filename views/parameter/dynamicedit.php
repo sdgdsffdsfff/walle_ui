@@ -47,7 +47,7 @@ use yii\helpers\Html;
                                                 <label class="control-label">参数：</label>
                                             </td>
                                             <td>
-                                                <select id="parameter_id" name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                                <select id="parameter_id" name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;" disabled="disabled">
                                             <optgroup label="">
 <?php
 if (isset($parameter)) {//编辑配置，只显示要编辑的参数

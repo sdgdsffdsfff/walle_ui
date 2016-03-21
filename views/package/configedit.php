@@ -48,7 +48,7 @@ use yii\helpers\Html;
                                             <label class="control-label">平台：</label>
                                         </td>
                                         <td>                                               
-                                            <select name="package_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="package_id" class="js-source-states" style="width:300px; margin-right: 40px;" disabled="disabled">
                                             <optgroup label="">
 <?php
 if (isset($package)) {//编辑配置，只显示要编辑的发行地区
@@ -64,7 +64,7 @@ if (isset($package)) {//编辑配置，只显示要编辑的发行地区
                                             <label class="control-label">参数：</label>
                                         </td>
                                         <td>
-                                            <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;">
+                                            <select name="parameter_id" class="js-source-states" style="width:300px; margin-right: 40px;" disabled="disabled">
                                             <optgroup label="">
 <?php
 if (isset($parameter)) {//编辑配置，只显示要编辑的参数
