@@ -171,22 +171,27 @@ class UpgradepathController extends BaseController
         
         $upgradePathSelect = $parameterSelect = $upgradePathConfigSelect = array();
         
+        $flag = true;
         if(!empty($upgrade_path_id))
         {
-            $result = UpgradePathConfig::getUpgradePathById($upgrade_path_id, true);
-        }
-        else
-        {
-            $result = UpgradePathConfig::getAllUpgradePathConfig();
+            //根据升级序列id,查询是否有对应的congfig数据
+            $record = UpgradePathConfig::getUpgradePathById($upgrade_path_id, true);
+            if(!$record)
+            {
+                $flag = false;
+            }
         }
         
+        //获取全部升级序列config信息
+        $result = UpgradePathConfig::getAllUpgradePathConfig();
+
         if($result)
         {
             //获取下拉框数据
             foreach ($result as $upgradePathConfig)
             {
                 $upgradePathConfigSelect[] = $upgradePathConfig['value'];
-                $upgradePathSelect[] = $upgradePathConfig['upgradePath']['name'];
+                $upgradePathSelect[$upgradePathConfig['upgradePath']['id']] = $upgradePathConfig['upgradePath']['name'];
                 $parameterSelect[$upgradePathConfig['parameter']['name']] = $upgradePathConfig['parameter']['description'];
             }
         }
@@ -195,8 +200,10 @@ class UpgradepathController extends BaseController
             'upgradePathSelect' => array_unique($upgradePathSelect),
             'parameterSelect' => array_unique($parameterSelect),
             'upgradePathConfigSelect' => array_unique($upgradePathConfigSelect),
-            'list' => $result
-        ]);
+            'list' => $result,
+            'upgrade_path_id' => $upgrade_path_id,
+            'flag' => $flag
+         ]);
     }
     
     /**

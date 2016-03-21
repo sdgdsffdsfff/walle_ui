@@ -100,7 +100,7 @@ use yii\helpers\Html;
                         <div class="form-group">
                             <label class="col-sm-2 control-label"><?= $module['description']; ?></label>
                             <div class="col-sm-10">
-                                <?php if(((strtolower($module['name']) == 'asset') || (strtolower($module['name']) == 'config')) && ($module['repo_type'] == 'SVN')){ ?>
+                                <?php if($module['repo_type'] == 'SVN'){ ?>
                                 <input type="text" placeholder="<?= ucwords($module['name']); ?>" class="form-control" id="new_<?= $module['name']; ?>" name="new_<?= $module['name']; ?>" />
                                 <?php }else{ ?>
                                 <select class="js-source-states" id="new_<?= $module['name']; ?>" name="new_<?= $module['name']; ?>" style="width: 100%">

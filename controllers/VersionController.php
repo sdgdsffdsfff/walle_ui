@@ -379,7 +379,7 @@ class VersionController extends BaseController
         foreach($modules as $module)
         {
             //生成验证规则,SVN类型只能输入正整数
-            if((strtolower($module['name']) == 'asset' || strtolower($module['name']) == 'config') && ($module['repo_type'] == 'SVN'))
+            if($module['repo_type'] == 'SVN')
             {
                 $rules .= <<<EOT
 new_{$module['name']}: { required: true, digits: true },\r\n
@@ -393,7 +393,7 @@ EOT;
             }
 
             //生成验证信息
-            if((strtolower($module['name']) == 'asset' || strtolower($module['name']) == 'config') && ($module['repo_type'] == 'SVN'))
+            if($module['repo_type'] == 'SVN')
             {
                 $messages .= <<<EOT
 new_{$module['name']}: { required: "请输入{$module['name']}", digits: "请输入正整数" },\r\n
@@ -468,7 +468,7 @@ EOT;
             $gameAlias = yii::$app->session->get('game_alias');
             foreach ($clientUpdatePackages as $clientUpdatePackage)
             {
-                $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['filename'];
+                $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
                 $tmp['size'] = $clientUpdatePackage['size'];
                 array_push($clientUpdatePackageList, $tmp);
             }
