@@ -468,7 +468,7 @@ EOT;
             $gameAlias = yii::$app->session->get('game_alias');
             foreach ($clientUpdatePackages as $clientUpdatePackage)
             {
-                $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['filename'];
+                $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
                 $tmp['size'] = $clientUpdatePackage['size'];
                 array_push($clientUpdatePackageList, $tmp);
             }
