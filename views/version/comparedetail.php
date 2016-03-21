@@ -114,7 +114,7 @@ if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
     					<thead>
     						<tr>
     							<th>客户端更新包</th>
-    							<th>大小</th>
+    							<th>大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -123,7 +123,7 @@ if (!empty($clientUpdatePackageList)) {
     foreach ($clientUpdatePackageList as $clientUpdatePackage) {
         echo "<tr>";
         echo "<td><a style='text-decoration:underline' href='".$clientUpdatePackage['url']."' target='black'>".$clientUpdatePackage['url']."</a></td>";
-        echo "<td>".$clientUpdatePackage['size']."KB</td>";
+        echo "<td>".$clientUpdatePackage['size']."</td>";
         echo "</tr>";
     }
 }
@@ -138,7 +138,7 @@ if (!empty($clientUpdatePackageList)) {
     						<tr>
     							<th>类型</th>
     							<th>改动文件数量</th>
-    							<th>改动文件大小</th>
+    							<th>改动文件大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -170,7 +170,7 @@ if (!empty($updateStatistics)) {
     							<th>类型</th>
     							<th>改动文件名称</th>
     							<th>文件URL</th>
-    							<th>文件大小</th>
+    							<th>文件大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -182,7 +182,7 @@ if (!empty($updateFileList)) {
             echo "<td>$type</td>";
             echo "<td>".$file['filename']."</td>";
             echo "<td><a style='text-decoration:underline' href='".$file['url']."' target='black'>".$file['url']."</a></td>";
-            echo "<td>".$file['size']."</td>";
+            echo "<td>".number_format($file['size']/1024, 2, '.', ',')."</td>";
             echo "</tr>";
         }
     }
