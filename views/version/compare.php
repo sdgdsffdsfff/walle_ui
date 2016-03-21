@@ -28,11 +28,11 @@ use yii\helpers\Html;
     			<form class="form-inline" role="form" id="compare_form" name="compare_form">
     				<div class="form-group col-lg-4">
     					<label class="control-label">旧版本号：</label>
-    					<input type="text" name="old_version_id" class="form-control" placeholder="旧版本号" value="<?php if (!empty($old_version_id) { echo $old_version_id;}?>" required>
+    					<input type="text" name="old_version_id" class="form-control" placeholder="旧版本号" value="<?php if (!empty($old_version_id)) { echo $old_version_id;}?>" required />
     				</div>
     				<div class="form-group col-lg-4">
     					<label class="control-label">新版本号：</label>
-    					<input type="text" name="new_version_id" class="form-control" placeholder="新版本号" value="<?php if (!empty($new_version_id) { echo $new_version_id;}?>" required>
+    					<input type="text" name="new_version_id" class="form-control" placeholder="新版本号" value="<?php if (!empty($new_version_id)) { echo $new_version_id;}?>" required>
     				</div>
     				<div class="form-group col-lg-4">
     					<button class="btn w-xs btn-warning" type="submit">对比版本</button>
