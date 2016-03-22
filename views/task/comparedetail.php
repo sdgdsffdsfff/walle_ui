@@ -44,20 +44,29 @@ use yii\helpers\Html;
     <div class="row">
         <div class="hpanel horange">
             <div class="panel-body">
-                <div class="table-responsive">
+                <div class="table-responsive" style="height: 800px;">
                     <table id="job_table" class="table table-bordered table-striped" cellpadding="1" cellspacing="1" style="width: 100%;">
                         <thead>
-                        <tr>
-                            <th>类型</th>
-                            <th>参数名称</th>
-                            <?php if($jobConfigs){ ?>
-                                <?php for($i = 0;$i < count($jobConfigs); $i++){ ?>
-                            <th>参数取值<a style="float: right; position: static;" onclick="javascript:removeCol('<?= $jobId_arr[$i] ?>');"><i class="fa fa-times"></i></a></th>
+                            <tr>
+                                <th>类型</th>
+                                <th>参数名称</th>
+                                <?php if($jobConfigs){ ?>
+                                    <?php for($i = 0;$i < count($jobConfigs); $i++){ ?>
+                                <th>参数取值<a style="float: right; position: static;" onclick="javascript:removeCol('<?= $jobId_arr[$i] ?>');"><i class="fa fa-times"></i></a></th>
+                                    <?php } ?>
+                                <?php }else{ ?>
+                                    <th>参数取值</th>
                                 <?php } ?>
-                            <?php }else{ ?>
-                                <th>参数取值</th>
+                            </tr>
+                            <?php if($jobConfigs){ ?>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <?php for($i = 0;$i < count($jobConfigs); $i++){ ?>
+                                <th><?= $jobId_arr[$i] ?></th>
+                                <?php } ?>
+                            </tr>
                             <?php } ?>
-                        </tr>
                         </thead>
                         <?php if($jobConfigs){ ?>
                         <tbody>
@@ -84,8 +93,11 @@ use yii\helpers\Html;
 </div>
 
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
+<?= Html::jsFile('@web/static/tableHeadFixer.js'); ?>
 <script type="text/javascript">
     $(document).ready(function(){
+        $("#job_table").tableHeadFixer({"left" : 2});
+        
         $("#task_compare_form").validate({
             rules: {
                 job_id: {
@@ -187,11 +199,19 @@ use yii\helpers\Html;
                 }
             });
         });
-        $("#job_table thead tr").eq(0).find('th').each(function(j, item){   //遍历每一行
-            if(j == pos)
-            {
-                $(item).remove();
-            }
+//        $("#job_table thead tr").eq(0).find('th').each(function(j, item){   //遍历每一行
+//            if(j == pos)
+//            {
+//                $(item).remove();
+//            }
+//        });
+        $("#job_table thead tr").each(function(trindex, tritem){   //遍历每一行
+            $(tritem).find('th').each(function(thindex, thitem){   //遍历改行的td
+                if(thindex == pos)
+                {
+                    $(thitem).remove();
+                }
+            });
         });
     }
 </script>
