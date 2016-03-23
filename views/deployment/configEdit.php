@@ -139,6 +139,7 @@ $(function() {
     };
 
     $('#create_worker_btn').click(function() {
+        $("select").attr("disabled", false);
         $.ajax({
             type: "POST",
             url: "/deployment/config-save",

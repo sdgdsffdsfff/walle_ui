@@ -124,6 +124,7 @@ $(function() {
     };
 
     $('#create_worker_btn').click(function() {
+        $("select").attr("disabled", false);
         $.ajax({
             type: "POST",
             url: "/parameter/config-save",
