@@ -452,13 +452,15 @@ EOT;
         {
             return $this->render('compare');
         }
+        $oldVersion = Version::findOne($oldVersionId);
+        $newVersion = Version::findOne($newVersionId);
+        if (empty($oldVersion) || empty($newVersion))
+        {
+            $this->error('对比版本不存在!', '/version/compare');
+        }
         //通过version_id查找version详情
         $oldVersionInfo = Version::getVersionDetial($oldVersionId);
         $newVersionInfo = Version::getVersionDetial($newVersionId);
-        if (empty($oldVersionInfo) || empty($newVersionInfo))
-        {
-            $this->error('请求参数异常!', '/version/compare');
-        }
 
         //获取客户端更新包
         $clientUpdatePackages = ClientUpdatePackage::getUpdatePackages($oldVersionId, $newVersionId);
