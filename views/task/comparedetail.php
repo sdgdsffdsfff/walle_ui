@@ -60,8 +60,8 @@ use yii\helpers\Html;
                             </tr>
                             <?php if($jobConfigs){ ?>
                             <tr>
-                                <th>任务ID</th>
                                 <th></th>
+                                <th>任务ID</th>
                                 <?php for($i = 0;$i < count($jobConfigs); $i++){ ?>
                                 <th><?= $jobId_arr[$i] ?></th>
                                 <?php } ?>
