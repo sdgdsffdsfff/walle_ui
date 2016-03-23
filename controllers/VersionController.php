@@ -448,7 +448,7 @@ EOT;
     {
         $oldVersionId = yii::$app->getRequest()->get('old_version_id');
         $newVersionId = yii::$app->getRequest()->get('new_version_id');
-        if (empty($oldVersionId) && empty($newVersionId))
+        if (empty($oldVersionId) || empty($newVersionId))
         {
             return $this->render('compare');
         }
