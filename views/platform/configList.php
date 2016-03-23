@@ -23,7 +23,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看平台信息配置列表
+                平台信息配置列表
             </h5>
         </div>
     </div>

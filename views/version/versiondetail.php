@@ -37,7 +37,7 @@ use yii\helpers\Html;
                                     </tr>
                                     <tr>
                                         <td class="col-md-3 text-center">
-                                            <label class="control-label">发行区域</label>
+                                            <label class="control-label">发行地区</label>
                                         </td>
                                         <td class="issue-info">
                                             <small>

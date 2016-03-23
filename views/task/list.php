@@ -42,10 +42,10 @@ use yii\widgets\LinkPager;
                             <input type="text" name="create_user" class="form-control" placeholder="发布人" style="margin-right: 40px;" value="<?php echo $create_user;?>"/>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">发布位置：</label>
+                            <label class="control-label">部署位置：</label>
                             <select class="js-source-states" name="deployment_id" style="width:200px; margin-right: 40px;">
                                 <optgroup label="">
-                                    <option value="">请选择发布位置</option>
+                                    <option value="">请选择部署位置</option>
                                     <!---  php foreach work table-->
 <?php
 foreach ($deployments as $deployment) {
@@ -74,7 +74,7 @@ foreach ($deployments as $deployment) {
                             <tr>
                                 <th>任务号</th>
                                 <th>版本号</th>
-                                <th>发布位置</th>
+                                <th>部署位置</th>
                                 <th>开始时间</th>
                                 <th>结束时间</th>
                                 <th>状态</th>
