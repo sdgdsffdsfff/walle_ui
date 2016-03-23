@@ -51,8 +51,8 @@ use yii\helpers\Html;
     					<thead>
     						<tr>
     							<th>参数</th>
-    							<th>源版本</th>
-    							<th>目标版本</th>
+    							<th>旧版本</th>
+    							<th>新版本</th>
     						</tr>
     					</thead>
     					<tbody>
