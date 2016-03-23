@@ -14,7 +14,7 @@ $this->title = 'My Yii Application';
 <div class="normalheader transition small-header">
 	<div class="hpanel">
 		<div class="panel-body">
-			<h5 class="font-light m-b-xs">发布任务</h5>
+			<h5 class="font-light m-b-xs">创建发布任务</h5>
 		</div>
 	</div>
 </div>
@@ -43,7 +43,7 @@ $this->title = 'My Yii Application';
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">发布位置</label>
+								<label class="col-sm-3 control-label">部署位置</label>
 								<div id="deployment_div" class="col-sm-9">
                                        	<?php echo $data['deploymentListContent']?>
 								</div>

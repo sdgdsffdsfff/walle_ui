@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看升级序列
+                升级序列列表
             </h5>
         </div>
     </div>

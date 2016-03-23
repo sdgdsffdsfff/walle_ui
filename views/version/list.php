@@ -69,7 +69,7 @@ use yii\widgets\LinkPager;
                             <label for="exampleInputEmail2">平台：</label>
                             <select class="js-source-states" name="platform_id" style="width:180px; margin-right: 12px;">
                                
-                                    <option value="">请选择发行区域-平台</option>
+                                    <option value="">请选择发行地区-平台</option>
                                     <?php 
                                         foreach ($platform as $v) {
                                              if(isset($platform_id)&&!empty($platform_id)&&$platform_id==$v['id']){

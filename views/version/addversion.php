@@ -78,7 +78,7 @@ use yii\helpers\Html;
                             <label class="col-sm-2 control-label">平台</label>
                             <div class="col-sm-10">
                                 <select class="js-source-states" id="new_platform" name="new_platform" style="width: 100%">
-                                    <option value="">请选择发行区域-平台</option>
+                                    <option value="">请选择发行地区-平台</option>
                                     <?php foreach($platform_list as $platform){ ?>
                                     <option value="<?= $platform['id']; ?>"><?= $platform['region']['name']; ?> - <?= $platform['name']; ?></option>
                                     <?php } ?>

@@ -2,7 +2,7 @@
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看业务模块配置
+                业务模块配置列表
             </h5>
         </div>
     </div>

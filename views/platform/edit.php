@@ -10,7 +10,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-              编辑平台
+              编辑平台信息
             </h5>
         </div>
     </div>
@@ -36,10 +36,10 @@ use yii\widgets\LinkPager;
                                     </thead>
                         <tbody>
                                <tr>
-                       <td>发行区域</td>
+                       <td>发行地区</td>
                        <td>
                           <select class="js-source-states"  name="region" id="region" style="width: 100%" <?php if($id){ echo "disabled='disabled'";}?>>
-                                    <option value="">请选择发行区域</option>
+                                    <option value="">请选择发行地区</option>
                                    <?php 
                                     foreach ($region as $k => $v) {
                                       if(isset($info['region_id'])&&$info['region_id']==$v['id']){
