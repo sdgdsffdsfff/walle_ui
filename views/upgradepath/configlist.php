@@ -5,9 +5,7 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
-<style type="text/css">
-.glyphicon { cursor: pointer; }
-</style>
+<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -32,58 +30,13 @@ use yii\helpers\Html;
     
 	<div class="row">
         <div class="table-responsive" style="background: #fff;border: 1px solid #e4e5e7;border-radius: 2px;padding: 20px;">
-            <table id="upgrade_path_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
+            <table id="upgrade_path_table" cellpadding="1" cellspacing="1" class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            升级序列
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
-                        <th>
-                            参数
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
-                        <th>
-                            参数值
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span> 
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
+                        <th>升级序列</th>
+                        <th>参数</th>
+                        <th>参数值</th>
                         <th>操作</th>
-                    </tr>
-                    <tr>
-                        <th> 
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($upgradePathSelect && $flag){ ?>
-                                    <?php foreach($upgradePathSelect as $key => $value){ ?>
-                                    <option value="<?= $value; ?>" <?php if(isset($upgrade_path_id) && ($upgrade_path_id == $key)){ ?>selected<?php } ?>><?= $value; ?></option>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </th>
-                        <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($parameterSelect && $flag){ ?>
-                                    <?php foreach($parameterSelect as $key => $value){ ?>
-                                    <option value="<?= $value.'（'.$key.'）'; ?>"><?= $value.'（'.$key.'）'; ?></option>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </th>
-                        <th>
-                            <select class="js-filter js-source-states">
-                                <option value="">全部</option>
-                                <?php if($upgradePathConfigSelect && $flag){ ?>
-                                    <?php foreach($upgradePathConfigSelect as $value){ ?>
-                                    <option value="<?= $value; ?>"><?= $value; ?></option>
-                                    <?php } ?>
-                                <?php } ?>
-                            </select>
-                        </th>
-                        <th></th>
                     </tr>
                 </thead>
                 <?php if($list && $flag){ ?>
@@ -109,9 +62,52 @@ use yii\helpers\Html;
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
-<?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
 <script type="text/javascript">
 $(function() {
+    $('#upgrade_path_table').DataTable({
+        "aoColumnDefs": [{ "bSortable": false, "aTargets": [3] }],
+        "paging":   false,
+        "info":     false,
+        "dom": '<"clear">', //通过dom属性去掉search文本框
+        initComplete: function () {
+            $('#upgrade_path_table thead').append('<tr></tr>');
+
+            var api = this.api();
+            api.columns().indexes().flatten().each( function ( i ) {
+                if(i < 3)
+                {
+                    $('#upgrade_path_table thead').find('tr:last').append('<th></th>');
+                    var column = api.column( i );
+                    //console.log(column.header());
+                    var select = $('<select class="js-source-states" style="margin-right: 40px;"><option value="">全部</option></select>')
+                        .appendTo( $('#upgrade_path_table thead').find('tr:last').find('th').eq(i) )
+                        .on( 'change', function () {
+                            var val = $.fn.dataTable.util.escapeRegex(
+                                $(this).val()
+                            );
+                            column
+                                .search( val ? '^'+val+'$' : '', true, false )
+                                .draw();
+                        } );
+                    column.data().unique().sort().each( function ( d, j ) {
+                        if(d == '<?= $upgrade_path_name; ?>')
+                        {
+                            select.append( '<option value="'+d+'" selected>'+d+'</option>' );
+                            column
+                                .search( "<?= $upgrade_path_name; ?>" ? '^'+"<?= $upgrade_path_name; ?>"+'$' : '', true, false )
+                                .draw();
+                        }
+                        else
+                        {
+                            select.append( '<option value="'+d+'">'+d+'</option>' );
+                        }
+                    } );
+                }
+            } );
+        }
+    });
+    
     //select2
     $(".js-source-states").select2({ 
         width: '100%' //设定select框宽度
