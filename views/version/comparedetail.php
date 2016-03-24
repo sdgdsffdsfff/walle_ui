@@ -55,7 +55,7 @@ use yii\helpers\Html;
     							<th>新版本</th>
     						</tr>
     					</thead>
-    					<tbody>
+    					<tbody id="compare_tbody">
     						<tr>
     							<td>版本号</td>
                                 <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $oldVersionInfo['id'];?>" target="black"><?php echo $oldVersionInfo['id'];?></a></td>
@@ -98,9 +98,9 @@ echo "<td>$new_deployment</td>";
 if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
     foreach ($oldVersionInfo['module'] as $key => $value) {
         echo "<tr>";
-        echo "<td>$key</td>";
-        echo "<td>$value</td>";
-        echo "<td>".$newVersionInfo['module'][$key]."</td>";
+        echo "<td>".$value['description']."</td>";
+        echo "<td>".$value['tag']."</td>";
+        echo "<td>".$newVersionInfo['module'][$key]['tag']."</td>";
         echo "</tr>";
     }
 }
@@ -225,5 +225,22 @@ if (!empty($updateFileList)) {
                 }
             }
         });
+        diff_text();
     });
+
+function diff_text() {
+    console.log("diff text");
+    $("#compare_tbody tr").each(function(trindex, tritem) {
+        var old_version = $(tritem).children().eq(1);
+        var new_version = $(tritem).children().eq(2);
+        if (old_version.text() != new_version.text()) {
+        console.log(old_version.text());
+        console.log(new_version.text());
+            old_version.attr("style", "color:red");
+            new_version.attr("style", "color:red");
+        }
+
+
+    });
+}
 </script>
