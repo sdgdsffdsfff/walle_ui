@@ -489,7 +489,7 @@ EOT;
             {
                 $this->error('请求参数异常!', '/version/compare');
             }
-            $updateFileList[$type] = $this->countUpdateFiles($type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type], $newVersionInfo['module'][$type]);
+            $updateFileList[$type] = $this->countUpdateFiles($type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type]['tag'], $newVersionInfo['module'][$type]['tag']);
             if ($updateFileList[$type] === false)
             {
                 $this->error('sql计算失败!', '/version/compare');
