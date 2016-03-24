@@ -201,7 +201,7 @@ if (!empty($updateFileList)) {
 </div>
 
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
-<script>
+<script type="text/javascript">
     $(function(){
         $("#compare_form").validate({
             rules: {

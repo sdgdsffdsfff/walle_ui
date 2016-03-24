@@ -22,7 +22,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                部署位置配置列表
+                部署位置配置
             </h5>
         </div>
     </div>

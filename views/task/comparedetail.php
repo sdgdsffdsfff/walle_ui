@@ -5,7 +5,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                任务对比详情
+                发布任务对比
             </h5>
         </div>
     </div>

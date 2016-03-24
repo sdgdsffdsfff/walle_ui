@@ -2,7 +2,7 @@
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                打包机配置列表
+                打包机列表
             </h5>
         </div>
     </div>

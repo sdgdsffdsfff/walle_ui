@@ -43,7 +43,7 @@ return [
                 ],
                 [
                     'name' => '创建发布任务',
-                    'path' => ['task/publish'],
+                    'path' => ['task/publish', 'task/clonepublish'],
                 ],
                 [
                     'name' => '发布任务对比',

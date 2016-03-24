@@ -2,7 +2,7 @@
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                参数配置列表
+                参数配置
             </h5>
         </div>
     </div>

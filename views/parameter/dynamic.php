@@ -22,7 +22,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                动态参数配置列表
+                动态参数配置
             </h5>
         </div>
     </div>

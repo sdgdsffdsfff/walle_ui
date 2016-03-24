@@ -22,7 +22,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                安装包配置列表
+                安装包配置
             </h5>
         </div>
     </div>

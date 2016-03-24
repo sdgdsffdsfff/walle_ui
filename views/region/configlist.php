@@ -22,7 +22,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                发行地区配置列表
+                发行地区配置
             </h5>
         </div>
     </div>
