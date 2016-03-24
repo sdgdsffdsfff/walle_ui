@@ -163,7 +163,7 @@ if (!empty($updateStatistics)) {
 
     				<hr style="height:1px;border:none;border-top:1px solid orange;" />
 
-                    <div style="height: 200px; overflow-y: scroll; overflow-x: hidden;">
+                    <div style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
     				<table class="table table-bordered table-striped" cellpadding="1" cellspacing="1">
     					<thead>
     						<tr>
