@@ -172,6 +172,7 @@ class UpgradepathController extends BaseController
         $upgradePathSelect = $parameterSelect = $upgradePathConfigSelect = array();
         
         $flag = true;
+        $upgrade_path_name = '';
         if(!empty($upgrade_path_id))
         {
             //根据升级序列id,查询是否有对应的congfig数据
@@ -179,6 +180,10 @@ class UpgradepathController extends BaseController
             if(!$record)
             {
                 $flag = false;
+            }
+            else
+            {
+                $upgrade_path_name = !empty($record) ? $record[0]['upgradePath']['name'] : '';
             }
         }
         
@@ -201,7 +206,7 @@ class UpgradepathController extends BaseController
             'parameterSelect' => array_unique($parameterSelect),
             'upgradePathConfigSelect' => array_unique($upgradePathConfigSelect),
             'list' => $result,
-            'upgrade_path_id' => $upgrade_path_id,
+            'upgrade_path_name' => $upgrade_path_name,
             'flag' => $flag
          ]);
     }
