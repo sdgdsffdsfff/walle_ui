@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑upgrade path
+                复制升级序列
             </h5>
         </div>
     </div>
@@ -33,17 +33,20 @@ use yii\widgets\LinkPager;
                                         </tr>
                                     </thead>
                         <tbody>
-                       <tr>
-                       <td>名称</td>
-                       <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php echo $info['name']; ?>" /> </td>
-                   </tr>
-                    <tr>
-                       <td>描述</td>
-                       <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php echo $info['description'];?>" /></td> 
-                   </tr>
-                        <tr>
-                        <td>是否启用</td>
-                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($info['disable']==0) echo "checked";?> /><label></label></div>  </td> </tr>
+                            <tr>
+                                <td>名称</td>
+                                <td><input type="text" id="up_name"  class="form-control" name="up_name"  value="<?php echo $info['name']; ?>" /> </td>
+                            </tr>
+                             <tr>
+                                <td>描述</td>
+                                <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php echo $info['description'];?>" /></td> 
+                            </tr>
+                            <tr>
+                                <td>是否启用</td>
+                                <td>
+                                    <input type="checkbox" class="i-checks checkbox" id="up_option" name="subBox" <?php if($info['disable']==0) echo "checked";?> /><label></label>
+                                </td> 
+                            </tr>
                         </tbody>
                     </table>
                        <div class="form-group">
