@@ -297,11 +297,11 @@ class VersionController extends BaseController
         $bool = Version::modifyChangeLog($versionId, $changeLog);
         if($bool)
         {
-            $this->ajaxReturn(self::STATUS_SUCCESS, array('result' => 'success', 'msg' => '更新changLog成功!'));
+            $this->ajaxReturn(self::STATUS_SUCCESS, array('result' => 'success', 'msg' => '更新日志成功!'));
         }
         else
         {
-            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '更新changLog失败!'));
+            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '更新日志失败!'));
         }
     }
     
