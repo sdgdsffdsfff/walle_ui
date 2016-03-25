@@ -26,7 +26,7 @@ class DeploymentController extends BaseController
         foreach ($data as $k => $v)
         {
             $region = Region::findOne($v['platform']['region_id']);
-            $data[$k]['region'] = $v['platform']['name'].'-'.$region['name'];
+            $data[$k]['region'] = $region['name'].'-'.$v['platform']['name'];
         }
         return $this->render('list', array('data' => $data));
     }
