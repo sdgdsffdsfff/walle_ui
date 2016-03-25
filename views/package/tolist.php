@@ -53,7 +53,7 @@ use yii\widgets\LinkPager;
                                 foreach ($data as $k => $v) {
                                     echo "<tr>";
                                     echo "<td>".$v['id']."</td>";
-                                    echo "<td>".$v['platform']['name'].'-'.$v['region_name']."</td>";
+                                    echo "<td>".$v['region_name'].'-'.$v['platform']['name']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                         if($v['disable']==0){
                                      echo '<td style="color:#66CD00">是</td>';
