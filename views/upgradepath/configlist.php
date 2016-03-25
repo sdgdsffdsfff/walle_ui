@@ -91,7 +91,7 @@ $(function() {
                                 .draw();
                         } );
                     column.data().unique().sort().each( function ( d, j ) {
-                        if(d == '<?= $upgrade_path_name; ?>')
+                        if('<?= $upgrade_path_name; ?>' && (d == '<?= $upgrade_path_name; ?>'))
                         {
                             select.append( '<option value="'+d+'" selected>'+d+'</option>' );
                             column
@@ -100,7 +100,10 @@ $(function() {
                         }
                         else
                         {
-                            select.append( '<option value="'+d+'">'+d+'</option>' );
+                            if(d != '')
+                            {
+                                select.append( '<option value="'+d+'">'+d+'</option>' );
+                            }
                         }
                     } );
                 }
@@ -188,7 +191,7 @@ function submitForm(parameter_id, upgradePath_id)
                     showCancelButton: false, //是否显示'取消'按钮
                     confirmButtonColor: "#e74c3c",
                     confirmButtonText: "确认",
-                    closeOnConfirm: false,
+                    closeOnConfirm: false
                 });
             }
         }
