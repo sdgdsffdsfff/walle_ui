@@ -63,8 +63,11 @@ use yii\widgets\LinkPager;
                        <td><input type="text" id="up_description" class="form-control"  name="up_description"  value="<?php if($id){echo $info['description'];}?>"/></td> 
                    </tr>
                         <tr>
-                        <td>是否启用</td>
-                        <td><div class="checkbox checkbox-success"> <input  type="checkbox" id="up_option" name="subBox"  <?php if($id&&$info['disable']==0) echo "checked";?> ><label></label></div>  </td> </tr>
+                            <td>是否启用</td>
+                            <td>
+                                <input type="checkbox" class="i-checks checkbox" id="up_option" name="subBox" <?php if($id&&$info['disable']==0) echo "checked";?> ><label></label>
+                            </td> 
+                        </tr>
                         </tbody>
                     </table>
                        <div class="form-group">
