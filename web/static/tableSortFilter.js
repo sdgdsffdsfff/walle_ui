@@ -29,7 +29,10 @@ function datasSortFilter(table_id, col_num)
                                 .draw();
                         } );
                     column.data().unique().sort().each( function ( d, j ) {
-                        select.append( '<option value="'+d+'">'+d+'</option>' );
+                        if(d != '')
+                        {
+                            select.append( '<option value="'+d+'">'+d+'</option>' );
+                        }
                     } );
                 }
             } );
