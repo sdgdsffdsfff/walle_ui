@@ -261,11 +261,14 @@ class VersionController extends BaseController
         foreach ($modules as $value)
         {
             $result = ModuleTag::getModuleTagByVersionIdAndModuleId($versionId, $value['id']);
-            $moduleTag_array[] = [
-                'name' => $value['name'],
-                'tag' => empty($result['tag']) ? 'null' : $result['tag'],
-                'description' => $value['description'],
-            ];
+            if($result) //过滤掉在moduletag中没有的模块
+            {
+                $moduleTag_array[] = [
+                    'name' => $value['name'],
+                    'tag' => empty($result['tag']) ? 'null' : $result['tag'],
+                    'description' => $value['description'],
+                ];
+            }
         }
 
         return $this->render('versiondetail', [
