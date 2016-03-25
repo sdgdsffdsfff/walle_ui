@@ -493,6 +493,10 @@ class TaskController extends BaseController
         $data['versionUpdateContent']   = $this->getVersionupdatelist($versionUpdateListData);
         $this->ajaxReturn(self::STATUS_SUCCESS, $data, "切换版本数据成功");
     }
+    
+    /**
+     * 执行发布任务操作
+     */
     public function actionDopublish()
     {
         $params = yii::$app->request->post();
@@ -944,8 +948,8 @@ class TaskController extends BaseController
             $jobConfig['versions_need_client_update_package'][$key]=intval($value);
         }
         
-        //默认参数
-        $paramerList = Parameter::find()->asArray()->all();
+        //默认参数(读取启用的默认参数)
+        $paramerList = Parameter::find()->where(['disable' => 0])->asArray()->all();
         $defaultConfigList = array();
         foreach ($paramerList as $value) {
             $defaultConfigList[$value['name']] = $value['default_value'];
