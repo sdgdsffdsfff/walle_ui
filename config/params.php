@@ -64,7 +64,7 @@ return [
             'icon' => 'fa-cloud-download',
         ],
         [
-            'name' => '更新模块版本列表',
+            'name' => '更新模块版本',
             'controller' => 'module',
             'path' => 'module/index',
             'icon' => 'fa-puzzle-piece',

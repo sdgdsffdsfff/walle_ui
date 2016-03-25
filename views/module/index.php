@@ -118,7 +118,7 @@ use yii\helpers\Html;
     });
 
     function cat(pid,log_path) {
-            var ws_url = 'ws://' + window.location.hostname  + ':9003';
+            var ws_url = 'ws://' + window.location.hostname + ':9003';
             var log_path = log_path;
             var pid = pid;
             var div_id = 'div_logs';
