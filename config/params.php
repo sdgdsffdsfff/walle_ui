@@ -108,7 +108,7 @@ return [
                     'path' => ['platform/list','platform/edit']
                 ],
                 [
-                    'name' => '平台信息配置',
+                    'name' => '平台配置信息',
                     'path' => ['platform/config-list','platform/config-edit']
                 ],
                 [

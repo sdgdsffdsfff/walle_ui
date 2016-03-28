@@ -10,7 +10,6 @@ use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
 use app\models\Version;
 use app\models\Platform;
-use app\models\Deployment;
 use app\models\Region;
 use app\models\Module;
 use app\models\ModuleTag;
@@ -126,15 +125,15 @@ class VersionController extends BaseController
                         ->all();
         foreach ($models as $k => $v) 
         {
-            $res=ModuleTag::find()->where('version_id='.$v['id'])->select(['version_id','module_id','tag'])
+            $res = ModuleTag::find()->where('version_id='.$v['id'])->select(['version_id','module_id','tag'])
                             ->with('module')
                             ->asArray()
                             ->all();
-            $region=Region::find()->where('id='.$v['platform']['region_id'])->select(['name'])
-            ->asArray()
-            ->one();
-            $models[$k]['modules']=$res;
-            $models[$k]['region']=$region['name'];
+            $region = Region::find()->where('id='.$v['platform']['region_id'])->select(['name'])
+                            ->asArray()
+                            ->one();
+            $models[$k]['modules'] = $res;
+            $models[$k]['region'] = $region['name'];
         }
 
         $pageCount = $pages->pageCount;
@@ -165,10 +164,11 @@ class VersionController extends BaseController
             $this->error('参数错误!', '/version/add-version');
         }
         
+        $flag = yii::$app->getRequest()->post('flag');  //是否过滤已禁用的数据
         //获取全部可用模块
         $modules = Module::getAllDatas();
         //获取版本相关信息
-        $this->getCurrentVersion($versionId, $modules);
+        $this->getCurrentVersion($versionId, $modules, $flag);
     }
     
     /**
@@ -253,9 +253,9 @@ class VersionController extends BaseController
         //获取全部可用模块
         $modules = Module::getAllDatas();
         //根据版本id获取版本信息
-        $versionInfo = Version::getDataById($versionId);
+        $versionInfo = Version::getAllDataById($versionId);
         //根据平台id获取平台信息
-        $platformInfo = Platform::getDataById($versionInfo['platform_id']);
+        $platformInfo = Platform::getAllPlatformById($versionInfo['platform_id']);
         //获取模块版本信息
         $moduleTag_array = array();
         foreach ($modules as $value)
@@ -310,12 +310,22 @@ class VersionController extends BaseController
      * @param int $versionId 版本id
      * @param array $modules 模块相关信息
      */
-    private function getCurrentVersion($versionId, $modules)
+    private function getCurrentVersion($versionId, $modules, $flag = false)
     {
-        //根据版本id获取版本信息
-        $versionInfo = Version::getDataById($versionId);
-        //根据平台id获取平台信息
-        $platformInfo = Platform::getDataById($versionInfo['platform_id']);
+        if($flag)
+        {
+            //根据版本id获取非禁用版本信息
+            $versionInfo = Version::getDataById($versionId);
+            //根据平台id获取非禁用平台信息
+            $platformInfo = Platform::getDataById($versionInfo['platform_id']);
+        }
+        else
+        {
+            //根据版本id获取版本信息
+            $versionInfo = Version::getAllDataById($versionId);
+            //根据平台id获取平台信息
+            $platformInfo = Platform::getAllPlatformById($versionInfo['platform_id']);
+        }
         
         //获取模块版本信息
         $moduleTag_array = array();
@@ -336,7 +346,7 @@ class VersionController extends BaseController
             'platform_name' => $platformInfo['name'],
             'platform_id' => $platformInfo['id'],
             'upgrade_name' => $versionInfo['upgradePath']['name'],
-            'upgrade_id' => $versionInfo['upgrade_path_id'],
+            'upgrade_id' => $versionInfo['upgradePath']['id'],
             'module_tags' => $moduleTag_array,
         );
         
