@@ -274,7 +274,10 @@ class Version extends BaseModel
         $versionInfo['module'] = array();
         foreach ($moduleInfo as $value)
         {
-            $versionInfo['module'][$value['module']['name']] = $value['tag'];
+            $versionInfo['module'][$value['module']['name']] = array(
+                "tag" => $value['tag'],
+                "description" => $value['module']['description'],
+            ); 
         }
     
         return $versionInfo;

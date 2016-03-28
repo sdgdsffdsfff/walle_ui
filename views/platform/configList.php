@@ -15,15 +15,12 @@ use yii\helpers\Html;
 <?= Html::cssFile('@web/static/plugins/select2-bootstrap/select2-bootstrap.css'); ?>
 <?= Html::cssFile('@web/static/plugins/toastr/build/toastr.min.css'); ?>
 <?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweet-alert.css'); ?>
-<style type="text/css">
-.glyphicon { cursor: pointer; }
-</style>
-
+<?= Html::cssFile('@web/static/plugins/datatables_plugins/integration/bootstrap/3/dataTables.bootstrap.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看平台信息配置列表
+                平台配置信息列表
             </h5>
         </div>
     </div>
@@ -46,84 +43,18 @@ use yii\helpers\Html;
             <table id="platform_table" cellpadding="1" cellspacing="1" class="js-dynamitable table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>
-                            平台
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
-                        <th>
-                            参数
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
-                        <th>
-                            参数值
-                            <span class="js-sorter-desc glyphicon glyphicon-chevron-down pull-right"></span>
-                            <span class="js-sorter-asc glyphicon glyphicon-chevron-up pull-right"></span>
-                        </th>
+                        <th>平台</th>
+                        <th>参数</th>
+                        <th>参数值</th>
                         <th>操作</th>
                     </tr>
-                <tr>
-                    <th>
-                        <select class="js-filter js-source-states">
-                            <option value="">全部</option>
-                            <?php if($data){ ?>
-<?php
-$region_names = array();
-foreach ($data as $platformConfig) {
-$platform_names[] = $platformConfig['platform_name']."-".$platformConfig['region_name'];
-}
-$platform_names = array_unique($platform_names);
-?>
-                                <?php foreach($platform_names as $platform_name){ ?>
-                                <option value="<?= $platform_name; ?>"><?= $platform_name; ?></option>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </th>
-                    <th>
-                        <select class="js-filter js-source-states">
-                            <option value="">全部</option>
-                            <?php if($data){ ?>
-<?php
-$parameters = array();
-foreach ($data as $platformConfig) {
-$parameters[] = $platformConfig['parameter_des']."（".$platformConfig['parameter_name']."）";
-}
-$parameters = array_unique($parameters);
-?>
-                                <?php foreach($parameters as $parameter){ ?>
-                                <option value="<?= $parameter; ?>"><?= $parameter; ?></option>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </th>
-                    <th>
-                        <select class="js-filter js-source-states">
-                            <option value="">全部</option>
-                            <?php if($data){ ?>
-<?php
-$values = array();
-foreach ($data as $platformConfig) {
-$values[] = $platformConfig['value'];
-}
-$values = array_unique($values);
-?>
-                                <?php foreach($values as $value){ ?>
-                                <option value="<?= $value; ?>"><?= $value; ?></option>
-                                <?php } ?>
-                            <?php } ?>
-                        </select>
-                    </th>
-                    <th></th>
-                </tr>
                 </thead>
                 <tbody>
 <?php
 foreach ($data as $platformConfig)
 {
 echo "<tr>";
-echo "<td>".$platformConfig['platform_name']."-".$platformConfig['region_name']."</td>";
+echo "<td>".$platformConfig['region_name']."-".$platformConfig['platform_name']."</td>";
 echo "<td>".$platformConfig['parameter_des']."（".$platformConfig['parameter_name']."）</td>";
 echo "<td>".$platformConfig['value']."</td>";
 echo "<td align='center'>"."<a href='/platform/config-edit?platform_id=".$platformConfig['platform_id']."&parameter_id=".$platformConfig['parameter_id']."' class='btn btn-info'>编辑</a>&nbsp;&nbsp;".'<button class="btn btn-danger" onclick="javascript:delete_platformconfig('.$platformConfig['platform_id'].",".$platformConfig['parameter_id'].');">删除</button>'."</td>";
@@ -139,9 +70,12 @@ echo "</tr>";
 <?= Html::jsFile('@web/static/plugins/select2-3.5.2/select2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/toastr/build/toastr.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweet-alert.min.js'); ?>
-<?= Html::jsFile('@web/static/dynamitable.jquery.min.js'); ?>
+<?= Html::jsFile('@web/static/plugins/datatables/media/js/jquery.dataTables.min.js'); ?>
+<?= Html::jsFile('@web/static/tableSortFilter.js'); ?>
 <script type="text/javascript">
 $(function() {
+    datasSortFilter('platform_table', 3);
+    
     $(".js-source-states").select2({
         width: '100%' //设定select框宽度
     });

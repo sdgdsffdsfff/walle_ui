@@ -20,7 +20,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑安装包配置信息
+                编辑安装包配置
             </h5>
         </div>
     </div>
@@ -139,6 +139,7 @@ $(function() {
     };
 
     $('#create_worker_btn').click(function() {
+        $("select").attr("disabled", false);
         $.ajax({
             type: "POST",
             url: "/package/config-save",

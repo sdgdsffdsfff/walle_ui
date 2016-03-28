@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看平台
+                平台信息列表
             </h5>
         </div>
     </div>

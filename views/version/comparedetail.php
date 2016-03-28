@@ -51,11 +51,11 @@ use yii\helpers\Html;
     					<thead>
     						<tr>
     							<th>参数</th>
-    							<th>源版本</th>
-    							<th>目标版本</th>
+    							<th>旧版本</th>
+    							<th>新版本</th>
     						</tr>
     					</thead>
-    					<tbody>
+    					<tbody id="compare_tbody">
     						<tr>
     							<td>版本号</td>
                                 <td><a style='text-decoration:underline' href="version-detail?version_id=<?php echo $oldVersionInfo['id'];?>" target="black"><?php echo $oldVersionInfo['id'];?></a></td>
@@ -98,9 +98,9 @@ echo "<td>$new_deployment</td>";
 if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
     foreach ($oldVersionInfo['module'] as $key => $value) {
         echo "<tr>";
-        echo "<td>$key</td>";
-        echo "<td>$value</td>";
-        echo "<td>".$newVersionInfo['module'][$key]."</td>";
+        echo "<td>".$value['description']."</td>";
+        echo "<td>".$value['tag']."</td>";
+        echo "<td>".$newVersionInfo['module'][$key]['tag']."</td>";
         echo "</tr>";
     }
 }
@@ -114,7 +114,7 @@ if (!empty($oldVersionInfo['module']) && !empty($newVersionInfo['module'])) {
     					<thead>
     						<tr>
     							<th>客户端更新包</th>
-    							<th>大小</th>
+    							<th>大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -123,7 +123,7 @@ if (!empty($clientUpdatePackageList)) {
     foreach ($clientUpdatePackageList as $clientUpdatePackage) {
         echo "<tr>";
         echo "<td><a style='text-decoration:underline' href='".$clientUpdatePackage['url']."' target='black'>".$clientUpdatePackage['url']."</a></td>";
-        echo "<td>".$clientUpdatePackage['size']."KB</td>";
+        echo "<td>".$clientUpdatePackage['size']."</td>";
         echo "</tr>";
     }
 }
@@ -138,7 +138,7 @@ if (!empty($clientUpdatePackageList)) {
     						<tr>
     							<th>类型</th>
     							<th>改动文件数量</th>
-    							<th>改动文件大小</th>
+    							<th>改动文件大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -163,14 +163,14 @@ if (!empty($updateStatistics)) {
 
     				<hr style="height:1px;border:none;border-top:1px solid orange;" />
 
-                    <div style="height: 200px; overflow-y: scroll; overflow-x: hidden;">
+                    <div style="height: 300px; overflow-y: scroll; overflow-x: hidden;">
     				<table class="table table-bordered table-striped" cellpadding="1" cellspacing="1">
     					<thead>
     						<tr>
     							<th>类型</th>
     							<th>改动文件名称</th>
     							<th>文件URL</th>
-    							<th>文件大小</th>
+    							<th>文件大小(KB)</th>
     						</tr>
     					</thead>
     					<tbody>
@@ -182,7 +182,7 @@ if (!empty($updateFileList)) {
             echo "<td>$type</td>";
             echo "<td>".$file['filename']."</td>";
             echo "<td><a style='text-decoration:underline' href='".$file['url']."' target='black'>".$file['url']."</a></td>";
-            echo "<td>".$file['size']."</td>";
+            echo "<td>".number_format($file['size']/1024, 2, '.', ',')."</td>";
             echo "</tr>";
         }
     }
@@ -201,7 +201,7 @@ if (!empty($updateFileList)) {
 </div>
 
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
-<script>
+<script type="text/javascript">
     $(function(){
         $("#compare_form").validate({
             rules: {
@@ -225,5 +225,22 @@ if (!empty($updateFileList)) {
                 }
             }
         });
+        diff_text();
     });
+
+function diff_text() {
+    console.log("diff text");
+    $("#compare_tbody tr").each(function(trindex, tritem) {
+        var old_version = $(tritem).children().eq(1);
+        var new_version = $(tritem).children().eq(2);
+        if (old_version.text() != new_version.text()) {
+        console.log(old_version.text());
+        console.log(new_version.text());
+            old_version.attr("style", "color:red");
+            new_version.attr("style", "color:red");
+        }
+
+
+    });
+}
 </script>

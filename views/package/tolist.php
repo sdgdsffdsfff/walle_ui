@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                查看安装包列表
+                安装包列表
             </h5>
         </div>
     </div>
@@ -53,7 +53,7 @@ use yii\widgets\LinkPager;
                                 foreach ($data as $k => $v) {
                                     echo "<tr>";
                                     echo "<td>".$v['id']."</td>";
-                                    echo "<td>".$v['platform']['name'].'-'.$v['region_name']."</td>";
+                                    echo "<td>".$v['region_name'].'-'.$v['platform']['name']."</td>";
                                    echo "<td>".$v['name']."</td>";
                                         if($v['disable']==0){
                                      echo '<td style="color:#66CD00">是</td>';

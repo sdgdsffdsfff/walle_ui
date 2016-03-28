@@ -493,6 +493,10 @@ class TaskController extends BaseController
         $data['versionUpdateContent']   = $this->getVersionupdatelist($versionUpdateListData);
         $this->ajaxReturn(self::STATUS_SUCCESS, $data, "切换版本数据成功");
     }
+    
+    /**
+     * 执行发布任务操作
+     */
     public function actionDopublish()
     {
         $params = yii::$app->request->post();
@@ -944,8 +948,8 @@ class TaskController extends BaseController
             $jobConfig['versions_need_client_update_package'][$key]=intval($value);
         }
         
-        //默认参数
-        $paramerList = Parameter::find()->asArray()->all();
+        //默认参数(读取启用的默认参数)
+        $paramerList = Parameter::find()->where(['disable' => 0])->asArray()->all();
         $defaultConfigList = array();
         foreach ($paramerList as $value) {
             $defaultConfigList[$value['name']] = $value['default_value'];
@@ -1144,19 +1148,43 @@ class TaskController extends BaseController
      */
     public function actionCompare()
     {
-        if(yii::$app->request->isPost)
-        {
-            $post = yii::$app->request->post();
-            
-            //根据任务id,判断任务是否合法
-            $job = Job::getJobById($post['job_id']);
-            if(!$job)
-            {
-                $this->ajaxReturn(self::STATUS_FAILS, array(), '没有此任务!');
-            }
-            
-            $this->ajaxReturn(self::STATUS_SUCCESS, $job, '');
-        }
+        $sessions = yii::$app->session;
+        
+//        if(yii::$app->request->isPost)
+//        {
+//            $post = yii::$app->request->post();
+//            
+//            //根据任务id,判断任务是否合法
+//            $job = Job::getJobById($post['job_id']);
+//            if(!$job)
+//            {
+//                $this->ajaxReturn(self::STATUS_FAILS, array(), '没有此任务!');
+//            }
+//            else
+//            {
+//                if(isset($sessions['compare_job_ids']) && !empty($sessions['compare_job_ids']))
+//                {
+//                    $compare_job_ids = explode(',', rtrim($sessions['compare_job_ids'], ','));
+//                    if(in_array($post['job_id'], $compare_job_ids))
+//                    {
+//                        $this->ajaxReturn(self::STATUS_FAILS, array(), '该任务id已存在,请更换任务id!');
+//                        die;
+//                    }
+//
+//                    if(count($compare_job_ids) >= 5)
+//                    {
+//                        $this->ajaxReturn(self::STATUS_FAILS, array(), '最多可以比较5个任务!');
+//                        die;
+//                    }
+//                }
+                
+//                $sessions['compare_job_ids'] = $post['job_id'].','.$sessions['compare_job_ids'];
+//                $this->ajaxReturn(self::STATUS_SUCCESS, array());
+//                //die;
+//            }
+//        }
+//        var_dump($sessions['compare_job_ids']);
+        unset($sessions['compare_job_ids']);  //删除session
         
         return $this->render('compare');
     }
@@ -1167,10 +1195,43 @@ class TaskController extends BaseController
      */
     public function actionCompareDetail()
     {
+        $jobIds = array();
+        $flag = false;
         $post = yii::$app->request->post();
-        //获取要对比的任务id数组
-        $jobIds = explode(',', trim($post['compare_jobIds'], ','));
+        $sessions = yii::$app->session;
         
+        //根据任务id,判断任务是否合法
+        $job = Job::getJobById($post['job_id']);
+        if(!$job)
+        {
+            $this->error('没有此任务!', '/task/compare');
+        }
+        
+        //首次保存
+        if(!isset($sessions['compare_job_ids']) || empty($sessions['compare_job_ids']))
+        {
+            $jobIds[] = $post['job_id'];
+            $sessions['compare_job_ids'] = $jobIds;
+        }
+        else
+        {
+            //之后的保存
+            $jobIds = $sessions['compare_job_ids'];
+            if(count($jobIds) <= 5)
+            {
+                array_push($jobIds, $post['job_id']);  //入栈
+            }
+            if(count($jobIds) > 5)
+            {
+                $flag = true;
+                array_pop($jobIds);  //出栈
+            }
+            
+            $jobIds = array_unique($jobIds);
+            $sessions['compare_job_ids'] = $jobIds;
+        }
+        
+        //var_dump($jobIds);
         //根据获取的任务id查询相关配置信息
         if($jobIds)
         {
@@ -1202,11 +1263,42 @@ class TaskController extends BaseController
                 }
             }
         }
-        //var_dump($fields_array);exit;
+        //var_dump($job_config_arr);exit;
         return $this->render('comparedetail', [
             'jobConfigs' => $job_config_arr,
-            'fieldsConfig' => $fields_array
+            'fieldsConfig' => $fields_array,
+            'job_id' => $post['job_id'],
+            'jobId_arr' => $jobIds,
+            'flag' => $flag
         ]);
+    }
+    
+    /**
+     * 删除对比任务
+     */
+    public function actionDeleteJob()
+    {
+        $sessions = yii::$app->session;
+        $post = yii::$app->request->post();
+        if(!isset($post['job_id']) || empty($post['job_id']))
+        {
+            $this->ajaxReturn(self::STATUS_FAILS, array(), '对比任务id错误!');
+        }
+        
+        //获取全部对比任务id
+        $jobIds = $sessions['compare_job_ids'];
+        $array = array();
+        foreach ($jobIds as $value)
+        {
+            if($value == $post['job_id'])
+            {
+                continue;
+            }
+            $array[] = $value;
+        }
+
+        $sessions['compare_job_ids'] = $array;
+        $this->ajaxReturn(self::STATUS_SUCCESS, array());
     }
     
     /**

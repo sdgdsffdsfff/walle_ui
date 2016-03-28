@@ -261,11 +261,14 @@ class VersionController extends BaseController
         foreach ($modules as $value)
         {
             $result = ModuleTag::getModuleTagByVersionIdAndModuleId($versionId, $value['id']);
-            $moduleTag_array[] = [
-                'name' => $value['name'],
-                'tag' => empty($result['tag']) ? 'null' : $result['tag'],
-                'description' => $value['description'],
-            ];
+            if($result) //过滤掉在moduletag中没有的模块
+            {
+                $moduleTag_array[] = [
+                    'name' => $value['name'],
+                    'tag' => empty($result['tag']) ? 'null' : $result['tag'],
+                    'description' => $value['description'],
+                ];
+            }
         }
 
         return $this->render('versiondetail', [
@@ -294,11 +297,11 @@ class VersionController extends BaseController
         $bool = Version::modifyChangeLog($versionId, $changeLog);
         if($bool)
         {
-            $this->ajaxReturn(self::STATUS_SUCCESS, array('result' => 'success', 'msg' => '更新changLog成功!'));
+            $this->ajaxReturn(self::STATUS_SUCCESS, array('result' => 'success', 'msg' => '更新日志成功!'));
         }
         else
         {
-            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '更新changLog失败!'));
+            $this->ajaxReturn(self::STATUS_FAILS, array('result' => 'fails', 'msg' => '更新日志失败!'));
         }
     }
     
@@ -448,17 +451,19 @@ EOT;
     {
         $oldVersionId = yii::$app->getRequest()->get('old_version_id');
         $newVersionId = yii::$app->getRequest()->get('new_version_id');
-        if (empty($oldVersionId) && empty($newVersionId))
+        if (empty($oldVersionId) || empty($newVersionId))
         {
             return $this->render('compare');
+        }
+        $oldVersion = Version::findOne($oldVersionId);
+        $newVersion = Version::findOne($newVersionId);
+        if (empty($oldVersion) || empty($newVersion))
+        {
+            $this->error('对比版本不存在!', '/version/compare');
         }
         //通过version_id查找version详情
         $oldVersionInfo = Version::getVersionDetial($oldVersionId);
         $newVersionInfo = Version::getVersionDetial($newVersionId);
-        if (empty($oldVersionInfo) || empty($newVersionInfo))
-        {
-            $this->error('请求参数异常!', '/version/compare');
-        }
 
         //获取客户端更新包
         $clientUpdatePackages = ClientUpdatePackage::getUpdatePackages($oldVersionId, $newVersionId);
@@ -469,7 +474,7 @@ EOT;
             foreach ($clientUpdatePackages as $clientUpdatePackage)
             {
                 $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
-                $tmp['size'] = $clientUpdatePackage['size'];
+                $tmp['size'] = $this->formatSize($clientUpdatePackage['size']);
                 array_push($clientUpdatePackageList, $tmp);
             }
         }
@@ -487,7 +492,7 @@ EOT;
             {
                 $this->error('请求参数异常!', '/version/compare');
             }
-            $updateFileList[$type] = $this->countUpdateFiles($type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type], $newVersionInfo['module'][$type]);
+            $updateFileList[$type] = $this->countUpdateFiles($type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type]['tag'], $newVersionInfo['module'][$type]['tag']);
             if ($updateFileList[$type] === false)
             {
                 $this->error('sql计算失败!', '/version/compare');
@@ -503,7 +508,7 @@ EOT;
                 }
             }
             $updateStatistics[$type]['num'] = $num;
-            $updateStatistics[$type]['size'] = $size;
+            $updateStatistics[$type]['size'] = $this->formatSize($size);
             $totalNum += $num;
             $totalSize += $size;
         }
@@ -513,7 +518,7 @@ EOT;
             "newVersionInfo" => $newVersionInfo,
             "clientUpdatePackageList" => $clientUpdatePackageList,
             "totalNum" => $totalNum,
-            "totalSize" => $totalSize,
+            "totalSize" => $this->formatSize($totalSize),
             "updateStatistics" => $updateStatistics,
             "updateFileList" => $updateFileList,
         );
@@ -564,5 +569,12 @@ EOT;
             }
         }
         return $result;
+    }
+
+    /**
+     * 统一文件单位和格式
+     */
+    private function formatSize($size) {
+        return number_format($size/1024, 2, '.', ',');
     }
 }

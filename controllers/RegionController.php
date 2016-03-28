@@ -88,7 +88,7 @@ class RegionController extends BaseController
                     $info->insert();
                 }
                 
-                $this->ajaxReturn(self::STATUS_SUCCESS,'编辑发行区域成功!');
+                $this->ajaxReturn(self::STATUS_SUCCESS,'编辑发行地区成功! ');
             }
         }
         else

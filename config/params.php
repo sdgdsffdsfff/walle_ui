@@ -43,7 +43,7 @@ return [
                 ],
                 [
                     'name' => '创建发布任务',
-                    'path' => ['task/publish'],
+                    'path' => ['task/publish', 'task/clonepublish'],
                 ],
                 [
                     'name' => '发布任务对比',
@@ -64,7 +64,7 @@ return [
             'icon' => 'fa-cloud-download',
         ],
         [
-            'name' => '更新模块版本列表',
+            'name' => '更新模块版本',
             'controller' => 'module',
             'path' => 'module/index',
             'icon' => 'fa-puzzle-piece',

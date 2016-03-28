@@ -9,7 +9,7 @@ use yii\helpers\Html;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑升级序列配置
+                新增升级序列配置
             </h5>
         </div>
     </div>
