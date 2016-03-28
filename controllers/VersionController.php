@@ -253,7 +253,7 @@ class VersionController extends BaseController
         //获取全部可用模块
         $modules = Module::getAllDatas();
         //根据版本id获取版本信息
-        $versionInfo = Version::getDataById($versionId);
+        $versionInfo = Version::getAllDataById($versionId);
         //根据平台id获取平台信息
         $platformInfo = Platform::getAllPlatformById($versionInfo['platform_id']);
         //获取模块版本信息
