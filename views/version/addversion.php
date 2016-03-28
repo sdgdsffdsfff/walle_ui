@@ -37,9 +37,9 @@ use yii\helpers\Html;
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">平台</label>
+                            <label class="col-sm-2 control-label">发行地区-平台</label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="平台" class="form-control" id="platform" name="platform" disabled="" />
+                                <input type="text" placeholder="发行地区-平台" class="form-control" id="platform" name="platform" disabled="" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -75,7 +75,7 @@ use yii\helpers\Html;
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">平台</label>
+                            <label class="col-sm-2 control-label">发行地区-平台</label>
                             <div class="col-sm-10">
                                 <select class="js-source-states" id="new_platform" name="new_platform" style="width: 100%">
                                     <option value="">请选择发行地区-平台</option>
@@ -218,7 +218,7 @@ use yii\helpers\Html;
         $.ajax({
             url: '/version/import-version',
             type: 'post',
-            data: 'version_id='+$versionId,
+            data: 'version_id='+$versionId+'&flag=true',
             dataType: 'json',
             success: function(response){
                 $('#new_platform').select2('val', response.data.platform_id);

@@ -66,7 +66,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">平台：</label>
+                            <label for="exampleInputEmail2">发行地区-平台：</label>
                             <select class="js-source-states" name="platform_id" style="width:180px; margin-right: 12px;">
                                
                                     <option value="">请选择发行地区-平台</option>
@@ -107,7 +107,7 @@ use yii\widgets\LinkPager;
                             <tr>
                                 <th data-toggle="true">版本号</th>
                                 <th>时间</th>
-                                <th>平台</th>
+                                <th>发行地区-平台</th>
                                 <th>升级序列</th>
                                 <th>创建人</th>
                                 <th>change log</th>

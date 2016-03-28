@@ -156,7 +156,7 @@ class Version extends BaseModel
     }
     
     /**
-     * 根据版本号获取数据
+     * 根据版本号获取数据(非禁用升级序列)
      * @param int $versionId 版本号
      * @return array
      */
@@ -171,6 +171,29 @@ class Version extends BaseModel
                       'upgradePath' => function($resource)
                       {
                           $resource->select('*')->where(['disable' => 0]);
+                      }
+                  ])->asArray()->one();
+        
+        return $result;
+    }
+    
+    /**
+     * 根据版本号获取数据
+     * 解决禁用升级序列后,升级序列为null的问题
+     * @param int $versionId 版本号
+     * @return type
+     */
+    public static function getAllDataById($versionId)
+    {
+        $fields = ['id','platform_id','upgrade_path_id','create_time','create_user','change_log'];
+        $condition = ['id' => $versionId];
+        
+        $resource = Version::find()->where($condition);
+        $result = $resource->select($fields)
+                  ->with([
+                      'upgradePath' => function($resource)
+                      {
+                          $resource->select('*');
                       }
                   ])->asArray()->one();
         
