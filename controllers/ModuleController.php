@@ -16,7 +16,7 @@ class ModuleController extends BaseController
      */
     public function actionIndex()
     {
-    	$models = Module::findBySql('select * from module where repo_type!="svn"')->asArray()->all();
+    	$models = Module::findBySql('select * from module where repo_type!="svn" and disable=0')->asArray()->all();
 
         return $this->render('index',['models'=>$models]);
     }

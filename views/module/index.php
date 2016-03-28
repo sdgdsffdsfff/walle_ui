@@ -23,7 +23,7 @@ use yii\helpers\Html;
                         <thead>
                         <tr>
 
-                            <th data-toggle="true">模块名称</th>
+                            <th data-toggle="true">模块名称(GIT类型)</th>
                             <th> <div class="checkbox checkbox-success">
                                         <input  type="checkbox" id="checkAll" checked> <label >是否更新 </label>
                                     </div></th>
