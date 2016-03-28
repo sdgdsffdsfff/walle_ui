@@ -215,7 +215,7 @@ class VersionController extends BaseController
             $i = 0;
             foreach ($modules as $module)
             {
-                $key = 'new_'.strtolower($module['name']);
+                $key = 'new_'.$module['name'];
                 if(!isset($post[$key]))
                 {
                     continue;
