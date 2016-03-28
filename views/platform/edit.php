@@ -10,7 +10,13 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-              编辑平台信息
+             
+                     <?php if($id){
+                    echo "编辑平台信息";
+                }else{
+                    echo "新增平台信息";
+                }
+              ?>
             </h5>
         </div>
     </div>
