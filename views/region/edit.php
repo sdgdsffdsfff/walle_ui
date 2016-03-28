@@ -8,7 +8,13 @@ use yii\widgets\LinkPager;
     <div class="hpanel">
         <div class="panel-body">
             <h5 class="font-light m-b-xs">
-                编辑发行区域
+                
+                     <?php if($id){
+                    echo "编辑发行区域";
+                }else{
+                    echo "新增发行区域";
+                }
+                ?>
             </h5>
         </div>
     </div>
