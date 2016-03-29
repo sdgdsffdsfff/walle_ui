@@ -191,27 +191,30 @@ use yii\helpers\Html;
             }
         });
         //console.log(pos);
-        $("#job_table tbody tr").each(function(trindex, tritem){   //遍历每一行
-            $(tritem).find('td').each(function(tdindex, tditem){   //遍历改行的td
-                if(tdindex == pos)
-                {
-                    $(tditem).remove();
-                }
+        if((pos != '') && (/(^[0-9]\d*$)/.test(pos)))
+        {
+            $("#job_table tbody tr").each(function(trindex, tritem){   //遍历每一行
+                $(tritem).find('td').each(function(tdindex, tditem){   //遍历改行的td
+                    if(tdindex == pos)
+                    {
+                        $(tditem).remove();
+                    }
+                });
             });
-        });
-//        $("#job_table thead tr").eq(0).find('th').each(function(j, item){   //遍历每一行
-//            if(j == pos)
-//            {
-//                $(item).remove();
-//            }
-//        });
-        $("#job_table thead tr").each(function(trindex, tritem){   //遍历每一行
-            $(tritem).find('th').each(function(thindex, thitem){   //遍历改行的td
-                if(thindex == pos)
-                {
-                    $(thitem).remove();
-                }
+//            $("#job_table thead tr").eq(0).find('th').each(function(j, item){   //遍历每一行
+//                if(j == pos)
+//                {
+//                    $(item).remove();
+//                }
+//            });
+            $("#job_table thead tr").each(function(trindex, tritem){   //遍历每一行
+                $(tritem).find('th').each(function(thindex, thitem){   //遍历改行的td
+                    if(thindex == pos)
+                    {
+                        $(thitem).remove();
+                    }
+                });
             });
-        });
+        }
     }
 </script>
