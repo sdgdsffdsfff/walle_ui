@@ -9,6 +9,7 @@ namespace app\controllers;
 use yii;
 use app\models\Parameter;
 use app\models\DynamicConfig;
+use yii\base\Exception;
 
 class ParameterController extends BaseController
 {
@@ -228,22 +229,26 @@ class ParameterController extends BaseController
         {
             $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
         }
-        $valueType = Parameter::findOne($parameterId)->value_type;
-        if ($valueType != "string" && empty($parameterValue))
-        {
-            $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
-        }
-        $dynamicConfig = DynamicConfig::findOne($parameterId);
-        if (!$dynamicConfig)
-        {
-            $dynamicConfig = new DynamicConfig();
-            $dynamicConfig->parameter_id = $parameterId;
-        }
-        $dynamicConfig->value = $parameterValue;
+        try {
+            $valueType = Parameter::findOne($parameterId)->value_type;
+            if ($valueType != "string" && empty($parameterValue))
+            {
+                $this->newajaxReturn(self::STATUS_FAILS, array(), '请求参数有误!');
+            }
+            $dynamicConfig = DynamicConfig::findOne($parameterId);
+            if (!$dynamicConfig)
+            {
+                $dynamicConfig = new DynamicConfig();
+                $dynamicConfig->parameter_id = $parameterId;
+            }
+            $dynamicConfig->value = $parameterValue;
 
-        if ($dynamicConfig->save())
-        {
-            $this->newajaxReturn(self::STATUS_SUCCESS, array(), '配置信息保存成功!');
+            if ($dynamicConfig->save())
+            {
+                $this->newajaxReturn(self::STATUS_SUCCESS, array(), '配置信息保存成功!');
+            }
+        } catch(Exception $e) {
+            $this->newajaxReturn(self::STATUS_FAILS, array(), '操作数据库失败!');
         }
     
         $this->newajaxReturn(self::STATUS_FAILS, array(), '保存失败!');
