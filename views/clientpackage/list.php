@@ -50,7 +50,7 @@ use yii\widgets\LinkPager;
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputEmail2">平台：</label>
+                            <label for="exampleInputEmail2">发行地区-平台：</label>
                             <select class="js-source-states" name="platform_id" style="width:180px;margin-right: 20px;">
                               
                                     <option value="">请选择发行地区-平台</option>

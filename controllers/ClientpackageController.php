@@ -36,7 +36,7 @@ class ClientpackageController extends BaseController
     {
     	$platform = Platform::getAllPlatform();
         $upgradePath = UpgradePath::getAbleUpgradepath();
-        $deployment = Deployment::find()->all();
+        $deployment = Deployment::find()->where(['disable' => 0])->all();
         
         $vid = $platform_id = $upgrade_path_id = $create_user = $deployment_id = '';
         $params = yii::$app->getRequest()->get();
