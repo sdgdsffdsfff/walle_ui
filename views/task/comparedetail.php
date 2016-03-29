@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Html;
 ?>
+<?= Html::cssFile('@web/static/plugins/sweetalert/lib/sweetalert2.css'); ?>
 <div class="normalheader transition small-header">
     <div class="hpanel">
         <div class="panel-body">
@@ -92,6 +93,7 @@ use yii\helpers\Html;
     </div>
 </div>
 
+<?= Html::jsFile('@web/static/plugins/sweetalert/lib/sweetalert2.min.js'); ?>
 <?= Html::jsFile('@web/static/plugins/jquery-validation/jquery.validate.min.js'); ?>
 <?= Html::jsFile('@web/static/tableHeadFixer.js'); ?>
 <script type="text/javascript">
@@ -154,33 +156,6 @@ use yii\helpers\Html;
     
     function removeCol(job_id)
     {
-        //根据任务id获取相应的信息
-        $.ajax({
-            url: '/task/delete-job',
-            type: 'post',
-            data: 'job_id='+job_id,
-            dataType: 'json',
-            success: function(response){
-                if(response.status == 10000)
-                {
-                    deleteOperate(job_id);
-                }
-                else
-                {
-                    swal({
-                        title: response.description,
-                        type: "error",
-                        showCancelButton: false, //是否显示'取消'按钮
-                        confirmButtonColor: "#e74c3c",
-                        confirmButtonText: "确认",
-                        closeOnConfirm: false
-                    });
-                }
-            }
-        });
-    }
-    function deleteOperate(job_id)
-    {
         //获取td索引位置
         var pos = '';
         $("#job_table tbody tr").eq(0).find('td').each(function(i){
@@ -193,28 +168,66 @@ use yii\helpers\Html;
         //console.log(pos);
         if((pos != '') && (/(^[0-9]\d*$)/.test(pos)))
         {
-            $("#job_table tbody tr").each(function(trindex, tritem){   //遍历每一行
-                $(tritem).find('td').each(function(tdindex, tditem){   //遍历改行的td
-                    if(tdindex == pos)
+            //根据任务id获取相应的信息
+            $.ajax({
+                url: '/task/delete-job',
+                type: 'post',
+                data: 'job_id='+job_id,
+                dataType: 'json',
+                success: function(response){
+                    if(response.status == 10000)
                     {
-                        $(tditem).remove();
+                        deleteOperate(pos);
                     }
-                });
+                    else
+                    {
+                        swal({
+                            title: response.description,
+                            type: "error",
+                            showCancelButton: false, //是否显示'取消'按钮
+                            confirmButtonColor: "#e74c3c",
+                            confirmButtonText: "确认",
+                            closeOnConfirm: false
+                        });
+                    }
+                }
             });
+        }
+        else
+        {
+            swal({
+                title: '任务id不匹配,无法删除!',
+                type: "error",
+                showCancelButton: false, //是否显示'取消'按钮
+                confirmButtonColor: "#e74c3c",
+                confirmButtonText: "确认",
+                closeOnConfirm: false
+            });
+        }
+    }
+    function deleteOperate(pos)
+    {
+        $("#job_table tbody tr").each(function(trindex, tritem){   //遍历每一行
+            $(tritem).find('td').each(function(tdindex, tditem){   //遍历改行的td
+                if(tdindex == pos)
+                {
+                    $(tditem).remove();
+                }
+            });
+        });
 //            $("#job_table thead tr").eq(0).find('th').each(function(j, item){   //遍历每一行
 //                if(j == pos)
 //                {
 //                    $(item).remove();
 //                }
 //            });
-            $("#job_table thead tr").each(function(trindex, tritem){   //遍历每一行
-                $(tritem).find('th').each(function(thindex, thitem){   //遍历改行的td
-                    if(thindex == pos)
-                    {
-                        $(thitem).remove();
-                    }
-                });
+        $("#job_table thead tr").each(function(trindex, tritem){   //遍历每一行
+            $(tritem).find('th').each(function(thindex, thitem){   //遍历改行的td
+                if(thindex == pos)
+                {
+                    $(thitem).remove();
+                }
             });
-        }
+        });
     }
 </script>

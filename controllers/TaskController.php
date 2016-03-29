@@ -1322,10 +1322,17 @@ class TaskController extends BaseController
         foreach ($fields_unique as $data)
         {
             $temp = explode(':', $data);
-            $typeNameArr[] = [
-                'type' => $temp[0],
-                'name' => $temp[1]
-            ];
+            if($temp[1] == 'job_id')
+            {
+                array_unshift($typeNameArr, array('type' => $temp[0], 'name' => $temp[1]));  //加在数组头部
+            }
+            else
+            {
+                $typeNameArr[] = [
+                    'type' => $temp[0],
+                    'name' => $temp[1]
+                ];
+            }
         }
         
         return $typeNameArr;
