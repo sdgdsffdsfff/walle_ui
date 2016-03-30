@@ -116,7 +116,7 @@ class DeploymentController extends BaseController
             }
         }
 
-        return $this->render('configlist', array("data" => $data));
+        return $this->render('configList', array("data" => $data));
     }
 
     /**
@@ -149,7 +149,7 @@ class DeploymentController extends BaseController
                 $this->error('您要编辑的内容不存在', '/deployment/config-list');
             }
 
-            return $this->render('configedit', array("deployment" => $deployment, "parameter" => $parameter, "value" => $deploymentConfig->value));
+            return $this->render('configEdit', array("deployment" => $deployment, "parameter" => $parameter, "value" => $deploymentConfig->value));
         }
 
     }

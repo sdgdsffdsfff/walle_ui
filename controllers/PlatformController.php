@@ -151,7 +151,7 @@ class PlatformController extends BaseController
                 $this->error('您要编辑的内容不存在', '/platform/config-list');
             }
 
-            return $this->render('configedit', array("platform" => $platform, "parameter" => $parameter, "value" => $platformConfig->value));
+            return $this->render('configEdit', array("platform" => $platform, "parameter" => $parameter, "value" => $platformConfig->value));
         }
 
     }

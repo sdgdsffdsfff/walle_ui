@@ -54,7 +54,7 @@ use yii\helpers\Html;
 <?php
 if (isset($platformList) && !empty($platformList)) {//新增配置，提供全部发行地区供选择
     foreach ($platformList as $reg) {
-        echo '<option value="'.$reg['id'].'">'.$reg['name'].'-'.$reg['region']['name'].'</option>';
+        echo '<option value="'.$reg['id'].'">'.$reg['region']['name'].'-'.$reg['name'].'</option>';
     }
 }
 ?>

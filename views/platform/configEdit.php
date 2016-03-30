@@ -52,7 +52,7 @@ use yii\helpers\Html;
                                             <optgroup label="">
 <?php
 if (isset($platform)) {//编辑配置，只显示要编辑的发行地区
-    echo '<option value="'.$platform['id'].'" selected="selected">'.$platform['name']."-".$platform['region']['name'].'</option>';
+    echo '<option value="'.$platform['id'].'" selected="selected">'.$platform['region']['name']."-".$platform['name'].'</option>';
 }
 ?>
                                             </optgroup>

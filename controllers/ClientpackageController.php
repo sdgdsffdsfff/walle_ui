@@ -16,7 +16,7 @@ use app\models\ClientUpdatePackage;
 use app\models\UpgradePath;
 use yii\data\Pagination;
 use app\models\Deployment;
-use app\models\Clientpackage;
+use app\models\ClientPackage;
 use app\models\Package;
 use app\models\Parameter;
 use app\models\PackageConfig;
