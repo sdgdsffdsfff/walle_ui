@@ -10,6 +10,7 @@ use yii\helpers\ArrayHelper;
 use yii\data\Pagination;
 use app\models\Version;
 use app\models\Platform;
+use app\models\Parameter;
 use app\models\Region;
 use app\models\Module;
 use app\models\ModuleTag;
@@ -477,13 +478,15 @@ EOT;
 
         //获取客户端更新包
         $clientUpdatePackages = ClientUpdatePackage::getUpdatePackages($oldVersionId, $newVersionId);
+        $resourceCenterServer = Parameter::findOne(array("name" => "resource_center_server"))->default_value;
+        $uploadPath = "http://".$resourceCenterServer."/walle/package/";
         $clientUpdatePackageList = array();
         if (!empty($clientUpdatePackages))
         {
             $gameAlias = yii::$app->session->get('game_alias');
             foreach ($clientUpdatePackages as $clientUpdatePackage)
             {
-                $tmp['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
+                $tmp['url'] = $uploadPath.$gameAlias."/client_update_package/".$clientUpdatePackage['url'];
                 $tmp['size'] = $this->formatSize($clientUpdatePackage['size']);
                 array_push($clientUpdatePackageList, $tmp);
             }
@@ -502,7 +505,7 @@ EOT;
             {
                 $this->error('请求参数异常!', '/version/compare');
             }
-            $updateFileList[$type] = $this->countUpdateFiles($type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type]['tag'], $newVersionInfo['module'][$type]['tag']);
+            $updateFileList[$type] = $this->countUpdateFiles($uploadPath, $type, $oldVersionInfo['upgrade_path_id'], $oldVersionInfo['module'][$type]['tag'], $newVersionInfo['module'][$type]['tag']);
             if ($updateFileList[$type] === false)
             {
                 $this->error('sql计算失败!', '/version/compare');
@@ -537,13 +540,14 @@ EOT;
 
     /**
      * 计算客户端更新文件
+     * @param $uploadPath string 下载地址前缀
      * @param $type string 类型
      * @param $upgrade_path_id 升级序列
      * @param $old_module_tag 源版本模块tag
      * @param $new_module_tag 新版本模块tag
      * @return array ['filename', 'size', 'md5', 'url']
      */
-    private function countUpdateFiles($type, $upgrade_path_id, $old_module_tag, $new_module_tag)
+    private function countUpdateFiles($uploadPath, $type, $upgrade_path_id, $old_module_tag, $new_module_tag)
     {
         $module_id = Module::findOne(array("name" => $type))->id;
         //使用数据库连接执行sql计算语句，由于数据库根据游戏更改设置时没有定义全局使用的connection
@@ -575,7 +579,7 @@ EOT;
             $gameAlias = yii::$app->session->get('game_alias');
             foreach ($result as &$info)
             {
-                $info['url'] = yii::$app->params['uploadPath'].$gameAlias."/client_file/".$info['url'];
+                $info['url'] = $uploadPath.$gameAlias."/client_file/".$info['url'];
             }
         }
         return $result;
